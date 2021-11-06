@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0/EN"
+				"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+        <typeAlias type="com.project.bling.vo.Address_listVO" alias="Address_listVO"/>
+        <typeAlias type="com.project.bling.vo.AdminVO" alias="AdminVO"/> 
+        <typeAlias type="com.project.bling.vo.CartVO" alias="CartVO"/> 
+        <typeAlias type="com.project.bling.vo.DeliveryVO" alias="DeliveryVO"/> 
+        <typeAlias type="com.project.bling.vo.EventVO" alias="EventVO"/> 
+        <typeAlias type="com.project.bling.vo.ImageVO" alias="ImageVO"/> 
+        <typeAlias type="com.project.bling.vo.LikeVO" alias="LikeVO"/> 
+        <typeAlias type="com.project.bling.vo.NoticeVO" alias="NoticeVO"/> 
+        <typeAlias type="com.project.bling.vo.OptionVO" alias="OptionVO"/> 
+        <typeAlias type="com.project.bling.vo.Order_detailVO" alias="Order_detailVO"/> 
+        <typeAlias type="com.project.bling.vo.OrderVO" alias="OrderVO"/> 
+        <typeAlias type="com.project.bling.vo.ProductVO" alias="ProductVO"/> 
+        <typeAlias type="com.project.bling.vo.Question_commentVO" alias="Question_commentVO"/> 
+        <typeAlias type="com.project.bling.vo.QuestionVO" alias="QuestionVO"/> 
+        <typeAlias type="com.project.bling.vo.ReviewVO" alias="ReviewVO"/> 
+        <typeAlias type="com.project.bling.vo.User_gradeVO" alias="User_gradeVO"/> 
+        <typeAlias type="com.project.bling.vo.UserVO" alias="UserVO"/> 
+        <typeAlias type="com.project.bling.vo.CombineVO" alias="CombineVO"/>        
+    </typeAliases>
+
+</configuration>
