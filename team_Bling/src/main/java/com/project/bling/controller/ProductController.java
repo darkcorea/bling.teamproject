@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.bling.service.ProductService;
+import com.project.bling.service.ReviewService;
 
 
 
@@ -19,6 +20,9 @@ public class ProductController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	ReviewService reviewService;
 	
 	/* 상품 리스트 페이지 */
 	// 상품 리스트에서 신상품,판매순,높은가격순,낮은가격순 을 선택 했을 경우 여기로 이동해서
@@ -153,8 +157,8 @@ public class ProductController {
 		// 상품의 이미지들
 		model.addAttribute("image", productService.image(pidx));
 		
-		// 상품의 리뷰들
-		model.addAttribute("review", productService.reviewProduct_1(pidx));
+		// 상품 리뷰의 이미지와 평점
+		model.addAttribute("review", reviewService.Product_review_count(pidx));
 		
 		
 		return "/product/detail";
