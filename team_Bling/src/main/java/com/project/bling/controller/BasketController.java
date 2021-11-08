@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.bling.service.BasketService;
 import com.project.bling.vo.LikeVO;
+import com.project.bling.vo.UserVO;
 
 @RequestMapping(value="/Basket")
 @Controller
@@ -25,16 +26,20 @@ public class BasketController {
 		return "basket/cart";
 	}
 	
+	//관심상품 등록
 	@RequestMapping(value="/like.do") 
-	public void like(LikeVO vo, HttpSession session, int yn, int pidx) { 
+	public void like(LikeVO lvo, UserVO uvo, HttpSession session, int yn, int pidx) { 
 		int likeyn = yn; 
 		int pidxx = pidx;
+		int midx = uvo.getMidx();
+		
+		lvo.setMidx(midx);
+		lvo.setPidx(pidxx);
 		
 		if(likeyn == 0) {
-			
+			//delete 
 		}else {
-			
+			//insert
 		}
 	}
-	 
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.project.bling.mapper.joinMapper">
+	<!-- 회원가입시 넣는 데이터 -->
+	<insert id="insert" parameterType="UserVO">
+		<![CDATA[
+		INSERT INTO bg_user(midx,id,pwd,zip_code,addr1,addr2,phone,uname,email,agree_sms,agree_email,agree_shopping)
+		VALUES(
+			midx_seq.nextval
+			,#{id}
+			,#{pwd}
+			,#{zip_code}
+			,#{addr1}
+			,#{addr2}
+			,#{phone}
+			,#{uname}
+			,#{email}
+			,#{agree_sms}
+			,#{agree_email}
+			,#{agree_shopping}
+		)]]>
+	</insert>
+	
+	<!-- 아이디 중복확인 -->
+	<select id="confirmId" parameterType="String" resultType="String">
+		SELECT id FROM bg_user WHERE id=#{id}
+	</select>
+	
+	<!-- 이메일 중복확인 -->
+	<select id="confirmEmail" parameterType="String" resultType="String">
+		SELECT email FROM bg_user WHERE email=#{id}
+	</select>
+	  
+</mapper>
