@@ -29,7 +29,12 @@ public class BasketController {
 	public void like(LikeVO vo, HttpSession session, int yn, int pidx) { 
 		int likeyn = yn; 
 		int pidxx = pidx;
-	 
+		
+		if(likeyn == 0) {
+			
+		}else {
+			
+		}
 	}
 	 
 }
