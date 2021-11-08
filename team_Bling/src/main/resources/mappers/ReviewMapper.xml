@@ -5,5 +5,55 @@
  
 <mapper namespace="com.project.bling.mapper.reviewMapper">
 
+	<!-- 상품의 pidx에 따라서 리뷰 갯수 가져오기  parameterType="int" -->
+	<select id="reviewCount"  parameterType="int" resultType="int">
+		SELECT count(r.ridx) as reviewCount FROM bg_review r
+    	JOIN bg_order_detail od on r.detail_idx = od.detail_idx
+	    JOIN bg_option o on o.oidx = od.oidx
+	    Join bg_user u on u.midx = r.midx
+	    WHERE o.pidx = #{pidx}
+	</select>
+
+	<!-- 상품의 리뷰 이미지와, 평점 가져오기 -->
+	<select id="Product_review_count" parameterType="int" resultType="ReviewVO">
+		SELECT  r.ridx, r.grade, r.image1, o.pidx FROM bg_review r
+    	JOIN bg_order_detail od on r.detail_idx = od.detail_idx
+	    JOIN bg_option o on o.oidx = od.oidx
+	    Join bg_user u on u.midx = r.midx
+	    WHERE o.pidx = #{pidx}
+	    ORDER BY r.image1 asc, r.ridx desc
+	</select>
+	
+	<!-- 상품의 리뷰들 가져오기  최신순-->
+	<select id="reviewProduct_1" parameterType="PageMaker" resultType="CombineVO">
+		<![CDATA[
+		select * from 
+	    ( select rownum as rnum, A.* from
+	        (SELECT r.contents, r.ridx, r.image1, r.image2, r.grade, u.uname FROM bg_review r
+	        JOIN bg_order_detail od on r.detail_idx = od.detail_idx
+	        JOIN bg_option o on o.oidx = od.oidx
+	        Join bg_user u on u.midx = r.midx
+	        WHERE o.pidx = #{pidx}
+	        order by r.ridx desc ) A 
+	     where rownum <= #{lastPost} ) B
+	 	where rnum >= #{startPost}
+	 	]]>
+	</select>
+	
+	<!-- 상품의 리뷰들 가져오기  평점 높은 순-->
+	<select id="reviewProduct_2" parameterType="PageMaker" resultType="CombineVO">
+		<![CDATA[
+		select * from 
+	    ( select rownum as rnum, A.* from
+	        (SELECT r.contents, r.image1, r.image2, r.grade, u.uname FROM bg_review r
+	        JOIN bg_order_detail od on r.detail_idx = od.detail_idx
+	        JOIN bg_option o on o.oidx = od.oidx
+	        Join bg_user u on u.midx = r.midx
+	        WHERE o.pidx = #{pidx}
+	        order by r.grade desc ) A 
+	     where rownum <= #{lastPost} ) B
+	 	where rnum >= #{startPost}
+	 	]]>
+	</select>
 	  
 </mapper>

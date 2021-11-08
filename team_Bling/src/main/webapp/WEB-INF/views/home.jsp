@@ -62,8 +62,7 @@
 <body>
 	<a href="/Admin/list.do">관리자 상품 리스트</a><br>
 	<a href="/Admin/regist.do">관리자 상품 등록</a><br>
-	아무거나 실험 ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴ<br>
-	한번더 실험 
+	<a href="/Review/list.do?page=1">페이징 완료</a><br>
 	
 <header>
 	<%@ include file="/WEB-INF/views/header.jsp" %><br><br>

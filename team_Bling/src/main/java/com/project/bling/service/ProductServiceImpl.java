@@ -70,18 +70,6 @@ public class ProductServiceImpl implements ProductService {
 		public ImageVO image(int pidx) throws Exception {
 			return productDAO.image(pidx);
 		}
-		// 상품에 대한 리뷰 갯수 최신순 
-		@Override
-		public List<CombineVO> reviewProduct_1(int pidx) throws Exception {
-			return productDAO.reviewProduct_1(pidx);
-		}
-		
-		// 상품에 대한 리뷰 갯수 평점순
-		@Override
-		public List<CombineVO> reviewProduct_2(int pidx) throws Exception {
-			return productDAO.reviewProduct_2(pidx);
-		}
-
 
 	
 }
