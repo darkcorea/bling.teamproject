@@ -199,6 +199,8 @@
 								<div>
 									<a id="loginName" href="/MyPage/main.do">${sessionScope.uname}</a> 님이 로그인중입니다.
 								</div>
+								<a href="/MyPage/main.do" id="hearderMemberJoin">마이페이지</a>
+								<span>｜</span>
 								<a href="${path}/Login/logout.do" id="headerLogin">로그아웃</a>	
 							</c:otherwise>
 						</c:choose>
