@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.project.bling.mapper.productMapper">
+
+	<!-- 홈, 상품 리스트에서 같이 쓰는 메퍼-->
+	<!-- 베스트 상품  판매량 순 -->
+	<select id="prodBest" resultType="CombineVO">
+	WITH pi
+	    AS(
+	        SELECT p.pidx,
+	               p.pname,
+	               p.kind,
+	               p.discount,
+	               p.price,
+	               p.saleprice,
+	               i.main
+	        FROM bg_product p
+	        LEFT OUTER JOIN bg_image i
+	        ON p.pidx=i.pidx
+	    ),
+    oro
+	    AS(
+	        SELECT op.pidx,
+	               od.quantity,
+	               r.ridx
+	        FROM bg_Order_detail od
+	        
+	        RIGHT OUTER JOIN bg_option op
+	        ON od.oidx=op.oidx
+	        
+	        LEFT OUTER JOIN bg_review r
+	        ON od.detail_idx=r.detail_idx
+	    )
+	SELECT pi.pidx,
+	       pi.pname,
+	       pi.kind,
+	       pi.discount,
+	       pi.saleprice,
+	       pi.price,
+	       pi.main,
+	       count(oro.ridx) as reviewCount,
+	       sum(oro.quantity) as quantitySum
+	FROM oro
+	RIGHT OUTER JOIN pi
+	ON oro.pidx=pi.pidx
+	GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price
+	ORDER BY sum(oro.quantity)
+	DESC nulls last
+	</select>
+	
+	<!-- 새로 올라온 상품 -->
+	<select id="prodNew" resultType="CombineVO">
+	WITH pi
+	    AS(
+	        SELECT p.pidx,
+	               p.pname,
+	               p.kind,
+	               p.discount,
+	               p.price,
+	               p.saleprice,
+                   p.rdate,
+	               i.main
+	        FROM bg_product p
+	        LEFT OUTER JOIN bg_image i
+	        ON p.pidx=i.pidx
+	    ),
+    oro
+	    AS(
+	        SELECT op.pidx,
+	               od.quantity,
+	               r.ridx
+	        FROM bg_Order_detail od
+	        
+	        RIGHT OUTER JOIN bg_option op
+	        ON od.oidx=op.oidx
+	        
+	        LEFT OUTER JOIN bg_review r
+	        ON od.detail_idx=r.detail_idx
+	    )
+	SELECT pi.pidx,
+	       pi.pname,
+	       pi.kind,
+	       pi.discount,
+	       pi.saleprice,
+	       pi.price,
+	       pi.main,
+	       count(oro.ridx) as reviewCount,
+	       sum(oro.quantity) as quantitySum,
+           pi.rdate
+	FROM oro
+	RIGHT OUTER JOIN pi
+	ON oro.pidx=pi.pidx
+	GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
+	ORDER BY pi.rdate
+	DESC nulls last
+	</select>
+	
+	<!-- 상품에 대한 리스트 종류별 최신순 -->
+	<select id="newList" parameterType="String" resultType="CombineVO" >
+	WITH pi
+	    AS(
+	        SELECT p.pidx,
+	               p.pname,
+	               p.kind,
+	               p.discount,
+	               p.price,
+	               p.saleprice,
+                   p.rdate,
+	               i.main
+	        FROM bg_product p
+	        LEFT OUTER JOIN bg_image i
+	        ON p.pidx=i.pidx
+	    ),
+    oro
+	    AS(
+	        SELECT op.pidx,
+	               od.quantity,
+	               r.ridx
+	        FROM bg_Order_detail od
+	        
+	        RIGHT OUTER JOIN bg_option op
+	        ON od.oidx=op.oidx
+	        
+	        LEFT OUTER JOIN bg_review r
+	        ON od.detail_idx=r.detail_idx
+	    )
+	SELECT pi.pidx,
+	       pi.pname,
+	       pi.kind,
+	       pi.discount,
+	       pi.saleprice,
+	       pi.price,
+	       pi.main,
+	       count(oro.ridx) as reviewCount,
+	       sum(oro.quantity) as quantitySum,
+           pi.rdate
+	FROM oro
+	RIGHT OUTER JOIN pi
+	ON oro.pidx=pi.pidx
+	WHERE pi.kind= #{kind}
+	GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
+	ORDER BY pi.rdate
+	DESC nulls last
+	</select>
+	
+
+
+	<!-- 상품 리스트에서 쓰는 매퍼 -->
+	<!-- 상품 품목별로 최신 상품 가져오기  -->
+	<select id="bestList" parameterType="String" resultType="CombineVO" >
+	WITH pi
+	    AS(
+	        SELECT p.pidx,
+	               p.pname,
+	               p.kind,
+	               p.discount,
+	               p.price,
+	               p.saleprice,
+	               i.main
+	        FROM bg_product p
+	        LEFT OUTER JOIN bg_image i
+	        ON p.pidx=i.pidx
+	    ),
+    oro
+	    AS(
+	        SELECT op.pidx,
+	               od.quantity,
+	               r.ridx
+	        FROM bg_Order_detail od
+	        
+	        RIGHT OUTER JOIN bg_option op
+	        ON od.oidx=op.oidx
+	        
+	        LEFT OUTER JOIN bg_review r
+	        ON od.detail_idx=r.detail_idx
+	    )
+	SELECT pi.pidx,
+	       pi.pname,
+	       pi.kind,
+	       pi.discount,
+	       pi.saleprice,
+	       pi.price,
+	       pi.main,
+	       count(oro.ridx) as reviewCount,
+	       sum(oro.quantity) as quantitySum
+	FROM oro
+	RIGHT OUTER JOIN pi
+	ON oro.pidx=pi.pidx
+	WHERE pi.kind= #{kind}
+	GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price
+	ORDER BY sum(oro.quantity)
+	DESC nulls last
+	</select>
+	
+	<!-- 상품 품목별로 판매가 높은 상품 가져오기  -->
+	<select id="highPrice" parameterType="String" resultType="CombineVO" >
+	WITH pi
+	    AS(
+	        SELECT p.pidx,
+	               p.pname,
+	               p.kind,
+	               p.discount,
+	               p.price,
+	               p.saleprice,
+	               i.main
+	        FROM bg_product p
+	        LEFT OUTER JOIN bg_image i
+	        ON p.pidx=i.pidx
+	    ),
+    oro
+	    AS(
+	        SELECT op.pidx,
+	               od.quantity,
+	               r.ridx
+	        FROM bg_Order_detail od
+	        
+	        RIGHT OUTER JOIN bg_option op
+	        ON od.oidx=op.oidx
+	        
+	        LEFT OUTER JOIN bg_review r
+	        ON od.detail_idx=r.detail_idx
+	    )
+	SELECT pi.pidx,
+	       pi.pname,
+	       pi.kind,
+	       pi.discount,
+	       pi.saleprice,
+	       pi.price,
+	       pi.main,
+	       count(oro.ridx) as reviewCount,
+	       sum(oro.quantity) as quantitySum
+	FROM oro
+	RIGHT OUTER JOIN pi
+	ON oro.pidx=pi.pidx
+	WHERE pi.kind= #{kind}
+	GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price
+	ORDER BY pi.price
+	DESC nulls last
+	</select>
+	
+	<!-- 상품 품목별로 판매가 낮은 상품 가져오기  -->
+	<select id="rowPrice" parameterType="String" resultType="CombineVO" >
+	WITH pi
+	    AS(
+	        SELECT p.pidx,
+	               p.pname,
+	               p.kind,
+	               p.discount,
+	               p.price,
+	               p.saleprice,
+	               i.main
+	        FROM bg_product p
+	        LEFT OUTER JOIN bg_image i
+	        ON p.pidx=i.pidx
+	    ),
+    oro
+	    AS(
+	        SELECT op.pidx,
+	               od.quantity,
+	               r.ridx
+	        FROM bg_Order_detail od
+	        
+	        RIGHT OUTER JOIN bg_option op
+	        ON od.oidx=op.oidx
+	        
+	        LEFT OUTER JOIN bg_review r
+	        ON od.detail_idx=r.detail_idx
+	    )
+	SELECT pi.pidx,
+	       pi.pname,
+	       pi.kind,
+	       pi.discount,
+	       pi.saleprice,
+	       pi.price,
+	       pi.main,
+	       count(oro.ridx) as reviewCount,
+	       sum(oro.quantity) as quantitySum
+	FROM oro
+	RIGHT OUTER JOIN pi
+	ON oro.pidx=pi.pidx
+	WHERE pi.kind= #{kind}
+	GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price
+	ORDER BY pi.price
+	ASC nulls last
+	</select>
+	
+	
+	<!-- 상품 디테일에서 쓰는  매퍼-->
+	<!-- 상품에 대한 정보 -->
+	<select id="detailProduct" parameterType="int" resultType="ProductVO">
+		SELECT pidx, pname, kind, price, saleprice, discount, shipping
+		FROM bg_product
+		WHERE pidx = #{pidx} AND saleyn='y'
+	</select>
+	
+	<!-- 상품 옵션 -->
+	<select id="optionsProduct" parameterType="int" resultType="OptionVO">
+		SELECT oidx, pidx, oname, addprice, stock
+		FROM bg_option
+		WHERE pidx = #{pidx} AND saleyn='y'
+	</select>
+	
+	<!-- 상품 이미지 -->
+	<select id="imageProduct" parameterType="int" resultType="ImageVO">
+		SELECT image_idx, pidx, main, detail1, detail2, detail3,
+		showing1, showing2, showing3, showing4, showing5  
+		FROM bg_image
+		WHERE pidx = #{pidx}
+	</select>
+	
+	<!-- 상품의 리뷰들 가져오기  최신순-->
+	<select id="reviewProduct_1" parameterType="int" resultType="CombineVO">
+		SELECT  r.grade, r.contents, r.image1, r.image2, u.uname FROM bg_review r
+    	JOIN bg_order_detail od on r.detail_idx = od.detail_idx
+	    JOIN bg_option o on o.oidx = od.oidx
+	    Join bg_user u on u.midx = r.midx
+	    WHERE o.pidx = #{pidx}
+	    ORDER BY r.rdate desc
+	</select>
+	
+	<!-- 상품의 리뷰들 가져오기  평점 높은 순-->
+	<select id="reviewProduct_2" parameterType="int" resultType="CombineVO">
+		SELECT  r.grade, r.contents, r.image1, r.image2, u.uname FROM bg_review r
+    	JOIN bg_order_detail od on r.detail_idx = od.detail_idx
+	    JOIN bg_option o on o.oidx = od.oidx
+	    Join bg_user u on u.midx = r.midx
+	    WHERE o.pidx = #{pidx}
+	    ORDER BY r.rdate desc
+	</select>
+	
+
+</mapper>
