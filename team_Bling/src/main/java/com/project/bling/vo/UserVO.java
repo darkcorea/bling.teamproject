@@ -5,7 +5,6 @@ public class UserVO {
 	private int midx;
 	private String id;
 	private String pwd;
-	private String name;
 	private String email;
 	private int zip_code;
 	private String addr1;
@@ -13,8 +12,36 @@ public class UserVO {
 	private int phone;
 	private int mileage;
 	private String grade;
+	private String uname;
+	private String agree_sms;
+	private String agree_email;
+	private String agree_shopping;
 	
 	
+	public String getAgree_sms() {
+		return agree_sms;
+	}
+	public void setAgree_sms(String agree_sms) {
+		this.agree_sms = agree_sms;
+	}
+	public String getAgree_email() {
+		return agree_email;
+	}
+	public void setAgree_email(String agree_email) {
+		this.agree_email = agree_email;
+	}
+	public String getAgree_shopping() {
+		return agree_shopping;
+	}
+	public void setAgree_shopping(String agree_shopping) {
+		this.agree_shopping = agree_shopping;
+	}
+	public String getUname() {
+		return uname;
+	}
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
 	public int getMidx() {
 		return midx;
 	}
@@ -32,12 +59,6 @@ public class UserVO {
 	}
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
 	}
 	public String getEmail() {
 		return email;

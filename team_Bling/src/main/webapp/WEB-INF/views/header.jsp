@@ -191,7 +191,7 @@
 					<div class="col-md-4" id="headerCol4">
 						<c:choose>
 							<c:when test="${sessionScope.id == null}">
-								<a href="/Join/main.do" id="hearderMemberJoin">회원가입</a>
+								<a href="/Join/normal.do" id="hearderMemberJoin">회원가입</a>
 								<span>｜</span>
 								<a href="${path}/Login/main.do" id="headerLogin">로그인</a>
 							</c:when>
