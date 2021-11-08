@@ -16,11 +16,6 @@ public class CombineVO {
 	private String image2;
 	// image
 	private String main;
-	// user
-	private String id;
-	private String pwd;
-	private String uname;
-	private String email;
 	// 임의로 정한 
 	private int reviewCount;
 	private int quantitySum;
@@ -92,30 +87,6 @@ public class CombineVO {
 	}
 	public void setMain(String main) {
 		this.main = main;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public String getPwd() {
-		return pwd;
-	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
-	public String getUname() {
-		return uname;
-	}
-	public void setUname(String uname) {
-		this.uname = uname;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	public int getReviewCount() {
 		return reviewCount;

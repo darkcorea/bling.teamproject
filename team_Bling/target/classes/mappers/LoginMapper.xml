@@ -13,12 +13,10 @@
 		
 	  </select>
 	  
-	  <select id="viewMember" resultType="CombineVO">
-		SELECT uname,
-			   id,
-			   email
+	  <select id="viewMember" resultType="UserVO">
+		SELECT *
 		FROM bg_user
 		WHERE id=#{id} AND pwd=#{pwd}
 	</select>
-	  
+	
 </mapper>

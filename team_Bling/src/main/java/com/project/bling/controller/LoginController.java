@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.bling.service.LoginService;
-import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.UserVO;
 
 @RequestMapping(value="/Login")
 @Controller
@@ -30,7 +30,7 @@ public class LoginController {
 	
 	// 02. 로그인 처리
 	@RequestMapping(value="/check.do")
-	public ModelAndView loginCheck(@ModelAttribute CombineVO vo, HttpSession session) throws Exception{
+	public ModelAndView loginCheck(@ModelAttribute UserVO vo, HttpSession session) throws Exception{
 		//System.out.println("로그인 컨트롤러에서 post로 받은 id : "+vo.getId());
 		//System.out.println("로그인 컨트롤러에서 post로 받은 pwd : "+vo.getPwd());
 		

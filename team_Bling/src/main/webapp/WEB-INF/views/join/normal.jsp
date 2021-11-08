@@ -316,7 +316,7 @@
 							<input type="hidden" name="agree_shopping" value="N"  id="yes5">
 						</div>
 					</div>
-					<div class="row agree border-bottom mt-3 mb-3 mx-auto">
+					<div class="row agree border-bottom mt-3 mb-3">
 						<div class="col text-start ">
 							<span class=" fs-5">SMS 수신 동의</span>
 							<span class="text-black-50">(선택)</span>
@@ -328,7 +328,7 @@
 							<span class="text-black-50">(선택)</span>
 							<i class="bi bi-check-circle" id="check7" OnClick="check(7)" style="cursor:pointer;"></i>
 							<input type="hidden" name="agree_email" value="N"  id="yes7">
-					</div>
+						</div>
 					</div>
 					
 				
