@@ -210,12 +210,33 @@
 <script>
 
 	function heart(pidx){
-		if($(".emptyHeart"+pidx).hasClass("bi bi-suit-heart-fill")==true){
-		    alert("관심 상품을 취소하셨습니다.");
-			$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart emptyHeart"+pidx);
+		var uid = '<%=(String)session.getAttribute("id")%>';
+		var like = 0;
+		if(uid=="null"){
+			alert("로그인하셔야합니다.");
 		}else{
-			$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
-			alert("관심 상품에 담았습니다");
+			if($(".emptyHeart"+pidx).hasClass("bi bi-suit-heart-fill")==true){
+			    alert("관심 상품을 취소하셨습니다.");
+				$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart emptyHeart"+pidx);
+				like = 0;
+			}else{
+				$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
+				alert("관심 상품에 담았습니다");
+				like = 1;
+			}
+			console.log(like);
+			console.log(pidx);
+			$.ajax({
+				url:"/Basket/like.do",
+				type:"POST",
+				data:{"yn":like,"pidx":pidx},
+				ContentType:"application/json",
+				success:function(data){
+					console.log(data);
+				},error:function(){
+					alert("관심상품등록 에러!")
+				}
+			});
 		}
 	}
 

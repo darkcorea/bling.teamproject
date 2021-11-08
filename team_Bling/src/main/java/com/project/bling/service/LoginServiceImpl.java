@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.bling.dao.LoginDAO;
-import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.UserVO;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -16,10 +16,10 @@ public class LoginServiceImpl implements LoginService {
 
 	// 01_01. 회원 로그인체크
 	@Override
-	public boolean loginCheck(CombineVO vo, HttpSession session) throws Exception {
+	public boolean loginCheck(UserVO vo, HttpSession session) throws Exception {
 		boolean result = loginDAO.loginCheck(vo);
 		if (result) { // true일 경우 세션에 등록
-			CombineVO vo2 = viewMember(vo);
+			UserVO vo2 = viewMember(vo);
 			// 세션 변수 등록
 			session.setAttribute("id", vo2.getId());
 			session.setAttribute("uname", vo2.getUname());
@@ -31,7 +31,7 @@ public class LoginServiceImpl implements LoginService {
 	
 	// 01_02. 회원 로그인 정보
 	@Override
-	public CombineVO viewMember(CombineVO vo) {
+	public UserVO viewMember(UserVO vo) {
 
 		return loginDAO.viewMember(vo);
 	}

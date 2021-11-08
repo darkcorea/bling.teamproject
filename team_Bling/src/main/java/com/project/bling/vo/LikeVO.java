@@ -4,7 +4,7 @@ public class LikeVO {
 
 	private int interest_idx;
 	private int midx;
-	private int oidx;
+	private int pidx;
 	
 	
 	public int getInterest_idx() {
@@ -19,11 +19,11 @@ public class LikeVO {
 	public void setMidx(int midx) {
 		this.midx = midx;
 	}
-	public int getOidx() {
-		return oidx;
+	public int getPidx() {
+		return pidx;
 	}
-	public void setOidx(int oidx) {
-		this.oidx = oidx;
+	public void setPidx(int pidx) {
+		this.pidx = pidx;
 	}
 	
 }
