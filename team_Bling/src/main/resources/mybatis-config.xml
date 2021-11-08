@@ -21,7 +21,7 @@
         <typeAlias type="com.project.bling.vo.ReviewVO" alias="ReviewVO"/> 
         <typeAlias type="com.project.bling.vo.User_gradeVO" alias="User_gradeVO"/> 
         <typeAlias type="com.project.bling.vo.UserVO" alias="UserVO"/> 
-        <typeAlias type="com.project.bling.vo.CombineVO" alias="CombineVO"/>        
+        <typeAlias type="com.project.bling.vo.CombineVO" alias="CombineVO"/>    
     </typeAliases>
 
 </configuration>
