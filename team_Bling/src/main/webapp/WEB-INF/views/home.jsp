@@ -62,10 +62,7 @@
 <body>
 	<a href="/Admin/list.do">관리자 상품 리스트</a><br>
 	<a href="/Admin/regist.do">관리자 상품 등록</a><br>
-	아무거나 실험 ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴ<br>
-	한번더 실험 <br>
-	김주희 실험dsfjklsdfjl
-	
+
 <header>
 	<%@ include file="/WEB-INF/views/header.jsp" %><br><br>
 </header>
