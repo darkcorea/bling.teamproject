@@ -16,6 +16,8 @@ public class CombineVO {
 	private String image2;
 	// image
 	private String main;
+	//user
+	private String uname;
 	// 임의로 정한 
 	private int reviewCount;
 	private int quantitySum;
@@ -87,6 +89,12 @@ public class CombineVO {
 	}
 	public void setMain(String main) {
 		this.main = main;
+	}
+	public String getUname() {
+		return uname;
+	}
+	public void setUname(String uname) {
+		this.uname = uname;
 	}
 	public int getReviewCount() {
 		return reviewCount;

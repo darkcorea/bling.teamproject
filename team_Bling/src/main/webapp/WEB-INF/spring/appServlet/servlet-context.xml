@@ -54,6 +54,7 @@
 			<mapping path="/Admin/registPro.do"/>
 			<mapping path="/Admin/insertOpt.do"/>
 			<mapping path="/Admin/insertImg.do"/>
+			<mapping path="/Admin/login.do"/>
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
 		<!-- 사용자 세션체크 매핑 -->
