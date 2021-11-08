@@ -26,7 +26,7 @@
         <!-- 페이징 할 떄 필요한 VO  -->
         <typeAlias type="com.project.bling.domain.Criteria" alias="Criteria"/> 
         <typeAlias type="com.project.bling.domain.PageMaker" alias="PageMaker"/> 
-           
+
     </typeAliases>
 
 </configuration>
