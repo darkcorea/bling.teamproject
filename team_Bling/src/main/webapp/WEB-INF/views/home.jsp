@@ -67,7 +67,6 @@
 <header>
 	<%@ include file="/WEB-INF/views/header.jsp" %><br><br>
 </header>
-	
 	<!-- carousel -->
 	<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 		<div class="carousel-indicators">

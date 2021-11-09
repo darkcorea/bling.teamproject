@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.service.BasketService;
 import com.project.bling.vo.LikeVO;
@@ -26,20 +27,27 @@ public class BasketController {
 		return "basket/cart";
 	}
 	
-	//관심상품 등록
-	@RequestMapping(value="/like.do") 
-	public void like(LikeVO lvo, UserVO uvo, HttpSession session, int yn, int pidx) { 
+	//관심상품 등록 및 삭제
+	@RequestMapping(value="/like.do")
+	@ResponseBody
+	public void like(LikeVO lvo, HttpSession session, int yn, int pidx) { 
 		int likeyn = yn; 
 		int pidxx = pidx;
-		int midx = uvo.getMidx();
+		int midx = (Integer)session.getAttribute("midx");
+		
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>"+midx);
+		System.out.println(pidxx);
+		System.out.println(likeyn);
 		
 		lvo.setMidx(midx);
 		lvo.setPidx(pidxx);
 		
 		if(likeyn == 0) {
-			//delete 
+			//관심상품 삭제
+			basketService.likeDelete(lvo);
 		}else {
-			//insert
+			//관심상품 등록
+			basketService.likeInsert(lvo);
 		}
 	}
 }

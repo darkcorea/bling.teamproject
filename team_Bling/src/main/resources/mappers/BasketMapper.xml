@@ -5,5 +5,23 @@
  
 <mapper namespace="com.project.bling.mapper.basketMapper">
 
-	  
+<!-- 관심상품 등록 -->
+	<insert id="likeInsert" parameterType="LikeVO">
+		<![CDATA[
+			INSERT INTO bg_like(interest_idx,midx,pidx)
+			VALUES(
+				interest_seq.nextval
+				,#{midx}
+				,#{pidx}
+			)		
+		]]>
+	</insert>
+
+<!-- 관심상품 삭제 -->
+	<delete id="likeDelete" parameterType="LikeVO">
+		<![CDATA[
+			DELETE FROM bg_like 
+			WHERE midx=#{midx} AND pidx=#{pidx}
+		]]>
+	</delete>
 </mapper>
