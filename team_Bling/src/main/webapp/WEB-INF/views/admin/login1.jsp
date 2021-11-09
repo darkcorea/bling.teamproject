@@ -89,7 +89,7 @@
 				
 				</div>
 				<div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8" id="formDiv">
-					<form name="form" action="/Login/check.do" method="post">
+					<form name="form" action="/Admin/check1.do" method="post">
 						<div>
 							<div id="formText">
 								<label for="login_Id">아이디 입력</label>
@@ -104,7 +104,7 @@
 								<label for="login_Pw">비밀번호 입력</label>
 							</div>
 							<div id="inputPw">
-								<input id="login_Pw" name="pwd" type="password">
+								<input id="login_Pw" name="pwd1" type="password">
 								<span class="check"></span>
 							</div>
 						</div>
@@ -112,6 +112,9 @@
 							<c:if test="${msg == 'failure'}">
 								<div id="caution" style="color: red;">아이디 또는 비밀번호가 잘못 입력 되었습니다.</div>
 								<div id="caution" style="color: red;">아이디와 비밀번호를 정확히 입력해 주세요.</div>
+							</c:if>
+							<c:if test="${msg == 'logout'}">
+								<div id="caution" style="color: red;">로그아웃 되었습니다.</div>
 							</c:if>
 						</div>
 						<div id="btnDiv">

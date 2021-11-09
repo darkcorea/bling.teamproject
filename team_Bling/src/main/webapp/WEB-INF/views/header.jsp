@@ -190,14 +190,14 @@
 					</div>
 					<div class="col-md-4" id="headerCol4">
 						<c:choose>
-							<c:when test="${sessionScope.id == null}">
+							<c:when test="${sessionScope.UserVO.id == null}">
 								<a href="/Join/normal.do" id="hearderMemberJoin">회원가입</a>
 								<span>｜</span>
 								<a href="${path}/Login/main.do" id="headerLogin">로그인</a>
 							</c:when>
 							<c:otherwise>
 								<div>
-									<a id="loginName" href="/MyPage/main.do">${sessionScope.uname}</a> 님이 로그인중입니다.
+									<a id="loginName" href="/MyPage/main.do">${sessionScope.UserVO.uname}</a> 님이 로그인중입니다.
 								</div>
 								<a href="/MyPage/main.do" id="hearderMemberJoin">마이페이지</a>
 								<span>｜</span>

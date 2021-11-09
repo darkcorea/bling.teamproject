@@ -46,9 +46,17 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
-	<!-- 세션 유효시간 설정(분단위) -->
-	<session-config>
+	<!-- 세션 유효시간 설정(분단위)  -> web.xml 또는 클래스 파일에서 설정 가능
+		 -> 해당 프로젝트에서는 LoginController 에서 설정함
+			관리자 로그인은 설정 안 함	 
+	 -->
+	<!-- <session-config>
 		<session-timeout>20</session-timeout>
-	</session-config>
+	</session-config> -->
+	
+	<!-- 로그인 세션 관리를 위한 listener(중복 로그인 방지) -->
+	<listener>
+		<listener-class>com.project.bling.session.SessionListener</listener-class>
+	</listener>
 	
 </web-app>

@@ -195,6 +195,15 @@ a {text-decoration:none;}
 
 .content {position:relative;min-height:1000px;}
 
+	#logoutDiv{
+		margin: 10px 0px;
+		float: right;
+	}
+	#logoutA{
+		text-decoration: none;
+		color: #000000;
+	}
+
 </style>
 </head>
 <body>
@@ -242,10 +251,13 @@ a {text-decoration:none;}
 	  </li>
 	  <li class="nav-item">
 	    <a class="nav-link" href="#">통계</a>
-	  </li> 
-	</ul>	 
+	  </li>
+	</ul>
 	<hr>	
-	</header>	
+	</header>
+	<div id="logoutDiv">
+	  	<a href="/Admin/logout.do" id="logoutA">로그아웃</a>
+	</div>
 	<div class="d1">
 		<div class="quickmenu">
 			  <ul>

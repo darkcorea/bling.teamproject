@@ -40,6 +40,9 @@ public class LoginController {
 			// home.jsp로 이동
 			mav.setViewName("redirect:/");
 			//mav.addObject("msg", "success");
+			/** 세션 유효시간 설정(초 단위) **/
+			session.setMaxInactiveInterval(20 * 60);	//	(20 min)*(60 s/min)
+			
 		} else {	// 로그인 실패
 			// main.jsp로 이동
 			mav.setViewName("login/main");
