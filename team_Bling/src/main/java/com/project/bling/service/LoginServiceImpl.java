@@ -21,13 +21,9 @@ public class LoginServiceImpl implements LoginService {
 		if (result) { // true일 경우 세션에 등록
 			UserVO vo2 = viewMember(vo);
 			// 세션 변수 등록
-			session.setAttribute("id", vo2.getId());
-			session.setAttribute("uname", vo2.getUname());
-			session.setAttribute("midx", vo2.getMidx());
+			session.setAttribute("UserVO", vo2);
+			
 		} 
-		//System.out.println("서비스에서 세션 id : "+session.getAttribute("id"));
-		//System.out.println("서비스에서 세션 이름 : "+session.getAttribute("uname"));
-		//System.out.println("서비스에서 세션 midx"+session.getAttribute("midx"));
 		return result;
 	}
 	

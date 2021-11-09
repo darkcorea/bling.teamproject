@@ -181,7 +181,7 @@
 		            <div class="col-8 col-md-6" id="headerCol1">
 		            <!-- home icon -->
 		                <a href="/"><i class="bi bi-house-fill"></i></a>
-		                <a id="header_notice" href="">NOTICE</a>
+		                <a id="header_notice" href="/Notice/main.do">NOTICE</a>
 		                <a id="header_event" href="">EVENT</a>
 	                <!-- heart icon -->
 						<a href=""><i class="bi bi-suit-heart-fill header_heart"></i></a>
@@ -201,14 +201,14 @@
 					</div>
 					<div class="col-md-4" id="headerCol4">
 						<c:choose>
-							<c:when test="${sessionScope.id == null}">
+							<c:when test="${sessionScope.UserVO.id == null}">
 								<a href="/Join/normal.do" id="hearderMemberJoin">회원가입</a>
 								<span>｜</span>
 								<a href="${path}/Login/main.do" id="headerLogin">로그인</a>
 							</c:when>
 							<c:otherwise>
 								<div>
-									<a id="loginName" href="/MyPage/main.do">${sessionScope.uname}</a> 님이 로그인중입니다.
+									<a id="loginName" href="/MyPage/main.do">${sessionScope.UserVO.uname}</a> 님이 로그인중입니다.
 								</div>
 								<a href="/MyPage/main.do" id="hearderMemberJoin">마이페이지</a>
 								<span>｜</span>
