@@ -45,12 +45,12 @@
 		<![CDATA[
 		select * from 
 	    ( select rownum as rnum, A.* from
-	        (SELECT r.contents, r.image1, r.image2, r.grade, u.uname FROM bg_review r
+	        (SELECT r.contents, r.ridx, r.image1, r.image2, r.grade, u.uname FROM bg_review r
 	        JOIN bg_order_detail od on r.detail_idx = od.detail_idx
 	        JOIN bg_option o on o.oidx = od.oidx
 	        Join bg_user u on u.midx = r.midx
 	        WHERE o.pidx = #{pidx}
-	        order by r.grade desc ) A 
+	        order by r.grade desc, r.ridx desc ) A 
 	     where rownum <= #{lastPost} ) B
 	 	where rnum >= #{startPost}
 	 	]]>
