@@ -47,7 +47,7 @@ public class ReviewController {
 		
 		
 		// 가져오는 페이지수 변경 가능한지 확인 -> 변경 가능
-		int pageNum = 3;
+		int pageNum = 10;
 		sc.setPerPageNum(pageNum);
 		
 		// 페이징 하기 위해서 필요한 값들 넣음
@@ -62,8 +62,9 @@ public class ReviewController {
 		 * System.out.println("StartPage>>>>>>>>>>>"+pm.getStartPage());
 		 * System.out.println("EndPage>>>>>>>>>>>>>>"+pm.getEndPage());
 		 * System.out.println("시작하는 페이지 번호>>>>>>>>>>"+pm.getStartPost());
-		 * System.out.println("가져오는 페이지 갯수>>>>>>>>>>"+pm.getPerPageNum());
+		 * System.out.println("마지막 페이지 번호>>>>>>>>>>"+pm.getLastPost());
 		 */
+		 
 		 
 		// 페이징 된 리뷰들 
 		model.addAttribute("page", reviewService.reviewProduct_1(pm));
