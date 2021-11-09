@@ -21,7 +21,7 @@
 		.bi-house-fill{
 			font-size:18px;
 			color:#000000;
-			padding: 15px;
+			padding-left:20px;
 		}
 		/* header heart icon */
 		.header_heart{
@@ -267,40 +267,41 @@
 		</header>
   <div class="scrollNav container">
      <div class="row">
-		<div class="col-lg-1 col-md-3 col-4 scmenu" >
-		   <a href="main.do"><i class="bi bi-house-fill"></i></a>
+		<div class="col-lg-1 col-md-1 col-sm-2 col-2 scmenu" >
+		   <a href="/"><i class="bi bi-house-fill"></i></a>
 		</div>
-		<div class="col-lg-1 col-md-3 col-4 scmenu">
+		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
 			<a id="header_notice" href="">LOGIN</a>
 		</div>
-		<div class="col-lg-1 col-md-3 col-4 scmenu">
+		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
 			<a id="header_event" href="">JOIN US</a>
 		</div>
-		<div class="col-lg-1 col-md-3 col-4 scmenu">
+		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
 			<a id="header_event" href="" >CART
 	       <span class="badge bg-secondary rounded-pill">4</span></a>
 		</div>
-		<div class="col-lg-1 col-md-3 col-4 scmenu" id="menu1">
-			<span><a id="amenu" href="/Product/best.do">BEST</a></span>
-		</div>
-		<div class="col-lg-1 col-md-3 col-4 scmenu" id="menu1">
-			<span><a id="amenu" href="/Product/new.do">NEW</a></span>
-		</div>
-		<div class="col-lg-1 col-md-3 col-4 scmenu" id="menu1">
-			<span><a id="amenu" href="/Product/ring.do?orderBy=1">반지</a></span>
-		</div>
-		<div class="col-lg-1 col-md-3 col-4 scmenu" id="menu1">
-			<span><a id="amenu" href="/Product/necklace.do?orderBy=1">목걸이</a></span>
-		</div>
-		<div class="col-lg-1 col-md-3 col-4 scmenu" id="menu1">
-			<span><a id="amenu" href="/Product/earring.do?orderBy=1">귀걸이</a></span>
-		</div>
-		<div class="col-lg-1 col-md-3 col-4 scmenu" id="menu1">
-			<span><a id="amenu" href="/Product/braclet.do?orderBy=1">팔찌</a></span>
-		</div>
-		<div class="col-lg-2 col-md-3 col-4 scmenu" id="headerCol2">
+		<div class="col-lg-2 col-md-4 col-sm-3 col-3 scmenu">
 		   <a id="customerCenter" href="">고객센터</a>
 		</div>
+		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu" id="menu1">
+			<span><a id="amenu" href="/Product/best.do">BEST</a></span>
+		</div>
+		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu" id="menu1">
+			<span><a id="amenu" href="/Product/new.do">NEW</a></span>
+		</div>
+		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu" id="menu1">
+			<span><a id="amenu" href="/Product/ring.do?orderBy=1">반지</a></span>
+		</div>
+		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu" id="menu1">
+			<span><a id="amenu" href="/Product/necklace.do?orderBy=1">목걸이</a></span>
+		</div>
+		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu" id="menu1">
+			<span><a id="amenu" href="/Product/earring.do?orderBy=1">귀걸이</a></span>
+		</div>
+		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu" id="menu1">
+			<span><a id="amenu" href="/Product/braclet.do?orderBy=1">팔찌</a></span>
+		</div>
+		
 	</div>
   </div>
 
