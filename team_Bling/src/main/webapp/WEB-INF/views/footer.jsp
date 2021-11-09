@@ -18,8 +18,7 @@ footer {
   width: 100%;
   height: 90px;
   bottom: 0px;
-/*  position: absolute; */
-/*  border-top: 1px solid #c4c4c4; */
+  border-top: 1px solid #c4c4c4; 
   padding-top: 15px;
   color: #808080;
   font-size: 11px;
@@ -38,6 +37,8 @@ ul > li {
 }
 .lo{
 	width:120px;
+	position: relative;
+	top: 60px;
 }
 .company{
 	width:278px;
@@ -61,7 +62,6 @@ ul > li {
 </head>
 <body>
 
-	<footer>
         <div class="d1">
         	<div class="d2">
         	<ul>
@@ -109,7 +109,6 @@ ul > li {
         	</ul>
         	</div>
         </div>
-	</footer>
 
 </body>
 </html>
