@@ -6,14 +6,18 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.project.bling.vo.UserVO;
+
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		// 세션 객체 생성
 		HttpSession session = request.getSession();
+		UserVO vo = (UserVO)session.getAttribute("UserVO");
+		String id = vo.getId();
 		// 세션에 id가 null이면
-		if(session.getAttribute("id") == null) {
+		if(id == null) {
 			// 로그인 페이지로 이동
 			response.sendRedirect(request.getContextPath()+"/Login/main.do?msg=nologin");
 			// 컨트롤러를 실행하지 않는다.(요청페이지로 이동하지 않는다)

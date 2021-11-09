@@ -33,8 +33,7 @@ public class BasketController {
 	public void like(LikeVO lvo, HttpSession session, int yn, int pidx) { 
 		int likeyn = yn; 
 		int pidxx = pidx;
-		UserVO vo = (UserVO)session.getAttribute("UserVO");
-		int midx = vo.getMidx();
+		int midx = (Integer)session.getAttribute("midx");
 		
 		lvo.setMidx(midx);
 		lvo.setPidx(pidxx);
