@@ -136,11 +136,12 @@
 		    line-height:50px; 
 		   	z-index:1001;
 		    font-weight:600;
-		    background-color:#CB7878;
+		    
 		}
 		.scmenu{
-		    background-color: rgba( 255, 255, 255, 0.9 );
+		    background-color: rgba(231, 224, 224, 0.9 );
 		     height: 45px;
+		     
 		}
 		.login{
 			word-spacing: 5px;
@@ -167,6 +168,7 @@
 			input:focus {
 			outline:none;
 		}
+		
 /*--------------- header-end ---------------*/
   	</style>
 </head>
@@ -276,7 +278,7 @@
 			<a id="header_event" href="" >CART
 	       <span class="badge bg-secondary rounded-pill">4</span></a>
 		</div>
-		<div class="col-lg-2 col-md-4 col-sm-3 col-3 scmenu">
+		<div class="col-lg-2 col-md-4 col-sm-3 col-3 scmenu cust">
 		   <a id="customerCenter" href="">고객센터</a>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
