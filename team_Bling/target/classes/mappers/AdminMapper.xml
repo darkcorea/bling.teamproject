@@ -45,9 +45,24 @@
           WHERE 1=1 
 	</select>
 	
+	<!-- 관리자 로그인 체크1 -->
+	<select id="adminCheck1" resultType="String">
+		SELECT id
+		FROM bg_admin
+		WHERE id=#{id} AND pwd1=#{pwd1}
+	</select>
 	
-	
+	<!-- 관리자 로그인 체크2 -->
+	<select id="adminCheck2" resultType="String">
+		SELECT id
+		FROM bg_admin
+		WHERE pwd2=#{pwd2}
+	</select>
 	
 	<!-- 관리자 계정 정보 -->
-	
+	<select id="adminInfo" resultType="AdminVO">
+		SELECT id
+		FROM bg_admin
+		WHERE pwd2=#{pwd2}
+	</select>
 </mapper>

@@ -5,6 +5,7 @@ public class AdminVO {
 	private String id;
 	private String pwd1;
 	private String pwd2;
+	private String cert;
 	
 	
 	public String getId() {
@@ -24,5 +25,11 @@ public class AdminVO {
 	}
 	public void setPwd2(String pwd2) {
 		this.pwd2 = pwd2;
+	}
+	public String getCert() {
+		return cert;
+	}
+	public void setCert(String cert) {
+		this.cert = cert;
 	}
 }
