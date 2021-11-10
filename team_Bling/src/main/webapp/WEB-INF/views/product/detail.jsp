@@ -265,14 +265,35 @@
 		font-size:15px;
 	}
 	
+	/* 리뷰 안에 들어가는 별의 크기와 색깔 */
 	.bi-star-fill {
 		font-size:10px;
 		color:#CB7878;
 	}
 	
+	/*  페이징 번호들을 붙이기 위해서 */
 	.page-item {
 		padding:0px;
 	}
+	
+	/* 상품문의  크기와 높이*/
+	#detail-Inquiry{
+		width:986;
+		height:450px;
+		margin: 5px auto;
+		border:1px solid black;
+	}
+	
+	/* 클래스 추가하면 텍스트 센터*/
+	.text_align {
+		text-align:center;
+	}
+	
+	/* 클래스 추가하면 가져다 대면 손모양 나옴*/
+	.pointer {
+		cursor:pointer;
+	}
+	
 </style>
 
 
@@ -390,9 +411,9 @@
 	<!-- 상품설명, 후기 등 네비게이션 -->
 	<div class="detail-nav fw-bold">
 		<span class="detail-nav-1"><a id="move_info">상세정보</a></span>
-		<span class="detail-nav-1"><a href="#move_review">후기(<span><c:out value="${fn:length(review)}"/></span>)</a></span>
-		<span class="detail-nav-1"><a href="#move_question">상문문의</a></span>
-		<span class="detail-nav-1"><a href="#move_giude">구매가이드</a></span>
+		<span class="detail-nav-1"><a href="#move_review" style="text-decoration: none;color: inherit;">후기(<span><c:out value="${fn:length(review)}"/></span>)</a></span>
+		<span class="detail-nav-1"><a href="#move_question" style="text-decoration: none;color: inherit;">상문문의</a></span>
+		<span class="detail-nav-1"><a href="#move_giude" style="text-decoration: none;color: inherit;">구매가이드</a></span>
 	</div>
 	<!-- 상품 상세 설명 이미지 -->
 	<div class="detail-image">
@@ -413,10 +434,10 @@
 	
 	<!-- 상품에 관한 리뷰 -->
 	<div class="detail-nav fw-bold">
-		<span class="detail-nav-1"><a href="#move_info">상세정보</a></span>
+		<span class="detail-nav-1"><a href="#move_info" style="text-decoration: none;color: inherit;">상세정보</a></span>
 		<span class="detail-nav-1"><a id="move_review">후기(<span><c:out value="${fn:length(review)}"/></span>)</a></span>
-		<span class="detail-nav-1"><a href="#move_question">상문문의</a></span>
-		<span class="detail-nav-1"><a href="#move_giude">구매가이드</a></span>
+		<span class="detail-nav-1"><a href="#move_question" style="text-decoration: none;color: inherit;">상문문의</a></span>
+		<span class="detail-nav-1"><a href="#move_giude" style="text-decoration: none;color: inherit;">구매가이드</a></span>
 	</div>
 	
 	<!-- 상품문의 상단 정보들 표시 -->
@@ -456,9 +477,9 @@
 		<!-- 리뷰, 최신순, 평점순 -->
 		<div>
 			&ensp;&ensp;&ensp;<span class="fw-bold fs-5">리뷰</span>
-			&ensp;<span onclick="review_Fn(1,'R')">최신순</span>
+			&ensp;<span class="pointer" onclick="review_Fn(1,'R')">최신순</span>
 			<span>|</span>
-			<span onclick="review_Fn(1,'G')">평점순</span>
+			<span class="pointer" onclick="review_Fn(1,'G')">평점순</span>
 		</div >			
 		<!--  리뷰 테이블 -->
 		<div id="review_table">
@@ -468,20 +489,53 @@
 	
 	<!-- 상품에 관한 문의 -->
 	<div class="detail-nav fw-bold">
-		<span class="detail-nav-1"><a href="#move_info">상세정보</a></span>
-		<span class="detail-nav-1"><a href="#move_info">후기(<span><c:out value="${fn:length(review)}"/></span>)</a></span>
+		<span class="detail-nav-1"><a href="#move_info" style="text-decoration: none;color: inherit;">상세정보</a></span>
+		<span class="detail-nav-1"><a href="#move_review" style="text-decoration: none;color: inherit;">후기(<span><c:out value="${fn:length(review)}"/></span>)</a></span>
 		<span class="detail-nav-1"><a id="move_question">상문문의</a></span>
-		<span class="detail-nav-1"><a href="#move_giude">구매가이드</a></span>
+		<span class="detail-nav-1"><a href="#move_giude" style="text-decoration: none;color: inherit;">구매가이드</a></span>
 	</div>
 	<div id="detail-Inquiry">
-		상품문의 게시찬 불러오기, 페이징, 상품문의하기 버튼 추가
+		<table class="table">
+			<thead>
+				<tr class="text_align">
+					<th style="width:6%;">번호</th>
+					<th style="width:70%;">제목</th>
+					<th style="width:12%;">작성자</th>
+					<th>작성일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="text_align">번호</td>
+					<td>제목</td>
+					<td class="text_align">작성자</td>
+					<td class="text_align">작성일</td>
+				</tr>
+				<tr>
+					<td class="text_align">번호</td>
+					<td>제목</td>
+					<td class="text_align">작성자</td>
+					<td class="text_align">작성일</td>
+				</tr><tr>
+					<td class="text_align">번호</td>
+					<td>제목</td>
+					<td class="text_align">작성자</td>
+					<td class="text_align">작성일</td>
+				</tr><tr>
+					<td class="text_align">번호</td>
+					<td>제목</td>
+					<td class="text_align">작성자</td>
+					<td class="text_align">작성일</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 	
 	<!-- 상품구매에 대한 가이드 -->
 	<div class="detail-nav fw-bold">
-		<span class="detail-nav-1"><a href="#move_info">상세정보</a></span>
-		<span class="detail-nav-1"><a href="#move_info">후기(<span><c:out value="${fn:length(review)}"/></span>)</a></span>
-		<span class="detail-nav-1"><a href="#move_question">상품문의</a></span>
+		<span class="detail-nav-1"><a href="#move_info" style="text-decoration: none;color: inherit;">상세정보</a></span>
+		<span class="detail-nav-1"><a href="#move_review" style="text-decoration: none;color: inherit;">후기(<span><c:out value="${fn:length(review)}"/></span>)</a></span>
+		<span class="detail-nav-1"><a href="#move_question" style="text-decoration: none;color: inherit;">상품문의</a></span>
 		<span class="detail-nav-1"><a id="move_giude">구매가이드</a></span>
 	</div>
 	<div class="detail-guide">
@@ -828,7 +882,7 @@
 			  	str += "<td style='width:10%'></td>";
 			  	str += "<td style='width:30%'>"
 				
-			  	// 이미지 뿌려주기, !=null 이 안먹혀서 ==null 로 작업함
+			  	// 이미지 뿌려주기, !=null 이 안먹혀서 ==null 로 작업 함
 			  	if(reviews[i].image1 == null || reviews[i].image1 == ""){
 			  	  str += "";
 			  	}else{
@@ -853,17 +907,17 @@
 		  	 str += "<li class='page-item'>";
 		  	 //console.log(prev);
 		  	 if (pm.prev == true){
-		  	     str += "<a class='page-link' aria-label='Previous' onclick='review_Fn("+prev+",\""+type+"\")'><span aria-hidden='true'>&laquo;</span></a>";
+		  	     str += "<a class='page-link' aria-label='Previous' onclick='review_Fn("+prev+",\""+type+"\")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
 		  	 }
 		  	 str += "</li>";
 		  	 let startPage = parseInt(pm.startPage);
 		  	 let endPage = parseInt(pm.endPage);
 		  	 for (let k = startPage; k<=endPage; k++ ){
-		  	 	str += "<li class='page-item'><a class='page-link' onclick='review_Fn("+k+",\""+type+"\")'>"+k+"</a>";      
+		  	 	str += "<li class='page-item'><a class='page-link pointer' onclick='review_Fn("+k+",\""+type+"\")'>"+k+"</a>";      
 		  	 }
 		  	 str += "<li class='page-item'>";
 		  	 if(pm.next && pm.endPage > 0){
-		  	     str += "<a class='page-link' aria-label='Next' onclick='review_Fn("+next+",\""+type+"\")'><span aria-hidden='true'>&raquo;</span></a>";
+		  	     str += "<a class='page-link' aria-label='Next' onclick='review_Fn("+next+",\""+type+"\")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
 		  	 }
 		  	 str += "</li>";
 		  	 str += "</ul>";
@@ -889,7 +943,7 @@
 		    let re_txt_short = re_txt.substring(0,60)+"...";
 		  	
 		 	// 더보기 버튼 추가 void(0)는 이동을 하지 않고 그곳에서 만 움직이겠다는 뜻
-		    let btn_more = $('<a href="javascript:void(0)" class="more">더보기</a>');
+		    let btn_more = $('<a href="javascript:void(0)" class="more" style="text-decoration:none;">더보기</a>');
 		    $("#review_btn"+ridx).append(btn_more);
 		    
 		 	// 텍스트 길이가 길면 자르고 길이가 짧으면 더보기 버튼을 감춘다.
