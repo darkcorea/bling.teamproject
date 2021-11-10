@@ -8,7 +8,36 @@ public class QuestionVO {
 	private String content;
 	private String rdate;
 	private String state;
+	private int originqidx;
+	private int depth;
+	private int detail_idx;
 	
+	
+	
+	public int getOriginqidx() {
+		return originqidx;
+	}
+
+	public void setOriginqidx(int originqidx) {
+		this.originqidx = originqidx;
+	}
+
+	public int getDepth() {
+		return depth;
+	}
+
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+
+	public int getDetail_idx() {
+		return detail_idx;
+	}
+
+	public void setDetail_idx(int detail_idx) {
+		this.detail_idx = detail_idx;
+	}
+
 	public QuestionVO() {
 		
 	}
