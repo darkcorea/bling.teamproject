@@ -55,12 +55,12 @@
 	<!-- 제품 종류 -->
 	<div class="text-center fs-1">
 		<c:choose>
-		<c:when test="${kind eq 'best'}">
-		BEST
-		</c:when>
-		<c:when test="${kind eq 'new'}">
-		NEW
-		</c:when>
+			<c:when test="${kind eq 'best'}">
+				BEST
+			</c:when>
+			<c:when test="${kind eq 'new'}">
+				NEW
+			</c:when>
 		</c:choose>
 	</div><br><br>
 
@@ -70,76 +70,95 @@
 		
 			<!-- 베스트는 100깨까지, new는 9개만 보여주기  -->
 	     	<c:choose>
-			<c:when test="${kind eq 'best'}">
-			<c:set var="endvalue" value="99"/>
-			</c:when>
-			<c:when test="${kind eq 'new'}">
-			<c:set var="endvalue" value="8"/>
-			</c:when>
+				<c:when test="${kind eq 'best'}">
+					<c:set var="endvalue" value="99"/>
+				</c:when>
+				<c:when test="${kind eq 'new'}">
+					<c:set var="endvalue" value="8"/>
+				</c:when>
 			</c:choose>
 			<c:set var="num" value="1" />
 			
 			<!-- 리스트 반목문  -->
         	<c:forEach items="${list}" var="list" begin="0" end="${endvalue}">
-			<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
-				<div id="img1">
-					<span class="product-badge badge badge-secondary bg-danger" style="position: absolute;width:40px;">
-					
-					<!-- 제품 사진 안에 있는 베스트는 숫자로 표시 new는 new로 표시 -->
-	              	<c:choose>
-					<c:when test="${kind eq 'best'}">
-					<c:out value="${num}"/>
-					</c:when>
-					<c:when test="${kind eq 'new'}">
-					NEW
-					</c:when>
-					</c:choose>
-					<c:set var="num" value="${num+1}"/>
-					</span>
-					
-					<!-- 제품 사진 -->
-					<a href="/Product/detail.do?pidx=${list.pidx}" style="text-decoration:none">
-						<img class="img-fluid" src="/resources/image/${list.main }">
-					</a>
-				</div>
-				<div>
-					<div style="padding:5px">
-						<div id="reviewName">
+				<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
+					<div id="img1">
+						<span class="product-badge badge badge-secondary bg-danger" style="position: absolute;width:40px;">
 						
-							<!--  리뷰 갯수  -->
-							<div id="text_1">
-								<span class="text-black-50">리뷰 </span>
-								<span class="text-black-50" id="review"><c:out value="${list.reviewCount}"/></span>
-								<!-- heart icon -->
-								<span>
-									<i class="bi bi-suit-heart emptyHeart${list.pidx}" onclick="heart(${list.pidx})"></i>
-								</span>
-							</div>
-							
-							<!-- 상품 이름 -->
-							<div>
-								<h3 class="text-base mb-0">
-									<a class="text-dark prodName" href="/Product/detail.do?pidx=${list.pidx}" style="text-decoration:none">${list.pname}</a>
-								</h3>
-							</div>
-							
-							<!-- 가격 할인율이 0일 경우와 아닐 경우를 나눔 -->
-							<div id="totprice">
-							<c:choose>
-								<c:when test="${list.discount != 0}">
-								<span class="text-danger fs-5">${list.discount}%</span>
-								<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${list.saleprice}" pattern="#,###" />원</span>
-								<span class="text-decoration-line-through" id="saleprice"><fmt:formatNumber value="${list.price}" pattern="#,###" />원</span>
-								</c:when>
-								<c:when test="${list.discount ==0 }">
-								<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${list.price}" pattern="#,###" />원</span>
-								</c:when>
-							</c:choose>
-							</div><br><br>
-						</div>
+						<!-- 제품 사진 안에 있는 베스트는 숫자로 표시 new는 new로 표시 -->
+		              	<c:choose>
+							<c:when test="${kind eq 'best'}">
+								<c:out value="${num}"/>
+							</c:when>
+							<c:when test="${kind eq 'new'}">
+								NEW
+							</c:when>
+						</c:choose>
+						<c:set var="num" value="${num+1}"/>
+						</span>
+						
+						<!-- 제품 사진 -->
+						<a href="/Product/detail.do?pidx=${list.pidx}" style="text-decoration:none">
+							<img class="img-fluid" src="/resources/image/${list.main }">
+						</a>
 					</div>
-				</div>	
-			</div>
+					<div>
+						<div style="padding:5px">
+							<div id="reviewName">
+							
+								<!--  리뷰 갯수  -->
+								<div id="text_1">
+									<span class="text-black-50">리뷰 </span>
+									<span class="text-black-50" id="review"><c:out value="${list.reviewCount}"/></span>
+									<!-- heart icon -->
+									<span>
+										<i class="bi bi-suit-heart emptyHeart${list.pidx}" onclick="heart(${list.pidx})"></i>
+									</span>
+								</div>
+								
+								<!-- 상품 이름 -->
+								<div>
+									<h3 class="text-base mb-0">
+										<a class="text-dark prodName" href="/Product/detail.do?pidx=${list.pidx}" style="text-decoration:none">${list.pname}</a>
+									</h3>
+								</div>
+								
+								<!-- 가격 할인율이 0일 경우와 아닐 경우를 나눔 -->
+								<div id="totprice">
+								<c:choose>
+									<c:when test="${list.discount != 0}">
+										<span class="text-danger fs-5">${list.discount}%</span>
+										<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${list.saleprice}" pattern="#,###" />원</span>
+										<span class="text-decoration-line-through" id="saleprice"><fmt:formatNumber value="${list.price}" pattern="#,###" />원</span>
+									</c:when>
+										<c:when test="${list.discount ==0 }">
+										<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${list.price}" pattern="#,###" />원</span>
+									</c:when>
+								</c:choose>
+								</div><br><br>
+							</div>
+						</div>
+					</div>	
+				</div>
+				<script>
+					$(document).ready(function(){
+						var pidx = ${list.pidx};
+						$.ajax({
+							url:"/Basket/checklike.do",
+							type:"POST",
+							data:{"pidx":pidx},
+							ContentType:"application/json",
+							success:function(data){
+								if(data == ""){
+								}else{
+									$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
+								}
+							},error:function(){
+								alert("관심상품존재찾기 에러!")
+	 						}
+						});
+					});
+				</script> 
 			</c:forEach>
 		</div>
 	</div>
