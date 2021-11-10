@@ -27,17 +27,39 @@ public class BasketController {
 		return "basket/cart";
 	}
 	
+	//관심상품 존재여부확인
+	@RequestMapping(value="/checklike.do")
+	@ResponseBody
+	public Integer checklike(LikeVO lvo,HttpSession session, int pidx) {
+		
+		Integer yn = 0;
+		
+		if(session.getAttribute("UserVO") == null ) {
+			yn = 0;
+		}else {
+			UserVO vo = (UserVO)session.getAttribute("UserVO");
+			int midx = vo.getMidx();
+			lvo.setMidx(midx);
+			lvo.setPidx(pidx);
+			
+			yn = basketService.likeyn(lvo);
+		}
+		
+		return yn;
+	}
+	
+	
 	//관심상품 등록 및 삭제
 	@RequestMapping(value="/like.do")
 	@ResponseBody
 	public void like(LikeVO lvo, HttpSession session, int yn, int pidx) { 
+		
 		int likeyn = yn; 
-		int pidxx = pidx;
 		UserVO vo = (UserVO)session.getAttribute("UserVO");
 		int midx = vo.getMidx();
 		
 		lvo.setMidx(midx);
-		lvo.setPidx(pidxx);
+		lvo.setPidx(pidx);
 		
 		if(likeyn == 0) {
 			//관심상품 삭제
