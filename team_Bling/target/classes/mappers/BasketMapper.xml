@@ -5,6 +5,13 @@
  
 <mapper namespace="com.project.bling.mapper.basketMapper">
 
+<!-- 관심상품 존재여부확인 -->
+	<select id="likeyn" parameterType="LikeVO" resultType="Integer">
+		SELECT interest_idx
+		FROM bg_like
+		WHERE midx=#{midx} AND pidx=#{pidx}
+	</select>
+
 <!-- 관심상품 등록 -->
 	<insert id="likeInsert" parameterType="LikeVO">
 		<![CDATA[

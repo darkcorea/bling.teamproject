@@ -14,6 +14,12 @@ public class BasketDAO {
 	
 	private String bm = "com.project.bling.mapper.basketMapper.";
 	
+	//관심상품 존재여부확인
+	public Integer likeyn(LikeVO vo) {
+		Integer m = sqlSession.selectOne(bm+"likeyn",vo);
+		return m;
+	}
+	
 	//관심상품 등록
 	public void likeInsert(LikeVO vo) {
 		sqlSession.insert(bm+"likeInsert",vo);
@@ -23,4 +29,5 @@ public class BasketDAO {
 	public void likeDelete(LikeVO vo) {
 		sqlSession.delete(bm+"likeDelete",vo);
 	}
+	
 }

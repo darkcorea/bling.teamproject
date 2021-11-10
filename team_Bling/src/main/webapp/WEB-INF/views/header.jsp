@@ -33,10 +33,6 @@
 			text-decoration-line: none;
 			color: #989191;
 		}
-		#header_notice1,#header_event1,#customerCenter1,#customerCenter1{
-			text-decoration-line: none;
-			color: #ffffff;
-		}
 		#header_notice:hover,#header_event:hover,#customerCenter:hover{
 			text-decoration-line: none;
 			color: #000000;
@@ -143,8 +139,7 @@
 		    
 		}
 		.scmenu{
-		    background-color: #CB7878;
-    		opacity:0.8;
+		    background-color: rgba(231, 224, 224, 0.9 );
 		     height: 45px;
 		     
 		}
@@ -206,14 +201,14 @@
 					</div>
 					<div class="col-md-4" id="headerCol4">
 						<c:choose>
-							<c:when test="${sessionScope.id == null}">
+							<c:when test="${sessionScope.UserVO.id == null}">
 								<a href="/Join/normal.do" id="hearderMemberJoin">회원가입</a>
 								<span>｜</span>
 								<a href="${path}/Login/main.do" id="headerLogin">로그인</a>
 							</c:when>
 							<c:otherwise>
 								<div>
-									<a id="loginName" href="/MyPage/main.do">${sessionScope.uname}</a> 님이 로그인중입니다.
+									<a id="loginName" href="/MyPage/main.do">${sessionScope.UserVO.uname}</a> 님이 로그인중입니다.
 								</div>
 								<a href="/MyPage/main.do" id="hearderMemberJoin">마이페이지</a>
 								<span>｜</span>
@@ -274,17 +269,17 @@
 		   <a href="/"><i class="bi bi-house-fill"></i></a>
 		</div>
 		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
-			<a id="header_notice1" href="">LOGIN</a>
+			<a id="header_notice" href="">LOGIN</a>
 		</div>
 		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
-			<a id="header_event1" href="">JOIN US</a>
+			<a id="header_event" href="">JOIN US</a>
 		</div>
 		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
-			<a id="header_event1" href="" >CART
+			<a id="header_event" href="" >CART
 	       <span class="badge bg-secondary rounded-pill">4</span></a>
 		</div>
 		<div class="col-lg-2 col-md-4 col-sm-3 col-3 scmenu cust">
-		   <a id="customerCenter1" href="">고객센터</a>
+		   <a id="customerCenter" href="">고객센터</a>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
 			<span><a id="amenu" href="/Product/best.do">BEST</a></span>

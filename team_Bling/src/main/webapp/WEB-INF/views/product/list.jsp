@@ -15,47 +15,50 @@
 	<script src="/js/bootstrap.bundle.js"></script>
 	<link rel="stylesheet" href="/css/bootstrap.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-<style>
-	/* 전반적인 크기에 관한 설정 */
-	section, header {
-		max-width:1008px;
-		margin:  0px auto;
-	}
 	
-	/* 빈 하트 아이콘, 꽉찬 하트 아이콘  */
-	.bi-suit-heart, .bi-suit-heart-fill {
-		font-size:27px;
-		color:red;
-		float: right;
-		padding:5px;
-	}
+	<style>
+		/* 전반적인 크기에 관한 설정 */
+		section, header {
+			max-width:1008px;
+			margin:  0px auto;
+		}
+		
+		/* 빈 하트 아이콘, 꽉찬 하트 아이콘  */
+		.bi-suit-heart, .bi-suit-heart-fill {
+			font-size:27px;
+			color:red;
+			float: right;
+			padding:5px;
+		}
+		
+		/* 제품 리스트 관련 */
+		#subMenu1,#subMenu2{
+			text-decoration-line: none;
+			color : #000000;
+		}
+		#subMenu1{
+			font-size: 30px;
+			margin-right: 10px;	
+		}
+		.prodName{
+			font-size: 20px;
+		}
+		#text_1{
+			height: 29px;
+		}
+		
+		.font12 {
+			font-size:14px;
+		}
+		
+		.margin15 {
+			margin-bottom:20px;
+		}
+	</style>
+
 	
-	/* 제품 리스트 관련 */
-	#subMenu1,#subMenu2{
-		text-decoration-line: none;
-		color : #000000;
-	}
-	#subMenu1{
-		font-size: 30px;
-		margin-right: 10px;	
-	}
-	.prodName{
-		font-size: 20px;
-	}
-	#text_1{
-		height: 29px;
-	}
-	
-	.font12 {
-		font-size:14px;
-	}
-	
-	.margin15 {
-		margin-bottom:20px;
-	}
-</style>
 </head>
-<body>
+<body> 
 <header>
 <%@ include file="/WEB-INF/views/header.jsp" %><BR>
 </header><br>
@@ -117,6 +120,25 @@
 					</div>
 				</div>
 			</div>
+			<script>
+				$(document).ready(function(){
+					var pidx = ${best.pidx};
+					$.ajax({
+						url:"/Basket/checklike.do",
+						type:"POST",
+						data:{"pidx":pidx},
+						ContentType:"application/json",
+						success:function(data){
+							if(data == "" || data == 0){
+							}else{
+								$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
+							}
+						},error:function(){
+							alert("관심상품존재찾기 에러!")
+ 						}
+					});
+				});
+			</script> 
 			</c:forEach>
 		</div>
 	</div>
@@ -195,6 +217,25 @@
 					</div>
 				</div>
 			</div>
+			<script>
+				$(document).ready(function(){
+					var pidx = ${list.pidx};
+					$.ajax({
+						url:"/Basket/checklike.do",
+						type:"POST",
+						data:{"pidx":pidx},
+						ContentType:"application/json",
+						success:function(data){
+							if(data == ""){
+							}else{
+								$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
+							}
+						},error:function(){
+							alert("관심상품존재찾기 에러!")
+ 						}
+					});
+				});
+			</script> 
 			</c:forEach>
 		</div>
 	</div>
@@ -210,9 +251,10 @@
 <script>
 
 	function heart(pidx){
-		var uid = '<%=(String)session.getAttribute("id")%>';
+		
+		var uid = '${sessionScope.UserVO.id}';
 		var like = 0;
-		if(uid=="null"){
+		if(uid==""){
 			alert("로그인하셔야합니다.");
 		}else{
 			if($(".emptyHeart"+pidx).hasClass("bi bi-suit-heart-fill")==true){
