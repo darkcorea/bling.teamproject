@@ -47,8 +47,13 @@
 	</servlet-mapping>
 	
 	<!-- 세션 유효시간 설정(분단위) -->
-	<session-config>
+	<!-- <session-config>
 		<session-timeout>20</session-timeout>
-	</session-config>
+	</session-config> -->
+	
+	<!-- 중복 로그인 방지(동시 접속) -->
+	<listener>
+		<listener-class>com.project.bling.session.SessionListener</listener-class>
+	</listener>
 	
 </web-app>
