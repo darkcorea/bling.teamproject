@@ -2,6 +2,7 @@ package com.project.bling.controller;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,11 @@ public class LoginController {
 	
 	// 02. 로그인 처리
 	@RequestMapping(value="/check.do")
-	public ModelAndView loginCheck(@ModelAttribute UserVO vo, HttpSession session) throws Exception{
+	public ModelAndView loginCheck(@ModelAttribute UserVO vo, HttpSession session, HttpServletRequest request) throws Exception{
 		//System.out.println("로그인 컨트롤러에서 post로 받은 id : "+vo.getId());
 		//System.out.println("로그인 컨트롤러에서 post로 받은 pwd : "+vo.getPwd());
 		
-		boolean result = loginService.loginCheck(vo, session);
+		boolean result = loginService.loginCheck(vo, session, request);
 		ModelAndView mav = new ModelAndView();
 		if (result == true) { // 로그인 성공
 			// home.jsp로 이동

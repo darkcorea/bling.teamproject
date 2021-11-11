@@ -16,7 +16,7 @@
         <typeAlias type="com.project.bling.vo.Order_detailVO" alias="Order_detailVO"/> 
         <typeAlias type="com.project.bling.vo.OrderVO" alias="OrderVO"/> 
         <typeAlias type="com.project.bling.vo.ProductVO" alias="ProductVO"/> 
-        <typeAlias type="com.project.bling.vo.Question_commentVO" alias="Question_commentVO"/> 
+        <typeAlias type="com.project.bling.vo.Product_QuestionVO" alias="Product_QuestionVO"/> 
         <typeAlias type="com.project.bling.vo.QuestionVO" alias="QuestionVO"/> 
         <typeAlias type="com.project.bling.vo.ReviewVO" alias="ReviewVO"/> 
         <typeAlias type="com.project.bling.vo.User_gradeVO" alias="User_gradeVO"/> 
