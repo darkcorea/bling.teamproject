@@ -16,8 +16,10 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	
-	@RequestMapping(value="/main.do")
+	@RequestMapping(value="/order.do")
 	public String main(Locale locale, Model model) {
-		return "order/main";
+		
+		
+		return "order/order";
 	}
 }
