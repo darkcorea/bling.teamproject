@@ -18,12 +18,50 @@ public class CombineVO {
 	private String main;
 	//user
 	private String uname;
+	// product_question
+	private int pqidx;
+	private int depth;
+	private String title;
+	private String comments;
+	private String rdate;
 	// 임의로 정한 
 	private int reviewCount;
 	private int quantitySum;
 	private int quantity;
 	
 	
+	
+	
+	public int getPqidx() {
+		return pqidx;
+	}
+	public void setPqidx(int pqidx) {
+		this.pqidx = pqidx;
+	}
+	public int getDepth() {
+		return depth;
+	}
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+	public String getRdate() {
+		return rdate;
+	}
+	public void setRdate(String rdate) {
+		this.rdate = rdate;
+	}
 	public int getPidx() {
 		return pidx;
 	}

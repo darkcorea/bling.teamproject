@@ -279,9 +279,7 @@
 	/* 상품문의  크기와 높이*/
 	#detail-Inquiry{
 		width:986;
-		height:450px;
 		margin: 5px auto;
-		border:1px solid black;
 	}
 	
 	/* 클래스 추가하면 텍스트 센터*/
@@ -732,7 +730,9 @@
 		  
 		// 리뷰 페이징 해주는 function 실행	 
 		review_Fn(1,"R");
-  
+  		
+		// 문의 페이징 해주는 function 실행
+		question_Fn(1);
 		
 	});
 	
@@ -980,6 +980,93 @@
 	      });
 	 }
 
+	
+	
+    /*   제이쿼리를 활용해서 문의 페이징 뿌려주기 */
+  	// 누르면 나오게 하기 위해서 아래로 뺴놨음.
+  	// 페이지가 로드 되면 function이 실행이 되도록 위에 넣어놨음
+  	  function question_Fn(page){
+  	    
+  	      let pidx =  <c:out value="${detail.pidx}"/>;
+  	      if (page == null){page = 1};
+  	      
+  	      $.ajax({
+  		  	url:"detail_question.do",
+  		    data:{"pidx":pidx, "page":page},
+  		    dataType: 'json',
+  		  	type:"post",
+  		  	success:function(data){
+  		  	 
+  		  	 // 가져온 데이터를 문의 div에 뿌려 준다.
+  		  	 let question = data.questionProduct;
+  		  	 let pm = data.pm;
+  		  	 let prev = parseInt(pm.startPage - 1) ;
+  		  	 let next = parseInt(pm.endPage + 1) ;
+  		  	 let str = "";
+  		  	 
+  		  	 // 문의 해더 작성
+  		  	 str += "<table class='table'>";
+  		  	 str += "<thead>";
+  		  	 str += "<tr class='text_align'>";
+  		  	 str += "<th style='width:6%;'>번호</th>";
+  		  	 str += "<th style='width:70%;'>제목</th>";
+  		  	 str += "<th style='width:12%;'>작성자</th>";
+  		  	 str += "<th>작성일</th>";
+  		  	 str += "</tr>";
+  		  	 str += "</thead>";
+  		  	 str += "<tbody>";
+  		  	 for (let i=0; i<question.length ; i++){
+  			  	
+  		  		// 문의 내용 뿌려주기
+  			  	str += "<tr>";
+  			  	str += "<td class='text_align'>"+i+"</td>";
+  			  	str += "<td>"+question[i].title+"</td>";
+  			  	let name = question[i].uname.slice(0,-2);
+			  	let name1 = name+"**";
+  			  	str += "<td class='text_align'>"+name1+"</td>";
+  			  	let date = question[i].rdate.slice(0,10);
+  			  	str += "<td class='text_align'>"+date+"</td>";
+  			  	str += "</tr>";
+
+  		  	 }
+  		  	 str += "</tbody>"
+  		  	 str += "</table><br>";
+  		  	 
+  		  	 // 페이징 할 수 있는 번호 나오는 곳 뿌려 주기
+  		  	 str += "<nav aria-label='Page navigation'>";
+  		  	 str += "<ul class='pagination justify-content-center'>";
+  		  	 str += "<li class='page-item'>";
+  		  	 //console.log(prev);
+  		  	 if (pm.prev == true){
+  		  	     str += "<a class='page-link' aria-label='Previous' onclick='question_Fn("+prev+")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
+  		  	 }
+  		  	 str += "</li>";
+  		  	 let startPage = parseInt(pm.startPage);
+  		  	 let endPage = parseInt(pm.endPage);
+  		  	 for (let k = startPage; k<=endPage; k++ ){
+  		  	 	str += "<li class='page-item'><a class='page-link pointer' onclick='question_Fn("+k+")'>"+k+"</a>";      
+  		  	 }
+  		  	 str += "<li class='page-item'>";
+  		  	 if(pm.next && pm.endPage > 0){
+  		  	     str += "<a class='page-link' aria-label='Next' onclick='question_Fn("+next+")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
+  		  	 }
+  		  	 str += "</li>";
+  		  	 str += "</ul>";
+  		  	 str += "</nav>";
+  		  	
+  		  	// 리뷰 div에 모든 내용 뿌려주기
+  		  	$("#detail-Inquiry").html(str);
+  		  	 
+  		  	},
+  		  	error:function(){
+  		  	    alert("문의 뿌려주기 에러입니다.");
+  		  	}
+  	      });
+  	 }
+	
+	
+	
+	
 	
 	
 	// 하트버튼 누르면 관심상품에 넣고 다시 누르면 빼고
