@@ -5,5 +5,26 @@
  
 <mapper namespace="com.project.bling.mapper.customerMapper">
 
+	<!-- 상품 pidx의 문의 총 갯수 -->
+	<select id="Prduct_Question_Count" parameterType="int" resultType="int">
+		SELECT count(*)  AS questionCount FROM bg_prodect_question 
+		WHERE pidx= #{pidx}
+	</select>
+
+
+	<!-- 상품 디테일에서의 문의 -->
+	<select id="Product_Question" parameterType="PageMaker" resultType="CombineVO">
+		<![CDATA[
+		SELECT * FROM 
+		    ( SELECT rownum as rnum, A.* from
+		        (SELECT bq.pqidx, bq.depth, bq.title, bq.comments, bg.uname, bq.rdate
+				FROM bg_prodect_question bq
+				JOIN bg_user bg ON bq.midx = bg.midx 
+				WHERE pidx= #{pidx}
+				ORDER BY bq.originpqidx desc, bq.depth asc) A 
+		     WHERE rownum <= #{lastPost} ) B
+	 	WHERE rnum >= #{startPost}
+	 	]]>
+	</select>
 	  
 </mapper>

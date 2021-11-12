@@ -20,4 +20,12 @@ public class CustomerController {
 	public String main(Locale locale, Model model) {
 		return "customer/main";
 	}
+	
+	@RequestMapping(value="/Product.do")
+	public String product_Question(Locale locale, Model model) {
+		return "customer/product";
+	}
+	
+	
+	
 }

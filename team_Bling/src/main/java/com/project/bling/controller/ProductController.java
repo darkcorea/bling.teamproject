@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
+import com.project.bling.service.CustomerService;
 import com.project.bling.service.ProductService;
-import com.project.bling.service.QeustionService;
 import com.project.bling.service.ReviewService;
 
 
@@ -33,7 +33,7 @@ public class ProductController {
 	ReviewService reviewService;
 	
 	@Autowired
-	QeustionService qeustionService;
+	CustomerService customerService;
 	
 	
 	/* 상품 리스트 페이지 */
@@ -231,7 +231,7 @@ public class ProductController {
 		
 	
 		// pidx에 대한 문의 갯수
-		int questionCount = qeustionService.Product_Question_Count(pidx);
+		int questionCount = customerService.Product_Question_Count(pidx);
 		// 가져오는 페이지 수 
 		int pageNum = 10;
 		Criteria sc = new Criteria();
@@ -248,7 +248,7 @@ public class ProductController {
 		// 페이징 된 리뷰와 페이징에 필요한 값 넣음
 		Map<String, Object> question = new HashMap<String, Object>();
 		question.put("pm", pm);
-		question.put("questionProduct", qeustionService.Product_Question(pm));
+		question.put("questionProduct", customerService.Product_Question(pm));
 
 		return question;
 	}
