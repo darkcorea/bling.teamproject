@@ -394,7 +394,7 @@
 				
 				<!-- 바로구매, 장바구니 버튼 -->
 				<div class="btn-two">
-					<button type="button" class="btn btn-danger">바로구매</button> 
+					<button type="button" class="btn btn-danger" onclick="location.href='/Order/nonorder.do'">바로구매</button> 
 					<button type="button" class="btn btn-light">장바구니</button>
 					&ensp;<i class="bi bi-suit-heart" id="heart" onclick="heart(${detail.pidx})"></i>	
 				</div>			

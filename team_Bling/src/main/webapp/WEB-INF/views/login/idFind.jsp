@@ -35,8 +35,10 @@
 		
 		str += "</form>";
 		
+		str += "<div id='idFail'></div>";
+		
 		str += "<div id='btnDiv'>";
-		str += "	<input class='btn btn-primary' id='submitBtn' value='확인' onclick='idAjax()'>";
+		str += "	<input class='btn btn-primary' type='submit' id='submitBtn' value='확인' onclick='idAjax()'>";
 		str += "</div id='btnDiv'>";
 		
 		str += "<div id='searchDiv'>";
@@ -78,8 +80,10 @@ function phoneForm(){
 		
 		str += "</form>";
 		
+		str += "<div id='idFail'></div>";
+		
 		str += "<div id='btnDiv'>";
-		str += "	<input class='btn btn-primary' id='submitBtn' value='확인' onclick='idAjax()'>";
+		str += "	<input class='btn btn-primary' type='submit' id='submitBtn' value='확인' onclick='idAjax()'>";
 		str += "</div id='btnDiv'>";
 		
 		str += "<div id='searchDiv'>";
@@ -106,19 +110,26 @@ function idAjax(){
 		success:function(data){
 			console.log(data);
 			
-			var str = ""; 
-			str += "<div>회원님의 정보와 일치하는 아이디입니다.</div><br>";
-			str += "<div id='resultDiv'>";
-			str += "	아이디 : <span id='findId'>"+data+"</span>";
-			str += "</div>";
-			
-			str += "<div id='searchDiv'>";
-			str += "	<span id='searchSpan'><a href='/Login/pwdFind.do' id='searchA'>비밀번호 찾기</a></span>";
-			str += "	<span>｜</span>";
-			str += "	<span id='searchSpan'><a href='/Login/main.do' id='searchA'>로그인 하기</a></span>";
-			str += "</div>";
-			
-			document.getElementById("formDiv").innerHTML = str;
+			if(data == "") {
+				var str = ""; 
+				str += "<div id='failText'>입력하신 정보와 일치하는 아이디가 존재하지 않습니다.</div><br>";
+				
+				document.getElementById("idFail").innerHTML = str;
+			}else{
+				var str = ""; 
+				str += "<div>회원님의 정보와 일치하는 아이디입니다.</div><br>";
+				str += "<div id='resultDiv'>";
+				str += "	아이디 : <span id='findId'>"+data+"</span>";
+				str += "</div>";
+				
+				str += "<div id='searchDiv'>";
+				str += "	<span id='searchSpan'><a href='/Login/pwdFind.do' id='searchA'>비밀번호 찾기</a></span>";
+				str += "	<span>｜</span>";
+				str += "	<span id='searchSpan'><a href='/Login/main.do' id='searchA'>로그인 하기</a></span>";
+				str += "</div>";
+				
+				document.getElementById("formDiv").innerHTML = str;
+			}
 		},
 		error:function(){
 			alert("아이디 찾기 에러");
@@ -153,23 +164,18 @@ function idAjax(){
 		}
 		#nameBox1{
 			position: relative;
-			left: 170px;
+			left: 165px;
 		}
 		#nameBox2{
 			position: relative;
-			left: 100px;
+			left: 95px;
 		}
 		#nameBox3{
 			position: relative;
-			left: 63px;
+			left: 58px;
 		}
 		#inputBox{
 			width: 260px;
-		}
-		#submitBtn{
-			position: relative;
-			top: 40px;
-			text-align: center;
 		}
 		#data{
 			height: 40px;
@@ -178,7 +184,7 @@ function idAjax(){
 		}
 		#searchDiv{
 			position: relative;
-			top: 70px;
+			top: 110px;
 			text-align: center;
 			height: 200px;
 		}
@@ -186,8 +192,18 @@ function idAjax(){
 			text-align: center;
 		}
 		#submitBtn{
+			position: relative;
+			top: 70px;
+			text-align: center;
 			background-color: #CB7878;
 			border: none;
+			width: 456px;
+			height: 60px;
+		}
+		#submitBtn:hover{
+			color: #CB7878;
+			background-color: #ffffff;
+			border: 1px solid #CB7878;
 			width: 456px;
 			height: 60px;
 		}
@@ -196,6 +212,12 @@ function idAjax(){
 		}
 		#findId{
 			color: #CB7878;
+		}
+		#idFail{
+			height: 10px;
+		}
+		#failText{
+			color: red;
 		}
 	</style>
 	
