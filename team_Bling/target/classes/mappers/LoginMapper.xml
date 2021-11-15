@@ -5,18 +5,48 @@
  
 <mapper namespace="com.project.bling.mapper.loginMapper">
 
-	  <select id="loginCheck" resultType="String">
+	<select id="loginCheck" resultType="String">
 	  		
 		SELECT uname
 		FROM bg_user
 		WHERE id=#{id} AND pwd=#{pwd}
 		
-	  </select>
+	</select>
 	  
-	  <select id="viewMember" resultType="UserVO">
+	<select id="viewMember" resultType="UserVO">
 		SELECT *
 		FROM bg_user
 		WHERE id=#{id} AND pwd=#{pwd}
 	</select>
+	
+	<select id="idFindEmail" resultType="String">
+		SELECT id
+		FROM bg_user
+		WHERE uname=#{uname} AND email=#{email}
+	</select>
+	
+	<select id="idFindPhone" resultType="String">
+		SELECT id
+		FROM bg_user
+		WHERE uname=#{uname} AND phone=#{phone}
+	</select>
+	
+	<select id="pwdFindEmail" resultType="int">
+		SELECT midx
+		FROM bg_user
+		WHERE id=#{id} AND uname=#{uname} AND email=#{email}
+	</select>
+	
+	<select id="pwdFindPhone" resultType="int">
+		SELECT midx
+		FROM bg_user
+		WHERE id=#{id} AND uname=#{uname} AND phone=#{phone}
+	</select>
+	
+	<update id="tempPwd" parameterType="UserVO">
+		UPDATE bg_user
+		SET pwd=#{pwd}
+		WHERE midx=#{midx}
+	</update>
 	
 </mapper>

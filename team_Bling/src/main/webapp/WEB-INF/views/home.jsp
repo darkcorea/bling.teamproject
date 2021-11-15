@@ -16,7 +16,7 @@
 <style>
 
 	/* 전반적인 크기에 관한 설정 */
-	section, header {
+	section {
 		max-width:1008px;
 		margin:  0px auto;
 	}

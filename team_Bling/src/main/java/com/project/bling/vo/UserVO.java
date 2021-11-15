@@ -9,7 +9,7 @@ public class UserVO {
 	private int zip_code;
 	private String addr1;
 	private String addr2;
-	private int phone;
+	private String phone;
 	private int mileage;
 	private String grade;
 	private String uname;
@@ -84,10 +84,10 @@ public class UserVO {
 	public void setAddr2(String addr2) {
 		this.addr2 = addr2;
 	}
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	public int getMileage() {
@@ -102,5 +102,6 @@ public class UserVO {
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
+	
 	
 }

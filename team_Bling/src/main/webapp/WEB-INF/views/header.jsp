@@ -17,6 +17,11 @@
   	
   	<style>
 /*--------------- header-begin ---------------*/
+		header{
+			max-width:1008px;
+			margin:  0px auto;
+		}
+		
 		/* header home icon */
 		.bi-house-fill{
 			font-size:18px;
@@ -173,7 +178,7 @@
   	</style>
 </head>
 <body>
-	<section>
+
 		<!-- header -->
 		
 			<div class="mainNav container">
@@ -306,7 +311,7 @@
          <a id="topBtn" href="#"><i class="bi bi-chevron-up" style="font-size:2rem;"></i></a>
          <div><a id="topBtn" href="#">TOP</a></div>
       </div>
-	</section>
+
 <script>
 
 $(document).ready(function(){

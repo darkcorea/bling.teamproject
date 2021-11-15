@@ -18,7 +18,7 @@
   	
   	
   	<style>
-  		section, header{
+  		section{
 			max-width:1008px;
 			margin:  0px auto;
 		}
@@ -131,9 +131,9 @@
 							<input class="btn btn-primary" id="loginBtn" type="submit" value="로그인">
 						</div>
 						<div id="searchDiv">
-							<span id="searchSpan"><a href="" id="searchA">아이디 찾기</a></span>
+							<span id="searchSpan"><a href="/Login/idFind.do" id="searchA">아이디 찾기</a></span>
 							<span>｜</span>
-							<span id="searchSpan"><a href="" id="searchA">비밀번호 찾기</a></span>
+							<span id="searchSpan"><a href="/Login/pwdFind.do" id="searchA">비밀번호 찾기</a></span>
 						</div>
 					</form>
 				</div>
