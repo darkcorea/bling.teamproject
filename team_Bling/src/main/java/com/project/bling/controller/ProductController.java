@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
+import com.project.bling.service.CustomerService;
 import com.project.bling.service.ProductService;
 import com.project.bling.service.ReviewService;
 
@@ -30,6 +31,10 @@ public class ProductController {
 	
 	@Autowired
 	ReviewService reviewService;
+	
+	@Autowired
+	CustomerService customerService;
+	
 	
 	/* 상품 리스트 페이지 */
 	// 상품 리스트에서 신상품,판매순,높은가격순,낮은가격순 을 선택 했을 경우 여기로 이동해서
@@ -53,6 +58,7 @@ public class ProductController {
 			//낮은가격순
 			model.addAttribute("viewAll",productService.rowPrice(kind1));
 		}
+		
 		return model;
 	}
 
@@ -211,10 +217,41 @@ public class ProductController {
 		if (type.equals("R")) {
 		review_1.put("reviewProduct", reviewService.reviewProduct_1(pm));
 		}else if (type.equals("G")) {
-		review_1.put("reviewProduct", reviewService.reviewProduct_2(pm));	
+		review_1.put("reviewProduct", reviewService.reviewProduct_2(pm));
 		}
 		
 		return review_1;
 	}
+	
+	
+	// 문의하기 뿌려주기 에이작스
+	@RequestMapping(value="/detail_question.do" )
+	@ResponseBody
+	public  Map<String, Object> detail_question(int pidx, int page) throws Exception  {	
+		
+	
+		// pidx에 대한 문의 갯수
+		int questionCount = customerService.Product_Question_Count(pidx);
+		// 가져오는 페이지 수 
+		int pageNum = 10;
+		Criteria sc = new Criteria();
+		sc.setPerPageNum(pageNum);
+		sc.setPage(page);
+		
+		// 페이징 하기 위해서 필요한 값들 넣음
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		pm.setPidx(pidx);
+		pm.setTotalCount(questionCount);
+
+		
+		// 페이징 된 리뷰와 페이징에 필요한 값 넣음
+		Map<String, Object> question = new HashMap<String, Object>();
+		question.put("pm", pm);
+		question.put("questionProduct", customerService.Product_Question(pm));
+
+		return question;
+	}
+	
 
 }

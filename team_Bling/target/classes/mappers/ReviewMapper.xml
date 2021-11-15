@@ -10,7 +10,6 @@
 		SELECT count(r.ridx) as reviewCount FROM bg_review r
     	JOIN bg_order_detail od on r.detail_idx = od.detail_idx
 	    JOIN bg_option o on o.oidx = od.oidx
-	    Join bg_user u on u.midx = r.midx
 	    WHERE o.pidx = #{pidx}
 	</select>
 
