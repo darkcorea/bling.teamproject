@@ -37,6 +37,14 @@
 			text-decoration-line: none;
 			color: #000000;
 		}
+		#header_notice1,#header_event1,#customerCenter1{
+			text-decoration-line: none;
+			color: #fff;
+		}
+		#header_notice1:hover,#header_event1:hover,#customerCenter1:hover{
+			text-decoration-line: none;
+			color: #000000;
+		}
 		#searchIcon,#cartIcon{
 			text-decoration: none;
 			color: #000000;
@@ -139,8 +147,9 @@
 		    
 		}
 		.scmenu{
-		    background-color: rgba(231, 224, 224, 0.9 );
-		     height: 45px;
+		    background-color: #CB7878;
+		    opacity:0.9;
+		    height: 45px;
 		     
 		}
 		.login{
@@ -269,17 +278,17 @@
 		   <a href="/"><i class="bi bi-house-fill"></i></a>
 		</div>
 		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
-			<a id="header_notice" href="">LOGIN</a>
+			<a id="header_notice1" href="">LOGIN</a>
 		</div>
 		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
-			<a id="header_event" href="">JOIN US</a>
+			<a id="header_event1" href="">JOIN US</a>
 		</div>
 		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
-			<a id="header_event" href="" >CART
+			<a id="header_event1" href="" >CART
 	       <span class="badge bg-secondary rounded-pill">4</span></a>
 		</div>
 		<div class="col-lg-2 col-md-4 col-sm-3 col-3 scmenu cust">
-		   <a id="customerCenter" href="">고객센터</a>
+		   <a id="customerCenter1" href="">고객센터</a>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
 			<span><a id="amenu" href="/Product/best.do">BEST</a></span>
