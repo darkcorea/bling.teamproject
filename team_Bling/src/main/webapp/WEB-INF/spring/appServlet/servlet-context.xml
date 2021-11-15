@@ -60,6 +60,7 @@
 		<interceptor>
 			<mapping path="/MyPage/main.do"/>
 			<mapping path="/Basket/cart.do"/>
+			<mapping path="/Order/nonorder.do"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 	</interceptors>

@@ -40,8 +40,10 @@
 		
 		str += "</form>";
 		
+		str += "<div id='pwdFail'></div>";
+		
 		str += "<div id='btnDiv'>";
-		str += "	<input class='btn btn-primary' id='submitBtn' value='확인' onclick='pwdAjax()'>";
+		str += "	<input class='btn btn-primary' type='submit' id='submitBtn' value='확인' onclick='pwdAjax()'>";
 		str += "</div id='btnDiv'>";
 		
 		str += "<div id='searchDiv'>";
@@ -87,8 +89,10 @@
 		
 		str += "</form>";
 		
+		str += "<div id='pwdFail'></div>";
+		
 		str += "<div id='btnDiv'>";
-		str += "	<input class='btn btn-primary' id='submitBtn' value='확인' onclick='pwdAjax()'>";
+		str += "	<input class='btn btn-primary' type='submit' id='submitBtn' value='확인' onclick='pwdAjax()'>";
 		str += "</div id='btnDiv'>";
 		
 		str += "<div id='searchDiv'>";
@@ -126,9 +130,14 @@
 				str += "</div>";
 				
 				document.getElementById("formDiv").innerHTML = str;
+				
 			},
 			error : function(){
-				alert("비밀번호 찾기 에러");
+				//alert("비밀번호 찾기 에러");
+				var str = ""; 
+				str += "<div id='failText'>입력하신 정보와 일치하는 아이디가 존재하지 않습니다.</div><br>";
+				
+				document.getElementById("pwdFail").innerHTML = str;
 			}
 		});	
 	}
@@ -158,27 +167,22 @@
 		}
 		#nameBox1{
 			position: relative;
-			left: 170px;
+			left: 165px;
 		}
 		#nameBox2{
 			position: relative;
-			left: 100px;
+			left: 95px;
 		}
 		#nameBox3{
 			position: relative;
-			left: 63px;
+			left: 58px;
 		}
 		#nameBox4{
 			position: relative;
-			left: 154px;
+			left: 149px;
 		}
 		#inputBox{
 			width: 260px;
-		}
-		#submitBtn{
-			position: relative;
-			top: 40px;
-			text-align: center;
 		}
 		#data{
 			height: 40px;
@@ -195,8 +199,18 @@
 			text-align: center;
 		}
 		#submitBtn{
+			position: relative;
+			top: 30px;
+			text-align: center;
 			background-color: #CB7878;
 			border: none;
+			width: 456px;
+			height: 60px;
+		}
+		#submitBtn:hover{
+			color: #CB7878;
+			background-color: #ffffff;
+			border: 1px solid #CB7878;
 			width: 456px;
 			height: 60px;
 		}
@@ -205,6 +219,12 @@
 		}
 		#tempPwd{
 			color: #CB7878;
+		}
+		#pwdFail{
+			height: 10px;
+		}
+		#failText{
+			color: red;
 		}
 	</style>
 	
