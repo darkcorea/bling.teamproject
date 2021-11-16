@@ -62,104 +62,13 @@
 				NEW
 			</c:when>
 		</c:choose>
+		<input type="hidden" value="${kind}" id="kinds">
 	</div><br><br>
 
 	<!-- 제품 뿌리는 곳 -->
 	<div class="container">
 		<div class="row" id="prodRow">
 		
-			<!-- 베스트는 100깨까지, new는 9개만 보여주기  -->
-	     	<c:choose>
-				<c:when test="${kind eq 'best'}">
-					<c:set var="endvalue" value="99"/>
-				</c:when>
-				<c:when test="${kind eq 'new'}">
-					<c:set var="endvalue" value="8"/>
-				</c:when>
-			</c:choose>
-			<c:set var="num" value="1" />
-			
-			<!-- 리스트 반목문  -->
-        	<c:forEach items="${list}" var="list" begin="0" end="${endvalue}">
-				<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
-					<div id="img1">
-						<span class="product-badge badge badge-secondary bg-danger" style="position: absolute;width:40px;">
-						
-						<!-- 제품 사진 안에 있는 베스트는 숫자로 표시 new는 new로 표시 -->
-		              	<c:choose>
-							<c:when test="${kind eq 'best'}">
-								<c:out value="${num}"/>
-							</c:when>
-							<c:when test="${kind eq 'new'}">
-								NEW
-							</c:when>
-						</c:choose>
-						<c:set var="num" value="${num+1}"/>
-						</span>
-						
-						<!-- 제품 사진 -->
-						<a href="/Product/detail.do?pidx=${list.pidx}" style="text-decoration:none">
-							<img class="img-fluid" src="/resources/image/${list.main }">
-						</a>
-					</div>
-					<div>
-						<div style="padding:5px">
-							<div id="reviewName">
-							
-								<!--  리뷰 갯수  -->
-								<div id="text_1">
-									<span class="text-black-50">리뷰 </span>
-									<span class="text-black-50" id="review"><c:out value="${list.reviewCount}"/></span>
-									<!-- heart icon -->
-									<span>
-										<i class="bi bi-suit-heart emptyHeart${list.pidx}" onclick="heart(${list.pidx})"></i>
-									</span>
-								</div>
-								
-								<!-- 상품 이름 -->
-								<div>
-									<h3 class="text-base mb-0">
-										<a class="text-dark prodName" href="/Product/detail.do?pidx=${list.pidx}" style="text-decoration:none">${list.pname}</a>
-									</h3>
-								</div>
-								
-								<!-- 가격 할인율이 0일 경우와 아닐 경우를 나눔 -->
-								<div id="totprice">
-								<c:choose>
-									<c:when test="${list.discount != 0}">
-										<span class="text-danger fs-5">${list.discount}%</span>
-										<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${list.saleprice}" pattern="#,###" />원</span>
-										<span class="text-decoration-line-through" id="saleprice"><fmt:formatNumber value="${list.price}" pattern="#,###" />원</span>
-									</c:when>
-										<c:when test="${list.discount ==0 }">
-										<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${list.price}" pattern="#,###" />원</span>
-									</c:when>
-								</c:choose>
-								</div><br><br>
-							</div>
-						</div>
-					</div>	
-				</div>
-				<script>
-					$(document).ready(function(){
-						var pidx = ${list.pidx};
-						$.ajax({
-							url:"/Basket/checklike.do",
-							type:"POST",
-							data:{"pidx":pidx},
-							ContentType:"application/json",
-							success:function(data){
-								if(data == ""){
-								}else{
-									$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
-								}
-							},error:function(){
-								alert("관심상품존재찾기 에러!")
-	 						}
-						});
-					});
-				</script> 
-			</c:forEach>
 		</div>
 	</div>
 
@@ -168,18 +77,157 @@
 		<%@ include file="/WEB-INF/views/footer.jsp" %>
 </footer> 		
 </body>
-<script>
-	function heart(pidx){
-		if($(".emptyHeart"+pidx).hasClass("bi bi-suit-heart-fill")==true){
-		    alert("관심 상품을 취소하셨습니다.");
-			$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart emptyHeart"+pidx);
-		}else{
-			$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
-			alert("관심 상품에 담았습니다");
+	<script>
+		function like(pidx){
+			$.ajax({
+				url:"/Basket/checklike.do",
+				type:"POST",
+				data:{"pidx":pidx},
+				ContentType:"application/json",
+				success:function(data){
+					if(data == ""){
+					}else{
+						$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
+					}
+				},error:function(){
+					alert("관심상품존재찾기 에러!")
+				}
+			});
 		}
-	}
+			
+		var page = 1;
+		var kind = document.getElementById("kinds").value;
+		var orderBy;
+		if(kind == "best"){
+			orderBy = 5;
+		}else if(kind =="new"){
+			orderBy = 6;
+		}
+		
+		$(function(){
+			getList(page, orderBy, kind);
+			page++;
+		});
+		
+		$(window).scroll(function(){
+			if($(window).scrollTop() >= $(document).height() - $(window).height()){
+				getList(page, orderBy, kind);
+				page++;
+			}
+		});
+		
+		function getList(page,orderBy,kind){
+			$.ajax({
+				type:'POST',
+				dataType:'json',
+				data:{"page":page,"orderBy":orderBy,"kind":kind},
+				async: false,
+				url:"/Product/product_scroll.do",
+				success:function(returnData){
+					var data = returnData.scroll;
+					var startnum = returnData.startnum;
+					var totalcnt = returnData.totalCnt;
+					
+					
+					var j = 1;
+					if(page == 1){
+						 $("#prodRow").html("");
+					}
+					var html="";
+		            
+		           	  if(startnum<=totalcnt ){
+		           		  if(data.length > 0){
+			           		for(i=0;i<data.length;i++){
+			   	            	html += "<div class='col-12 col-md-6 col-lg-4 col-xl-4' id='prodCol'>";
+			   	            	html += "<div id='img1'>";
+			   	            	html += "<span class='product-badge badge badge-secondary bg-danger' style='position: absolute;width:40px;'>";
+			   	            	if(returnData.kind == "best"){
+			   	            		html += j+(9*(page-1));
+			   	            		console.log(page);
+			   	            	}else if(returnData.kind == "new"){
+			   	            		html += "NEW";
+			   	            	}
+			   	            	html += "</span>";
+			   	            	html += "<a href='/Product/detail.do?pidx="+data[i].pidx+"' style='text-decoration:none'>";
+			   	            	html += "<img class='img-fluid' src='/resources/image/"+data[i].main+"'>";
+			   	            	html += "</a>";
+			   	            	html += "</div>";
+			   	            	html += "<div>";
+			   	            	html += "<div style='padding:5px'>";
+			   	            	html += "<div id='reviewName'>";
+			   	            	html += "<div id='text_1'>";
+			   	            	html += "<span class='text-black-50'>리뷰 </span>";
+			   	            	html += "<span class='text-black-50' id='review'>"+data[i].reviewCount+"</span>";
+			   	            	html += "<span>";
+			   	            	html += "<i class='bi bi-suit-heart emptyHeart"+data[i].pidx+"' onclick='heart("+data[i].pidx+")'></i>";
+			   	            	html += "</span>";
+			   	            	html += "</div>";
+			   	            	html += "<div>";
+			   	            	html += "<h3 class='text-base mb-0'>";
+			   	            	html += "<a class='text-dark prodName' href='/Product/detail.do?pidx="+data[i].pidx+"' style='text-decoration:none'>"+data[i].pname+"</a>";
+			   	            	html += "</h3>";
+			   	            	html += "</div>";
+			   	            	html += "<div id='totprice'>";
+			   	            	if(data[i].discount != 0){
+			   	            		html += "<span class='text-danger fs-5'>"+data[i].discount+"%</span>";
+			       	            	html += "<span class='text-gray-500 fw-bold fs-3'>"+data[i].saleprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")+"원</span>";
+			       	            	html += "<span class='text-decoration-line-through' id='saleprice'>"+data[i].price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")+"원</span>";
+			   	            	}else{
+			   	            		html += "<span class='text-gray-500 fw-bold fs-3'>"+data[i].price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")+"원</span>";
+			   	            	}
+			   	            	html += "</div><br><br>";
+			   	            	html += "</div>";
+			   	            	html += "</div>";
+			   	            	html += "</div>";
+			   	            	html += "</div>";
+			   	            	
+			   	            	//하트 관련 에이작스
+			   	            	like(data[i].pidx);
+			   	            	j++;
+			           		}
+			            		 $("#prodRow").append(html);
+			            		 
+		           		  }else{}
+					} 
+				},error:function(e){
+		           if(e.status==300){
+		               alert("데이터를 가져오는데 실패하였습니다.");
+		           };
+		       }
+			});
+		}
+		//관심상품 추가
+		function heart(pidx){
+			
+			var uid = '${sessionScope.UserVO.id}';
+			var like = 0;
+			if(uid==""){
+				alert("로그인하셔야합니다.");
+			}else{
+				if($(".emptyHeart"+pidx).hasClass("bi bi-suit-heart-fill")==true){
+				    alert("관심 상품을 취소하셨습니다.");
+					$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart emptyHeart"+pidx);
+					like = 0;
+				}else{
+					$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
+					alert("관심 상품에 담았습니다");
+					like = 1;
+				}
+				$.ajax({
+					url:"/Basket/like.do",
+					type:"POST",
+					data:{"yn":like,"pidx":pidx},
+					ContentType:"application/json",
+					success:function(data){
+						console.log(data);
+					},error:function(){
+						alert("관심상품등록 에러!")
+					}
+				});
+			}
+		}
 
-</script>
+	</script>
 </html>
 
 

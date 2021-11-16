@@ -253,23 +253,22 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/best.do">BEST</a></span>
+						<span id="smenu"><a id="amenu" href="/Product/best_new.do?kind=best">BEST</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/new.do">NEW</a></span>
+						<span id="smenu"><a id="amenu" href="/Product/best_new.do?kind=new">NEW</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/ring.do?orderBy=1">반지</a></span>
+						<span id="smenu"><a id="amenu" href="/Product/sroll.do?kind=R">반지</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/necklace.do?orderBy=1">목걸이</a></span>
+						<span id="smenu"><a id="amenu" href="/Product/sroll.do?kind=N">목걸이</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/earring.do?orderBy=1">귀걸이</a></span>
+						<span id="smenu"><a id="amenu" href="/Product/sroll.do?kind=E">귀걸이</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-7 col-xl-7" id="menu_end">
-						<span id="smenu"><a id="amenu" href="/Product/braclet.do?orderBy=1">팔찌</a></span>
-					</div>
+						<span id="smenu"><a id="amenu" href="/Product/sroll.do?kind=B">팔찌</a></span>
 				</div>
 			</div>
 			<br>
@@ -293,22 +292,22 @@
 		   <a id="customerCenter1" href="">고객센터</a>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="amenu" href="/Product/best.do">BEST</a></span>
+			<span><a id="amenu" href="/Product/best_new.do?kind=best">BEST</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="amenu" href="/Product/new.do">NEW</a></span>
+			<span><a id="amenu" href="/Product/best_new.do?kind=new">NEW</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="amenu" href="/Product/ring.do?orderBy=1">반지</a></span>
+			<span><a id="amenu" href="/Product/sroll.do?kind=R">반지</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="amenu" href="/Product/necklace.do?orderBy=1">목걸이</a></span>
+			<span><a id="amenu" href="/Product/sroll.do?kind=N">목걸이</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="amenu" href="/Product/earring.do?orderBy=1">귀걸이</a></span>
+			<span><a id="amenu" href="/Product/sroll.do?kind=E">귀걸이</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="amenu" href="/Product/braclet.do?orderBy=1">팔찌</a></span>
+			<span><a id="amenu" href="/Product/sroll.do?kind=B">팔찌</a></span>
 		</div>
 	</div>
   </div>

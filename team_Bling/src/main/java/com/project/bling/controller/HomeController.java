@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.project.bling.domain.PageMaker;
 import com.project.bling.service.ProductService;
 
 @Controller
@@ -32,27 +33,46 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate );
 		
+		PageMaker pm = new PageMaker();
+		
+		
 		/**제품 사진 - 판매량순**/
-		model.addAttribute("best", productService.prodBest());
+		pm.setEnd(3);
+		pm.setStart(1);
+		model.addAttribute("best", productService.prodBest(pm));
 		
 		/**제품 사진 - 신상품**/
-		model.addAttribute("newProd", productService.prodNew());
+		pm.setEnd(3);
+		pm.setStart(1);
+		model.addAttribute("newProd", productService.prodNew(pm));
 		
 		/**제품 사진 - 반지**/
 		String kind = "R";
-		model.addAttribute("ring", productService.newList(kind));
+		pm.setKind(kind);
+		pm.setEnd(3);
+		pm.setStart(1);
+		model.addAttribute("ring", productService.scrollnew(pm));
 		
 		/**제품 사진 - 목걸이**/
 		kind = "N";
-		model.addAttribute("neck", productService.newList(kind));
+		pm.setKind(kind);
+		pm.setEnd(3);
+		pm.setStart(1);
+		model.addAttribute("neck", productService.scrollnew(pm));
 		
 		/**제품 사진 - 귀걸이**/
 		kind = "E";
-		model.addAttribute("ear", productService.newList(kind));
+		pm.setKind(kind);
+		pm.setEnd(3);
+		pm.setStart(1);
+		model.addAttribute("ear", productService.scrollnew(pm));
 		
 		/**제품 사진 - 팔찌**/
 		kind = "B";
-		model.addAttribute("brac", productService.newList(kind));
+		pm.setKind(kind);
+		pm.setEnd(3);
+		pm.setStart(1);
+		model.addAttribute("brac", productService.scrollnew(pm));
 		
 		return "home";
 	}
