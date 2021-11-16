@@ -4,288 +4,357 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.project.bling.mapper.productMapper">
-
+	
+	<!-- 상품 총 갯수 -->
+	<select id="productCount" resultType="int" parameterType="String">
+		SELECT count(pidx) 
+		FROM bg_product 
+		WHERE kind=#{kind}
+	</select>
+	
 	<!-- 홈, 상품 리스트에서 같이 쓰는 메퍼-->
 	<!-- 베스트 상품  판매량 순 -->
-	<select id="prodBest" resultType="CombineVO">
-	WITH pi
-	    AS(
-	        SELECT p.pidx,
-	               p.pname,
-	               p.kind,
-	               p.discount,
-	               p.price,
-	               p.saleprice,
-	               i.main
-	        FROM bg_product p
-	        LEFT OUTER JOIN bg_image i
-	        ON p.pidx=i.pidx
-	    ),
-    oro
-	    AS(
-	        SELECT op.pidx,
-	               od.quantity,
-	               r.ridx
-	        FROM bg_Order_detail od
-	        
-	        RIGHT OUTER JOIN bg_option op
-	        ON od.oidx=op.oidx
-	        
-	        LEFT OUTER JOIN bg_review r
-	        ON od.detail_idx=r.detail_idx
-	    )
-	SELECT pi.pidx,
-	       pi.pname,
-	       pi.kind,
-	       pi.discount,
-	       pi.saleprice,
-	       pi.price,
-	       pi.main,
-	       count(oro.ridx) as reviewCount,
-	       sum(oro.quantity) as quantitySum
-	FROM oro
-	RIGHT OUTER JOIN pi
-	ON oro.pidx=pi.pidx
-	GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price
-	ORDER BY sum(oro.quantity)
-	DESC nulls last
+	<select id="prodBest" parameterType="PageMaker" resultType="CombineVO" >
+	<![CDATA[
+		SELECT * 
+		FROM (
+			SELECT rownum as rnum, A.* 
+			FROM (
+				WITH pi
+				    AS(
+				        SELECT p.pidx,
+				               p.pname,
+				               p.kind,
+				               p.discount,
+				               p.price,
+				               p.saleprice,
+				               i.main
+				        FROM bg_product p
+				        LEFT OUTER JOIN bg_image i
+				        ON p.pidx=i.pidx
+				    ),
+			    oro
+				    AS(
+				        SELECT op.pidx,
+				               od.quantity,
+				               r.ridx
+				        FROM bg_Order_detail od
+				        
+				        RIGHT OUTER JOIN bg_option op
+				        ON od.oidx=op.oidx
+				        
+				        LEFT OUTER JOIN bg_review r
+				        ON od.detail_idx=r.detail_idx
+				    )
+				SELECT pi.pidx,
+				       pi.pname,
+				       pi.kind,
+				       pi.discount,
+				       pi.saleprice,
+				       pi.price,
+				       pi.main,
+				       count(oro.ridx) as reviewCount,
+				       sum(oro.quantity) as quantitySum
+				FROM oro
+				RIGHT OUTER JOIN pi
+				ON oro.pidx=pi.pidx
+				GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price
+				ORDER BY sum(oro.quantity)
+				DESC nulls last
+			) A 
+			WHERE rownum <= #{end}
+		)B
+		WHERE rnum >= #{start}
+	]]>
 	</select>
 	
 	<!-- 새로 올라온 상품 -->
-	<select id="prodNew" resultType="CombineVO">
-	WITH pi
-	    AS(
-	        SELECT p.pidx,
-	               p.pname,
-	               p.kind,
-	               p.discount,
-	               p.price,
-	               p.saleprice,
-                   p.rdate,
-	               i.main
-	        FROM bg_product p
-	        LEFT OUTER JOIN bg_image i
-	        ON p.pidx=i.pidx
-	    ),
-    oro
-	    AS(
-	        SELECT op.pidx,
-	               od.quantity,
-	               r.ridx
-	        FROM bg_Order_detail od
-	        
-	        RIGHT OUTER JOIN bg_option op
-	        ON od.oidx=op.oidx
-	        
-	        LEFT OUTER JOIN bg_review r
-	        ON od.detail_idx=r.detail_idx
-	    )
-	SELECT pi.pidx,
-	       pi.pname,
-	       pi.kind,
-	       pi.discount,
-	       pi.saleprice,
-	       pi.price,
-	       pi.main,
-	       count(oro.ridx) as reviewCount,
-	       sum(oro.quantity) as quantitySum,
-           pi.rdate
-	FROM oro
-	RIGHT OUTER JOIN pi
-	ON oro.pidx=pi.pidx
-	GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
-	ORDER BY pi.rdate
-	DESC nulls last
+	<select id="prodNew" parameterType="PageMaker" resultType="CombineVO" >
+	<![CDATA[
+		SELECT * 
+		FROM (
+			SELECT rownum as rnum, A.* 
+			FROM (
+				WITH pi
+				    AS(
+				        SELECT p.pidx,
+				               p.pname,
+				               p.kind,
+				               p.discount,
+				               p.price,
+				               p.saleprice,
+			                   p.rdate,
+				               i.main
+				        FROM bg_product p
+				        LEFT OUTER JOIN bg_image i
+				        ON p.pidx=i.pidx
+				    ),
+			    oro
+				    AS(
+				        SELECT op.pidx,
+				               od.quantity,
+				               r.ridx
+				        FROM bg_Order_detail od
+				        
+				        RIGHT OUTER JOIN bg_option op
+				        ON od.oidx=op.oidx
+				        
+				        LEFT OUTER JOIN bg_review r
+				        ON od.detail_idx=r.detail_idx
+				    )
+				SELECT pi.pidx,
+				       pi.pname,
+				       pi.kind,
+				       pi.discount,
+				       pi.saleprice,
+				       pi.price,
+				       pi.main,
+				       count(oro.ridx) as reviewCount,
+				       sum(oro.quantity) as quantitySum,
+			           pi.rdate
+				FROM oro
+				RIGHT OUTER JOIN pi
+				ON oro.pidx=pi.pidx
+				GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
+				ORDER BY pi.rdate
+				DESC nulls last
+			) A 
+			WHERE rownum <= #{end}
+		)B
+		WHERE rnum >= #{start}
+	]]>
 	</select>
 	
 	<!-- 상품에 대한 리스트 종류별 최신순 -->
-	<select id="newList" parameterType="String" resultType="CombineVO" >
-	WITH pi
-	    AS(
-	        SELECT p.pidx,
-	               p.pname,
-	               p.kind,
-	               p.discount,
-	               p.price,
-	               p.saleprice,
-                   p.rdate,
-	               i.main
-	        FROM bg_product p
-	        LEFT OUTER JOIN bg_image i
-	        ON p.pidx=i.pidx
-	    ),
-    oro
-	    AS(
-	        SELECT op.pidx,
-	               od.quantity,
-	               r.ridx
-	        FROM bg_Order_detail od
-	        
-	        RIGHT OUTER JOIN bg_option op
-	        ON od.oidx=op.oidx
-	        
-	        LEFT OUTER JOIN bg_review r
-	        ON od.detail_idx=r.detail_idx
-	    )
-	SELECT pi.pidx,
-	       pi.pname,
-	       pi.kind,
-	       pi.discount,
-	       pi.saleprice,
-	       pi.price,
-	       pi.main,
-	       count(oro.ridx) as reviewCount,
-	       sum(oro.quantity) as quantitySum,
-           pi.rdate
-	FROM oro
-	RIGHT OUTER JOIN pi
-	ON oro.pidx=pi.pidx
-	WHERE pi.kind= #{kind}
-	GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
-	ORDER BY pi.rdate
-	DESC nulls last
+	<select id="Scroll_newList" parameterType="PageMaker" resultType="CombineVO" >
+	<![CDATA[
+		SELECT * 
+		FROM (
+			SELECT rownum as rnum, A.* 
+			FROM (
+				WITH pi
+				    AS(
+				        SELECT p.pidx,
+				               p.pname,
+				               p.kind,
+				               p.discount,
+				               p.price,
+				               p.saleprice,
+			                   p.rdate,
+				               i.main
+				        FROM bg_product p
+				        LEFT OUTER JOIN bg_image i
+				        ON p.pidx=i.pidx
+				    ),
+			    oro
+				    AS(
+				        SELECT op.pidx,
+				               od.quantity,
+				               r.ridx
+				        FROM bg_Order_detail od
+				        
+				        RIGHT OUTER JOIN bg_option op
+				        ON od.oidx=op.oidx
+				        
+				        LEFT OUTER JOIN bg_review r
+				        ON od.detail_idx=r.detail_idx
+				    )
+				SELECT pi.pidx,
+				       pi.pname,
+				       pi.kind,
+				       pi.discount,
+				       pi.saleprice,
+				       pi.price,
+				       pi.main,
+				       count(oro.ridx) as reviewCount,
+				       sum(oro.quantity) as quantitySum,
+			           pi.rdate
+				FROM oro
+				RIGHT OUTER JOIN pi
+				ON oro.pidx=pi.pidx
+				WHERE pi.kind= #{kind}
+				GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
+				ORDER BY pi.rdate
+				DESC nulls last
+			) A 
+			WHERE rownum <= #{end}
+		)B
+		WHERE rnum >= #{start}
+	]]>
 	</select>
 	
-
-
-	<!-- 상품 리스트에서 쓰는 매퍼 -->
-	<!-- 상품 품목별로 최신 상품 가져오기  -->
-	<select id="bestList" parameterType="String" resultType="CombineVO" >
-	WITH pi
-	    AS(
-	        SELECT p.pidx,
-	               p.pname,
-	               p.kind,
-	               p.discount,
-	               p.price,
-	               p.saleprice,
-	               i.main
-	        FROM bg_product p
-	        LEFT OUTER JOIN bg_image i
-	        ON p.pidx=i.pidx
-	    ),
-    oro
-	    AS(
-	        SELECT op.pidx,
-	               od.quantity,
-	               r.ridx
-	        FROM bg_Order_detail od
-	        
-	        RIGHT OUTER JOIN bg_option op
-	        ON od.oidx=op.oidx
-	        
-	        LEFT OUTER JOIN bg_review r
-	        ON od.detail_idx=r.detail_idx
-	    )
-	SELECT pi.pidx,
-	       pi.pname,
-	       pi.kind,
-	       pi.discount,
-	       pi.saleprice,
-	       pi.price,
-	       pi.main,
-	       count(oro.ridx) as reviewCount,
-	       sum(oro.quantity) as quantitySum
-	FROM oro
-	RIGHT OUTER JOIN pi
-	ON oro.pidx=pi.pidx
-	WHERE pi.kind= #{kind}
-	GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price
-	ORDER BY sum(oro.quantity)
-	DESC nulls last
+	<select id="Scroll_bestList" parameterType="PageMaker" resultType="CombineVO" >
+	<![CDATA[
+		SELECT * 
+		FROM (
+			SELECT rownum as rnum, A.* 
+			FROM (
+				WITH pi
+				    AS(
+				        SELECT p.pidx,
+				               p.pname,
+				               p.kind,
+				               p.discount,
+				               p.price,
+				               p.saleprice,
+			                   p.rdate,
+				               i.main
+				        FROM bg_product p
+				        LEFT OUTER JOIN bg_image i
+				        ON p.pidx=i.pidx
+				    ),
+			    oro
+				    AS(
+				        SELECT op.pidx,
+				               od.quantity,
+				               r.ridx
+				        FROM bg_Order_detail od
+				        
+				        RIGHT OUTER JOIN bg_option op
+				        ON od.oidx=op.oidx
+				        
+				        LEFT OUTER JOIN bg_review r
+				        ON od.detail_idx=r.detail_idx
+				    )
+				SELECT pi.pidx,
+				       pi.pname,
+				       pi.kind,
+				       pi.discount,
+				       pi.saleprice,
+				       pi.price,
+				       pi.main,
+				       count(oro.ridx) as reviewCount,
+				       sum(oro.quantity) as quantitySum,
+			           pi.rdate
+				FROM oro
+				RIGHT OUTER JOIN pi
+				ON oro.pidx=pi.pidx
+				WHERE pi.kind= #{kind}
+				GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
+				ORDER BY sum(oro.quantity)
+				DESC nulls last
+			) A 
+			WHERE rownum <= #{end}
+		)B
+		WHERE rnum >= #{start}
+	]]>
 	</select>
 	
-	<!-- 상품 품목별로 판매가 높은 상품 가져오기  -->
-	<select id="highPrice" parameterType="String" resultType="CombineVO" >
-	WITH pi
-	    AS(
-	        SELECT p.pidx,
-	               p.pname,
-	               p.kind,
-	               p.discount,
-	               p.price,
-	               p.saleprice,
-	               i.main
-	        FROM bg_product p
-	        LEFT OUTER JOIN bg_image i
-	        ON p.pidx=i.pidx
-	    ),
-    oro
-	    AS(
-	        SELECT op.pidx,
-	               od.quantity,
-	               r.ridx
-	        FROM bg_Order_detail od
-	        
-	        RIGHT OUTER JOIN bg_option op
-	        ON od.oidx=op.oidx
-	        
-	        LEFT OUTER JOIN bg_review r
-	        ON od.detail_idx=r.detail_idx
-	    )
-	SELECT pi.pidx,
-	       pi.pname,
-	       pi.kind,
-	       pi.discount,
-	       pi.saleprice,
-	       pi.price,
-	       pi.main,
-	       count(oro.ridx) as reviewCount,
-	       sum(oro.quantity) as quantitySum
-	FROM oro
-	RIGHT OUTER JOIN pi
-	ON oro.pidx=pi.pidx
-	WHERE pi.kind= #{kind}
-	GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price
-	ORDER BY pi.price
-	DESC nulls last
+	<select id="Scroll_highPriceList" parameterType="PageMaker" resultType="CombineVO" >
+	<![CDATA[
+		SELECT * 
+		FROM (
+			SELECT rownum as rnum, A.* 
+			FROM (
+				WITH pi
+				    AS(
+				        SELECT p.pidx,
+				               p.pname,
+				               p.kind,
+				               p.discount,
+				               p.price,
+				               p.saleprice,
+				               i.main
+				        FROM bg_product p
+				        LEFT OUTER JOIN bg_image i
+				        ON p.pidx=i.pidx
+				    ),
+			    oro
+				    AS(
+				        SELECT op.pidx,
+				               od.quantity,
+				               r.ridx
+				        FROM bg_Order_detail od
+				        
+				        RIGHT OUTER JOIN bg_option op
+				        ON od.oidx=op.oidx
+				        
+				        LEFT OUTER JOIN bg_review r
+				        ON od.detail_idx=r.detail_idx
+				    )
+				SELECT pi.pidx,
+				       pi.pname,
+				       pi.kind,
+				       pi.discount,
+				       pi.saleprice,
+				       pi.price,
+				       pi.main,
+				       count(oro.ridx) as reviewCount,
+				       sum(oro.quantity) as quantitySum
+				FROM oro
+				RIGHT OUTER JOIN pi
+				ON oro.pidx=pi.pidx
+				WHERE pi.kind= #{kind}
+				GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price
+				ORDER BY pi.price
+				DESC nulls last
+			) A 
+			WHERE rownum <= #{end}
+		)B
+		WHERE rnum >= #{start}
+	]]>
 	</select>
 	
-	<!-- 상품 품목별로 판매가 낮은 상품 가져오기  -->
-	<select id="rowPrice" parameterType="String" resultType="CombineVO" >
-	WITH pi
-	    AS(
-	        SELECT p.pidx,
-	               p.pname,
-	               p.kind,
-	               p.discount,
-	               p.price,
-	               p.saleprice,
-	               i.main
-	        FROM bg_product p
-	        LEFT OUTER JOIN bg_image i
-	        ON p.pidx=i.pidx
-	    ),
-    oro
-	    AS(
-	        SELECT op.pidx,
-	               od.quantity,
-	               r.ridx
-	        FROM bg_Order_detail od
-	        
-	        RIGHT OUTER JOIN bg_option op
-	        ON od.oidx=op.oidx
-	        
-	        LEFT OUTER JOIN bg_review r
-	        ON od.detail_idx=r.detail_idx
-	    )
-	SELECT pi.pidx,
-	       pi.pname,
-	       pi.kind,
-	       pi.discount,
-	       pi.saleprice,
-	       pi.price,
-	       pi.main,
-	       count(oro.ridx) as reviewCount,
-	       sum(oro.quantity) as quantitySum
-	FROM oro
-	RIGHT OUTER JOIN pi
-	ON oro.pidx=pi.pidx
-	WHERE pi.kind= #{kind}
-	GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price
-	ORDER BY pi.price
-	ASC nulls last
+	<select id="Scroll_rowPriceList" parameterType="PageMaker" resultType="CombineVO" >
+	<![CDATA[
+		SELECT * 
+		FROM (
+			SELECT rownum as rnum, A.* 
+			FROM (
+				WITH pi
+				    AS(
+				        SELECT p.pidx,
+				               p.pname,
+				               p.kind,
+				               p.discount,
+				               p.price,
+				               p.saleprice,
+				               i.main
+				        FROM bg_product p
+				        LEFT OUTER JOIN bg_image i
+				        ON p.pidx=i.pidx
+				    ),
+			    oro
+				    AS(
+				        SELECT op.pidx,
+				               od.quantity,
+				               r.ridx
+				        FROM bg_Order_detail od
+				        
+				        RIGHT OUTER JOIN bg_option op
+				        ON od.oidx=op.oidx
+				        
+				        LEFT OUTER JOIN bg_review r
+				        ON od.detail_idx=r.detail_idx
+				    )
+				SELECT pi.pidx,
+				       pi.pname,
+				       pi.kind,
+				       pi.discount,
+				       pi.saleprice,
+				       pi.price,
+				       pi.main,
+				       count(oro.ridx) as reviewCount,
+				       sum(oro.quantity) as quantitySum
+				FROM oro
+				RIGHT OUTER JOIN pi
+				ON oro.pidx=pi.pidx
+				WHERE pi.kind= #{kind}
+				GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price
+				ORDER BY pi.price
+				ASC nulls last
+			) A 
+			WHERE rownum <= #{end}
+		)B
+		WHERE rnum >= #{start}
+	]]>
 	</select>
+	
+	
+	
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	
+	
 	
 	
 	<!-- 상품 디테일에서 쓰는  매퍼-->
