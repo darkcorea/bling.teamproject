@@ -28,6 +28,8 @@ public class ProductController {
 	@Autowired
 	ReviewService reviewService;
 	
+	@Autowired
+	CustomerService customerService;
 	
 	// 베스트와 new 상품
 	@RequestMapping(value="/best_new.do")
@@ -190,6 +192,35 @@ public class ProductController {
 		}
 		
 		return review_1;
+	}
+	
+	// 문의하기 뿌려주기 에이작스
+	@RequestMapping(value="/detail_question.do" )
+	@ResponseBody
+	public  Map<String, Object> detail_question(int pidx, int page) throws Exception  {	
+		
+	
+		// pidx에 대한 문의 갯수
+		int questionCount = customerService.Product_Question_Count(pidx);
+		// 가져오는 페이지 수 
+		int pageNum = 10;
+		Criteria sc = new Criteria();
+		sc.setPerPageNum(pageNum);
+		sc.setPage(page);
+		
+		// 페이징 하기 위해서 필요한 값들 넣음
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		pm.setPidx(pidx);
+		pm.setTotalCount(questionCount);
+
+		
+		// 페이징 된 리뷰와 페이징에 필요한 값 넣음
+		Map<String, Object> question = new HashMap<String, Object>();
+		question.put("pm", pm);
+		question.put("questionProduct", customerService.Product_Question(pm));
+
+		return question;
 	}
 
 }
