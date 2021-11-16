@@ -60,6 +60,11 @@
 		<interceptor>
 			<mapping path="/MyPage/main.do"/>
 			<mapping path="/Basket/cart.do"/>
+			<mapping path="/Basket/cart.do"/>
+			<!-- 고객센터 또는 디테일,마이페이지에서  상품,일반문의, 문의수정하기 -->
+			<mapping path="/Customer/product.do"/>
+			<mapping path="/Customer/question.do"/>
+			<mapping path="/Customer/product_modify.do"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 	</interceptors>
