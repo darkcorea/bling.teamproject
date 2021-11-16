@@ -18,7 +18,7 @@
   	
   	
   	<style>
-  		section, header{
+  		section{
 			max-width:1008px;
 			margin:  0px auto;
 		}
@@ -36,6 +36,13 @@
 			width: 400px;
 			height: 50px;
 		}
+		#nonMemberBuy{
+			color: black;
+			background-color: #ffffff;
+			border: 1px solid black;
+			width: 400px;
+			height: 50px;
+		}
 		#login_Id,#login_Pw{
 			border-top: none;
 			border-left: none;
@@ -45,6 +52,11 @@
 		#btnDiv{
 			position: relative;
 			top: 40px;
+			text-align: center;
+		}
+		#btnDiv2{
+			position: relative;
+			top: 60px;
 			text-align: center;
 		}
 		#formText{
@@ -130,10 +142,16 @@
 						<div id="btnDiv">
 							<input class="btn btn-primary" id="loginBtn" type="submit" value="로그인">
 						</div>
+						<div id="btnDiv2">
+							<input class="btn btn-primary" id="nonMemberBuy" type="button" 
+							onclick="location.href='/Order/nonorder.do'" value="비회원으로 구매하기">
+						</div>
 						<div id="searchDiv">
-							<span id="searchSpan"><a href="" id="searchA">아이디 찾기</a></span>
+							<span id="searchSpan"><a href="/Login/idFind.do" id="searchA">아이디 찾기</a></span>
 							<span>｜</span>
-							<span id="searchSpan"><a href="" id="searchA">비밀번호 찾기</a></span>
+							<span id="searchSpan"><a href="/Login/pwdFind.do" id="searchA">비밀번호 찾기</a></span>
+							<span>｜</span>
+							<span id="searchSpan"><a href="#" id="searchA">비회원 주문조회</a></span>
 						</div>
 					</form>
 				</div>
