@@ -18,6 +18,7 @@ public class CombineVO {
 	private String main;
 	//user
 	private String uname;
+	private int midx;
 	// product_question
 	private int pqidx;
 	private int depth;
@@ -31,7 +32,12 @@ public class CombineVO {
 	
 	
 	
-	
+	public int getMidx() {
+		return midx;
+	}
+	public void setMidx(int midx) {
+		this.midx = midx;
+	}
 	public int getPqidx() {
 		return pqidx;
 	}
