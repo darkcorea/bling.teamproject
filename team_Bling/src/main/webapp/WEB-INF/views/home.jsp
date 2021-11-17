@@ -60,8 +60,6 @@
 </head>
 
 <body>
-	<a href="/Admin/list.do">관리자 상품 리스트</a><br>
-	<a href="/Admin/regist.do">관리자 상품 등록</a><br>
 	<a href="/Review/list.do?page=1">페이징 완료</a><br>
 	<a href="/Order/order.do">주문하기</a><br>
   

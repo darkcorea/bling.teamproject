@@ -311,14 +311,7 @@ section {
 
 </head>
 <body>
-	상품상세 페이지입니다
-	<br>
-	<!-- 상세페이지 main -->
-	상품 가격 :
-	<c:out value="${detail.saleprice}" />
-	<br> 리뷰 갯수 :
-	<c:out value="${fn:length(review)}" />
-	<br>
+
 	<header>
 		<%@ include file="/WEB-INF/views/header.jsp"%><BR>
 		<br>
@@ -358,13 +351,22 @@ section {
 					<div class="price">
 						<div class="fw-bold fs-6 w-25 price1 m-1">가격</div>
 						<div class="price2">
-							<span class="fw-bold fs-5"> <fmt:formatNumber
-									type="number" maxFractionDigits="3" value="${detail.saleprice}" />원
-							</span>&ensp; <span class="text-muted text-decoration-line-through">
-								<fmt:formatNumber type="number" maxFractionDigits="3"
-									value="${detail.price}" />원
-							</span>&ensp; <span class="text-danger"><c:out
-									value="${detail.discount}" />%</span>
+						<c:if test="${detail.discount != 0}">
+							<span class="fw-bold fs-5">
+								<fmt:formatNumber type="number" maxFractionDigits="3" value="${detail.saleprice}" />원
+							</span>&ensp;
+							<span class="text-muted text-decoration-line-through">
+								<fmt:formatNumber type="number" maxFractionDigits="3" value="${detail.price}" />원
+							</span>&ensp;
+							<span class="text-danger">
+								<c:out	value="${detail.discount}" />%
+							</span>
+						</c:if>
+						<c:if  test="${detail.discount == 0}">
+							<span class="fw-bold fs-5">
+								<fmt:formatNumber type="number" maxFractionDigits="3" value="${detail.saleprice}" />원
+							</span>
+						</c:if>
 						</div>
 					</div>
 					<hr>

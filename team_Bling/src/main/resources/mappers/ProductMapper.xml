@@ -360,7 +360,7 @@
 	<!-- 상품 디테일에서 쓰는  매퍼-->
 	<!-- 상품에 대한 정보 -->
 	<select id="detailProduct" parameterType="int" resultType="ProductVO">
-		SELECT pidx, pname, kind, price, saleprice, discount, shipping
+		SELECT pidx, pname, kind, price, saleprice, discount
 		FROM bg_product
 		WHERE pidx = #{pidx} AND saleyn='y'
 	</select>
