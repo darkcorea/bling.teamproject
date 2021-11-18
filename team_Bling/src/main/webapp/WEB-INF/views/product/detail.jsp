@@ -1102,7 +1102,7 @@ section {
   		  	 let startPage = parseInt(pm.startPage);
   		  	 let endPage = parseInt(pm.endPage);
   		  	 for (let k = startPage; k<=endPage; k++ ){
-  		  	 	str += "<li class='page-item'><a class='page-link pointer' onclick='question_Fn("+k+")'>"+k+"</a>";      
+  		  	 	str += "<li class='page-item'><a class='page-link pointer' onclick='question_Fn("+k+")'>"+k+"</a></li>";      
   		  	 }
   		  	 str += "<li class='page-item'>";
   		  	 if(pm.next && pm.endPage > 0){

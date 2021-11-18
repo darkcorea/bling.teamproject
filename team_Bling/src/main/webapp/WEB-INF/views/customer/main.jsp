@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,9 +52,19 @@
 		width:130px;
 		float: right;
 	}
+	/*  페이징 번호들을 붙이기 위해서 */
+	.page-item {
+		padding: 0px;
+	}
 	
+	/* 텍스트 가운데로 클래스 */
 	.text_center{
 		text-align:center;
+	}
+	
+	/* 클래스 추가하면 가져다 대면 손모양 나옴*/
+	.pointer {
+		cursor: pointer;
 	}
 </style>
 </head>
@@ -81,22 +92,100 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr class="text_center"></tr>
-		<tr></tr>
-		<tr class="text_center"></tr>
+		<!-- 고객센터 글 뿌려주기 -->
+		<c:set var="num" value="1" />
+		<c:forEach items="${question}" var="list">
+		<tr>
+			<td class="text_center"><c:out value="${num}"/></td>
+			
+			<c:set var="num" value="${num + 1}" />
+			<td>
+			<div class="accordion">
+				<div class="accordion-item" style="border:0;">
+					<div class="accordion-header" id="heading${list.nidx}">
+			     		<span onclick="coll_fn(${list.nidx})" id="coll${list.nidx}" class="pointer">
+			        		<c:out value="${list.subject}"/>
+			      		</span>
+			    	</div>
+			    	<div id="collapse${list.nidx}" class="accordion-collapse collapse">
+				    	<div class="accordion-body">
+				      		<c:out value="${list.contents}"/>
+				      	</div>
+			    	</div>
+				</div>
+			</div>
+			</td>
+			
+			<c:set var="rdate" value="${list.rdate}"/>
+			<c:set var="date" value="${fn:substring(rdate,0,10)}"/>
+			<td class="text_center"><c:out value="${date}"/></td>
+		</tr>
+		</c:forEach>
 	</tbody>
 </table>
-
-
-
-<button type="button" class="btn btn-danger" id="question_btn" onclick="">문의하기</button>
+<!-- 페이징 바 뿌려주기 -->
+<nav aria-label="Page navigation">
+	<ul class="pagination justify-content-center">
+		<!-- 앞으로  가기 버튼 -->
+		<c:if test="${pm.prev == true}">
+		<li class='page-item'>
+		<c:set var="prev" value="${pm.startPage -1}"/>
+			<a class='page-link' aria-label='Previous' href="/Customer/main.do?page=${prev}">
+				<span aria-hidden='true' class='pointer' >&laquo;</span>
+			</a>
+		</li>
+		</c:if>
+		
+		<!-- 페이징 번호  -->
+		<c:set var="page" value="${pm.scri.page}"/>
+		<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
+			<c:if test = "${pageNum == page}">
+			<li class="page-item active">	
+				<a class="page-link pointer" href="/Customer/main.do?page=${pageNum}">
+					<c:out value="${pageNum}"/>
+				</a>
+			</li>
+			</c:if>
+			<c:if test = "${pageNum != page}">
+			<li class="page-item">	
+				<a class="page-link pointer" href="/Customer/main.do?page=${pageNum}">
+					<c:out value="${pageNum}"/>
+				</a>
+			</li>
+			</c:if>
+		</c:forEach>
+		
+		<!-- 뒤로 가기 버튼 -->
+		<c:if test="${pm.next && pm.endPage > 0}">
+		<li class='page-item'>
+			<a class='page-link' aria-label='Next' href="/Customer/main.do?page=${pm.endPage + 1}">
+				<span aria-hidden='true' class='pointer'>&raquo;</span>
+			</a>
+		</li>
+		</c:if>
+	</ul>
+</nav>
+<button type="button" class="btn btn-danger" id="question_btn" onclick="location.href='/Customer/question.do'">문의하기</button>
 
 </section><br><br><br>
 
 <footer>
 	<%@ include file="/WEB-INF/views/footer.jsp"%>
 </footer>
+
 </body>
 <script>
+	
+	/* 문의 제목을 클릭하면 아래로 창이 보였다가 사라졌다 한다 */
+	function coll_fn(nidx){
+		let show = $("#collapse"+nidx).hasClass("show");
+		console.log(show);
+		if (show == false){
+			$("#collapse"+nidx).addClass("show");
+		}else if (show == true){
+			$("#collapse"+nidx).removeClass("show");
+		}
+	}
+
 </script>
 </html>

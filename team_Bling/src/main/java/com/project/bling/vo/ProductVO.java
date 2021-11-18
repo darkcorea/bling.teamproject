@@ -9,7 +9,6 @@ public class ProductVO {
 	private String rdate;
 	private int discount;
 	private int saleprice;
-	private int shipping;
 	private String saleyn;
 	
 	
@@ -54,12 +53,6 @@ public class ProductVO {
 	}
 	public void setSaleprice(int saleprice) {
 		this.saleprice = saleprice;
-	}
-	public int getShipping() {
-		return shipping;
-	}
-	public void setShipping(int shipping) {
-		this.shipping = shipping;
 	}
 	public String getSaleyn() {
 		return saleyn;

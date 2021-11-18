@@ -199,7 +199,7 @@
 		            </div>
 		            <div class="col-1 col-md-4"></div>
 		            <div class="col-3 col-md-2" id="headerCol2">
-		                <a id="customerCenter" href="">고객센터</a>
+		                <a id="customerCenter" href="/Customer/main.do?page=1">고객센터</a>
 		            </div>
 		        </div>
 		

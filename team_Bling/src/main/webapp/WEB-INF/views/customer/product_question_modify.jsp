@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>제품 문의 수정하기</title>
+<title>제품 문의 하기</title>
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script src="/js/bootstrap.bundle.js"></script>
 <link rel="stylesheet" href="/css/bootstrap.css">
@@ -74,26 +74,32 @@
 
 <section>
 	<h2>상품 문의 수정하기</h2>
-	<form name="question" action="/Customer/product_write.do" method="POST">
+	<form name="question" action="/Customer/product_modify.do" method="POST">
 	<table>
 		<tr class="tr1">
 			<td style="width:180px;"><span class="red">*</span>제목</td>
-			<td><input type="text" name="title" style="width:90%"></td>
+			<td>
+			<input type="text" name="title" style="width:90%" value="${question.title}">
+			</td>
 		</tr>
 		<tr class="tr2">
 			<td><span class="red">*</span>본문</td>
-			<td><textarea id="comments" name="comments" cols="60" rows="15" class="mar20"></textarea></td>
+			<td>
+			<textarea id="comments" name="comments" cols="60" rows="15" class="mar20"><c:out value="${question.comments}"/>
+			</textarea>
+			</td>
 		</tr>
 		<tr class="tr3">
 			<td><span class="red">*</span>비밀번호</td>
-			<td><input type="text" name="pwd"  maxlength="8">			
-			<input type="hidden" name="pidx" value="${pidx}">
-			<input type="hidden" name="midx" value="${sessionScope.UserVO.midx}">			
+			<td>
+			<input type="text" name="pwd"  maxlength="8" value="${question.pwd}">
+			<input type="hidden" name="pqidx" value="${question.pqidx}">
+			<input type="hidden" name="pidx" value="${question.pidx}">
 			</td>
 		</tr>
 	</table>
 	<div class="btn-two">
-	<button type="button" class="btn btn-danger" onclick="qustionFn(this.form)">저장</button>&ensp;
+	<button type="button" class="btn btn-danger" onclick="qustionFn(this.form)">수정</button>&ensp;
 	<button type="button" class="btn btn-light" onclick="history.go(-1)">이전</button>
 	</div>
 	</form>
@@ -126,7 +132,7 @@
 			return;
 		}
 		
-		alert("문의 내용이 등록되었습니다.");
+		alert("문의 내용이 수정되었습니다.");
 		Qform.submit();
 	}
 

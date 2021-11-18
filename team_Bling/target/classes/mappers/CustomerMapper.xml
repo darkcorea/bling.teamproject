@@ -11,8 +11,7 @@
 		WHERE pidx= #{pidx}
 	</select>
 
-
-	<!-- 상품 디테일에서의 문의 -->
+	<!-- 상품 디테일에서 pidx로 문의한 내용 가져오기 -->
 	<select id="Product_Question" parameterType="PageMaker" resultType="CombineVO">
 		<![CDATA[
 		SELECT * FROM 
@@ -27,8 +26,26 @@
 	 	]]>
 	</select>
 	  
+	<!-- 상품 디테일에서 문의한 내용과 결과를 확인할 때 --> 
 	<select id="product_pqidx" parameterType="Product_QuestionVO" resultType="Product_QuestionVO">
 		SELECT title, comments, state FROM bg_product_question WHERE pwd=#{pwd} AND pqidx=#{pqidx}
 	</select>  
-	  
+	 
+	 <!-- 상문 문의 하기 내용 등록 -->
+	<insert id="product_write" parameterType="Product_QuestionVO" >
+		INSERT INTO bg_product_question (pqidx, originpqidx, midx, pidx, title, comments, pwd,  rdate) 
+		VALUES (pqidx_seq.nextval, pqidx_seq.nextval, #{midx}, #{pidx}, #{title}, #{comments}, #{pwd}, sysdate)
+	</insert> 
+	
+	<!-- pqidx로 문의 내용 가져오기 -->
+	<select id="product_question_one" parameterType="int" resultType="Product_QuestionVO">
+		SELECT title, comments, pidx, pwd, pqidx FROM bg_product_question WHERE pqidx=#{pqidx}
+	</select>
+	
+	<update id="product_modify" parameterType="Product_QuestionVO">
+		UPDATE bg_product_question SET title=#{title}, comments=#{comments}, pwd=#{pwd}, rdate=sysdate
+		WHERE pqidx = #{pqidx}
+	</update>
+	
+	
 </mapper>

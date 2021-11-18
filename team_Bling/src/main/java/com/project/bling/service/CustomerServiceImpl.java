@@ -35,6 +35,25 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerDAO.product_pqidx(pq);
 	}
 	
+	// 상품문의하기 등록하기
+	@Override
+	public void product_write(Product_QuestionVO pq) throws Exception {
+		customerDAO.product_write(pq);
+	}
+
+	// 상품문의 pqidx로 문의 내용 가져오기
+	@Override
+	public Product_QuestionVO product_question_one(int pqidx) throws Exception {
+		return customerDAO.product_question_one(pqidx);
+	}
+	
+	// 상품문의 내역 수정하기
+	@Override
+	public void product_modify(Product_QuestionVO pq) throws Exception {
+		customerDAO.product_modify(pq);
+		
+	}
+	
 	
 	
 	
