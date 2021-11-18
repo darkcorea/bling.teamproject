@@ -18,7 +18,7 @@ public class ProductDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-private String ps = "com.project.bling.mapper.productMapper.";
+	private String ps = "com.project.bling.mapper.productMapper.";
 	
 	/* 제품 리스트에서 쓰는 */
 	

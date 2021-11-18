@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.project.bling.mapper.adminmapper.ad_registMapper">
+
+	<!-- 관리자 제품 등록 -->
+	<insert id="productInsert" parameterType="ProductVO">
+	<![CDATA[
+	INSERT INTO BG_PRODUCT(pname,kind,price,discount,shipping)
+		values(#{pname},#{kind},#{price},#{discount},#{shipping})
+	]]>
+	<selectKey resultType="int" keyProperty="pidx" order="AFTER">
+	
+	SELECT MAX(pidx) FROM BG_PRODUCT
+	
+	</selectKey>
+	</insert>
+	
+	<!-- 관리자 옵션 등록 -->
+	<insert id="optionInsert" parameterType="OptionVO">
+	<![CDATA[
+	INSERT INTO BG_OPTION(color,texture,sizes,stock,addprice,pidx,oname)
+		values(#{color},#{texture},#{sizes},#{stock},#{addprice},#{pidx},#{oname})
+	]]>
+	</insert>
+	
+	<!--  관리자 이미지 등록 -->
+	<insert id="imageInsert" parameterType="ImageVO">
+	<![CDATA[
+	INSERT INTO BG_IMAGE(image_idx,pidx,main,detail1,showing1)
+		values(2,#{pidx},#{main},#{detail1},#{showing1})
+	]]>	
+	</insert>
+	
+	<!-- 관리자 제품 정보 불러오기 -->
+	<select id="list" resultType="ProductVO">
+		 SELECT pidx
+        	 , name
+        	 , kind
+        	 , price
+        	 , rdate
+          FROM BG_PRODUCT
+          WHERE 1=1 
+	</select>
+	
+</mapper>

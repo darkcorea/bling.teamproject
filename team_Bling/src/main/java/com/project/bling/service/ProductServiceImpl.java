@@ -54,22 +54,22 @@ public class ProductServiceImpl implements ProductService {
 		
 		
 		
-		/*  상품 디테일에서 쓰는 */
-		// 상품의 정보 가져 오기
-		@Override
-		public ProductVO detail(int pidx) throws Exception {
-			return productDAO.detail(pidx);
-		}
-		// 상품의 옵션 정보들 가져오기
-		@Override
-		public List<OptionVO> options(int pidx) throws Exception {
-			return productDAO.options(pidx);
-		}
-		// 상품의 이미지들 가져 오기
-		@Override
-		public ImageVO image(int pidx) throws Exception {
-			return productDAO.image(pidx);
-		}
+	/*  상품 디테일에서 쓰는 */
+	// 상품의 정보 가져 오기
+	@Override
+	public ProductVO detail(int pidx) throws Exception {
+		return productDAO.detail(pidx);
+	}
+	// 상품의 옵션 정보들 가져오기
+	@Override
+	public List<OptionVO> options(int pidx) throws Exception {
+		return productDAO.options(pidx);
+	}
+	// 상품의 이미지들 가져 오기
+	@Override
+	public ImageVO image(int pidx) throws Exception {
+		return productDAO.image(pidx);
+	}
 
 	
 }
