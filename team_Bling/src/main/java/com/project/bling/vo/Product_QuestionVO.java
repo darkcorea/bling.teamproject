@@ -2,7 +2,7 @@ package com.project.bling.vo;
 
 public class Product_QuestionVO {
 	private int pqidx;
-	private int qidx;
+	private int pidx;
 	private int midx;
 	private int originpqidx;
 	private int depth;
@@ -19,11 +19,12 @@ public class Product_QuestionVO {
 	public void setPqidx(int pqidx) {
 		this.pqidx = pqidx;
 	}
-	public int getQidx() {
-		return qidx;
+
+	public int getPidx() {
+		return pidx;
 	}
-	public void setQidx(int qidx) {
-		this.qidx = qidx;
+	public void setPidx(int pidx) {
+		this.pidx = pidx;
 	}
 	public int getMidx() {
 		return midx;

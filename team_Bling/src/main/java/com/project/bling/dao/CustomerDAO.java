@@ -34,5 +34,18 @@ public class CustomerDAO {
 		return sqlSession.selectOne(cm +"product_pqidx", pq);
 	}
 	
-
+	// 상문문의하기 등록하기
+	public void product_write(Product_QuestionVO pq) throws Exception{
+		sqlSession.insert(cm +"product_write", pq);
+	}
+	
+	// pqidx로  문의한 내용 가져오기, 수정하기 페이지에 뿌려주기
+	public Product_QuestionVO product_question_one(int pqidx) throws Exception{
+		return sqlSession.selectOne(cm +"product_question_one", pqidx);
+	}
+	
+	// 상문문의 내역 수정하기
+	public void product_modify(Product_QuestionVO pq) throws Exception{
+	sqlSession.selectOne(cm +"product_modify", pq);
+	}
 }

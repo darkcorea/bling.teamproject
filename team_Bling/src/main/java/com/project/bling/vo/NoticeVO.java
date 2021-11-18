@@ -6,8 +6,16 @@ public class NoticeVO {
 	private String subject;
 	private String contents;
 	private String rdate;
+	private String type;
 	
 	
+	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public int getNidx() {
 		return nidx;
 	}
