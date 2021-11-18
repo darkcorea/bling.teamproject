@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>제품 문의 수정하기</title>
+<title>제품 문의 하기</title>
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script src="/js/bootstrap.bundle.js"></script>
 <link rel="stylesheet" href="/css/bootstrap.css">
@@ -73,7 +73,7 @@
 </header>
 
 <section>
-	<h2>상품 문의 수정하기</h2>
+	<h2>상품 문의 하기</h2>
 	<form name="question" action="/Customer/product_write.do" method="POST">
 	<table>
 		<tr class="tr1">
