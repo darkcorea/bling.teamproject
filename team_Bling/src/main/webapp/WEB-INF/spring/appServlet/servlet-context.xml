@@ -26,6 +26,9 @@
 		<beans:property name="suffix" value=".jsp" /><!--확장자-->
 	</beans:bean>
 	
+	<context:component-scan base-package="com.project.bling.ad_controller" />
+	<context:component-scan base-package="com.project.bling.ad_service" />
+	<context:component-scan base-package="com.project.bling.ad_dao" />
 	<context:component-scan base-package="com.project.bling.controller" />
 	<context:component-scan base-package="com.project.bling.service" />
 	<context:component-scan base-package="com.project.bling.dao" />
@@ -48,12 +51,12 @@
 	<interceptors>
 		<!-- 관리자 세션체크 매핑-->
 		<interceptor>
-			<mapping path="/Admin/main.do"/>
-			<mapping path="/Admin/list.do"/>
-			<mapping path="/Admin/regist.do"/>
-			<mapping path="/Admin/registPro.do"/>
-			<mapping path="/Admin/insertOpt.do"/>
-			<mapping path="/Admin/insertImg.do"/>
+			<mapping path="/Ad_Main/main.do"/>
+			<mapping path="/Ad_regist/list.do"/>
+			<mapping path="/Ad_regist/regist.do"/>
+			<mapping path="/Ad_regist/registPro.do"/>
+			<mapping path="/Ad_regist/insertOpt.do"/>
+			<mapping path="/Ad_regist/insertImg.do"/>
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
 		<!-- 사용자 세션체크 매핑 -->
