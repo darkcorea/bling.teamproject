@@ -964,7 +964,11 @@ section {
 		  	 let startPage = parseInt(pm.startPage);
 		  	 let endPage = parseInt(pm.endPage);
 		  	 for (let k = startPage; k<=endPage; k++ ){
-		  	 	str += "<li class='page-item'><a class='page-link pointer' onclick='review_Fn("+k+",\""+type+"\")'>"+k+"</a>";      
+		  		if(k == pm.scri.page){
+		  		 	str += "<li class='page-item active'><a class='page-link pointer' onclick='review_Fn("+k+",\""+type+"\")'>"+k+"</a>";
+		  		}else{
+		  			str += "<li class='page-item'><a class='page-link pointer' onclick='review_Fn("+k+",\""+type+"\")'>"+k+"</a>";
+		  		}
 		  	 }
 		  	 str += "<li class='page-item'>";
 		  	 if(pm.next && pm.endPage > 0){
@@ -1102,7 +1106,11 @@ section {
   		  	 let startPage = parseInt(pm.startPage);
   		  	 let endPage = parseInt(pm.endPage);
   		  	 for (let k = startPage; k<=endPage; k++ ){
-  		  	 	str += "<li class='page-item'><a class='page-link pointer' onclick='question_Fn("+k+")'>"+k+"</a></li>";      
+  		  		if ( k == pm.scri.page){ 
+  		 	 	 	str += "<li class='page-item active'><a class='page-link pointer' onclick='question_Fn("+k+")'>"+k+"</a></li>";  
+  		  		}else {
+  		  			str += "<li class='page-item'><a class='page-link pointer' onclick='question_Fn("+k+")'>"+k+"</a></li>"; 
+  		  		}
   		  	 }
   		  	 str += "<li class='page-item'>";
   		  	 if(pm.next && pm.endPage > 0){

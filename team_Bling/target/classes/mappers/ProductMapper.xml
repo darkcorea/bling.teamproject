@@ -362,14 +362,14 @@
 	<select id="detailProduct" parameterType="int" resultType="ProductVO">
 		SELECT pidx, pname, kind, price, saleprice, discount
 		FROM bg_product
-		WHERE pidx = #{pidx} AND saleyn='y'
+		WHERE pidx = #{pidx} AND saleyn='Y'
 	</select>
 	
 	<!-- 상품 옵션 -->
 	<select id="optionsProduct" parameterType="int" resultType="OptionVO">
 		SELECT oidx, pidx, oname, addprice, stock
 		FROM bg_option
-		WHERE pidx = #{pidx} AND saleyn='y'
+		WHERE pidx = #{pidx} AND saleyn='Y'
 	</select>
 	
 	<!-- 상품 이미지 -->
