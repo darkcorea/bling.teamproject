@@ -139,7 +139,6 @@ public class ProductController {
 		// 상품의 옵션 정보
 		model.addAttribute("options", productService.options(pidx));
 		
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>"+productService.options(pidx));
 		// 상품의 이미지들
 		model.addAttribute("image", productService.image(pidx));
 		
