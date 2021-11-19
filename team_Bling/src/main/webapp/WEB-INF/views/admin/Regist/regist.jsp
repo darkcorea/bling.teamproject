@@ -154,19 +154,26 @@ $.reset = function(){
 </script>
 
 <style>
-	div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
-a {text-decoration:none;}
+section, header {
+		max-width:1008px;
+		margin:  0px auto;
+	}
+	section {
+    display: block;
+	}
 
-.quickmenu {position:absolute;width:120px;height:500px;top:20%;margin-top:-50px;left:50px;background:#cb7878;padding:20px;}
-.quickmenu ul {position:relative;float:left;width:100%;display:inline-block;*display:inline;}
-.quickmenu ul li {float:left;width:100%;text-align:center;display:inline-block;*display:inline;}
-.quickmenu ul li a {position:relative;float:left;width:100%;height:50px;line-height:30px;text-align:center;color:#fff;font-size:12pt;}
-.quickmenu ul li a:hover {color:#000;}
-.quickmenu ul li:last-child {border-bottom:0;}
-
-.content {position:relative;min-height:1000px;}
-
+	.quickmenu {position:absolute;width:120px;height:500px;top:20%;margin-top:-50px;left:50px;background:#cb7878;padding:20px;}
+	.quickmenu ul {position:relative;float:left;width:100%;display:inline-block;*display:inline;}
+	.quickmenu ul li {float:left;width:100%;text-align:center;display:inline-block;*display:inline;}
+	.quickmenu ul li a {position:relative;float:left;width:100%;height:50px;line-height:30px;text-align:center;color:#fff;font-size:12pt;}
+	.quickmenu ul li a:hover {color:#000;}
+	.quickmenu ul li:last-child {border-bottom:0;}
 	
+	.t {background-color:#cb7878;}
+	.d1 {margin-left:30px;
+		margin-top:30px;
+		margin-bottom:40px;
+		}
 </style>
 </head>
 <body>
@@ -174,8 +181,9 @@ a {text-decoration:none;}
 	<header>
 		<%@ include file="/WEB-INF/views/admin/ad_header.jsp" %><BR>
 	</header>
-<!-- 옆 nav 바 -->		
-	<div class="d1">
+<!-- 옆 nav 바 -->	
+<section>
+	<div class="container d1">
 		<div class="quickmenu">
 			  <ul>
 			 	<li><a href="#">홈</a></li>
@@ -316,6 +324,6 @@ a {text-decoration:none;}
 			</form>	
 		</div>
 	</div>	
-	
+</section>	
 </body>
 </html>

@@ -6,47 +6,42 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-		.t {background-color:#cb7878;}
-		.d1 {margin-left:200px;
-			margin-top:50px;
-			margin-bottom:50px;
-			width:1008px;
-			}
-		li{list-style-type:none;
-			display: inline;
-	 		margin-left:20px;
-	 		font-weight: bold;
-			}
-		ul{
-	    margin-top: 8px;
-	    margin-bottom: 8px;
-		}
-		hr{margin:1px;
-			width:1008px;
-			}
-		body{
+	body{
 		  margin: 0 auto;
 		  width: 1008px;
 			}
-		.nav-link {
-			color:black;
+	li{list-style-type:none;
+		display: inline;
+ 		margin-left:20px;
+ 		font-weight: bold;
 		}
-		.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-	    color: #fff;
-	    background-color: #cb7878;
+	ul{
+    margin-top: 8px;
+    margin-bottom: 8px;
+	}
+	hr{margin:1px;
+		width:1008px;
 		}
-		div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
-		a {text-decoration:none;}
-		
-		
-		#logoutDiv{
-			margin: 10px 0px;
-			float: right;
-		}
-		#logoutA{
-			text-decoration: none;
-			color: #000000;
-		}
+	
+	.nav-link {
+		color:black;
+	}
+	.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #cb7878;
+	}
+	div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
+	a {text-decoration:none;}
+	
+	
+	#logoutDiv{
+		margin: 10px 0px;
+		float: right;
+	}
+	#logoutA{
+		text-decoration: none;
+		color: #000000;
+	}
 		
 	</style>
 </head>
@@ -70,7 +65,7 @@
 		   <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle active" aria-current="page" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">상품 관리</a>
 		    <ul class="dropdown-menu">
-		      <li><a class="dropdown-item" href="/Ad_regist//list.do">상품 리스트</a></li>
+		      <li><a class="dropdown-item" href="/Ad_regist/list.do">상품 리스트</a></li>
 		      <li><a class="dropdown-item" href="/Ad_regist/regist.do">상품 등록</a></li>
 		      <li><a class="dropdown-item" href="#">품절 상품</a></li>
 		    </ul>
