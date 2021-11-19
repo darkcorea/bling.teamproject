@@ -40,7 +40,7 @@ public class Ad_RegistController {
 		
 		return "admin/Regist/view";
 	}
-	
+
 	// 제품 등록페이지 이동
 	@RequestMapping(value = "/regist.do", method = RequestMethod.GET)
 	public String resist(Locale locale, Model model) throws Exception {
