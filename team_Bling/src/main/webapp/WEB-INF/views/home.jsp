@@ -61,7 +61,6 @@
 
 <body>
 	<a href="/Review/list.do?page=1">페이징 완료</a><br>
-	<a href="/Order/order.do">주문하기</a><br>
   
 <header>
 	<%@ include file="/WEB-INF/views/header.jsp" %><br><br>

@@ -1,15 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ <%@ page import="java.util.*" %>
+ <%@ page import="com.project.bling.*" %>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content ="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>관리자 상품 등록</title>
+<title>관리자 상품 리스트</title>
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script src="/js/bootstrap.bundle.js"></script>
 <link rel="stylesheet" href="/css/bootstrap.css">
@@ -23,10 +25,39 @@ $(document).ready(function () {
     $(".quickmenu").stop().animate({"top":position+currentPosition+"px"},1000); 
     });
 });
+
+
 </script>
 
 <style>
-	
+	.d1 {margin-left:100px;
+		margin-top:50px;
+		margin-bottom:50px;
+		width:1008px;
+		}
+	li{list-style-type:none;
+		display: inline;
+ 		margin-left:20px;
+ 		font-weight: bold;
+		}
+	ul{
+    margin-top: 8px;
+    margin-bottom: 8px;
+	}
+	hr{margin:1px;
+		width:1008px;
+		}
+	body{
+	  margin: 0 auto;
+	  width: 1008px;
+		}
+	.nav-link {
+		color:black;
+	}
+	.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #cb7878;
+	}
 	div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
 a {text-decoration:none;}
 
@@ -46,9 +77,52 @@ th,td{text-align:center;}
 <body>
 	
 	<header>
-	<%@ include file="/WEB-INF/views/admin/ad_header.jsp" %><BR>
+			<img alt="header" src="/resources/simage/header.png" width="1008px" height="65px">	
+	<hr>
+	<ul class="nav nav-pills">
+	  <li class="nav-item">
+	    <a class="nav-link" href="#">홈</a>
+	  </li>
+	  <li class="nav-item dropdown">
+	    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">주문/배송</a>
+	    <ul class="dropdown-menu">
+	      <li><a class="dropdown-item" href="#">주문 리스트</a></li>
+	      <li><a class="dropdown-item" href="#">배송 리스트</a></li>
+	      <li><a class="dropdown-item" href="#">환불 접수</a></li>
+	      <li><a class="dropdown-item" href="#">교환 접수</a></li>
+	    </ul>
+	  </li>
+	   <li class="nav-item dropdown">
+	    <a class="nav-link dropdown-toggle active" aria-current="page" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">상품 관리</a>
+	    <ul class="dropdown-menu">
+	      <li><a class="dropdown-item" href="#">상품 리스트</a></li>
+	      <li><a class="dropdown-item" href="Admin/regist.do">상품 등록</a></li>
+	      <li><a class="dropdown-item" href="#">품절 상품</a></li>
+	    </ul>
+	  </li>
+	   <li class="nav-item dropdown">
+	    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">회원 관리</a>
+	    <ul class="dropdown-menu">
+	      <li><a class="dropdown-item" href="#">회원 리스트</a></li>
+	      <li><a class="dropdown-item" href="#">회원 등급 설정</a></li>
+	      <li><a class="dropdown-item" href="#">탈퇴회원 리스트</a></li>
+	    </ul>
+	     </li>
+	     <li class="nav-item dropdown">
+	    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">게시판 관리</a>
+	    <ul class="dropdown-menu">
+	      <li><a class="dropdown-item" href="#">문의 게시판</a></li>
+	      <li><a class="dropdown-item" href="#">공지사항 게시판</a></li>
+	      <li><a class="dropdown-item" href="#">이벤트 게시판</a></li>
+	      <li><a class="dropdown-item" href="#">리뷰 관리</a></li>
+	    </ul>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="#">통계</a>
+	  </li> 
+	</ul>	 
+	<hr>	
 	</header>	
-<!-- 옆 nav 바 -->	
 	<div class="d1">
 		<div class="quickmenu">
 			  <ul>
@@ -59,9 +133,7 @@ th,td{text-align:center;}
 			  </ul>
 		</div>
 		<h2>상품 리스트</h2>
-		<div id="d2">
-			
-		</div>
+	
 		<table style="width:800px">
 			<tr class="line">
 				<th width="100">상품번호</th>
@@ -70,15 +142,15 @@ th,td{text-align:center;}
 				<th width="150">상품가격</th>
 				<th>등록일</th>
 			</tr>	
-			<c:forEach items="${list}" var="list">
-				<tr class="line">
-					<td>${list.pidx}</td>
-					<td>${list.kind}</td>
-					<td>${list.name}</td>
-					<td>${list.price}</td>
-					<td>${list.rdate}</td>
-				</tr>
-			</c:forEach>
+		<c:forEach items="${list}" var="list">
+		<tr class="line">
+			<td>${list.pidx}</td>
+			<td>${list.kind}</td>
+			<td>${list.pname}</td>
+			<td>${list.price}</td>
+			<td>${list.rdate}</td>
+		</tr>
+		</c:forEach>
 		</table>
 		
 	</div>	
