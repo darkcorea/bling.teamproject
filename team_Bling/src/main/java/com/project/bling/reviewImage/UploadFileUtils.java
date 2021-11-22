@@ -24,6 +24,8 @@ public class UploadFileUtils {
         File target = new File(uploadPath + savedPath, savedName);
         // 임시 디렉토리에 업로드된 파일을 지정된 디렉토리로 복사
         FileCopyUtils.copy(fileData, target);
+     
+     /**
         // 썸네일을 생성하기 위한 파일의 확장자 검사
         // 파일명이 aaa.bbb.ccc.jpg일 경우 마지막 마침표를 찾기 위해
         String formatName = originalName.substring(originalName.lastIndexOf(".")+1);
@@ -37,7 +39,11 @@ public class UploadFileUtils {
             // 아이콘 생성
             uploadedFileName = makeIcon(uploadPath, savedPath, savedName);
         }
+     
         return uploadedFileName;
+     **/
+        
+        return savedName;
     }
 
     // 날짜별 디렉토리 추출
@@ -75,6 +81,7 @@ public class UploadFileUtils {
         }
     }    
 
+    /**
     // 썸네일 생성
     private static String makeThumbnail(String uploadPath, String path, String fileName) throws Exception {
         // 이미지를 읽기 위한 버퍼
@@ -90,7 +97,9 @@ public class UploadFileUtils {
         // 썸네일의 이름을 리턴함
         return thumbnailName.substring(uploadPath.length()).replace(File.separatorChar, '/');
     }
+    **/
 
+    /**
     // 아이콘 생성
     private static String makeIcon(String uploadPath, String path, String fileName) throws Exception {
         // 아이콘의 이름
@@ -100,4 +109,5 @@ public class UploadFileUtils {
         // 윈도우 \ , 유닉스(리눅스) /         
         return iconName.substring(uploadPath.length()).replace(File.separatorChar, '/');
     }
+    **/
 }
