@@ -5,5 +5,106 @@
  
 <mapper namespace="com.project.bling.mapper.myPageMapper">
 
-	  
+	<!-- 회원번호(midx)에 따른 결제완료 건수 -->
+	<select id="orderComp" resultType="CombineVO">
+		SELECT count(d.order_yn) AS orderCompCnt
+		FROM bg_delivery d
+		INNER JOIN bg_order o
+		ON d.order_idx=o.order_idx
+		WHERE d.order_yn='y' AND o.midx=#{midx}
+		GROUP BY o.midx
+	</select>
+	
+	<!-- 회원번호(midx)에 따른 배송상태(n:결제미완료,y:결제완료,a:상품준비중,b:배송중,c:배송완료) -->
+	<select id="deliveryStat" resultType="CombineVO">
+		SELECT count(d.deli_stat) AS deliStatCnt
+		FROM bg_delivery d
+		INNER JOIN bg_order o
+		ON d.order_idx=o.order_idx
+		WHERE d.deli_stat=#{deli_stat} AND o.midx=#{midx}
+		GROUP BY o.midx
+	</select>
+	
+	<!-- 최근 주문 정보(product,option,order,order_detail,delivery 5개 테이블 join) -->
+	<select id="recentOrder" resultType="CombineVO">
+		WITH po
+		    AS(
+		        SELECT p.pname,
+		               p.saleprice,
+		               op.oname,
+		               op.addprice,
+		               op.oidx
+		        FROM bg_product p
+		        INNER JOIN bg_option op
+		        ON p.pidx=op.pidx
+		    ),
+		     oodd
+		     AS(
+		        SELECT o.rdate,
+		               o.order_idx,
+		               od.detail_idx,
+		               od.quantity,
+		               d.deli_stat,
+		               d.order_yn,
+		               od.oidx,
+		               o.midx
+		        FROM bg_order o
+		        LEFT OUTER JOIN bg_order_detail od
+		        ON o.order_idx=od.order_idx
+		        
+		        LEFT OUTER JOIN bg_delivery d
+		        ON o.order_idx=d.order_idx
+		     )
+		SELECT oodd.rdate,
+		       oodd.order_idx,
+		       oodd.detail_idx,
+		       po.pname,
+		       po.oname,
+		       po.saleprice,
+		       po.addprice,
+		       sum(oodd.quantity) AS quantitySum,
+		       oodd.deli_stat
+		FROM oodd
+		INNER JOIN po
+		ON oodd.oidx=po.oidx
+		WHERE oodd.midx=#{midx} AND NOT oodd.deli_stat='N'
+		GROUP BY oodd.rdate,oodd.order_idx,oodd.detail_idx,po.pname,po.oname,po.saleprice,po.addprice,oodd.deli_stat
+		ORDER BY oodd.rdate
+		DESC
+	</select>
+	
+	<insert id="reviewWrite" parameterType="CombineVO">
+	<!-- <![CDATA[]]> 안의 코드들을 문자열로 인식시킨다. -->
+		<![CDATA[
+    	INSERT INTO bg_review(
+    				ridx,
+    				contents,
+    				rdate,
+    				image1,
+    				image2,
+    				midx,
+    				detail_idx,
+    				grade
+    				)
+    	VALUES(
+    		#{ridx}
+    		,#{contents}	
+    		,sysdate
+    		,#{image1}
+    		,#{image2}
+    		,#{midx}
+    		,#{detail_idx}
+    		,#{grade}
+    	)
+    	]]>
+    	<!--
+    		selectKey의 결과를 keyProperty에 담는다 
+    		order : selectKey를 쿼리문 전에 실행할지 후에 실행할지 정한다.
+    	-->
+    	<selectKey resultType="int" keyProperty="ridx" order="BEFORE">
+    		SELECT MAX(ridx)+1 FROM bg_review
+    	</selectKey>
+    		
+	</insert>
+	
 </mapper>
