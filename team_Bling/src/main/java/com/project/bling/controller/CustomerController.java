@@ -1,19 +1,27 @@
 package com.project.bling.controller;
 
+
+
+import java.util.List;
 import java.util.Locale;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.service.CustomerService;
 import com.project.bling.service.NoticeService;
+import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.Product_QuestionVO;
+import com.project.bling.vo.QuestionVO;
 
 @RequestMapping(value="/Customer")
 @Controller
@@ -56,6 +64,28 @@ public class CustomerController {
 	}
 	
 	
+	// 문의 페이지에서 상품선택 버튼을 클릭 했을때 AJAX
+	@RequestMapping(value="/product_select.do")
+	@ResponseBody
+	public List<CombineVO> product_select(Locale locale, Model model, int midx) throws Exception {
+		return customerService.product_select(midx);
+	}
+	
+	// 문의 페이지에서 상품 선택 버튼을 클릭하고 모달창에 나와 있는 상품들을 선택 했을 때 AJAX
+	@RequestMapping(value="/detail_idx_select.do")
+	@ResponseBody
+	public List<CombineVO> detail_idx_select(Locale locale, Model model,
+			@RequestParam("list[]") List<Integer> list) throws Exception {	
+		//System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>"+list);
+		return customerService.detail_idx_select(list);
+	}
+	
+	// 고객센터, 마이페이지에서  문의하기를 등록 할 때
+	@RequestMapping(value="/question_write.do")
+	public String question_write(Locale locale, Model model, QuestionVO qv) throws Exception {
+			customerService.question_write(qv);
+		return "redirect:/Customer/main.do?page=1";
+	}
 	
 	
 	// 상품 디테일에서 상문문의하기 버튼을 눌렀을 경우에 상품문의하기 페이지로 이동
@@ -67,7 +97,7 @@ public class CustomerController {
 	
 	// 상품 문의하기에서 저장 버튼을 눌렀을 경우에 문의내용을 등록하고 상품 디테일 페이지로 이동
 	@RequestMapping(value="/product_write.do")
-	public String product_write(Locale locale, Model model, Product_QuestionVO pq) throws Exception  {
+	public String product_write(Locale locale, Model model, Product_QuestionVO pq) throws Exception {
 		customerService.product_write(pq);
 		return "redirect:/Product/detail.do?pidx="+pq.getPidx();
 	}

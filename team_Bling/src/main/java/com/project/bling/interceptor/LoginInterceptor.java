@@ -6,8 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.project.bling.vo.UserVO;
-
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 	@Override

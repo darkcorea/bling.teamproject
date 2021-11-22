@@ -1205,6 +1205,80 @@
 	      
 		}
 	}
+  
+  /* 문의하기 제목을 클릭할 시 비밀번호 입력 모달창 나오게 */
+	function question_title(pqidx,midx){
+		
+		// 로그인을 안했을 경우 로그인 하라는 창 띄우기
+		let umidx= "${sessionScope.UserVO.midx}";
+		let uid= "${sessionScope.UserVO.id}";
+		if(uid == ""){
+			alert("로그인을 해주세요");
+		
+		// 로그인을 했지만 다른 사람의 문의 글을 클릭 했을 경우 
+		}else if ( umidx != midx){
+			console.log(midx);
+			console.log(umidx);
+			alert("다른사람의 글입니다");
+			
+		}else {
+		
+		// 누를 때 마다 전에 입력 했던 값 없애고, 경고 문구 사라지게
+		$("#question_pwd").val("");
+		$("#pwd_chcek").text("").hide();
+		
+		// 비밀번호를 입력하라고 하는 모달창 보이게 하기
+		$("#question_motal").modal("show");
+		
+		// 확인 버튼을 눌렀을 때
+		$("#modal_button").click(function(){
+			var pwd = $("#question_pwd").val();
+			//console.log(pwd);
+			// 입력값이 업을 경우
+			if(pwd == ""){
+				$("#pwd_chcek").text("*입력해주세요").css("color","red").show();
+			}
+			// 입력 값이 있을 경우 에이작스 통신하기
+			else{
+				 $.ajax({
+					url:"/Customer/detail_question.do",
+					data:{"pqidx":pqidx, "pwd":pwd},
+					dataType:"JSON",
+					type:"POST",
+					success:function(data){
+						//console.log(data);
+						// 암호입력하는 모달창 닫기
+						$("#question_motal").modal("hide");
+						
+						// 모달창에 뿌려주는 내용 입력, 타이들과 내용
+						let str = "";
+						str +="<h5>"+data.title+"</h5>";
+						str += data.comments;
+						$("#question_contents").html(str);
+						
+						// 답변이 완료된 문의하기는 수정버튼이 없고, 답변 미완료된 문의하기만 수정버튼이 존재
+						let str1 = "";
+						if (data.state == "N"){
+							str1 += "<button type='button' class='btn btn-secondary' onclick='location.href=\"/Customer/product_modify.do?pqidx="+pqidx+"\"'>수정하기</button>";
+							str1 += "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal' id='modal_button2'>확인</button>";
+							$("#modal_requestion").html(str1);
+						}else if (data.state == "Y"){
+							str1 += "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal' id='modal_button2'>확인</button>";
+							$("#modal_requestion").html(str1);
+						}
+						
+						// 새로운 모달 창 띄우기
+						$("#question_motal1").modal("show");
+					},
+					error:function(){
+						$("#pwd_chcek").text("*비밀번호가 잘못되었습니다.").css("color","red").show();
+					}
+				 });
+			} 
+		});
+		
+		}
+	}
 
 </script>
 </html>

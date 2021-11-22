@@ -16,7 +16,7 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
   	
   	<style>
-/*--------------- header-begin ---------------*/
+/*--------------- header-begin ---------------*/ 
 		header{
 			max-width:1008px;
 			margin:  0px auto;
@@ -122,14 +122,6 @@
 		#amenu:hover{
 			color:#989191;
 		}
-		#scmenu{
-			text-decoration-line: none;
-			color : #000000;
-			
-		}
-		#scmenu:hover{
-			color:#fff;
-		}
 		.badge{
 			font-size:8pt;
 		}	
@@ -158,14 +150,11 @@
 		    font-weight:600;
 		    
 		}
-		.row1{
-			 background-color: #CB7878;
-			  opacity:0.9;
-		}
 		.scmenu{
 		    background-color: #CB7878;
 		    opacity:0.9;
 		    height: 45px;
+		     
 		}
 		.login{
 			word-spacing: 5px;
@@ -210,7 +199,7 @@
 		            </div>
 		            <div class="col-1 col-md-4"></div>
 		            <div class="col-3 col-md-2" id="headerCol2">
-		                <a id="customerCenter" href="">고객센터</a>
+		                <a id="customerCenter" href="/Customer/main.do?page=1">고객센터</a>
 		            </div>
 		        </div>
 		
@@ -264,29 +253,28 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/best.do">BEST</a></span>
+						<span id="smenu"><a id="amenu" href="/Product/best_new.do?kind=best">BEST</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/new.do">NEW</a></span>
+						<span id="smenu"><a id="amenu" href="/Product/best_new.do?kind=new">NEW</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/ring.do?orderBy=1">반지</a></span>
+						<span id="smenu"><a id="amenu" href="/Product/sroll.do?kind=R">반지</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/necklace.do?orderBy=1">목걸이</a></span>
+						<span id="smenu"><a id="amenu" href="/Product/sroll.do?kind=N">목걸이</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/earring.do?orderBy=1">귀걸이</a></span>
+						<span id="smenu"><a id="amenu" href="/Product/sroll.do?kind=E">귀걸이</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-7 col-xl-7" id="menu_end">
-						<span id="smenu"><a id="amenu" href="/Product/braclet.do?orderBy=1">팔찌</a></span>
-					</div>
+						<span id="smenu"><a id="amenu" href="/Product/sroll.do?kind=B">팔찌</a></span>
 				</div>
 			</div>
 			<br>
 		
   <div class="scrollNav container">
-     <div class="row row1">
+     <div class="row">
 		<div class="col-lg-1 col-md-1 col-sm-2 col-2 scmenu" >
 		   <a href="/"><i class="bi bi-house-fill"></i></a>
 		</div>
@@ -304,22 +292,22 @@
 		   <a id="customerCenter1" href="">고객센터</a>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="scmenu" href="/Product/best.do">BEST</a></span>
+			<span><a id="amenu" href="/Product/best_new.do?kind=best">BEST</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="scmenu" href="/Product/new.do">NEW</a></span>
+			<span><a id="amenu" href="/Product/best_new.do?kind=new">NEW</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="scmenu" href="/Product/ring.do?orderBy=1">반지</a></span>
+			<span><a id="amenu" href="/Product/sroll.do?kind=R">반지</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="scmenu" href="/Product/necklace.do?orderBy=1">목걸이</a></span>
+			<span><a id="amenu" href="/Product/sroll.do?kind=N">목걸이</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="scmenu" href="/Product/earring.do?orderBy=1">귀걸이</a></span>
+			<span><a id="amenu" href="/Product/sroll.do?kind=E">귀걸이</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="scmenu" href="/Product/braclet.do?orderBy=1">팔찌</a></span>
+			<span><a id="amenu" href="/Product/sroll.do?kind=B">팔찌</a></span>
 		</div>
 	</div>
   </div>
