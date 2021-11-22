@@ -1030,8 +1030,14 @@
   			  	
   		  		// 문의 내용 뿌려주기
   			  	str += "<tr>";
-  			  	str += "<td class='text_align'>"+i+"</td>";
-  			  	str += "<td>"+question[i].title+"</td>";
+  			  	str += "<td class='text_align'>"+(i+1)+"</td>";
+  			  	
+  			  	if (question[i].depth == 0) {
+  			  		str += "<td class='pointer' onclick='question_title("+question[i].pqidx+","+question[i].midx+")'>"+question[i].title+"</td>";
+  			  	}
+  			  	if (question[i].depth == 1) {
+    			  	str += "<td class='pointer' onclick='question_title("+question[i].pqidx+","+question[i].midx+")'><i class='bi bi-arrow-return-right'></i> "+question[i].title+"</td>";
+    			}
   			  	let name = question[i].uname.slice(0,-2);
 			  	let name1 = name+"**";
   			  	str += "<td class='text_align'>"+name1+"</td>";
@@ -1041,7 +1047,8 @@
 
   		  	 }
   		  	 str += "</tbody>"
-  		  	 str += "</table><br>";
+  		  	 str += "</table>";
+  		  	 str += "<button type='button' class='btn btn-danger' id='btn-question' onclick='location.href=\"/Customer/product.do?pidx="+pidx+"\"'>상품문의하기</button><br><br>";
   		  	 
   		  	 // 페이징 할 수 있는 번호 나오는 곳 뿌려 주기
   		  	 str += "<nav aria-label='Page navigation'>";
@@ -1055,7 +1062,11 @@
   		  	 let startPage = parseInt(pm.startPage);
   		  	 let endPage = parseInt(pm.endPage);
   		  	 for (let k = startPage; k<=endPage; k++ ){
-  		  	 	str += "<li class='page-item'><a class='page-link pointer' onclick='question_Fn("+k+")'>"+k+"</a>";      
+  		  		if ( k == pm.scri.page){ 
+  		 	 	 	str += "<li class='page-item active'><a class='page-link pointer' onclick='question_Fn("+k+")'>"+k+"</a></li>";  
+  		  		}else {
+  		  			str += "<li class='page-item'><a class='page-link pointer' onclick='question_Fn("+k+")'>"+k+"</a></li>"; 
+  		  		}
   		  	 }
   		  	 str += "<li class='page-item'>";
   		  	 if(pm.next && pm.endPage > 0){
@@ -1064,6 +1075,7 @@
   		  	 str += "</li>";
   		  	 str += "</ul>";
   		  	 str += "</nav>";
+  		  	 
   		  	
   		  	// 리뷰 div에 모든 내용 뿌려주기
   		  	$("#detail-Inquiry").html(str);
