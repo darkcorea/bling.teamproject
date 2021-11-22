@@ -113,8 +113,8 @@ public class MyPageController {
 		System.out.println("마이페이지 컨트롤러>>>>>contents : "+vo.getContents());
 		System.out.println("마이페이지 컨트롤러>>>>>grade : "+vo.getGrade());
 		//System.out.println("마이페이지 컨트롤러>>>>>detail_idx : "+vo.getDetail_idx());
-		System.out.println("마이페이지 컨트롤러>>>>>image1 : "+vo.getImage1());
-		System.out.println("마이페이지 컨트롤러>>>>>image2 : "+vo.getImage2());
+		//System.out.println("마이페이지 컨트롤러>>>>>image1 : "+vo.getImage1());
+		//System.out.println("마이페이지 컨트롤러>>>>>image2 : "+vo.getImage2());
 		
 		
 		//위의 detailIdx 메소드에서 session에 저장한 detail_idx를 불러와서 CombineVo에 저장한다.

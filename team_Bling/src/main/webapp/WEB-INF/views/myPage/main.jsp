@@ -54,7 +54,7 @@
 				str += "			<td id='td6'><span id='t6'>배송완료</span></td>";
 				str += "		</c:if>";
 				
-				str += "		<td id='td7'><span id='t7'><button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#staticBackdrop' onclick='javascript:upload(); detailIdx();' value='${ro.detail_idx}' >리뷰 작성</button></span></td>";
+				str += "		<td id='td7'><span id='t7'><button class='btn btn-primary' id='reviewBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop' onclick='javascript:upload(); detailIdx();' value='${ro.detail_idx}' >리뷰 작성</button></span></td>";
 				str += "	</tr>";
 				str += "</c:forEach>";
 				
@@ -399,7 +399,76 @@
 		
 	/* sweetalert2 css */
 	
-	/* star rating */
+	
+	/* modal */
+		/* modal 가운데 위치 */
+		.modal {
+	        text-align: center;
+		}
+		@media screen and (min-width: 768px) { 
+		        .modal:before {
+		                display: inline-block;
+		                vertical-align: middle;
+		                content: " ";
+		                height: 100%;
+		        }
+		}
+		/* modal 가운데 위치 */
+	 
+	.modal-dialog {
+	        display: inline-block;
+	        text-align: left;
+	        vertical-align: middle;
+	}
+
+		.modal-header{
+			background-color: #CB7878;
+		}
+		.modal-title{
+			color: #ffffff;
+			font-size: 30px;
+			position: relative;
+			left: 175px;
+		}
+		#modalText1{
+			text-align: center;
+			font-weight: bold;
+			font-size: 20px;
+		}
+		#textArea{
+			width: 465px;
+			height: 200px;
+			resize: none;
+			background-color: #C4C4C4;
+			opacity: 0.5;
+		}
+		#textArea::placeholder{
+			color: #000000;
+		}
+		#closeBtn{
+			width: 80px;
+			color: #000000;
+			background-color: #ffffff;
+			border: 2px solid #C4C4C4;
+			position: relative;
+			right: 150px;
+		}
+		#saveBtn{
+			width: 80px;
+			color: #ffffff;
+			background-color: #CB7878;
+			border: 2px solid #CB7878;
+			position: relative;
+			right: 150px;
+		}
+		#saveBtn:hover{
+			color: #CB7878;
+			background-color: #ffffff;
+			border: 2px solid #CB7878;
+		}
+	/* modal */
+	
+	/* modal - star rating */
 		.rating {
 		    display: flex;
 		    flex-direction: row-reverse;
@@ -411,7 +480,7 @@
 		.rating>label {
 		    position: relative;
 		    width: 1em;
-		    font-size: 6vw;
+		    font-size: 2vw;
 		    color: #FF3A00;
 		    cursor: pointer
 		}
@@ -451,14 +520,14 @@
 		        font-size: 12px
 		    }
 		}
-	/* star rating */
+	/* modal - star rating */
 	
 	
 	
-	/* drag&drop image upload */
+	/* modal - drag&drop image upload */
 		.fileDrop {
-	        width:600px;
-	        height: 200px;
+	        width: 465px;
+	        height: 20px;
 	        border: 1px dotted blue;
 	    }
 	    small {
@@ -466,7 +535,7 @@
 	        font-weight: bold;
 	        color: gray;
 	    }
-	/* drag&drop image upload */
+	/* modal - drag&drop image upload */
 	
 	
 	/* article css  */
@@ -569,7 +638,7 @@
 			text-align: center;
 		}
 		#td7{
-			width: 90px;
+			width: 100px;
 			text-align: center;
 		}
 		#th3{
@@ -588,6 +657,12 @@
 		}
 		#review{
 			cursor: pointer;
+		}
+		#reviewBtn{
+			color: #000000;
+			background-color: #ffffff;
+			border: none;
+			
 		}
 	/* article css  */
 	</style>
@@ -610,6 +685,8 @@
 				</div>
 				
 				<div class="modal-body">
+					<div id="modalText1">상품을 사용해보셨나요?</div>
+									
 					<!-- star_rating -->
 					<div class="rating">
 						<input type="radio" name="rating" value="5" id="5">
@@ -624,7 +701,7 @@
 							<label for="1">☆</label>
 					</div>
 					<br>
-					<textarea></textarea>
+					<textarea id="textArea" placeholder="상품에 대한 후기를 남겨 주세요.&#13;&#10;사진은 2장까지 첨부 가능합니다."></textarea>
 					<br>
 					<!-- 파일을 업로드할 영역 -->
 					<div class="fileDrop"></div>
@@ -632,8 +709,8 @@
 				</div>
 				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="reviewWrite()">저장</button>
+					<button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary" id="saveBtn" data-bs-dismiss="modal" onclick="reviewWrite()">저장</button>
 				</div>
 				
 			</div>
