@@ -9,51 +9,40 @@ public class CombineVO {
 	private int discount;
 	private int saleprice;
 	// option
+	private int order_idx;
 	private String oname;
+	private int addprice;
 	// review
 	private int ridx;
 	private int grade;
 	private String contents;
 	private String image1;
 	private String image2;
+	private int detail_idx;
 	// image
 	private String main;
 	//user
 	private String uname;
-	private int midx;
 	// product_question
 	private int pqidx;
 	private int depth;
 	private String title;
 	private String comments;
 	private String rdate;
-	//ORDER_DETAIL
-	private int detail_idx;
+	// delivery
+	private String deli_stat;
+	// order
+	private int midx;
 	// 임의로 정한 
 	private int reviewCount;
 	private int quantitySum;
 	private int quantity;
+	// 임의(MyPageMapper)
+	private int orderCompCnt;
+	private int deliStatCnt;
 	
 	
 	
-	public String getOname() {
-		return oname;
-	}
-	public void setOname(String oname) {
-		this.oname = oname;
-	}
-	public int getDetail_idx() {
-		return detail_idx;
-	}
-	public void setDetail_idx(int detail_idx) {
-		this.detail_idx = detail_idx;
-	}
-	public int getMidx() {
-		return midx;
-	}
-	public void setMidx(int midx) {
-		this.midx = midx;
-	}
 	public int getPqidx() {
 		return pqidx;
 	}
@@ -114,6 +103,24 @@ public class CombineVO {
 	public void setSaleprice(int saleprice) {
 		this.saleprice = saleprice;
 	}
+	public int getOrder_idx() {
+		return order_idx;
+	}
+	public void setOrder_idx(int order_idx) {
+		this.order_idx = order_idx;
+	}
+	public String getOname() {
+		return oname;
+	}
+	public void setOname(String oname) {
+		this.oname = oname;
+	}
+	public int getAddprice() {
+		return addprice;
+	}
+	public void setAddprice(int addprice) {
+		this.addprice = addprice;
+	}
 	public int getRidx() {
 		return ridx;
 	}
@@ -144,6 +151,12 @@ public class CombineVO {
 	public void setImage2(String image2) {
 		this.image2 = image2;
 	}
+	public int getDetail_idx() {
+		return detail_idx;
+	}
+	public void setDetail_idx(int detail_idx) {
+		this.detail_idx = detail_idx;
+	}
 	public String getMain() {
 		return main;
 	}
@@ -155,6 +168,18 @@ public class CombineVO {
 	}
 	public void setUname(String uname) {
 		this.uname = uname;
+	}
+	public String getDeli_stat() {
+		return deli_stat;
+	}
+	public void setDeli_stat(String deli_stat) {
+		this.deli_stat = deli_stat;
+	}
+	public int getMidx() {
+		return midx;
+	}
+	public void setMidx(int midx) {
+		this.midx = midx;
 	}
 	public int getReviewCount() {
 		return reviewCount;
@@ -173,6 +198,18 @@ public class CombineVO {
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	public int getOrderCompCnt() {
+		return orderCompCnt;
+	}
+	public void setOrderCompCnt(int orderCompCnt) {
+		this.orderCompCnt = orderCompCnt;
+	}
+	public int getDeliStatCnt() {
+		return deliStatCnt;
+	}
+	public void setDeliStatCnt(int deliStatCnt) {
+		this.deliStatCnt = deliStatCnt;
 	}
 	
 	

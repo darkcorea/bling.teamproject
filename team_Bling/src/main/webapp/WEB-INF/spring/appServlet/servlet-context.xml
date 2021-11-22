@@ -26,9 +26,6 @@
 		<beans:property name="suffix" value=".jsp" /><!--확장자-->
 	</beans:bean>
 	
-	<context:component-scan base-package="com.project.bling.ad_controller" />
-	<context:component-scan base-package="com.project.bling.ad_service" />
-	<context:component-scan base-package="com.project.bling.ad_dao" />
 	<context:component-scan base-package="com.project.bling.controller" />
 	<context:component-scan base-package="com.project.bling.service" />
 	<context:component-scan base-package="com.project.bling.dao" />
@@ -42,6 +39,15 @@
 		<beans:property name="defaultEncoding" value="utf-8" />
 	</beans:bean>
 	
+
+	<!-- 파일업로드를 위한 디렉토리 설정 -->
+	<!-- String uploadPath = new String("업로드 경로") -->
+	<beans:bean id="uploadPath" class="java.lang.String">
+	    <!-- 파일업로드 디렉토리-->
+	    <beans:constructor-arg value="D:\프\1122\team_Bling\src\main\webapp\resources\review_img"/>
+	</beans:bean>
+	
+			
 	<!-- 인터셉터 bean 설정 -->
 	<!-- 사용자 세션체크 bean -->
 	<beans:bean id="loginInterceptor" class="com.project.bling.interceptor.LoginInterceptor"/>
@@ -51,23 +57,19 @@
 	<interceptors>
 		<!-- 관리자 세션체크 매핑-->
 		<interceptor>
-			<mapping path="/Ad_Main/main.do"/>
-			<mapping path="/Ad_regist/list.do"/>
-			<mapping path="/Ad_regist/regist.do"/>
-			<mapping path="/Ad_regist/registPro.do"/>
-			<mapping path="/Ad_regist/insertOpt.do"/>
-			<mapping path="/Ad_regist/insertImg.do"/>
+			<mapping path="/Admin/main.do"/>
+			<mapping path="/Admin/list.do"/>
+			<mapping path="/Admin/regist.do"/>
+			<mapping path="/Admin/registPro.do"/>
+			<mapping path="/Admin/insertOpt.do"/>
+			<mapping path="/Admin/insertImg.do"/>
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
 		<!-- 사용자 세션체크 매핑 -->
 		<interceptor>
 			<mapping path="/MyPage/main.do"/>
 			<mapping path="/Basket/cart.do"/>
-    	<mapping path="/Order/nonorder.do"/>
-			<!-- 고객센터 또는 디테일,마이페이지에서  상품,일반문의, 문의수정하기 -->
-			<mapping path="/Customer/product.do"/>
-			<mapping path="/Customer/question.do"/>
-			<mapping path="/Customer/product_modify.do"/>
+			<mapping path="/Order/nonorder.do"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 	</interceptors>
