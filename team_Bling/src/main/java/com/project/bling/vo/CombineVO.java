@@ -8,6 +8,8 @@ public class CombineVO {
 	private int price;
 	private int discount;
 	private int saleprice;
+	// option
+	private String oname;
 	// review
 	private int ridx;
 	private int grade;
@@ -25,6 +27,8 @@ public class CombineVO {
 	private String title;
 	private String comments;
 	private String rdate;
+	//ORDER_DETAIL
+	private int detail_idx;
 	// 임의로 정한 
 	private int reviewCount;
 	private int quantitySum;
@@ -32,6 +36,18 @@ public class CombineVO {
 	
 	
 	
+	public String getOname() {
+		return oname;
+	}
+	public void setOname(String oname) {
+		this.oname = oname;
+	}
+	public int getDetail_idx() {
+		return detail_idx;
+	}
+	public void setDetail_idx(int detail_idx) {
+		this.detail_idx = detail_idx;
+	}
 	public int getMidx() {
 		return midx;
 	}

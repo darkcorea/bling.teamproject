@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,6 +63,8 @@ public class Ad_RegistController {
 
 		String path = "D:\\dev_ajax\\spring\\team\\src\\main\\webapp\\resources\\image\\";
 		String spath = "D:\\dev_ajax\\spring\\team\\src\\main\\webapp\\resources\\simage\\";
+		String path11 = request.getContextPath();
+		String path12 = path11+"/image/";
 		MultipartFile f_main = request.getFile("main");
 		MultipartFile f_detail1 = request.getFile("detail1");
 		MultipartFile f_detail2 = request.getFile("detail2");

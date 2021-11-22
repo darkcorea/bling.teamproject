@@ -1,6 +1,9 @@
 package com.project.bling.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.Order_detailVO;
 import com.project.bling.vo.Product_QuestionVO;
+import com.project.bling.vo.QuestionVO;
 
 @Repository
 public class CustomerDAO {
@@ -48,4 +53,21 @@ public class CustomerDAO {
 	public void product_modify(Product_QuestionVO pq) throws Exception{
 	sqlSession.selectOne(cm +"product_modify", pq);
 	}
+	
+	// midx로 60일 동안 구매한 제품에 대한 정보 가져오기
+	public List<CombineVO> product_select(int midx) throws Exception{
+		return sqlSession.selectList(cm +"product_select", midx);
+	}
+	
+	// detail_idx로 상품 이름, 옵션 이름 , detail_idx 값 가져오기
+	public List<CombineVO> detail_idx_select(List<Integer> list) throws Exception{	
+		return sqlSession.selectList(cm +"detail_idx_select", list);
+	}
+	
+	// 문의 내역 저장하기
+	public void question_write(QuestionVO qv) throws Exception{
+	sqlSession.insert(cm +"question_write", qv);
+	}
+	
+	
 }

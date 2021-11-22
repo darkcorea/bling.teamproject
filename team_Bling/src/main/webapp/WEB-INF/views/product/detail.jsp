@@ -16,7 +16,7 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style>
-/* 메인 페이지 설정   */
+/* 메인 페이지 설정   */ 
 section {
 	width: 1008px;
 	/* height:20000px; */

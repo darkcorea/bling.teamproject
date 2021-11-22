@@ -9,6 +9,7 @@ import com.project.bling.dao.CustomerDAO;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.Product_QuestionVO;
+import com.project.bling.vo.QuestionVO;
 
 
 @Service("CustomerService")
@@ -52,6 +53,24 @@ public class CustomerServiceImpl implements CustomerService {
 	public void product_modify(Product_QuestionVO pq) throws Exception {
 		customerDAO.product_modify(pq);
 		
+	}
+
+	// midx로 상품 문의에서 뿌려주는 구매한 상품 정보
+	@Override
+	public List<CombineVO> product_select(int midx) throws Exception {
+		return customerDAO.product_select(midx);
+	}
+	
+	// detail_idx로 상품 이름, 옵션 이름 , detail_idx 조회하기
+	@Override
+	public List<CombineVO> detail_idx_select(List<Integer> list) throws Exception {
+		return customerDAO.detail_idx_select(list);
+	}
+
+	// 문의 내역 저장하기
+	@Override
+	public void question_write( QuestionVO qv) throws Exception {
+		customerDAO.question_write(qv);
 	}
 	
 	
