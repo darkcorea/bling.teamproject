@@ -36,7 +36,12 @@ public class Ad_RegistController {
 		model.addAttribute("list", list);
 		return "admin/Regist/list";
 	}
-	
+	@RequestMapping(value = "/view.do")
+	public String detail(Locale locale, Model model) throws Exception {
+		
+		return "admin/Regist/view";
+	}
+
 	// 제품 등록페이지 이동
 	@RequestMapping(value = "/regist.do", method = RequestMethod.GET)
 	public String resist(Locale locale, Model model) throws Exception {
@@ -47,8 +52,9 @@ public class Ad_RegistController {
 	// 제품 등록하기
 	@RequestMapping(value = "/registPro.do", method = RequestMethod.POST)
 	@ResponseBody
-	public void insert(ProductVO vo) throws Exception {
+	public int insert(ProductVO vo) throws Exception {
 		ad_registService.insert(vo);
+		return vo.getPidx();
 	}
 	
 	// 옵션등록

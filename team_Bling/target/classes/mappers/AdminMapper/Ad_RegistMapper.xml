@@ -8,8 +8,8 @@
 	<!-- 관리자 제품 등록 -->
 	<insert id="productInsert" parameterType="ProductVO">
 	<![CDATA[
-	INSERT INTO BG_PRODUCT(pname,kind,price,discount,shipping)
-		values(#{pname},#{kind},#{price},#{discount},#{shipping})
+	INSERT INTO BG_PRODUCT(pname,kind,price,discount)
+		values(#{pname},#{kind},#{price},#{discount})
 	]]>
 	<selectKey resultType="int" keyProperty="pidx" order="AFTER">
 	
@@ -37,7 +37,7 @@
 	<!-- 관리자 제품 정보 불러오기 -->
 	<select id="list" resultType="ProductVO">
 		 SELECT pidx
-        	 , name
+        	 , pname
         	 , kind
         	 , price
         	 , rdate
