@@ -1,560 +1,611 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content ="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>상품 상세페이지</title>
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script src="/js/bootstrap.bundle.js"></script>
 <link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style>
-   /* 메인 페이지 설정   */
-	section {
-		width:1008px;
-		/* height:20000px; */
-		/* border:1px solid black; */
-		margin:5px auto;
-	}
-	
-	/* 폰트사이즈  */
-	.font12 {
-		font-size:12px;
-	}
-	
-	/* 아이콘 크기 등 설정 */
-	.size27 {
-		height:27px;
-		width:27px;
-	}
-	
-	.size25 {
-		height:25px;
-		width:25px;
-	}
-	
-	
-	/* 상품 이미지, 옵션 , 가격, 결제, 장바구니 */
-	.explan {
-		height:680px;
-	}
-	
-	/* 보여지는 이미지 틀*/
-	.explan .image1 {
-		width:490px;
-		height:630px;
-		margin:20px 6px;
-		float: left;
-	}
-	
-	/* 커다란 이미지 */
-	.explan .image1 .image2 {
-		width:490px;
-		height:490px;
-		margin-bottom: 15px ;
-	}
-	
-	/* 작은 이미지들 1~4 */
-	.explan .image1 .image3 {
-		width:100px;
-		height:100px;
-		float: left;
-		margin: 5px;
-	}
-	
-	/* 이미지 옆에 이름, 옵션, 가격, 결제, 장바구니 버튼등의 큰들*/
-	.explan .text1 {
-		width:490px;
-		height:630px;
-		margin:20px 3px;
-		float: left;	
-	}
-	
-	/* 이름, 옵션 나오는 곳*/
-	.explan .text1 .text2 {
-		width:468px;
-		height:480px;
-		float: right;
-	
-	}
-	
-	/* 상품명 위에 있는 커다란 선 */
-	.explan .myhr {
-		background-color: black;
- 		height: 3px;
- 		margin:0px 0px 10px 0px;
-	}
-	
-	/* 가격, 옵션 텍스트 */
-	.select .select-text, .explan .text2 .price1{
-		float: left;
-	}
-	
-	/* 옵션 드롭 셀릭트 박스  */
-	.select .form-select {
-		width:70%;
-	}
-	
-	/* 옵션을 선택하면 표시되는 곳 */
-	.explan .text1 .text2 .select-result{
-		width:100%;
-		height:270px;
-		overflow:auto;
-	}
-	
-	/* 옵션에 선택시 나오는 박스 크기 */	
-	.option_box{
-		width:100%;
-		height:45px;
-		padding-top:3px;
-		border-bottom:1px solid #BEB5B5;
-	}
-	
-	/* 옵션 선택 박스 안에 있는 테이블 크기*/
-	.option_tb1 {
-		width:220px;
-	}
-	
-	/* 옵션의 숫자를 조절 하는 단추 컨트롤러 */
-	.option_tb2 {
-		width:100px;
-		text-align:light;
-	}
-	
-	/* 선택한 옵션들에 대한 종합 가격 */
-	.explan .text1 .text2 .select-price{
-		text-align:right;
-		height:30px;
-		margin: 5px 70px 10px 0px;
-		
-	}
+/* 메인 페이지 설정   */ 
+section {
+	width: 1008px;
+	/* height:20000px; */
+	/* border:1px solid black; */
+	margin: 5px auto;
+}
 
-	/* 버튼들 위치 가운데 */
-	.explan .text2 .btn-two {
-		text-align:center;
-	}
-	
-	/* 바로구매 버튼 */
-	.explan .text2 .btn-two .btn-danger {
-		background-color: #CB7878;
-		border: 1px solid #CB7878;
-		width: 160px;
-	}
-	
-	
-	/* 장바구니 버튼 */
-	.explan .text2 .btn-two .btn-light {
-		width: 160px;
-	}
-	
-	/* 하트 아이콘  */
-	.bi-suit-heart,  .bi-suit-heart-fill {
-		font-size:25px;
-		color:red;
-	}
-	
-	/* explan밑에 있는 hr줄의 마진  */
-	.explan-bottom {
-		margin-bottom: 50px;
-	}
+/* 폰트사이즈  */
+.font12 {
+	font-size: 12px;
+}
 
-	/* 상세정보 후기 상품문의 구매가이드  바*/
-	.detail-nav {
-		text-align:center;
-		font-size:20px;
-		margin: 20px auto;
-		padding: 20px;
-		border-bottom:1px solid #BEB5B5;
-	}
-	
-	/* 상세정보, 후기, 상품문의, 구매가이드  */
-	.detail-nav-1{
-		margin:20px;
-	}
-    
-    /* 예비 클래스 3개 */
-    .detail-nav-2, .detail-nav-3, .detail-nav-4{
+/* 아이콘 크기 등 설정 */
+.size27 {
+	height: 27px;
+	width: 27px;
+}
 
-	}
-    
-    /* 상세정보, 후기, 상품문의, 구매가이드 각각 아래 발간색 줄 */
-    #move_info, #move_review, #move_question, #move_giude {
-   		border: #CB7878 solid;
-    	border-width: 0 0 10px 0;
-    }
-    
-	/* 상세정보 이미지 가운데로 */
-	.detail-image, .detail-guide {
-		text-align:center;	
-	}
+.size25 {
+	height: 25px;
+	width: 25px;
+}
+
+/* 상품 이미지, 옵션 , 가격, 결제, 장바구니 */
+.explan {
+	height: 680px;
+}
+
+/* 보여지는 이미지 틀*/
+.explan .image1 {
+	width: 490px;
+	height: 630px;
+	margin: 20px 6px;
+	float: left;
+}
+
+/* 커다란 이미지 */
+.explan .image1 .image2 {
+	width: 490px;
+	height: 490px;
+	margin-bottom: 15px;
+}
+
+/* 작은 이미지들 1~4 */
+.explan .image1 .image3 {
+	width: 100px;
+	height: 100px;
+	float: left;
+	margin: 5px;
+}
+
+/* 이미지 옆에 이름, 옵션, 가격, 결제, 장바구니 버튼등의 큰들*/
+.explan .text1 {
+	width: 490px;
+	height: 630px;
+	margin: 20px 3px;
+	float: left;
+}
+
+/* 이름, 옵션 나오는 곳*/
+.explan .text1 .text2 {
+	width: 468px;
+	height: 480px;
+	float: right;
+}
+
+/* 상품명 위에 있는 커다란 선 */
+.explan .myhr {
+	background-color: black;
+	height: 3px;
+	margin: 0px 0px 10px 0px;
+}
+
+/* 가격, 옵션 텍스트 */
+.select .select-text, .explan .text2 .price1 {
+	float: left;
+}
+
+/* 옵션 드롭 셀릭트 박스  */
+.select .form-select {
+	width: 70%;
+}
+
+/* 옵션을 선택하면 표시되는 곳 */
+.explan .text1 .text2 .select-result {
+	width: 100%;
+	height: 270px;
+	overflow: auto;
+}
+
+/* 옵션에 선택시 나오는 박스 크기 */
+.option_box {
+	width: 100%;
+	height: 45px;
+	padding-top: 3px;
+	border-bottom: 1px solid #BEB5B5;
+}
+
+/* 옵션 선택 박스 안에 있는 테이블 크기*/
+.option_tb1 {
+	width: 220px;
+}
+
+/* 옵션의 숫자를 조절 하는 단추 컨트롤러 */
+.option_tb2 {
+	width: 100px;
+	text-align: light;
+}
+
+/* 선택한 옵션들에 대한 종합 가격 */
+.explan .text1 .text2 .select-price {
+	text-align: right;
+	height: 30px;
+	margin: 5px 70px 10px 0px;
+}
+
+/* 버튼들 위치 가운데 */
+.explan .text2 .btn-two {
+	text-align: center;
+}
+
+/* 바로구매 버튼 */
+.explan .text2 .btn-two .btn-danger {
+	background-color: #CB7878;
+	border: 1px solid #CB7878;
+	width: 160px;
+}
+
+/* 장바구니 버튼 */
+.explan .text2 .btn-two .btn-light {
+	width: 160px;
+}
+
+/* 하트 아이콘  */
+.bi-suit-heart, .bi-suit-heart-fill {
+	font-size: 25px;
+	color: red;
+}
+
+/* explan밑에 있는 hr줄의 마진  */
+.explan-bottom {
+	margin-bottom: 50px;
+}
+
+/* 상세정보 후기 상품문의 구매가이드  바*/
+.detail-nav {
+	text-align: center;
+	font-size: 20px;
+	margin: 20px auto;
+	padding: 20px;
+	border-bottom: 1px solid #BEB5B5;
+}
+
+/* 상세정보, 후기, 상품문의, 구매가이드  */
+.detail-nav-1 {
+	margin: 20px;
+}
+
+/* 예비 클래스 3개 */
+.detail-nav-2, .detail-nav-3, .detail-nav-4 {
 	
-	/* 평점 평균, 개별 평점, 사진10개 */
-	.detail-review-view {
-		width:990px;
-		height:250px;
-		margin: 5px auto;
-	/*	border:1px solid black; */	
-		padding:20px;
-	}
-	
-	/* 평점 평균 나오는곳 과 전체리뷰 수*/
-	.detail-review-view .review-average{
-		width:125px;
-		height:125px;
-		float: left;
-		text-align:center;
-		margin:50px 50px;
-	}
-	
-	/* 평점평균 나오는 곳 */
-	.detail-review-view .review-average .review-average1{
-		width:125px;
-		height:100px;
-		background-color:black;
-		color:white;
-		font-size:65px;
-	}
-		
-	/* 개별 평점 */
-	.detail-review-view .review-score{
-		float: left;
-		width:200px;
-		height:150px;
-		margin-top:37px;	
-	}
-	
-	/* 평점 안에 들어가 있는 prograce 바 */
-	.review-score .file{
-		height:16px;
-		vertical-align:middle;
-	}
-	
-	/* 이미지 10개 틀 */
-	.detail-review-view .review-image{
-		width:500px;
-		height:200px;
-		float: right;
-		margin:0px;
-	}
-	
-	/* 후기 개별 이미지들, 리뷰 이미지 2개 */
-	.review-image1 {
-		width:90px;
-		height:90px;
-		float: left;
-		margin: 3px;
-	}
-	
-	/* 리뷰 리스트 테이블 */
-	#review_table{
-		width:986;
-		/* height:440px; */
-		margin: 5px auto;
+}
+
+/* 상세정보, 후기, 상품문의, 구매가이드 각각 아래 발간색 줄 */
+#move_info, #move_review, #move_question, #move_giude {
+	border: #CB7878 solid;
+	border-width: 0 0 10px 0;
+}
+
+/* 상세정보 이미지 가운데로 */
+.detail-image, .detail-guide {
+	text-align: center;
+}
+
+/* 평점 평균, 개별 평점, 사진10개 */
+.detail-review-view {
+	width: 990px;
+	height: 250px;
+	margin: 5px auto;
 	/*	border:1px solid black; */
-	}
-	
-	/* 각 리뷰들의 높이 */
-	.review_tr {
-		height:120px;
-		font-size:15px;
-	}
-	
-	/* 리뷰 안에 들어가는 별의 크기와 색깔 */
-	.bi-star-fill {
-		font-size:10px;
-		color:#CB7878;
-	}
-	
-	/*  페이징 번호들을 붙이기 위해서 */
-	.page-item {
-		padding:0px;
-	}
-	
-	/* 상품문의  크기와 높이*/
-	#detail-Inquiry{
-		width:986;
-		margin: 5px auto;
-	}
-	
-	/* 클래스 추가하면 텍스트 센터*/
-	.text_align {
-		text-align:center;
-	}
-	
-	/* 클래스 추가하면 가져다 대면 손모양 나옴*/
-	.pointer {
-		cursor:pointer;
-	}
-	
+	padding: 20px;
+}
+
+/* 평점 평균 나오는곳 과 전체리뷰 수*/
+.detail-review-view .review-average {
+	width: 125px;
+	height: 125px;
+	float: left;
+	text-align: center;
+	margin: 50px 50px;
+}
+
+/* 평점평균 나오는 곳 */
+.detail-review-view .review-average .review-average1 {
+	width: 125px;
+	height: 100px;
+	background-color: black;
+	color: white;
+	font-size: 65px;
+}
+
+/* 개별 평점 */
+.detail-review-view .review-score {
+	float: left;
+	width: 200px;
+	height: 150px;
+	margin-top: 37px;
+}
+
+/* 평점 안에 들어가 있는 prograce 바 */
+.review-score .file {
+	height: 16px;
+	vertical-align: middle;
+}
+
+/* 이미지 10개 틀 */
+.detail-review-view .review-image {
+	width: 500px;
+	height: 200px;
+	float: right;
+	margin: 0px;
+}
+
+/* 후기 개별 이미지들, 리뷰 이미지 2개 */
+.review-image1 {
+	width: 90px;
+	height: 90px;
+	float: left;
+	margin: 3px;
+}
+
+/* 리뷰 리스트 테이블 */
+#review_table {
+	width: 986;
+	/* height:440px; */
+	margin: 5px auto;
+	/*	border:1px solid black; */
+}
+
+/* 각 리뷰들의 높이 */
+.review_tr {
+	height: 120px;
+	font-size: 15px;
+}
+
+/* 리뷰 안에 들어가는 별의 크기와 색깔 */
+.bi-star-fill {
+	font-size: 10px;
+	color: #CB7878;
+}
+
+/*  페이징 번호들을 붙이기 위해서 */
+.page-item {
+	padding: 0px;
+}
+
+/* 상품문의  크기와 높이*/
+#detail-Inquiry {
+	width: 986;
+	margin: 5px auto;
+}
+
+/* 상품문의 하기 버튼 */
+#btn-question{
+	background-color: #CB7878;
+	border: 1px solid #CB7878;
+	width: 130px;
+	float: right;
+}
+
+/* 모달 버튼 */
+#modal_button, #modal_button2 {
+	background-color: #CB7878;
+}
+
+/* 클래스 붙이면 백그라운드 색상이 블링 색으로 */
+.bling_color {
+	background-color: #CB7878;
+}
+
+/* 클래스 추가하면 텍스트 센터*/
+.text_align {
+	text-align: center;
+}
+
+/* 클래스 추가하면 가져다 대면 손모양 나옴*/
+.pointer {
+	cursor: pointer;
+}
 </style>
 
 
 </head>
 <body>
-상품상세 페이지입니다<br>
-<!-- 상세페이지 main -->
-상품 가격 : <c:out value="${detail.saleprice}"/> <br>
-리뷰 갯수 : <c:out value="${fn:length(review)}"/> <br>
-<header>
-	<%@ include file="/WEB-INF/views/header.jsp" %><BR><br>
-</header>
 
-<section>
-	<!-- 상세이미지 보여주는  -->
-	<div class="w-100 explan"> 
-		<div class="image1">
-			<img src="/resources/image/${image.main}" class="img-thumbnail image2" id="image-main">
-			<img src="/resources/image/${image.main}" class="img-thumbnail image3" id="main">
- 			<c:if test="${image.detail1 ne null}">
-			<img src="/resources/image/${image.detail1}" class="img-thumbnail image3" id="detail1">
-			</c:if>
-			<c:if test="${image.detail2 ne null}">
-			<img src="/resources/image/${image.detail2}" class="img-thumbnail image3" id="detail2">
-			</c:if>
-			<c:if test="${image.detail3 ne null}">
-			<img src="/resources/image/${image.detail3}" class="img-thumbnail image3" id="detail3">
-			</c:if>
-		</div>
-		
-		<!-- 상품가격과 옵션, 버튼 표시 -->
-		<div class="text1">
-			<div class="text2">
-				<hr class="myhr">
-				<span class="fw-bold fs-3 m-1"><c:out value="${detail.pname}"/></span><br>
-				<hr>
-				
-				<!--  가격 표시 -->
-				<div class="price">
-					<div class="fw-bold fs-6 w-25 price1 m-1">가격</div>
-					<div class="price2">
-						<span class="fw-bold fs-5">
-							<fmt:formatNumber type="number" maxFractionDigits="3" value="${detail.saleprice}"/>원
-						</span>&ensp;
-						<span class="text-muted text-decoration-line-through">
-							<fmt:formatNumber type="number" maxFractionDigits="3" value="${detail.price}"/>원
-						</span>&ensp;				
-						<span class="text-danger"><c:out value="${detail.discount}"/>%</span>
-					</div>				
-				</div>
-				<hr>
-				
-				<!-- 옵션 선택 select 박스 -->
-				<div>
-					<div class="select-text fw-bold w-25 m-1">옵션</div>
-					<div id="optselect">
-						<select class="form-select" aria-label="Default select example">
-							<option value="first" selected disabled id="nooption">[필수] 옵션을 선택하세요.</option>
-							
-							<!-- 재고가  1~9개라면 재고 표시 -->
-							<c:forEach items="${options}" var="options">
-								<option value="${options.oidx},${options.stock}">
-									<c:out value="${options.oname}"/>
-									<c:if test="${0 < options.stock and options.stock < 10}">
-									<span class="font12">(재고:${options.stock})</span>
-									</c:if>
-								</option>
-								
-								<!-- 재고가 0개라면 disabled 하고 품절 추가 -->
-								<c:if test="${options.stock == 0 }">
-									<script  type="text/javascript">
+	<header>
+		<%@ include file="/WEB-INF/views/header.jsp"%><BR>
+		<br>
+	</header>
+
+	<section>
+		<!-- 상세이미지 보여주는  -->
+		<div class="w-100 explan">
+			<div class="image1">
+				<img src="/resources/image/${image.main}"
+					class="img-thumbnail image2" id="image-main"> <img
+					src="/resources/image/${image.main}" class="img-thumbnail image3"
+					id="main">
+				<c:if test="${image.detail1 ne null}">
+					<img src="/resources/image/${image.detail1}"
+						class="img-thumbnail image3" id="detail1">
+				</c:if>
+				<c:if test="${image.detail2 ne null}">
+					<img src="/resources/image/${image.detail2}"
+						class="img-thumbnail image3" id="detail2">
+				</c:if>
+				<c:if test="${image.detail3 ne null}">
+					<img src="/resources/image/${image.detail3}"
+						class="img-thumbnail image3" id="detail3">
+				</c:if>
+			</div>
+
+			<!-- 상품가격과 옵션, 버튼 표시 -->
+			<div class="text1">
+				<div class="text2">
+					<hr class="myhr">
+					<span class="fw-bold fs-3 m-1"><c:out
+							value="${detail.pname}" /></span><br>
+					<hr>
+
+					<!--  가격 표시 -->
+					<div class="price">
+						<div class="fw-bold fs-6 w-25 price1 m-1">가격</div>
+						<div class="price2">
+						<c:if test="${detail.discount != 0}">
+							<span class="fw-bold fs-5">
+								<fmt:formatNumber type="number" maxFractionDigits="3" value="${detail.saleprice}" />원
+							</span>&ensp;
+							<span class="text-muted text-decoration-line-through">
+								<fmt:formatNumber type="number" maxFractionDigits="3" value="${detail.price}" />원
+							</span>&ensp;
+							<span class="text-danger">
+								<c:out	value="${detail.discount}" />%
+							</span>
+						</c:if>
+						<c:if  test="${detail.discount == 0}">
+							<span class="fw-bold fs-5">
+								<fmt:formatNumber type="number" maxFractionDigits="3" value="${detail.saleprice}" />원
+							</span>
+						</c:if>
+						</div>
+					</div>
+					<hr>
+
+					<!-- 옵션 선택 select 박스 -->
+					<div class="select">
+						<div class="select-text fw-bold w-25 m-1">옵션</div>
+						<div>
+							<select class="form-select" aria-label="Default select example">
+								<option value="first" selected disabled>[필수] 옵션을 선택하세요.</option>
+
+								<!-- 재고가  1~9개라면 재고 표시 -->
+								<c:forEach items="${options}" var="options">
+									<option value="${options.oidx},${options.stock}">
+										<c:out value="${options.oname}" />
+										<c:if test="${0 < options.stock and options.stock < 10}">
+											<span class="font12">(재고:${options.stock})</span>
+										</c:if>
+									</option>
+
+									<!-- 재고가 0개라면 disabled 하고 품절 추가 -->
+									<c:if test="${options.stock == 0 }">
+										<script type="text/javascript">
 									var oidx = '<c:out value="${options.oidx}"/>';
 									var name = '<c:out value="${options.oname}"/>';
 									//alert(oidx);
 									$("select option[value='"+oidx+",0']").attr("disabled","disabled");
 									$("select option[value='"+oidx+",0']").text(name+" 품절");
 									</script>
-								</c:if>
-							
-					   		</c:forEach>
-						</select>
+									</c:if>
+
+								</c:forEach>
+							</select>
+						</div>
 					</div>
+
+					<hr>
+					<!-- 옵션 선택 표시 -->
+					<div id="select-result" class="select-result"></div>
+
+					<!-- 선택한 물품 가격 합계 표시 -->
+					<div class="select-price">
+						<span class="font12 fw-bold">TOTAL: </span> <span
+							class="fw-bold fs-4" id="total_price_out">0</span> <input
+							type="hidden" id="total_price_in" value="0"> <span>원</span>
+						<!-- 일단 지금은 안함 -->
+						<!--	<span class="font12"> (선택갯수)</span>    -->
+					</div>
+
+					<!-- 바로구매, 장바구니 버튼 -->
+					<c:choose>
+						<c:when test="${sessionScope.UserVO.id == null}">
+							<div class="btn-two">
+								<button type="button" class="btn btn-danger" onclick="nonorder()">비회원 바로구매</button>
+								<button type="button" class="btn btn-light">장바구니</button>
+								&ensp;<i class="bi bi-suit-heart" id="heart" onclick="heart(${detail.pidx})"></i>	
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="btn-two">
+								<button type="button" class="btn btn-danger" onclick="memberorder()">바로구매</button>
+								<button type="button" class="btn btn-light">장바구니</button>
+								&ensp;<i class="bi bi-suit-heart" id="heart" onclick="heart(${detail.pidx})"></i>	
+							</div>
+						</c:otherwise>
+					</c:choose>	
 				</div>
-				
-				<hr>
-				<!-- 옵션 선택 표시 -->
-				
-				<div id="select-result" class="select-result"></div>
-				
-				<!-- 선택한 물품 가격 합계 표시 -->
-				<div class="select-price">
-					<span class="font12 fw-bold">TOTAL: </span>
-					<span class="fw-bold fs-4" id="total_price_out">0</span>
-					<input type="hidden" id="total_price_in" value="0">
-					<span>원</span>
-			<!-- 일단 지금은 안함 -->
-			<!--	<span class="font12"> (선택갯수)</span>    -->
-				</div>
-			
-				<!-- 바로구매, 장바구니 버튼 -->
-				<c:choose>
-					<c:when test="${sessionScope.UserVO.id == null}">
-						<div class="btn-two">
-							<button type="button" class="btn btn-danger" onclick="nonorder()">비회원 바로구매</button>
-							<button type="button" class="btn btn-light">장바구니</button>
-							&ensp;<i class="bi bi-suit-heart" id="heart" onclick="heart(${detail.pidx})"></i>	
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="btn-two">
-							<button type="button" class="btn btn-danger" onclick="memberorder()">바로구매</button>
-							<button type="button" class="btn btn-light">장바구니</button>
-							&ensp;<i class="bi bi-suit-heart" id="heart" onclick="heart(${detail.pidx})"></i>	
-						</div>
-					</c:otherwise>
-				</c:choose>	
 			</div>
 		</div>
-	</div>
-	
-	<div>
-		<hr class="explan-bottom">
-	</div>
-	
-	<!-- 상품설명, 후기 등 네비게이션 -->
-	<div class="detail-nav fw-bold">
-		<span class="detail-nav-1"><a id="move_info">상세정보</a></span>
-		<span class="detail-nav-1"><a href="#move_review" style="text-decoration: none;color: inherit;">후기(<span><c:out value="${fn:length(review)}"/></span>)</a></span>
-		<span class="detail-nav-1"><a href="#move_question" style="text-decoration: none;color: inherit;">상문문의</a></span>
-		<span class="detail-nav-1"><a href="#move_giude" style="text-decoration: none;color: inherit;">구매가이드</a></span>
-	</div>
-	<!-- 상품 상세 설명 이미지 -->
-	<div class="detail-image">
-		<img src="/resources/simage/<c:out value="${image.showing1}"/>">
-		<c:if test="${image.showing2 ne null}">
-		<img src="/resources/simage/<c:out value="${image.showing2}"/>">
-		</c:if>
-		<c:if test="${image.showing3 ne null}">
-		<img src="/resources/simage/<c:out value="${image.showing3}"/>">
-		</c:if>
-		<c:if test="${image.showing4 ne null}">
-		<img src="/resources/simage/<c:out value="${image.showing4}"/>">
-		</c:if>
-		<c:if test="${image.showing5 ne null}">
-		<img src="/resources/simage/<c:out value="${image.showing5}"/>">
-		</c:if>
-	</div>
-	
-	<!-- 상품에 관한 리뷰 -->
-	<div class="detail-nav fw-bold">
-		<span class="detail-nav-1"><a href="#move_info" style="text-decoration: none;color: inherit;">상세정보</a></span>
-		<span class="detail-nav-1"><a id="move_review">후기(<span><c:out value="${fn:length(review)}"/></span>)</a></span>
-		<span class="detail-nav-1"><a href="#move_question" style="text-decoration: none;color: inherit;">상문문의</a></span>
-		<span class="detail-nav-1"><a href="#move_giude" style="text-decoration: none;color: inherit;">구매가이드</a></span>
-	</div>
-	
-	<!-- 상품문의 상단 정보들 표시 -->
-	<div class="detail-reviwe" >
-		<!-- 리뷰평점, 별점, 사진 10개 -->
-		<div class="detail-review-view">
+
+		<div>
+			<hr class="explan-bottom">
+		</div>
+
+		<!-- 상품설명, 후기 등 네비게이션 -->
+		<div class="detail-nav fw-bold">
+			<span class="detail-nav-1"><a id="move_info">상세정보</a></span> <span
+				class="detail-nav-1"><a href="#move_review"
+				style="text-decoration: none; color: inherit;">후기(<span><c:out
+							value="${fn:length(review)}" /></span>)
+			</a></span> <span class="detail-nav-1"><a href="#move_question"
+				style="text-decoration: none; color: inherit;">상품문의</a></span> <span
+				class="detail-nav-1"><a href="#move_giude"
+				style="text-decoration: none; color: inherit;">구매가이드</a></span>
+		</div>
+		<!-- 상품 상세 설명 이미지 -->
+		<div class="detail-image">
+			<img src="/resources/simage/<c:out value="${image.showing1}"/>">
+			<c:if test="${image.showing2 ne null}">
+				<img src="/resources/simage/<c:out value="${image.showing2}"/>">
+			</c:if>
+			<c:if test="${image.showing3 ne null}">
+				<img src="/resources/simage/<c:out value="${image.showing3}"/>">
+			</c:if>
+			<c:if test="${image.showing4 ne null}">
+				<img src="/resources/simage/<c:out value="${image.showing4}"/>">
+			</c:if>
+			<c:if test="${image.showing5 ne null}">
+				<img src="/resources/simage/<c:out value="${image.showing5}"/>">
+			</c:if>
+		</div>
+
+		<!-- 상품에 관한 리뷰 -->
+		<div class="detail-nav fw-bold">
+			<span class="detail-nav-1"><a href="#move_info"
+				style="text-decoration: none; color: inherit;">상세정보</a></span> <span
+				class="detail-nav-1"><a id="move_review">후기(<span><c:out
+							value="${fn:length(review)}" /></span>)
+			</a></span> <span class="detail-nav-1"><a href="#move_question"
+				style="text-decoration: none; color: inherit;">상품문의</a></span> <span
+				class="detail-nav-1"><a href="#move_giude"
+				style="text-decoration: none; color: inherit;">구매가이드</a></span>
+		</div>
+
+		<!-- 상품문의 상단 정보들 표시 -->
+		<div class="detail-reviwe">
+			<!-- 리뷰평점, 별점, 사진 10개 -->
+			<div class="detail-review-view">
 				<!-- 리뷰 평점 -->
 				<div class="review-average">
 					<div class="review-average1">
 						<span id="review-average1">0</span>
 					</div>
-					<span class="font12"><c:out value="${fn:length(review)}"/></span><span class="font12">개의 리뷰 펑점</span>
+					<span class="font12"><c:out value="${fn:length(review)}" /></span><span
+						class="font12">개의 리뷰 펑점</span>
 				</div>
 				<!-- 리뷰 별점 텍스트 -->
 				<div class="review-score">
-				<progress id="recount5" class="file" max="100" value="0"> 50% </progress>
-				(<span class="review_sum5 font12">0</span>)<br>
-				<progress id="recount4" class="file" max="100" value="0"> 50% </progress>
-				(<span class="review_sum4 font12">0</span>)<br>
-				<progress id="recount3" class="file" max="100" value="0"> 50% </progress>
-				(<span class="review_sum3 font12">0</span>)<br>
-				<progress id="recount2" class="file" max="100" value="0"> 50% </progress>
-				(<span class="review_sum2 font12">0</span>)<br>
-				<progress id="recount1" class="file" max="100" value="0"> 50% </progress>
-				(<span class="review_sum1 font12">0</span>)
+					<progress id="recount5" class="file" max="100" value="0">
+						50% </progress>
+					(<span class="review_sum5 font12">0</span>)<br>
+					<progress id="recount4" class="file" max="100" value="0">
+						50% </progress>
+					(<span class="review_sum4 font12">0</span>)<br>
+					<progress id="recount3" class="file" max="100" value="0">
+						50% </progress>
+					(<span class="review_sum3 font12">0</span>)<br>
+					<progress id="recount2" class="file" max="100" value="0">
+						50% </progress>
+					(<span class="review_sum2 font12">0</span>)<br>
+					<progress id="recount1" class="file" max="100" value="0">
+						50% </progress>
+					(<span class="review_sum1 font12">0</span>)
 				</div>
-				
+
 				<!-- 사진 10개 -->
 				<!-- 사진이 없을 경우에 뿌려주는 방법을 찾다가. jstl로는 불가능한 걸 알고 스크립트로 뿌려 줄려다가 -->
 				<!-- 데이터베이스에서 null값을 아래로 내리는 방법을 찾아내서 매퍼를 수정함 -->
 				<div class="review-image">
 					<c:forEach items="${review}" var="review" end="9">
-					<img class="review-image1 img-thumbnail" src="/resources/review_img/${review.image1}">
+						<img class="review-image1 img-thumbnail"
+							src="/resources/review_img/${review.image1}">
 					</c:forEach>
 				</div>
+			</div>
+			<!-- 리뷰, 최신순, 평점순 -->
+			<div>
+				&ensp;&ensp;&ensp;<span class="fw-bold fs-5">리뷰</span> &ensp;<span
+					class="pointer" onclick="review_Fn(1,'R')">최신순</span> <span>|</span>
+				<span class="pointer" onclick="review_Fn(1,'G')">평점순</span>
+			</div>
+			<!--  리뷰 테이블 -->
+			<div id="review_table"></div>
 		</div>
-		<!-- 리뷰, 최신순, 평점순 -->
-		<div>
-			&ensp;&ensp;&ensp;<span class="fw-bold fs-5">리뷰</span>
-			&ensp;<span class="pointer" onclick="review_Fn(1,'R')">최신순</span>
-			<span>|</span>
-			<span class="pointer" onclick="review_Fn(1,'G')">평점순</span>
-		</div >			
-		<!--  리뷰 테이블 -->
-		<div id="review_table">
-			
-		</div>
-	</div>
-	
-	<!-- 상품에 관한 문의 -->
-	<div class="detail-nav fw-bold">
-		<span class="detail-nav-1"><a href="#move_info" style="text-decoration: none;color: inherit;">상세정보</a></span>
-		<span class="detail-nav-1"><a href="#move_review" style="text-decoration: none;color: inherit;">후기(<span><c:out value="${fn:length(review)}"/></span>)</a></span>
-		<span class="detail-nav-1"><a id="move_question">상문문의</a></span>
-		<span class="detail-nav-1"><a href="#move_giude" style="text-decoration: none;color: inherit;">구매가이드</a></span>
-	</div>
-	<div id="detail-Inquiry">
-		<table class="table">
-			<thead>
-				<tr class="text_align">
-					<th style="width:6%;">번호</th>
-					<th style="width:70%;">제목</th>
-					<th style="width:12%;">작성자</th>
-					<th>작성일</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="text_align">번호</td>
-					<td>제목</td>
-					<td class="text_align">작성자</td>
-					<td class="text_align">작성일</td>
-				</tr>
-				<tr>
-					<td class="text_align">번호</td>
-					<td>제목</td>
-					<td class="text_align">작성자</td>
-					<td class="text_align">작성일</td>
-				</tr><tr>
-					<td class="text_align">번호</td>
-					<td>제목</td>
-					<td class="text_align">작성자</td>
-					<td class="text_align">작성일</td>
-				</tr><tr>
-					<td class="text_align">번호</td>
-					<td>제목</td>
-					<td class="text_align">작성자</td>
-					<td class="text_align">작성일</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	
-	<!-- 상품구매에 대한 가이드 -->
-	<div class="detail-nav fw-bold">
-		<span class="detail-nav-1"><a href="#move_info" style="text-decoration: none;color: inherit;">상세정보</a></span>
-		<span class="detail-nav-1"><a href="#move_review" style="text-decoration: none;color: inherit;">후기(<span><c:out value="${fn:length(review)}"/></span>)</a></span>
-		<span class="detail-nav-1"><a href="#move_question" style="text-decoration: none;color: inherit;">상품문의</a></span>
-		<span class="detail-nav-1"><a id="move_giude">구매가이드</a></span>
-	</div>
-	<div class="detail-guide">
-		<img src="/resources/simage/제품구매가이드.jpg">
-	</div>
-	
-</section>
 
-<footer>
-	<%@ include file="/WEB-INF/views/footer.jsp" %>
-</footer> 
+		<!-- 상품에 관한 문의 -->
+		<div class="detail-nav fw-bold">
+			<span class="detail-nav-1"><a href="#move_info"
+				style="text-decoration: none; color: inherit;">상세정보</a></span> <span
+				class="detail-nav-1"><a href="#move_review"
+				style="text-decoration: none; color: inherit;">후기(<span><c:out
+							value="${fn:length(review)}" /></span>)
+			</a></span> <span class="detail-nav-1"><a id="move_question">상품문의</a></span> <span
+				class="detail-nav-1"><a href="#move_giude"
+				style="text-decoration: none; color: inherit;">구매가이드</a></span>
+		</div>
+		<div id="detail-Inquiry">
+
+		</div>
+
+		<!-- 상품구매에 대한 가이드 -->
+		<div class="detail-nav fw-bold">
+			<span class="detail-nav-1"><a href="#move_info"
+				style="text-decoration: none; color: inherit;">상세정보</a></span> <span
+				class="detail-nav-1"><a href="#move_review"
+				style="text-decoration: none; color: inherit;">후기(<span><c:out
+							value="${fn:length(review)}" /></span>)
+			</a></span> <span class="detail-nav-1"><a href="#move_question"
+				style="text-decoration: none; color: inherit;">상품문의</a></span> <span
+				class="detail-nav-1"><a id="move_giude">구매가이드</a></span>
+		</div>
+		<div class="detail-guide">
+			<img src="/resources/simage/제품구매가이드.jpg">
+		</div>
+	
+	</section>
+
+	<footer>
+		<%@ include file="/WEB-INF/views/footer.jsp"%>
+	</footer>
+	
+	
+<!-- 문의하기 제목을 누르면 나오는 비밀번호 입력 모달창 -->
+<div class="modal fade" id="question_motal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bling_color">
+        <h5 class="modal-title">비밀번호를 입력하세요</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="question_pwd">
+        <span id="pwd_chcek"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-secondary" id="modal_button">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 문의하기에서 비밀번호를 입력하면 내용이 나오는 모달창 -->
+<div class="modal fade" id="question_motal1" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bling_color">
+        <h5 class="modal-title">문의 내용</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="question_contents">
+      </div>
+      <div class="modal-footer" id="modal_requestion">
+        <button type="button" class="btn btn-secondary" id="modal_button1">수정하기</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="modal_button2">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 <script type="text/javascript">
 
@@ -633,12 +684,11 @@
 			    str += "<td class='font12 option_tb1'>" +opName+ "</td>";
 			    str += "<td class='option_tb2'>";
 			    str += "<input type='button' class='btn btn-light p-0 size27 align-middle' onclick='count(\"minus\"," +oidx+ "," +produt_price+ "," +stock+ ")' value='-'/>";
-				str += "<span class='option_q' id='add_option" +oidx+ "'>1</span>"
+				str += "<span id='add_option" +oidx+ "'> 1 </span>"
 				str += "<input type='button' class='btn btn-light p-0 size27 align-middle' onclick='count(\"plus\"," +oidx+ "," +produt_price+ "," +stock+ ")' value='+'/>";
 				str += "<td class='option_tb3'><span class='fw-bold' id='change_price" +oidx+ "'>" +addprice+ "</span><span> 원 </span>"
 				str += "<input id='option_delete" +oidx+ "' onclick='option_delete(" +oidx+ "," +produt_price+ ")' type='button' class='btn btn-light p-0 size25 align-middle' value='X'/></td>";
 			    str += "<input type='hidden' id ='price_value" +oidx+ "' value='" +price2+ "'>";
-			    str += "<span style='display:none;' class='oidx_q'> "+oidx+"</span>";
 			    str += "<input type='hidden' id ='price_option" +oidx+ "' value='" +produt_price+ "'>";				
 			    str += "</tr>";
 			    str += "</table>";
@@ -924,7 +974,11 @@
 		  	 let startPage = parseInt(pm.startPage);
 		  	 let endPage = parseInt(pm.endPage);
 		  	 for (let k = startPage; k<=endPage; k++ ){
-		  	 	str += "<li class='page-item'><a class='page-link pointer' onclick='review_Fn("+k+",\""+type+"\")'>"+k+"</a>";      
+		  		if(k == pm.scri.page){
+		  		 	str += "<li class='page-item active'><a class='page-link pointer' onclick='review_Fn("+k+",\""+type+"\")'>"+k+"</a>";
+		  		}else{
+		  			str += "<li class='page-item'><a class='page-link pointer' onclick='review_Fn("+k+",\""+type+"\")'>"+k+"</a>";
+		  		}
 		  	 }
 		  	 str += "<li class='page-item'>";
 		  	 if(pm.next && pm.endPage > 0){
@@ -1087,6 +1141,7 @@
   	      });
   	 }
 	
+	
 	// 하트버튼 누르면 관심상품에 넣고 다시 누르면 빼고
 	function heart(pidx){
 		if($("#heart").hasClass('bi bi-suit-heart-fill')==true){
@@ -1106,10 +1161,12 @@
 		var productname = "<c:out value='${detail.pname}'/>";
 		console.log(productname);
 		
+										
 		if(option == ""){
 			alert("옵션을 선택하세요");
 		}
 		else{
+																					  
 		  let option1 = 0;
 	      let quntity = 0;
 	      let List = new Array;
@@ -1130,6 +1187,7 @@
 	      let jsonData = JSON.stringify(List);
 	      console.log(jsonData);
 		
+																	 
 	      var frm = document.createElement("form");
 
 	      frm.name = 'frm';
@@ -1158,6 +1216,7 @@
 	      
 		}
 	}
+	
 	
 	
 	function memberorder(){
@@ -1190,7 +1249,6 @@
 	      console.log(jsonData);
 		
 	      var frm = document.createElement("form");
-
 	      frm.name = 'frm';
 	      frm.method = 'post';
 	      frm.action = '/Order/memberorder.do';
@@ -1217,8 +1275,9 @@
 	      
 		}
 	}
-  
-  /* 문의하기 제목을 클릭할 시 비밀번호 입력 모달창 나오게 */
+	
+	
+	/* 문의하기 제목을 클릭할 시 비밀번호 입력 모달창 나오게 */
 	function question_title(pqidx,midx){
 		
 		// 로그인을 안했을 경우 로그인 하라는 창 띄우기
@@ -1291,6 +1350,7 @@
 		
 		}
 	}
+
 
 </script>
 </html>
