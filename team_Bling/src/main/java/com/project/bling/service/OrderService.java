@@ -1,5 +1,9 @@
 package com.project.bling.service;
 
-public interface OrderService {
+import com.project.bling.vo.NonorderVO;
 
+public interface OrderService {
+	void insert(NonorderVO vo) throws Exception;
+	void detailInsert(NonorderVO vo) throws Exception;
+	
 }
