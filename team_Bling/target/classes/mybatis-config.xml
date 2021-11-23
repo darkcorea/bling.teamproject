@@ -22,6 +22,7 @@
         <typeAlias type="com.project.bling.vo.User_gradeVO" alias="User_gradeVO"/> 
         <typeAlias type="com.project.bling.vo.UserVO" alias="UserVO"/> 
         <typeAlias type="com.project.bling.vo.CombineVO" alias="CombineVO"/> 
+        <typeAlias type="com.project.bling.vo.NonorderVO" alias="NonorderVO"/> 
         
         <!-- 페이징 할 떄 필요한 VO  -->
         <typeAlias type="com.project.bling.domain.Criteria" alias="Criteria"/> 

@@ -2,7 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%
+ 
+    request.setCharacterEncoding("UTF-8");
+ 
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -136,7 +140,7 @@
 	<br><br>
 	<div class="container">
 	<h5>구매자 정보</h5>
-		<form name="frm3">
+		<form name="frm">
 			<table class="t1">
 				<tr class="line">
 					<td class="gray"><span class="white">이름</span></td>
@@ -185,7 +189,6 @@
 			<input type="hidden" name="tot_price" id="tot_price">
 			<input type="hidden" name="productname" id="productname" value="${productname}">
 			<input type="hidden" name="orderid" id="orderid">
-			
 			<table class="t1">
 				<tr class="line">
 					<td class="gray"><span class="white">총상품가격</span></td>
@@ -209,7 +212,7 @@
 						<div class="change">
 						<label><input type="radio" name="payment" value="카드" id="card" checked>신용/체크카드</label>
 						<label><input type="radio" name="payment" value="계좌이체" id="transfer">실시간계좌이체</label>
-						<label><input type="radio" name="payment" value="무통장입금" id="cwhiteit">무통장입금</label>
+						<label><input type="radio" name="payment" value="무통장" id="cwhiteit">무통장입금</label>
 						
 						<div id="content">
 							<p id="text">소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다</p>
@@ -220,8 +223,7 @@
 				</tr>
 			</table>
 		<br><br>
-		
-			</form>
+		</form>
 		<br><br>
 		<div class="agree">
 			<p id="checkall" class="line"><input type="checkbox" name="all">모든 약관 동의</p>
@@ -243,6 +245,7 @@
 		<div id="btndiv">
 		<button type="button" class="btn btn-secondary btns" onclick="iamport()">결제하기</button> 
 		</div>
+		<div id="form2"></div>
 		<br><br>
 	</div>
 
@@ -269,16 +272,17 @@
 		</footer> 
 	<script>
 
-let Json = JSON.parse('${jsonData}');
-console.log(Json);
-for(let i =0 ; i<Json.length ; i++){
-    var oidx = Json[i].oidx;
-    var quntity = Json[i].quntity;
-    console.log("oidx>>>>>>>>>"+oidx);
-    console.log("수량>>>>>>>>"+quntity);
-}
+	 let Json = JSON.parse('${jsonData}');
+		console.log(Json);
+		for(let i =0 ; i<Json.length ; i++){
+		    var oidx = Json[i].oidx;
+		    var quantity = Json[i].quntity;
+		    console.log("oidx>>>>>>>>>"+oidx);
+		    console.log("수량>>>>>>>>"+quantity);
+		}
 
 function iamport(){
+	var payment = $("input[name='payment']:checked").val();
 	var productname = $("#productname").val();
 	var tot_price = $("#tot_price").val();
 	var name = $("#name").val();
@@ -287,62 +291,96 @@ function iamport(){
 	var zipcode = $("#zip_code").val();
 	var addr = $("#address1").val();
 	IMP.init('imp72441252');
-	IMP.request_pay({
-	    pg : 'kcp',
-	    pay_method : 'card',
-	    merchant_uid : 'merchant_' + new Date().getTime(),
-	    name : productname, //결제창에서 보여질 이름
-	    amount : tot_price, //실제 결제되는 가격
-	    buyer_email : email,
-	    buyer_name : name,
-	    buyer_tel : phone,
-	    buyer_addr : addr,
-	    buyer_postcode : zipcode
-	}, function(rsp) {
-		console.log(rsp);
-			// 결제검증
-			$.ajax({
-				type:"post",
-				url:"/Order/"+rsp.imp_uid
-			}).done(function(data){
-					console.log(data);
-			// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
-			    if (rsp.paid_amount == data.response.amount) {
-			    	var msg = '결제가 완료되었습니다.';
-			        msg += '고유ID : ' + rsp.imp_uid;
-			        msg += '상점 거래ID : ' + rsp.merchant_uid;
-			        msg += '결제 금액 : ' + rsp.paid_amount;
-			        msg += '카드 승인번호 : ' + rsp.apply_num;
-			        //orderinsert();
-			    } else {
-			    	 var msg = '결제에 실패하였습니다.';
-			         msg += '에러내용 : ' + rsp.error_msg;
-			    }
-	   			alert(msg);
+	
+	console.log(payment);
+	if(payment=="카드"){
+		IMP.request_pay({
+		    pg : 'kcp',
+		    pay_method : 'card',
+		    merchant_uid : 'merchant_' + new Date().getTime(),
+		    name : productname, //결제창에서 보여질 이름
+		    amount : tot_price, //실제 결제되는 가격
+		    buyer_email : email,
+		    buyer_name : name,
+		    buyer_tel : phone,
+		    buyer_addr : addr,
+		    buyer_postcode : zipcode
+		}, function(rsp) {
+			console.log(rsp);
+				// 결제검증
+				$.ajax({
+					type:"post",
+					url:"/Order/"+rsp.imp_uid
+				}).done(function(data){
+						console.log(data);
+				// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
+				    if (rsp.paid_amount == data.response.amount) {
+				    	var msg = '결제가 완료되었습니다.';
+				        msg += '고유ID : ' + rsp.imp_uid;
+				        msg += '상점 거래ID : ' + rsp.merchant_uid;
+				        msg += '결제 금액 : ' + rsp.paid_amount;
+				        msg += '카드 승인번호 : ' + rsp.apply_num;
+				        //orderinsert();
+				    } else {
+				    	 var msg = '결제에 실패하였습니다.';
+				         msg += '에러내용 : ' + rsp.error_msg;
+				    }
+		   			alert(msg);
+				});
 			});
-		});
-	}
-	
-$.orderinsert = function(){
-	var orderid = $("#orderid").val(Math.random().toString(36).substr(2,11));
-		console.log(orderid);
-	 var formData = $("form[name=frm3]").serialize();
-	$.ajax({
-		cache:false,
-		url:"/Order/insertOrder.do",
-		type:"POST",
-		data:formData,
-		ContentType:"application/json",
-		success:function(data){
-		  alert("결제되었습니다");
-		},
-		error:function(){
-			alert("실행오류");
+		}else if(payment=="무통장"){
+			$("#orderid").val(Math.random().toString(36).substr(2,11));
+			var formData = $("form[name=frm]").serialize();
+			var orderid = $("#orderid").val();
+			
+			 $.ajax({
+					url:"/Order/orderinsert.do",
+					type:"POST",
+					data:formData,
+					ContentType:"application/json",
+					success:function(data){
+					alert("주문 완료. 주문조회번호 : "+orderid);
+					var str = "";
+					
+					let Json = JSON.parse('${jsonData}');
+					for(let i =0 ; i<Json.length ; i++){
+						str += "<form name='fm'>";
+					    var oidx = Json[i].oidx;
+					    var quantity = Json[i].quntity;
+					    str += "<input type='hidden' name='nonidx' value='"+data+"'>";
+						str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
+						str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
+						
+						str += "</form>";
+						$("#form2").html(str);
+						
+						
+						var formData2 = $("form[name=fm]").serialize();
+						console.log(formData2);
+						 $.ajax({
+								url:"/Order/orderdetailinsert.do",
+								type:"POST",
+								data:formData2,
+								ContentType:"application/json",
+								success:function(data){
+								},
+								error:function(){
+									alert("실행오류");
+								}
+							});
+						 
+						}
+					},
+					error:function(){
+						alert("실행오류");
+					}
+				});
 		}
-	});
-	
-}
+		
+	}
+
 $(document).ready(function(){
+	
 	
 	var price = ${tot_price};
 	$(".productprice").text(price.toLocaleString());
@@ -362,16 +400,17 @@ $(document).ready(function(){
 	
 	$(".change input:radio").change(function(){
 		var value = $(this).val();
-		if(value=="무통장입금"){
+		if(value=="무통장"){
 			str="<p>입금은행 : 이젠은행 032123-04-003344 (주)블링</p>";
 			str+="입금자명 : <input type='text' name='depositor'>";
+			str+="<input type='hidden' name='order_yn' value='n'>";
 			$("#content").html(str);
 		}
-		else if(value=="신용/체크카드"){
+		else if(value=="카드"){
 			$("#content").html("<p id='text'>소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다</p>");
 		}
 		else if(value=="계좌이체"){
-			$("#content").html("예금주명 : <input type='text' name='AccountHolder'>");
+			$("#content").html("예금주명 : <input type='text' name='depositor'>");
 		}
 	});
 	

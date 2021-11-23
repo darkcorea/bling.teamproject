@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.service.OrderService;
+import com.project.bling.vo.NonorderVO;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -69,7 +70,6 @@ public class OrderController {
 		return "order/memberorder";
 		
 	}
-	
 	@ResponseBody
 	@RequestMapping(value="/{imp_uid}")
 	public IamportResponse<Payment> paymentByImpUid(
@@ -80,4 +80,23 @@ public class OrderController {
 	{	
 			return api.paymentByImpUid(imp_uid);
 	}
+	@RequestMapping(value="/orderinsert.do",method = RequestMethod.POST)
+	@ResponseBody
+	public int orderinsert(Model model,NonorderVO vo,HttpServletRequest request) throws Exception {
+		String orderid = request.getParameter("orderid");
+		System.out.println(orderid);
+		model.addAttribute("orderid",orderid);
+		orderService.insert(vo);
+		
+		return vo.getNonidx();
+		
+	}
+	@RequestMapping(value="/orderdetailinsert.do",method = RequestMethod.POST)
+	@ResponseBody
+	public void orderdetailinsert(Model model,NonorderVO vo,HttpServletRequest request) throws Exception {
+		
+		orderService.detailInsert(vo);
+		
+	}
+	
 }
