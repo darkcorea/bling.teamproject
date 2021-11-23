@@ -32,7 +32,7 @@
 	}
 	
 	/* 자주묻는 질문 텍스트 */
-	.research-question .research-text {
+	#research-text {
 		width:400px;
 		height: 38px;
 		vertical-align: middle;
@@ -78,8 +78,11 @@
 <h2>고객센터</h2>
 <!-- 문의하기  텍스트와 검색버튼 -->
 <div class="research-question">
-<input type="text" name="research_question" class="research-text" placeholder="자주 묻는 질문 검색">&ensp;
-<button type="button" class="btn btn-danger" id="research_question_btn" onclick="">검색</button>
+<form name="frm" action="/Customer/main.do" method="post">
+<input type="text" name="keyword" id="research-text" placeholder="자주 묻는 질문 검색">&ensp;
+<input type="hidden" name="page" value="1">
+<button type="button" class="btn btn-danger" id="research_question_btn" onclick="research_Fn(this.form)">검색</button>
+</form>
 </div>
 
 <!-- 고객센터 글 리스트 -->
@@ -126,39 +129,39 @@
 <!-- 페이징 바 뿌려주기 -->
 <nav aria-label="Page navigation">
 	<ul class="pagination justify-content-center">
-		<!-- 앞으로  가기 버튼 -->
+		<!-- 앞으로  가기 버튼 , 키워드 유지하면서 이동하기 -->
 		<c:if test="${pm.prev == true}">
 		<li class='page-item'>
 		<c:set var="prev" value="${pm.startPage -1}"/>
-			<a class='page-link' aria-label='Previous' href="/Customer/main.do?page=${prev}">
+			<a class='page-link' aria-label='Previous' href="/Customer/main.do?page=${prev}&keyword=${pm.scri.keyword}">
 				<span aria-hidden='true' class='pointer' >&laquo;</span>
 			</a>
 		</li>
 		</c:if>
 		
-		<!-- 페이징 번호  -->
+		<!-- 페이징 번호, 키워드 유지하면서 이동 하기  -->
 		<c:set var="page" value="${pm.scri.page}"/>
 		<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
 			<c:if test = "${pageNum == page}">
 			<li class="page-item active">	
-				<a class="page-link pointer" href="/Customer/main.do?page=${pageNum}">
+				<a class="page-link pointer" href="/Customer/main.do?page=${pageNum}&keyword=${pm.scri.keyword}">
 					<c:out value="${pageNum}"/>
 				</a>
 			</li>
 			</c:if>
 			<c:if test = "${pageNum != page}">
 			<li class="page-item">	
-				<a class="page-link pointer" href="/Customer/main.do?page=${pageNum}">
+				<a class="page-link pointer" href="/Customer/main.do?page=${pageNum}&keyword=${pm.scri.keyword}">
 					<c:out value="${pageNum}"/>
 				</a>
 			</li>
 			</c:if>
 		</c:forEach>
 		
-		<!-- 뒤로 가기 버튼 -->
+		<!-- 뒤로 가기 버튼 , 키워드 유지하면서 이동하기 -->
 		<c:if test="${pm.next && pm.endPage > 0}">
 		<li class='page-item'>
-			<a class='page-link' aria-label='Next' href="/Customer/main.do?page=${pm.endPage + 1}">
+			<a class='page-link' aria-label='Next' href="/Customer/main.do?page=${pm.endPage + 1}&keyword=${pm.scri.keyword}">
 				<span aria-hidden='true' class='pointer'>&raquo;</span>
 			</a>
 		</li>
@@ -175,8 +178,7 @@
 
 </body>
 <script>
-	
-	/* 문의 제목을 클릭하면 아래로 창이 보였다가 사라졌다 한다 */
+	/* 문의 제목을 클릭하면 제옥 아래로 내용이 보였다가 사라졌다 한다 */
 	function coll_fn(nidx){
 		let show = $("#collapse"+nidx).hasClass("show");
 		console.log(show);
@@ -187,5 +189,19 @@
 		}
 	}
 
+	/* 검색어를 입력하고 검색 버튼을 눌렀을 떄 */
+	function research_Fn(form) {
+
+		let rform = document.frm;
+		
+		if(form.keyword.value == ""){
+			alert("검색어를 입력해 주세요.");
+			form.keyword.focus();
+			return ;
+		}
+		
+		rform.submit();
+	}
+	
 </script>
 </html>
