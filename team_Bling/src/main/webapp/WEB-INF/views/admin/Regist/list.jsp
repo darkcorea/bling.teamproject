@@ -63,9 +63,9 @@ $(document).ready(function () {
 		<div class="quickmenu">
 			  <ul>
 			 	<li><a href="#">홈</a></li>
-			    <li><a href="#">리스트</a></li>
-			    <li><a href="Admin/regist.do">상품 등록</a></li>
-			    <li><a href="#">품절상품</a></li>
+			    <li><a href="/Ad_regist/list.do">리스트</a></li>
+			    <li><a href="/Ad_regist/regist.do">상품 등록</a></li>
+			    <li><a href="#">품절상품</a></li> 
 			  </ul>
 		</div>
 		<h2>상품 리스트</h2>

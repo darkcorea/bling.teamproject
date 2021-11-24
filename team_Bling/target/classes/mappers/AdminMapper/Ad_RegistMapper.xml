@@ -7,10 +7,8 @@
 
 	<!-- 관리자 제품 등록 -->
 	<insert id="productInsert" parameterType="ProductVO">
-	<![CDATA[
-	INSERT INTO BG_PRODUCT(pname,kind,price,discount)
-		values(#{pname},#{kind},#{price},#{discount})
-	]]>
+	INSERT INTO BG_PRODUCT(pidx, pname, kind, price, discount, saleprice, rdate)
+	VALUES(pidx_seq.nextval, #{pname}, #{kind}, #{price}, #{discount}, #{saleprice}, sysdate)
 	<selectKey resultType="int" keyProperty="pidx" order="AFTER">
 	
 	SELECT MAX(pidx) FROM BG_PRODUCT
@@ -20,18 +18,29 @@
 	
 	<!-- 관리자 옵션 등록 -->
 	<insert id="optionInsert" parameterType="OptionVO">
-	<![CDATA[
-	INSERT INTO BG_OPTION(color,texture,sizes,stock,addprice,pidx,oname)
-		values(#{color},#{texture},#{sizes},#{stock},#{addprice},#{pidx},#{oname})
-	]]>
+	INSERT INTO BG_OPTION(oidx, color, texture, sizes, stock, addprice, pidx, oname)
+	VALUES(oidx_seq.nextval, #{color}, #{texture}, #{sizes}, #{stock}, #{addprice}, #{pidx}, #{oname})
 	</insert>
 	
 	<!--  관리자 이미지 등록 -->
 	<insert id="imageInsert" parameterType="ImageVO">
-	<![CDATA[
-	INSERT INTO BG_IMAGE(image_idx,pidx,main,detail1,showing1)
-		values(2,#{pidx},#{main},#{detail1},#{showing1})
-	]]>	
+	INSERT INTO BG_IMAGE(image_idx, pidx, main, detail1, showing1
+	<if test="detail2 != null">, detail2</if>
+	<if test="detail3 != null">, detail3</if>
+	<if test="showing2 != null">, showing2</if>
+	<if test="showing3 != null">, showing3</if>
+	<if test="showing4 != null">, showing4</if>
+	<if test="showing5 != null">, showing5</if>
+	)
+	VALUES(image_seq.nextval, #{pidx}, #{main}, #{detail1}, #{showing1}
+	<if test="detail2 != null">, #{detail2}</if>
+	<if test="detail3 != null">, #{detail3}</if>
+	<if test="showing2 != null">, #{showing2}</if>
+	<if test="showing3 != null">, #{showing3}</if>
+	<if test="showing4 != null">, #{showing4}</if>
+	<if test="showing5 != null">, #{showing5}</if>
+	
+	)
 	</insert>
 	
 	<!-- 관리자 제품 정보 불러오기 -->
