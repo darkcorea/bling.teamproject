@@ -87,7 +87,7 @@
 		    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">게시판 관리</a>
 		    <ul class="dropdown-menu">
 		      <li><a class="dropdown-item" href="#">문의 게시판</a></li>
-		      <li><a class="dropdown-item" href="/Ad_board/board.do">공지사항 게시판</a></li>
+		      <li><a class="dropdown-item" href="/Ad_board/board.do?page=1&type=T">공지사항 게시판</a></li>
 		      <li><a class="dropdown-item" href="#">이벤트 게시판</a></li>
 		      <li><a class="dropdown-item" href="#">리뷰 관리</a></li>
 		    </ul>

@@ -389,7 +389,6 @@
 
                     <div class="rows h d-grid gap-2 col-6 mx-auto" id="formbtn">
                     	<input type="submit" class="btn btn-primary " value="가입하기">
-						<button type="button" class="btn btn-secondary" id="btn2">취소하기</button>
                     </div>
                     <br>
                     <br>

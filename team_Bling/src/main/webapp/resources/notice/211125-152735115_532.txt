@@ -1,0 +1,425 @@
+
+
+--공지사항--
+create table bg_notice (
+	nidx number not null primary key,
+	subject varchar2(20) not null,
+	contents varchar2(2000) not null,
+	type char(1) not null default'N', --14차수정 (N기본, Q고객센터, S중요공지)
+	files varchar2(100) null, --15차수정(추가)
+	image varchar2(100) null, --15차수정(추가)
+	rdate date default sysdate
+);
+create sequence nidx_seq
+increment by 1
+start with 1 ;
+
+
+--이벤트--
+create table bg_event (
+	eidx number not null primary key,
+	subject varchar2(20) not null,
+	contents varchar2(2000) not null,
+	rdate date default sysdate,
+    image varchar2(20),
+    event_start date not null,
+    event_end date not null
+);
+create sequence eidx_seq
+increment by 1
+start with 1 ;
+
+--리뷰--
+create table bg_review (
+	ridx number not null primary key,
+	contents varchar2(2000) not null,
+	rdate date default sysdate,
+    image1 varchar2(20),
+    image2 varchar2(20),
+    midx number not null,
+    detail_idx number not null,	-- 11차 수정
+    grade number not null
+);
+create sequence ridx_seq
+increment by 1
+start with 1 ;
+-- 유니크키 설정 --  -- 11차 수정
+alter table bg_review
+	 ADD UNIQUE KEY uk_detail_idx
+	 (detail_idx);
+
+--외래키 설정--
+alter table bg_review
+    add constraint fk_midx foreign key(midx) 
+    references bg_user(midx);
+alter table bg_review	-- 11차 수정
+    add constraint fk_detail_idx foreign key(detail_idx) 
+    references bg_order_detail(detail_idx);
+
+--관리자--
+create table bg_admin (
+	id varchar2(20) not null,
+	pwd1 varchar2(20) not null,
+	pwd2 varchar2(20) not null
+);
+
+
+--제품, 제품 옵션, 제품 이미지, 회원, 회원(등급) 테이블 생성하기
+
+--제품 테이블 생성
+create table bg_product(
+pidx number not null,
+pname varchar2(200) not null,  --10차수정
+kind char(1)    not null,
+price number    not null,
+saleprice number not null,  -- 9차 수정
+rdate date default sysdate not null,
+discount number null,
+-- 5차 수정  -- 14차 수정 배송비 없앰
+saleyn char(1) default 'y' not null, 	--1차 수정
+primary key(pidx)
+);
+
+--제품 테이블 pidx 시퀀스 생성
+create sequence pidx_seq
+increment by 1
+start with 1
+;
+
+--제품 옵션 테이블 생성
+create table bg_option(
+oidx number not null primary key,
+texture varchar2(20) not null, 	-- 2차수정
+sizes varchar2(20) not null,		-- 2차수정
+color varchar2(20) null,		--1차 수정, 2차수정	
+stock number not null,
+addprice number null,
+saleyn char(1) default 'y',			-- 1차 수정
+pidx number not null,               --pidx : 외래키
+oname varchar2(200) not null	--10차수정
+);
+
+--제품 옵션 테이블 외래키 재설정
+alter table bg_option add constraint fk_pidx 
+    foreign key(pidx) references bg_product(pidx);
+
+
+--제품 옵션 테이블 oidx 시퀀스 생성
+create sequence oidx_seq
+increment by 1
+start with 1
+;
+
+
+--제품 이미지 테이블 생성
+create table bg_image(
+image_idx number not null primary key,
+pidx number not null,                   --pidx : 외래키
+main VARCHAR2(30) NOT NULL,
+detail1	VARCHAR2(30) NULL, --4차수정
+detail2	VARCHAR2(30) NULL,
+detail3	VARCHAR2(30) NULL,
+showing1 VARCHAR2(30) NOT NULL,
+showing2 VARCHAR2(30) NULL,
+showing3 VARCHAR2(30) NULL,
+showing4 VARCHAR2(30) NULL,
+showing5 VARCHAR2(30) NULL
+);
+
+--제품 이미지 테이블 외래키 생성(제품 옵션 테이블에서 pidx가 외래키로 중복 사용되므로 외래키 명칭을 일부 수정함)
+alter table bg_image add constraint fk2_pidx 
+    foreign key(pidx) references bg_product(pidx);
+
+--제품 이미지 테이블 image_idx 시퀀스 생성
+create sequence image_seq
+increment by 1
+start with 1
+;
+
+
+--회원 테이블 생성
+create table bg_user(
+midx number not null primary key,
+id varchar2(20) not null,
+pwd varchar2(20) not null,
+uname varchar2(40) not null,		-- 11차 수정
+email varchar2(40) not null,
+zip_code number null,  -- 3차수정
+addr1 varchar2(100) null, --6차 수정
+addr2 varchar2(100) null, 	-- 3차수정 --6차 수정
+phone number  null,	-- 3차수정
+mileage number not null,
+grade varchar(1) default 'b' not null,
+agree_sms char(1) default 'N' null,	-- 12차 수정
+agree_email char(1) default 'N' null,	-- 12차 수정
+agree_shopping char(1) default 'N' null	-- 12차 수정
+);
+
+--회원 테이블 midx 시퀀스 생성(수업때 midx_seq 사용해서 적용이 안 됨 -> 수업때 시퀀스를 지우고 사용하거나 아래의 시퀀스를 변경해야할듯)
+drop sequence midx_seq;
+
+create sequence midx_seq
+increment by 1
+start with 1
+;
+
+
+--회원(등급) 테이블 생성
+create table bg_user_grade(
+gold number not null,
+gold_bene number not null,
+silver number not null,
+silver_bene number not null
+);
+
+
+--세부주문 테이블생성
+create table bg_order_detail (
+    detail_idx number not null primary key, --세부주문번호
+    order_idx number not null,--주문번호
+    oidx number not null,--옵션번호
+    quantity number not null --수량
+);
+
+--외래키 생성
+ALTER TABLE bg_order_detail 
+    ADD constraint fk_order_idx foreign key(order_idx) 
+    references bg_order(order_idx);--주문번호 외래키
+ALTER TABLE bg_order_detail 
+    ADD constraint fk2_oidx foreign key(oidx) 
+    references bg_option(oidx);--옵션번호외래키지정
+
+--시퀀스
+create sequence detail_seq
+    increment by 1
+    start with 1 ;
+
+-------------------------------------------------------------
+
+--배송 테이블생성
+create table bg_delivery (
+    didx number not null primary key, --배송번호
+    invoice_num number null, --송장번호 --14차 수정 결제완료가 안돼면 송장번호도 없음
+    order_idx number not null,--주문번호
+    cancel varchar(1) null, --취소여부
+    refund varchar(1) null,--환불여부
+    exchange varchar(1) null,--교환여부
+    deli_com date null,--배송완료일
+    deli_stat varchar(1) null,--배송상태
+    send_day date null,--출고일
+    order_yn varchar(1) null --결제완료여부 --7차수정 외래키, 유니크키 삭제
+);
+
+
+
+--외래키 생성
+ALTER TABLE bg_delivery 
+    ADD constraint fk2_order_idx foreign key(order_idx) 
+    references bg_order(order_idx);--주문번호 외래키
+    
+
+-------------------------------------------------------------
+
+--문의 테이블생성
+create table bg_question (
+    qidx number not null primary key, --문의번호
+    midx number not null, --회원번호
+    category varchar(1) not null,--문의유형
+    title varchar2(100) not null, --문의제목
+    content varchar2(2000) not null,--문의내용(글내용)
+    originqidx number not null, -- 오리진qidx --13차 수정
+    depth number not null default 0, -- 댓글 깊이  -- 13차 수정
+    detail_idx number null, -- 오더 디테일 번호 -- 13차 수정
+    rdate date default sysdate,--문의 작성 날짜
+    state varchar(1) default 'n' not null--문의 답변유무
+);
+
+--시퀀스
+create sequence qidx_seq
+    increment by 1
+    start with 1 ;
+
+--외래키 생성
+ALTER TABLE bg_question
+    ADD constraint fk2_midx foreign key(midx) 
+    references bg_user(midx);--회원번호 외래키
+ALTER TABLE bg_question
+    ADD constraint fk2_detail_idx foreign key(detail_idx) 
+    references bg_order_detail(detail_idx);--오더 디테일 외래키
+    
+-------------------------------------------------------------
+
+-- 문의 답변 테이블 삭제, 시퀀스 삭제
+-- 상품문의 테이블 추가 (13차 수정)
+create table bg_Podect_question (
+    pqidx number not null primary key, -- 상품문의번호
+    midx number not null,  -- 회원번호
+    pidx number not null,  -- 물건번호
+    originpqidx number not null, -- 오리진 상품문의번호
+    depth number not null,  -- 댓글의 깊이
+    title varchar2(100) not null,  -- 제목
+    contents varchar2(2000) not null,  -- 내용
+    pwd varchar2(50) not null,  -- 비밀번호
+    rdate date default sysdate,  -- 작성날짜
+    state char default 'N'  -- 답변 유무
+);
+
+-- 시퀀스 생성
+create sequence pqidx_seq
+increment by 1
+start with 1 ;
+
+
+-- 외래키 생성
+ALTER TABLE bg_Podect_question
+    ADD constraint fk7_midx foreign key(midx) 
+    references bg_user(midx);--회원번호 외래키
+ALTER TABLE bg_Podect_question
+    ADD constraint fk4_pidx foreign key(pidx) 
+    references bg_product(pidx);--제품번호 외래키
+    
+-------------------------------------------------------------
+
+--회원 주소록 테이블생성
+create table bg_address_list (
+    addr_idx number not null primary key, --주소록 번호
+    midx number not null, --회원번호
+    addr_name varchar2(20) not null,--배송지명
+    zip_code number not null, --우편번호
+    addr1 varchar2(100) not null,--회원주소1 --6차 수정
+    addr2 varchar2(100) null,--회원주소2 --6차 수정
+    phone number not null,--연락처
+    name varchar2(20) not null--받을 사람 이름
+);
+
+--시퀀스
+create sequence addr_seq
+    increment by 1
+    start with 1 ;
+
+--외래키 생성
+ALTER TABLE bg_address_list
+    ADD constraint fk3_midx foreign key(midx) 
+    references bg_user(midx);--회원번호 외래키
+    
+-------------------------------------------------------------
+
+--장바구니 테이블생성
+create table bg_cart (
+    cart_idx number not null primary key, --장바구니 번호
+    midx number not null, --장바구니 이용회원번호
+    oidx number not null,--옵션번호
+    quantity number not null --수량
+);
+
+--시퀀스
+create sequence cart_seq
+    increment by 1
+    start with 1 ;
+
+--외래키 생성
+ALTER TABLE bg_cart
+    ADD constraint fk4_midx foreign key(midx) 
+    references bg_user(midx);--장바구니 이용회원번호 외래키
+ALTER TABLE bg_cart
+    ADD constraint fk3_oidx foreign key(oidx) 
+    references bg_option(oidx);--옵션번호 외래키
+    
+-------------------------------------------------------------
+
+--관심상품 테이블생성
+create table bg_like (
+    interest_idx number not null primary key, --관심상품 번호
+    midx number not null, --회원번호
+    pidx number not null--제품번호 -- 8차 수정 oidx였음
+);
+
+--시퀀스
+create sequence interest_seq
+    increment by 1
+    start with 1 ;
+
+--외래키 생성
+ALTER TABLE bg_like
+    ADD constraint fk5_midx foreign key(midx) 
+    references bg_user(midx);--회원번호 외래키
+ALTER TABLE bg_like
+    ADD constraint fk3_pidx foreign key(pidx) 
+    references bg_option(pidx);--제품번호 외래키	--8차 수정 oidx였음
+
+-------------------------------------------------------------
+
+--주문 테이블생성
+create table bg_order (
+    order_idx number not null primary key, --주문번호
+    midx number not null, --주문한 회원번호
+    rdate date default sysdate,--주문날짜
+    addr_idx number not null,--회원주소록
+    tot_price number not null,--총가격
+    order_yn varchar(1) null,--결제완료여부
+    delivery_yn varchar(1) default 'n' not null--처리유무(배송전,후)
+);
+
+--시퀀스
+create sequence orders_seq
+    increment by 1
+    start with 1 ;
+
+--외래키 생성
+ALTER TABLE bg_order
+    ADD constraint fk6_midx foreign key(midx) 
+    references bg_user(midx);--주문한 회원번호 외래키
+ALTER TABLE bg_order
+    ADD constraint fk_addr_idx foreign key(addr_idx) 
+    references bg_address_list(addr_idx);--회원주소록 외래키
+    
+
+-------------------------------------------------------------
+--비회원주문 테이블생성 (14차 수정)
+create table bg_nonorder (
+    nonidx number not null primary key, --주문번호
+    orderid varchar2(100) not null, --주문조회번호
+    rdate date default sysdate, --주문날짜
+    name varchar2(20) not null, --구매자 이름
+   email varchar2(40) not null, --구매자 메일
+   phone number not null, --구매자 연락처
+   zip_code number not null, --우편번호
+    addr1 varchar2(100) not null,--받는사람 주소1 
+    addr2 varchar2(100) null,--받는사람 주소2
+    rphone number not null,--받는사람 연락처
+    recipient varchar2(20) not null, --받는사람 이름
+    tot_price number not null,--총가격
+    depositor varchar2(20) null, --무통장 입금자명
+    order_yn varchar(1) null,--결제완료여부
+    delivery_yn varchar(1) default 'n' --처리유무(배송전,후)
+);
+
+--시퀀스
+create sequence nonidx_seq
+    increment by 1
+    start with 1 ;
+
+
+-------------------------------------------------------------
+--비회원 세부주문 테이블생성 (14차 수정)
+create table bg_nonorder_detail (
+    detail_idx number not null primary key, --비회원 세부주문번호
+    nonidx number not null,--비회원주문번호
+    oidx number not null,--옵션번호
+    quantity number not null --수량
+);
+
+--외래키 생성
+ALTER TABLE bg_nonorder_detail 
+    ADD constraint fk_nonidx foreign key(nonidx) 
+    references bg_nonorder(nonidx);--주문번호 외래키
+ALTER TABLE bg_nonorder_detail 
+    ADD constraint fk4_oidx foreign key(oidx) 
+    references bg_option(oidx);--옵션번호외래키지정
+
+--시퀀스
+create sequence detail_idx_seq
+    increment by 1
+    start with 1 ;
+
+commit;

@@ -5,9 +5,37 @@ public class NoticeVO {
 	private int nidx;
 	private String subject;
 	private String contents;
+	private String type;
 	private String rdate;
+	private String imgfile;
+	private String imges;
+	private String edit;
 	
 	
+	public String getEdit() {
+		return edit;
+	}
+	public void setEdit(String edit) {
+		this.edit = edit;
+	}
+	public String getImges() {
+		return imges;
+	}
+	public void setImges(String imges) {
+		this.imges = imges;
+	}
+	public String getImgfile() {
+		return imgfile;
+	}
+	public void setImgfile(String imgfile) {
+		this.imgfile = imgfile;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public int getNidx() {
 		return nidx;
 	}
