@@ -126,9 +126,14 @@
 		display: inline;
 		margin-right:20px;
 	}
-	.info{
+	#info{
 		display: inline;
 	}
+	#complete{
+		height:700px;
+		font-size: 22px;
+		font-weight: bold;
+		}
 </style>
 </head>
 <body>
@@ -154,14 +159,14 @@
 				</tr>
 				<tr>
 					<td class="gray"><span class="white">휴대폰 번호</span></td>
-					<td class="fill"><input type="number" name="phone" class="impor" id="phone"><span class="check"></span>
+					<td class="fill"><input type="text" name="phone" class="impor" id="phone"><span class="check"></span>
 					<span id="addInfo">숫자만 입력하세요</span>
 					</td>
 				</tr>
 			</table>
 		<br><br>
 	<h5 id="inline">받는 사람 정보</h5>
-		<div class="info">
+		<div id="info">
 			<label><input type="radio" name="info" value="same">구매자 정보와 동일</label>
 			<label><input type="radio" name="info" value="new" checked>새로운 배송지</label>
 		</div>
@@ -181,7 +186,7 @@
 				</tr>
 				<tr>
 					<td class="gray"><span class="white">휴대폰 번호</span></td>
-					<td class="fill"><input type="number" name="rphone" id="rphone"></td>
+					<td class="fill"><input type="text" name="rphone" id="rphone"></td>
 				</tr>
 			</table>
 		<br><br>
@@ -216,6 +221,8 @@
 						
 						<div id="content">
 							<p id="text">소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다</p>
+							<input type='hidden' name='depositor' value='카드'>
+							<input type='hidden' name='order_yn' value='Y'>
 						</div>
 						
 						</div>
@@ -282,6 +289,7 @@
 		}
 
 function iamport(){
+	var agree = $('input:checkbox[name="c1"]').is(":checked");
 	var payment = $("input[name='payment']:checked").val();
 	var productname = $("#productname").val();
 	var tot_price = $("#tot_price").val();
@@ -291,9 +299,11 @@ function iamport(){
 	var zipcode = $("#zip_code").val();
 	var addr = $("#address1").val();
 	IMP.init('imp72441252');
-	
-	console.log(payment);
-	if(payment=="카드"){
+	if(agree == false){
+		alert("동의체크");
+		 return;
+	}
+	else{ if(payment=="카드"){
 		IMP.request_pay({
 		    pg : 'kcp',
 		    pay_method : 'card',
@@ -304,7 +314,7 @@ function iamport(){
 		    buyer_name : name,
 		    buyer_tel : phone,
 		    buyer_addr : addr,
-		    buyer_postcode : zipcode
+		    buyer_postcode : zipcode,
 		}, function(rsp) {
 			console.log(rsp);
 				// 결제검증
@@ -315,12 +325,55 @@ function iamport(){
 						console.log(data);
 				// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
 				    if (rsp.paid_amount == data.response.amount) {
-				    	var msg = '결제가 완료되었습니다.';
-				        msg += '고유ID : ' + rsp.imp_uid;
-				        msg += '상점 거래ID : ' + rsp.merchant_uid;
-				        msg += '결제 금액 : ' + rsp.paid_amount;
-				        msg += '카드 승인번호 : ' + rsp.apply_num;
-				        //orderinsert();
+				    	
+				    	$("#orderid").val(Math.random().toString(36).substr(2,11));
+						var formData = $("form[name=frm]").serialize();
+						var orderid = $("#orderid").val();
+						var msg = '결제가 완료되었습니다.';
+						msg += '주문조회번호 : ' +orderid;
+						 $.ajax({
+								url:"/Order/orderinsert.do",
+								type:"POST",
+								data:formData,
+								ContentType:"application/json",
+								success:function(data){
+								var str = "";
+								let Json = JSON.parse('${jsonData}');
+								var formData2 = "";
+								for(let i =0; i<Json.length; i++){
+									str += "<form name='fm"+i+"'>";
+								    var oidx = Json[i].oidx;
+								    var quantity = Json[i].quntity;
+								    console.log("oidx는 ????"+oidx);
+								    str += "<input type='hidden' name='nonidx' value='"+data+"'>";
+									str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
+									str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
+									
+									str += "</form>";
+									$("#form2").html(str);
+									
+									
+									formData2 = $("form[name=fm"+i+"]").serialize();
+									console.log(formData2);
+									 $.ajax({
+											url:"/Order/orderdetailinsert.do",
+											type:"POST",
+											data:formData2,
+											async: false,
+											ContentType:"application/json",
+											success:function(data){
+											},
+											error:function(){
+												alert("실행오류");
+											}
+										});
+									 
+									}
+								},
+								error:function(){
+									alert("실행오류");
+								}
+							});
 				    } else {
 				    	 var msg = '결제에 실패하였습니다.';
 				         msg += '에러내용 : ' + rsp.error_msg;
@@ -328,11 +381,33 @@ function iamport(){
 		   			alert(msg);
 				});
 			});
-		}else if(payment=="무통장"){
+		}else if(payment=="계좌이체"){
+			IMP.request_pay({
+			    pg : 'kcp',
+			    pay_method : 'trans',
+			    merchant_uid: 'merchant_' + new Date().getTime(), //상점에서 생성한 고유 주문번호
+			    name : productname, //결제창에서 보여질 이름
+			    amount : tot_price, //실제 결제되는 가격
+			    buyer_email : email,
+			    buyer_name : name,
+			    buyer_tel : phone,
+			    buyer_addr : addr,
+			    buyer_postcode : zipcode,
+			}, function(rsp) {
+			    if ( !rsp.success ) {
+			    	//결제 시작 페이지로 리디렉션되기 전에 오류가 난 경우
+			        var msg = '오류로 인하여 결제가 시작되지 못하였습니다.';
+			        msg += '에러내용 : ' + rsp.error_msg;
+
+			        alert(msg);
+			    }
+			});
+			
+		}
+		else if(payment=="무통장"){
 			$("#orderid").val(Math.random().toString(36).substr(2,11));
 			var formData = $("form[name=frm]").serialize();
 			var orderid = $("#orderid").val();
-			
 			 $.ajax({
 					url:"/Order/orderinsert.do",
 					type:"POST",
@@ -343,24 +418,24 @@ function iamport(){
 					var str = "";
 					
 					let Json = JSON.parse('${jsonData}');
+					var formData2 = "";
 					for(let i =0 ; i<Json.length ; i++){
-						str += "<form name='fm'>";
+						str += "<form name='fm"+i+"'>";
 					    var oidx = Json[i].oidx;
 					    var quantity = Json[i].quntity;
+					    console.log("oidx는 ????"+oidx);
 					    str += "<input type='hidden' name='nonidx' value='"+data+"'>";
 						str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
 						str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
-						
 						str += "</form>";
 						$("#form2").html(str);
-						
-						
-						var formData2 = $("form[name=fm]").serialize();
+						formData2 = $("form[name=fm"+i+"]").serialize();
 						console.log(formData2);
 						 $.ajax({
 								url:"/Order/orderdetailinsert.do",
 								type:"POST",
 								data:formData2,
+								async: false,
 								ContentType:"application/json",
 								success:function(data){
 								},
@@ -370,14 +445,15 @@ function iamport(){
 							});
 						 
 						}
+					$("section").html("<div id='complete'>주문이 완료되었습니다</div>");
 					},
 					error:function(){
 						alert("실행오류");
 					}
 				});
 		}
-		
 	}
+}
 
 $(document).ready(function(){
 	
@@ -400,21 +476,28 @@ $(document).ready(function(){
 	
 	$(".change input:radio").change(function(){
 		var value = $(this).val();
+		var name = $("#name").val();
 		if(value=="무통장"){
 			str="<p>입금은행 : 이젠은행 032123-04-003344 (주)블링</p>";
 			str+="입금자명 : <input type='text' name='depositor'>";
-			str+="<input type='hidden' name='order_yn' value='n'>";
+			str+="<input type='hidden' name='order_yn' value='N'>";
 			$("#content").html(str);
+			$("input[name='depositor']").val(name);
 		}
 		else if(value=="카드"){
-			$("#content").html("<p id='text'>소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다</p>");
+			str="<p id='text'>소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다</p>";
+			str+="<input type='hidden' name='depositor'>";
+			str+="<input type='hidden' name='order_yn' value='Y'>";
+			$("#content").html(str);
+			$("input[name='depositor']").val("카드");
 		}
 		else if(value=="계좌이체"){
-			$("#content").html("예금주명 : <input type='text' name='depositor'>");
+			$("#content").html("예금주명 : <input type='text' name='depositor'><input type='hidden' name='order_yn' value='Y'>");
+			$("input[name='depositor']").val(name);
 		}
 	});
 	
-	$(".info input:radio").change(function(){
+	$("#info input:radio").change(function(){
 		var value = $(this).val();
 		var name = $("#name").val();
 		var phone = $("#phone").val();
@@ -437,7 +520,6 @@ $(document).ready(function(){
 			$(".agree input[name='c1']").prop("checked",false);
 		}
 	});
-	
 	$(".impor").blur(function(){
 		var checkName = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g;
 		var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/g;
