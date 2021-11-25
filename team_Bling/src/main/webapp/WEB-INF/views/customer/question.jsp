@@ -181,6 +181,7 @@
 				<div id="product_selected">
 				<input type="hidden" name="detail_idx" value="0">
 				<input type="hidden" name="midx" value="${sessionScope.UserVO.midx}">
+				<input type="text" style="display:none;">
 				</div>
 			</td>
 			
