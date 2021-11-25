@@ -4,6 +4,115 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.project.bling.mapper.adminmapper.ad_boardMapper">
+	
+	<!-- 공지사항 전체 개수 -->
+	<select id="listCount" resultType="int">
+		SELECT count(nidx) 
+		FROM bg_notice
+	</select>
+	
+	<!-- 공지사항 옵션 선택 전체 개수 -->
+	<select id="listOptionCount" resultType="int" parameterType="String">
+		SELECT count(nidx) 
+		FROM bg_notice
+		WHERE type=#{type}
+	</select>
+	
+	<!-- 공지사항 검색 전체 개수 -->
+	<select id="searchcount" resultType="int" parameterType="String">
+		SELECT count(nidx) 
+		FROM bg_notice
+		WHERE subject LIKE '%'||#{keyword}||'%'
+	</select>
+	
+	<!-- 공지사항 리스트 반복되는 sql -->
+	<sql id="listpage_1">
+		SELECT * 
+			FROM (
+				SELECT rownum as rnum, A.* 
+				FROM (
+					SELECT nidx,subject,rdate,type,imgfile,imges
+					FROM bg_notice
+	</sql>
+	
+	<!-- 공지사항 전체 리스트 -->
+	<select id="totalList" resultType="NoticeVO" parameterType="PageMaker">
+		<include refid="listpage_1"></include>
+			<![CDATA[
+					ORDER BY RDATE DESC
+				) A 
+				WHERE rownum <= #{lastPost}
+			]]>	
+			<if test="scri.keyword != null">
+				AND subject LIKE '%'||#{scri.keyword}||'%'
+			</if>
+			<![CDATA[	
+			)B
+			WHERE rnum >= #{startPost}
+		]]>
+	</select>
 
+	<!--공지사항 옵션선택 리스트-->
+	<select id="optionList" resultType="NoticeVO" parameterType="PageMaker">
+		<include refid="listpage_1"></include>
+		<![CDATA[
+					WHERE type=#{type}
+					ORDER BY RDATE DESC
+				) A 
+				WHERE rownum <= #{lastPost}
+			)B
+			WHERE rnum >= #{startPost}
+		]]>
+	</select> 
+	
+	<!-- 공지사항 데이터 삭제 -->
+	<delete id="deleteArr" parameterType="int">
+		 DELETE FROM bg_notice WHERE nidx=#{nidx}
+	</delete>
+	
+	<!-- 공지사항 데이터 검색 -->
+	<select id="search" resultType="NoticeVO" parameterType="PageMaker">
+		<include refid="listpage_1"></include>
+			<![CDATA[
+					ORDER BY RDATE DESC
+				) A 
+				WHERE rownum <= #{lastPost} AND subject LIKE '%'||#{keyword}||'%'
+			)B
+			WHERE rnum >= #{startPost}
+		]]>
+	</select>
 
+	<!-- 공지사항 데이터 등록 -->
+	<insert id="confirm" parameterType="NoticeVO">
+		INSERT INTO bg_notice(nidx,subject,contents,rdate,type,imgfile,imges)
+		VALUES(
+			nidx_seq.nextval
+			,#{subject}
+			,#{contents}
+			,sysdate
+			,#{type}
+			,#{imgfile, jdbcType=VARCHAR}
+			,#{imges, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<!-- 공지사항 데이터 수정 전 불러오기 (고객 공지사항에도 똑같이 적용가능)(detail)-->
+	<select id="sp_detail" resultType="NoticeVO" parameterType="int">
+		SELECT * 
+		FROM bg_notice
+		WHERE nidx=#{nidx}
+	</select>
+	
+	<!-- 공지사항 데이터 수정 -->
+	<update id="modify" parameterType="NoticeVO">
+		UPDATE bg_notice
+		SET subject = #{subject},
+			rdate = sysdate,
+			type = #{type},
+			contents = #{contents},
+			imgfile =#{imgfile, jdbcType=VARCHAR},
+			imges=#{imges,jdbcType=VARCHAR}
+		WHERE nidx = #{nidx}
+	</update>
+	
 </mapper>
