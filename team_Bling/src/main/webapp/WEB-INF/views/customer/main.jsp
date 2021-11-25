@@ -81,6 +81,7 @@
 <form name="frm" action="/Customer/main.do" method="post">
 <input type="text" name="keyword" id="research-text" placeholder="자주 묻는 질문 검색">&ensp;
 <input type="hidden" name="page" value="1">
+<input type="text" style="display:none;">
 <button type="button" class="btn btn-danger" id="research_question_btn" onclick="research_Fn(this.form)">검색</button>
 </form>
 </div>
