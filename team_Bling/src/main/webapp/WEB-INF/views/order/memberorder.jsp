@@ -326,7 +326,7 @@
       	</div>
       </div>
       <div class="modal-footer" id="addr_select2">
-        <button type="button" class="btn btn-secondary"  id="header1" data-bs-dismiss="modal" onclick="modal_button1()">확인</button>&ensp;&ensp;
+        <button type="button" class="btn btn-secondary"  id="header1" data-bs-dismiss="modal" onclick="modal_select()">확인</button>&ensp;&ensp;
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="modal_button2">닫기</button>
       </div>
     </div>
@@ -405,9 +405,17 @@
 		
 	}
 
-function modal_button1(){
-	
-	
+function modal_select(){
+	var zip_code = $("input[name='addr']:checked").parent().siblings(':eq(0)').text();
+	var addr1 = $("input[name='addr']:checked").parent().siblings(':eq(1)').text();
+	var addr2 = $("input[name='addr']:checked").parent().siblings(':eq(2)').text();
+	var recipient = $("input[name='addr']:checked").parent().siblings(':eq(3)').text();
+	var rphone = $("input[name='addr']:checked").parent().siblings(':eq(4)').text();
+	$("#recipient").val(recipient);
+	$("#rphone").val(rphone);
+	$("#address1").val(addr1);
+	$("#address2").val(addr2);
+	$("#zip_code").val(zip_code);
 }
 	
 function mileage(){
