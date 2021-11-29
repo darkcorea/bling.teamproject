@@ -70,7 +70,7 @@
 		   <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle active" aria-current="page" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">상품 관리</a>
 		    <ul class="dropdown-menu">
-		      <li><a class="dropdown-item" href="/Ad_regist//list.do">상품 리스트</a></li>
+		      <li><a class="dropdown-item" href="/Ad_regist/list.do?page=1">상품 리스트</a></li>
 		      <li><a class="dropdown-item" href="/Ad_regist/regist.do">상품 등록</a></li>
 		      <li><a class="dropdown-item" href="#">품절 상품</a></li>
 		    </ul>

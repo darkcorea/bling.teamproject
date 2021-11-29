@@ -43,6 +43,11 @@
 		font-size:1.75rem;
 		font-weight:500;
 	}
+	
+	/* 글씨체 두껍게*/
+	.bold {
+		font-weight:bold;
+	}
 </style>
 </head>
 <body>
@@ -59,7 +64,7 @@
 		<div class="quickmenu">
 			  <ul>
 			 	<li><a href="#">홈</a></li>
-			    <li><a href="/Ad_regist/list.do">리스트</a></li>
+			    <li><a href="/Ad_regist/list.do?page=1">리스트</a></li>
 			    <li><a href="/Ad_regist/regist.do">상품 등록</a></li>
 			    <li><a href="#">품절상품</a></li> 
 			  </ul>
@@ -125,7 +130,7 @@
 					</tr>
 					<tr>
 						<th>옵션 이름 : </th>
-						<td colspan="5"><input type="text" name="oname" class="result_frm1" size="35"></td>
+						<td colspan="5"><input type="text" name="oname" id="result_frm1" size="35"></td>
 					</tr>
 					<tr>
 						<th>제품 번호 : </th>
@@ -164,7 +169,7 @@
 					</tr>
 					<tr>
 						<th>옵션 이름 : </th>
-						<td colspan="5"><input type="text" name="oname" class="result_frm2" size="35"></td>
+						<td colspan="5"><input type="text" name="oname" id="result_frm2" size="35"></td>
 					</tr>
 					<tr>
 						<th>제품 번호 : </th>
@@ -203,7 +208,7 @@
 					</tr>
 					<tr>
 						<th>옵션 이름 : </th>
-						<td colspan="5"><input type="text" name="oname" class="result_frm3" size="35"></td>
+						<td colspan="5"><input type="text" name="oname" id="result_frm3" size="35"></td>
 					</tr>
 					<tr>
 						<th>제품 번호 : </th>
@@ -228,17 +233,17 @@
 					제품 번호 : <input type="number" name="pidx" class="pidx">
 				</div><br>
 				<div class="mb-3">
-  					<label class="form-label">메인 이미지
+  					<label class="form-label bold">메인 이미지
 				 	<input class="form-control" type="file" name="main" accept="image/*"></label>
 				</div>
 				<div class="mb-3">
-  					<label class="form-label">상세 이미지
+  					<label class="form-label bold">상세 이미지1
 				 	<input class="form-control" type="file" name="detail1" accept="image/*"></label>
 				 	<input id="detail_add" type="button" value="파일 추가" onclick="plusFn()" class="btn btn-secondary">
 				</div>
 				<div id="result"></div>
 				<div class="mb-3">
-  					<label class="form-label">설명 이미지
+  					<label class="form-label bold">설명 이미지1
 				 	<input class="form-control" type="file" name="showing1" accept="image/*"></label>
 					<input id="showing_add" type="button" value="파일 추가" onclick="plusFn2()" class="btn btn-secondary">
 				</div>
@@ -338,7 +343,7 @@ function select_fn(type){
      radioVal += $(".addprice_"+type).val();
      radioVal += "원 ";
      
-     document.getElementsByClassName("result_"+type).value=radioVal;
+     document.getElementById("result_"+type).value=radioVal;
 	
 }
 
@@ -369,7 +374,7 @@ function insertOpt(type){
 function plusFn(){
 	var str = "";
 	for(i=2;i<4;i++){
-	str += "<div class='mb-3'><label class='form-label'>";
+	str += "<div class='mb-3'><label class='form-label'>상세 이미지"+i;
 	str += "<input accept='image/*' class='form-control' type='file' name='detail"+i+"'></label>";
 	str += "</div>";
 	}
@@ -382,7 +387,7 @@ function plusFn(){
 function plusFn2(){
 	var str = "";
 	for(i=2;i<6;i++){
-		str += "<div class='mb-3'><label class='form-label'>";
+		str += "<div class='mb-3'><label class='form-label'>설명 이미지"+i;
 		str += "<input accept='image/*' class='form-control' type='file' name='showing"+i+"'></label>";
 		str += "</div>";
 	}
