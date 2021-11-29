@@ -44,7 +44,7 @@
 	<!-- String uploadPath = new String("업로드 경로") -->
 	<beans:bean id="uploadPath" class="java.lang.String">
 	    <!-- 파일업로드 디렉토리-->
-	    <beans:constructor-arg value="D:\프\1122\team_Bling\src\main\webapp\resources\review_img"/>
+	    <beans:constructor-arg value="D:\git\bling.teamproject\team_Bling\src\main\webapp\resources\review_img"/>
 	</beans:bean>
 	
 			

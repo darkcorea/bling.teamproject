@@ -9,7 +9,7 @@ public class CombineVO {
 	private int discount;
 	private int saleprice;
 	// option
-	private int order_idx;
+	private int oidx;
 	private String oname;
 	private int addprice;
 	// review
@@ -32,6 +32,7 @@ public class CombineVO {
 	// delivery
 	private String deli_stat;
 	// order
+	private int order_idx;
 	private int midx;
 	// 임의로 정한 
 	private int reviewCount;
@@ -40,7 +41,8 @@ public class CombineVO {
 	// 임의(MyPageMapper)
 	private int orderCompCnt;
 	private int deliStatCnt;
-	
+	private String rdate1;
+	private String rdate2;
 	
 	
 	public int getPqidx() {
@@ -108,6 +110,12 @@ public class CombineVO {
 	}
 	public void setOrder_idx(int order_idx) {
 		this.order_idx = order_idx;
+	}
+	public int getOidx() {
+		return oidx;
+	}
+	public void setOidx(int oidx) {
+		this.oidx = oidx;
 	}
 	public String getOname() {
 		return oname;
@@ -211,6 +219,19 @@ public class CombineVO {
 	public void setDeliStatCnt(int deliStatCnt) {
 		this.deliStatCnt = deliStatCnt;
 	}
+	public String getRdate1() {
+		return rdate1;
+	}
+	public void setRdate1(String rdate1) {
+		this.rdate1 = rdate1;
+	}
+	public String getRdate2() {
+		return rdate2;
+	}
+	public void setRdate2(String rdate2) {
+		this.rdate2 = rdate2;
+	}
+	
 	
 	
 }

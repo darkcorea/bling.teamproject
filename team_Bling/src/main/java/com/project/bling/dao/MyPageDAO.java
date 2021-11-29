@@ -31,4 +31,13 @@ public class MyPageDAO {
 	public void reviewWrite(CombineVO vo) throws Exception {
 		sqlSession.insert(mm+"reviewWrite", vo);
 	}
+	
+	public void reviewWrite1(CombineVO vo) throws Exception {
+		sqlSession.insert(mm+"reviewWrite1", vo);
+	}
+	
+	public void reviewWrite2(CombineVO vo) throws Exception {
+		sqlSession.insert(mm+"reviewWrite2", vo);
+	}
+	
 }

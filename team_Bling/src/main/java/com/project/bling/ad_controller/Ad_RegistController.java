@@ -77,6 +77,7 @@ public class Ad_RegistController {
 		MultipartFile f_showing1 = request.getFile("showing1");
 		MultipartFile f_showing2 = request.getFile("showing2");
 
+		
 		String main=null;
 		String detail1=null;
 		String detail2=null;	

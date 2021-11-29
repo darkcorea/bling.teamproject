@@ -25,10 +25,10 @@
 		GROUP BY o.midx
 	</select>
 	
-	<!-- 최근 주문 정보(product,option,order,order_detail,delivery 5개 테이블 join) -->
+	<!-- 최근 주문 정보(product,option,order,order_detail,delivery,review 6개 테이블 join) -->
 	<select id="recentOrder" resultType="CombineVO">
 		WITH po
-		    AS(
+		     AS(
 		        SELECT p.pname,
 		               p.saleprice,
 		               op.oname,
@@ -36,9 +36,9 @@
 		               op.oidx
 		        FROM bg_product p
 		        INNER JOIN bg_option op
-		        ON p.pidx=op.pidx
-		    ),
-		     oodd
+		        ON p.pidx=op.pidx 
+		     ),
+		     oOdDr
 		     AS(
 		        SELECT o.rdate,
 		               o.order_idx,
@@ -47,32 +47,42 @@
 		               d.deli_stat,
 		               d.order_yn,
 		               od.oidx,
-		               o.midx
-		        FROM bg_order o
-		        LEFT OUTER JOIN bg_order_detail od
-		        ON o.order_idx=od.order_idx
+		               o.midx,
+		               r.ridx,
+		               r.contents
+		        FROM bg_order_detail od
+		        
+		        RIGHT OUTER JOIN bg_order o
+		        ON od.order_idx=o.order_idx
 		        
 		        LEFT OUTER JOIN bg_delivery d
-		        ON o.order_idx=d.order_idx
+		        ON od.order_idx=d.order_idx
+		        
+		        LEFT OUTER JOIN bg_review r
+		        ON od.detail_idx=r.detail_idx
 		     )
-		SELECT oodd.rdate,
-		       oodd.order_idx,
-		       oodd.detail_idx,
+		SELECT oOdDr.rdate,
+		       oOdDr.order_idx,
+		       oOdDr.detail_idx,
 		       po.pname,
 		       po.oname,
 		       po.saleprice,
 		       po.addprice,
-		       sum(oodd.quantity) AS quantitySum,
-		       oodd.deli_stat
-		FROM oodd
+		       sum(oOdDr.quantity) AS quantitySum,
+		       oOdDr.deli_stat,
+		       oOdDr.ridx,
+		       oOdDr.contents
+		FROM oOdDr
 		INNER JOIN po
-		ON oodd.oidx=po.oidx
-		WHERE oodd.midx=#{midx} AND NOT oodd.deli_stat='N'
-		GROUP BY oodd.rdate,oodd.order_idx,oodd.detail_idx,po.pname,po.oname,po.saleprice,po.addprice,oodd.deli_stat
-		ORDER BY oodd.rdate
+		ON oOdDr.oidx=po.oidx
+		WHERE oOdDr.midx=#{midx} AND NOT oOdDr.deli_stat='N'
+		GROUP BY oOdDr.rdate,oOdDr.order_idx,oOdDr.detail_idx,po.pname,po.oname,po.saleprice,po.addprice,oOdDr.deli_stat,oOdDr.ridx,oOdDr.contents
+		ORDER BY oOdDr.rdate
 		DESC
 	</select>
 	
+	
+	<!-- 사진 2개 첨부시 -->
 	<insert id="reviewWrite" parameterType="CombineVO">
 	<!-- <![CDATA[]]> 안의 코드들을 문자열로 인식시킨다. -->
 		<![CDATA[
@@ -92,6 +102,72 @@
     		,sysdate
     		,#{image1}
     		,#{image2}
+    		,#{midx}
+    		,#{detail_idx}
+    		,#{grade}
+    	)
+    	]]>
+    	<!--
+    		selectKey의 결과를 keyProperty에 담는다 
+    		order : selectKey를 쿼리문 전에 실행할지 후에 실행할지 정한다.
+    	-->
+    	<selectKey resultType="int" keyProperty="ridx" order="BEFORE">
+    		SELECT MAX(ridx)+1 FROM bg_review
+    	</selectKey>
+    		
+	</insert>
+	
+	
+	<!-- 사진 1개 첨부시 -->
+	<insert id="reviewWrite1" parameterType="CombineVO">
+	<!-- <![CDATA[]]> 안의 코드들을 문자열로 인식시킨다. -->
+		<![CDATA[
+    	INSERT INTO bg_review(
+    				ridx,
+    				contents,
+    				rdate,
+    				image1,
+    				midx,
+    				detail_idx,
+    				grade
+    				)
+    	VALUES(
+    		#{ridx}
+    		,#{contents}	
+    		,sysdate
+    		,#{image1}
+    		,#{midx}
+    		,#{detail_idx}
+    		,#{grade}
+    	)
+    	]]>
+    	<!--
+    		selectKey의 결과를 keyProperty에 담는다 
+    		order : selectKey를 쿼리문 전에 실행할지 후에 실행할지 정한다.
+    	-->
+    	<selectKey resultType="int" keyProperty="ridx" order="BEFORE">
+    		SELECT MAX(ridx)+1 FROM bg_review
+    	</selectKey>
+    		
+	</insert>
+	
+	
+	<!-- 사진 첨부 없는 경우 -->
+	<insert id="reviewWrite2" parameterType="CombineVO">
+	<!-- <![CDATA[]]> 안의 코드들을 문자열로 인식시킨다. -->
+		<![CDATA[
+    	INSERT INTO bg_review(
+    				ridx,
+    				contents,
+    				rdate,
+    				midx,
+    				detail_idx,
+    				grade
+    				)
+    	VALUES(
+    		#{ridx}
+    		,#{contents}	
+    		,sysdate
     		,#{midx}
     		,#{detail_idx}
     		,#{grade}

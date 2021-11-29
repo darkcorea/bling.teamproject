@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.project.bling.mapper.myPageReviewMapper">
+	
+	<select id="reviewList" resultType="CombineVO">
+		WITH pi
+		     AS(
+		        SELECT p.pidx,
+		               p.pname,
+		               i.main
+		        FROM bg_product p
+		        INNER JOIN bg_image i
+		        ON p.pidx=i.pidx
+		     ),
+		     opOodR
+		     AS(
+		        SELECT op.pidx,
+		               op.oidx,
+		               op.oname,
+		               o.midx,
+		               o.rdate,
+		               od.quantity,
+		               r.ridx,
+		               r.contents,
+		               r.image1,
+		               r.image2
+		        FROM bg_order_detail od
+		        
+		        RIGHT OUTER JOIN bg_option op
+		        ON od.oidx=op.oidx
+		        
+		        RIGHT OUTER JOIN bg_order o
+		        ON od.order_idx=o.order_idx
+		        
+		        INNER JOIN bg_review r
+		        ON od.detail_idx=r.detail_idx
+		     )
+		SELECT opOodR.ridx,
+		       pi.main,
+		       pi.pname,
+		       opOodR.oname,
+		       opOodR.quantity,
+		       opOodR.contents,
+		       opOodR.image1,
+		       opOodR.image2
+		FROM pi
+		LEFT OUTER JOIN opOodR
+		ON pi.pidx=opOodR.pidx
+		WHERE opOodR.midx=2
+		    AND opOodR.rdate BETWEEN TO_DATE('2021/07/01','YYYY/MM/DD') AND TO_DATE('2021/12/31','YYYY/MM/DD')
+		ORDER BY opOodR.ridx
+		DESC
+	</select>
+	
+	
+</mapper>
