@@ -192,7 +192,7 @@
 		            <div class="col-8 col-md-6" id="headerCol1">
 		            <!-- home icon -->
 		                <a href="/"><i class="bi bi-house-fill"></i></a>
-		                <a id="header_notice" href="/Notice/main.do">NOTICE</a>
+		                <a id="header_notice" href="/Notice/notice_main.do">NOTICE</a>
 		                <a id="header_event" href="">EVENT</a>
 	                <!-- heart icon -->
 						<a href=""><i class="bi bi-suit-heart-fill header_heart"></i></a>

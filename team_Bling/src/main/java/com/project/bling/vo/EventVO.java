@@ -9,8 +9,15 @@ public class EventVO {
 	private String image;
 	private String event_start;
 	private String event_end;
+	private String banner;
 	
 	
+	public String getBanner() {
+		return banner;
+	}
+	public void setBanner(String banner) {
+		this.banner = banner;
+	}
 	public int getEidx() {
 		return eidx;
 	}

@@ -87,10 +87,34 @@
 			</table>
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 			  <button class="btn btn-outline-primary" type="button" onclick="location.href='/Ad_board/bf_modify.do?nidx=${detail.nidx}'">수정하기</button>
+			  <button class="btn btn-outline-danger" type="button" onclick="detail_del(${detail.nidx})">삭제하기</button>
 			  <button class="btn btn-outline-secondary" type="button" onclick="location.href='/Ad_board/board.do?page=1&type=T'">목록가기</button>
 			</div>
 		</div>
 		<br>
 	</body>
-	
+	<script>
+		function detail_del(nidx){
+			
+			if(confirm("해당 게시물을 삭제하시겠습니까?")){
+				alert(nidx+"번 게시물을 삭제합니다");
+				
+				$.ajax({
+					url:"/Ad_board/detail_del.do",
+					type:"POST",
+					data:{"nidx":nidx},
+					ContentType:"application/json",
+					success:function(data){
+						location.reload();
+						window.history.back();
+					},error:function(){
+						alert("상품삭제 에러!")
+					}
+				});
+			}else{
+				alert("취소하였습니다.");
+			}
+			
+		}
+	</script>
 </html>

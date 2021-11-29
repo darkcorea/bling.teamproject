@@ -15,16 +15,25 @@ public class NoticeDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	private String nm = "com.project.bling.mapper.noticeMapper.";
+	private String ps = "com.project.bling.mapper.noticeMapper.";
 
-	// 고객센터에 사용하는 문의내역 총 갯수
-	public int Question_Count(PageMaker pm) throws Exception {
-		return sqlSession.selectOne(nm +"Question_Count", pm);
+	//공지사항 총 개수
+	public int listcount() throws Exception{
+		return sqlSession.selectOne(ps+"listCount");
 	}
 	
-	// 고객센터에 사용하는 페이징
-	public List<NoticeVO> Question_page(PageMaker pm) throws Exception {
-		return sqlSession.selectList(nm +"Question_page", pm);
+	//공지사항 검색 총 개수
+	public int searchcount(String keyword) throws Exception{
+		return sqlSession.selectOne(ps+"searchcount",keyword);
 	}
 	
+	//공지사항 총 페이징
+	public List<NoticeVO> totalList(PageMaker pm)throws Exception{
+		return sqlSession.selectList(ps+"totalList",pm);
+	}
+	
+	//공지사항 detail
+	public NoticeVO detail(int nidx) throws Exception{
+		return sqlSession.selectOne(ps+"sp_detail",nidx);
+	}
 }

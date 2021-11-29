@@ -202,7 +202,7 @@
 	});
 	
 	$(window).scroll(function(){
-		if($(window).scrollTop() >= $(document).height() - $(window).height()){
+		if($(window).scrollTop() >= $(document).height() - $(window).height() - 150){
 			getList(page, orderBy, kind);
 			page++;
 		}
@@ -290,6 +290,7 @@
 		kind = document.getElementById("option_kind").value;
 		
 		document.getElementById("option_orderBy").value=a;
+		getList(page, orderBy, kind);
 	}
  
 //스크롤페이징

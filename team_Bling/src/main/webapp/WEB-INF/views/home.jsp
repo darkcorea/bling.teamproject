@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -30,9 +31,16 @@
 	}
 	
 	/* 이벤트민 공지사항 관련 */
-	#event,#notice{
+	#event{
 		height: 256px;
 		background-color: #C4C4C4;
+	}
+	#notice{
+		height: 256px;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		border:1px solid #cb7878;
+		border-radius:10px;
 	}
 	#eventDiv{
 		padding-right: 100px;
@@ -127,9 +135,13 @@
 				</div>
 			</div>
 			<div class="col-xl-4">
-				<span><a id="subMenu1" href="">Notice</a></span>
+				<span><a id="subMenu1" href="/Notice/notice_main.do">Notice</a></span>
 				<div id="notice">
-
+					<c:forEach var="notice" items="${notice}">
+						<a href="/Notice/detail.do?nidx=${notice.nidx}" class='link-dark' style='text-decoration:none'>
+							<h6>&nbsp;&middot;&nbsp;${notice.subject} &#40; ${fn:substring(notice.rdate,0,10)} &#41;</h6> 
+						</a><br>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
