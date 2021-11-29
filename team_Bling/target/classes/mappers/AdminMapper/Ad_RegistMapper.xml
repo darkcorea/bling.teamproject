@@ -5,13 +5,24 @@
  
 <mapper namespace="com.project.bling.mapper.adminmapper.ad_registMapper">
 
+
+	<!-- 제품 총 갯수 -->
+	<select id="product_count" parameterType="String" resultType="int">
+		SELECT count(*) FROM bg_product WHERE 1=1
+		<if test=' _parameter == "R"'> AND kind='R'</if>
+		<if test=' _parameter == "E"'> AND kind='E'</if>
+		<if test=' _parameter == "N"'> AND kind='N'</if>
+		<if test=' _parameter == "B"'> AND kind='B'</if>	
+	</select>
+	
+	
 	<!-- 관리자 제품 등록 -->
 	<insert id="productInsert" parameterType="ProductVO">
 	INSERT INTO BG_PRODUCT(pidx, pname, kind, price, discount, saleprice, rdate)
 	VALUES(pidx_seq.nextval, #{pname}, #{kind}, #{price}, #{discount}, #{saleprice}, sysdate)
 	<selectKey resultType="int" keyProperty="pidx" order="AFTER">
 	
-	SELECT MAX(pidx) FROM BG_PRODUCT
+	SELECT MAX(pidx) FROM BG_PRODUCT WHERE 1=1
 	
 	</selectKey>
 	</insert>
@@ -24,34 +35,115 @@
 	
 	<!--  관리자 이미지 등록 -->
 	<insert id="imageInsert" parameterType="ImageVO">
-	INSERT INTO BG_IMAGE(image_idx, pidx, main, detail1, showing1
+	INSERT INTO BG_IMAGE(image_idx, pidx
+	<if test="main != null">, main</if>
+	<if test="detail1 != null">, detail1</if>
 	<if test="detail2 != null">, detail2</if>
 	<if test="detail3 != null">, detail3</if>
+	<if test="showing1 != null">, showing1</if>
 	<if test="showing2 != null">, showing2</if>
 	<if test="showing3 != null">, showing3</if>
 	<if test="showing4 != null">, showing4</if>
 	<if test="showing5 != null">, showing5</if>
 	)
-	VALUES(image_seq.nextval, #{pidx}, #{main}, #{detail1}, #{showing1}
+	VALUES(#{image_idx}, #{pidx}
+	<if test="main != null">, #{main}</if>
+	<if test="detail1 != null">, #{detail1}</if>
 	<if test="detail2 != null">, #{detail2}</if>
 	<if test="detail3 != null">, #{detail3}</if>
+	<if test="showing1 != null">, #{showing1}</if>
 	<if test="showing2 != null">, #{showing2}</if>
 	<if test="showing3 != null">, #{showing3}</if>
 	<if test="showing4 != null">, #{showing4}</if>
 	<if test="showing5 != null">, #{showing5}</if>
 	
 	)
+	<selectKey resultType="int" keyProperty="image_idx" order="BEFORE">
+	       SELECT MAX(image_idx)+1 FROM BG_IMAGE
+	</selectKey>
+	
 	</insert>
 	
 	<!-- 관리자 제품 정보 불러오기 -->
-	<select id="list" resultType="ProductVO">
-		 SELECT pidx
-        	 , pname
-        	 , kind
-        	 , price
-        	 , rdate
-          FROM BG_PRODUCT
-          WHERE 1=1 
+	<select id="list" parameterType="PageMaker" resultType="CombineVO">
+	<![CDATA[
+	SELECT * FROM
+		(SELECT rownum AS rnum, A.* FROM
+			 (SELECT * FROM bg_product pr JOIN bg_image im ON im.pidx = pr.pidx WHERE 1=1 
+	]]>	
+		<if test='kind == "R"'> AND kind='R'</if>
+		<if test='kind == "E"'> AND kind='E'</if>
+		<if test='kind == "N"'> AND kind='N'</if>
+		<if test='kind == "B"'> AND kind='B'</if>	
+		
+	<![CDATA[		  
+			  ORDER BY pr.rdate desc) A
+		WHERE rownum <= #{lastPost} ) B
+	WHERE rnum >= #{startPost}
+	]]>
 	</select>
+	
+	<!-- 상품 옵션 불러오기 -->
+	<select id="oblist" resultType="OptionVO" parameterType="int">
+	SELECT * FROM bg_option WHERE 1=1
+	<if test=" _parameter != null">AND pidx=#{pidx}</if>
+	</select>
+	
+	<!-- pidx로 제품 정보 불러오기 -->
+	<select id="product" parameterType="int" resultType="productVO">
+		SELECT * FROM bg_product WHERE pidx=#{pidx}
+	</select>
+
+	<!-- 제품 수정하기 -->
+	<update id="updatePro" parameterType="productVO">
+		UPDATE bg_product SET pname=#{pname}, price=#{price}, discount=#{discount}, saleprice=#{saleprice}
+		, saleyn=#{saleyn}, kind=#{kind}, rdate=sysdate
+		WHERE pidx = #{pidx}
+	</update>
+	
+	<!-- 제품 옵션 수정하기 -->
+	<update id="updateOpt" parameterType="OptionVO">
+		UPDATE bg_option SET oname=#{oname}, addprice=#{addprice}, color=#{color}, sizes=#{sizes}, stock=#{stock}
+		, texture=#{texture}, saleyn=#{saleyn}
+		WHERE oidx = #{oidx}
+	</update>
+	
+	<!-- 제품 옵션 삭제하기 -->
+	<delete id="deleteOpt" parameterType="int">
+		DELETE FROM bg_option WHERE oidx=#{oidx}
+	</delete>
+	
+	<!-- pidx로 제품이미지 가져오기 -->
+	<select id="image" parameterType="int" resultType="ImageVO">
+		SELECT * FROM bg_image WHERE pidx=#{pidx}
+	</select>
+	
+	<!-- 제품 이미자 칼럼에 null값 널기 -->
+	<update id="deleteImg" parameterType="CombineVO">
+		UPDATE bg_image SET
+		<if test='kind == "detail1"'> detail1 = null </if>
+		<if test='kind == "detail2"'> detail2 = null </if>
+		<if test='kind == "detail3"'> detail3 = null </if>
+		<if test='kind == "showing2"'> showing2 = null </if>
+		<if test='kind == "showing3"'> showing3 = null </if>
+		<if test='kind == "showing4"'> showing4 = null </if>
+		<if test='kind == "showing5"'> showing5 = null </if>
+		WHERE pidx=#{pidx}
+	</update>
+	
+	<!-- 제품 이미지 수정 -->
+	<update id="updateImg" parameterType="ImageVO">
+		UPDATE bg_image SET pidx=#{pidx}
+		<if test="main != null">, main = #{main}</if>
+		<if test="detail1 != null">, detail1 = #{detail1}</if>
+		<if test="detail2 != null">, detail2 = #{detail2}</if>
+		<if test="detail3 != null">, detail3 = #{detail3}</if>
+		<if test="showing1 != null">, showing1 = #{showing1}</if>
+		<if test="showing2 != null">, showing2 = #{showing2}</if>
+		<if test="showing3 != null">, showing3 = #{showing3}</if>
+		<if test="showing4 != null">, showing4 = #{showing4}</if>
+		<if test="showing5 != null">, showing5 = #{showing5}</if>
+		WHERE pidx = #{pidx}
+	</update>
 	
 </mapper>
