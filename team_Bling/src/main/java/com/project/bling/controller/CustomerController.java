@@ -30,31 +30,29 @@ public class CustomerController {
 	@Autowired
 	CustomerService customerService;
 	
-	@Autowired
-	NoticeService noticeService;
-	
 	// 고객센터 메인페이지
 	@RequestMapping(value="/main.do")
 	public String main(Locale locale, Model model, Criteria sc) throws Exception{
 		
-
 		// 필요한 페이지 넘버와 키워드 그리고 한 페이지당 10개의 리스트 보여주기
 		sc.setPage(sc.getPage());
 		sc.setPerPageNum(10);
 		sc.setKeyword(sc.getKeyword());
+		String type = "Q";
 		
 		// 페이징 하기 위해서 필요한 값들 넣음
 		PageMaker pm = new PageMaker();
 		pm.setScri(sc);
+		pm.setType(type);
 		
 		// 고객센터 문의 총 갯수, 키워드(검색 기능) 넣음
-		int questionCount = noticeService.Question_Count(pm);
+		int questionCount = customerService.Question_Count(pm);
 				
 		pm.setTotalCount(questionCount);
 		
 		// 고객센터에서 필요한  pm과 문의페이징
 		model.addAttribute("pm", pm);
-		model.addAttribute("question", noticeService.Question_page(pm));
+		model.addAttribute("question", customerService.Question_page(pm));
 		
 		return "customer/main";
 	}

@@ -87,5 +87,36 @@
 
 	</insert>
 	
+	<!-- 퀴리문에서  반복  사용되는거  -->
+	<sql id="keyword">
+		<if test="scri.keyword != null">
+		  AND subject LIKE '%'||#{scri.keyword}||'%' OR contents LIKE '%'||#{scri.keyword}||'%'
+		 </if>
+	</sql>
+
+
+	<!-- 고객센터 문의하기 총 갯수-->
+	<select id="Question_Count" parameterType="PageMaker" resultType="int">
+		SELECT count(*) FROM bg_notice WHERE type='Q'
+		<include refid="keyword"></include>
+	</select>
+	
+	
+	<!-- 고객센터 페이징 -->
+	<select id="Question_page" parameterType="PageMaker" resultType="NoticeVO">
+	<![CDATA[
+		SELECT * FROM
+			(SELECT rownum AS rnum, A.* FROM
+				(SELECT nidx, subject, contents, rdate FROM bg_notice WHERE type='Q'
+	]]>			
+		 <include refid="keyword"></include>
+		 
+	<![CDATA[			
+				) A
+			WHERE rownum <= #{lastPost} ) B
+		WHERE rnum >= #{startPost}
+	 	]]>
+	 	
+	</select> 
 	
 </mapper>

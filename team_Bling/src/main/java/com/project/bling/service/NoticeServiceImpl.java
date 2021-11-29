@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.bling.dao.NoticeDAO;
 import com.project.bling.domain.PageMaker;
+import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
 
 @Service("NoticeService")
@@ -14,19 +15,25 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Autowired
 	NoticeDAO noticeDAO;
-	
-	// 고객센테에서 사용하는 문의 내역 총 갯수
+
 	@Override
-	public int Question_Count( PageMaker pm) throws Exception {
-		return noticeDAO.Question_Count(pm);
+	public int listcount() throws Exception {
+		return noticeDAO.listcount();
+	}
+	
+	@Override
+	public int searchcount(String keyword) throws Exception {
+		return noticeDAO.searchcount(keyword);
+	}
+	
+	@Override
+	public List<NoticeVO> totalList(PageMaker pm) throws Exception {
+		return noticeDAO.totalList(pm);
 	}
 
-	// 고객센테에서 사용하는 페이징
 	@Override
-	public List<NoticeVO> Question_page(PageMaker pm) throws Exception {
-		return noticeDAO.Question_page(pm);
+	public NoticeVO detail(int nidx) throws Exception {
+		return noticeDAO.detail(nidx);
 	}
-	
-	
-	
+
 }

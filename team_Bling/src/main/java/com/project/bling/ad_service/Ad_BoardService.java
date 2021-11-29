@@ -3,6 +3,7 @@ package com.project.bling.ad_service;
 import java.util.List;
 
 import com.project.bling.domain.PageMaker;
+import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
 
 public interface Ad_BoardService {
@@ -33,5 +34,8 @@ public interface Ad_BoardService {
 	
 	//공지사항 수정
 	void modify(NoticeVO vo) throws Exception;
+	
+	//이벤트 db에 등록
+	void event_insert(EventVO vo) throws Exception;
 	
 }

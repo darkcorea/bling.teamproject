@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +30,7 @@ import com.google.gson.JsonObject;
 import com.project.bling.ad_service.Ad_BoardService;
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
+import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
 import com.project.bling.vo.ProductVO;
 
@@ -39,9 +41,11 @@ public class Ad_BoardController {
 	@Autowired
 	Ad_BoardService ad_boardService;
 	
+	/////////////////////////////////////공지사항///////////////////////////////////////
+	
 	//공지사항 파일, 이미지 저장 경로
 	private static final String FILE_SERVER_PATH = "D:\\팀프로젝트\\팀 깃\\4\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice\\";
-	
+	private static final String FILE_SERVER_PATH2 = "D:\\팀프로젝트\\팀 깃\\4\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\event\\";
 	
 	//공지사항 게시글리스트메인
 	@RequestMapping(value = "/board.do")
@@ -95,11 +99,14 @@ public class Ad_BoardController {
 		
 		//System.out.println(">>>>>>>type>>>>>>>>>"+count);
 		//System.out.println(">>>>>>>typenum>>>>>>>>>"+typenum);
+		System.out.println("<<<<<"+page);
 		
 		if(typenum == 1) {
 			noticelist.put("totalList", ad_boardService.totalList(pm));
+			noticelist.put("page", page);
 		}else { 
 			noticelist.put("totalList", ad_boardService.optionList(pm)); 
+			noticelist.put("page", page);
 		}
 		
 		return noticelist;
@@ -208,6 +215,14 @@ public class Ad_BoardController {
 		return "admin/Board/detail";
 	}
 	
+	//공지사항 detail 삭제
+	@RequestMapping(value="/detail_del.do")
+	@ResponseBody
+	public void detail_del(Locale locale,Model model,int nidx)throws Exception{
+		ad_boardService.deleteArr(nidx);
+		//return "admin/Board/board";
+	}
+	
 	
 	//파일 다운로드
 	@RequestMapping(value="/fileDownLoad.do") 
@@ -280,6 +295,85 @@ public class Ad_BoardController {
 		ad_boardService.modify(vo);
 		return "redirect:/Ad_board/detail.do?nidx="+vo.getNidx();
 	}
+	
+	/////////////////////////////////////////이벤트////////////////////////////////////////
+	
+	//이벤트
+	@RequestMapping(value="/event.do")
+	public String event(Locale locale, Model model,int page,int type) throws Exception {
+		model.addAttribute("page",page);
+		model.addAttribute("type",type);
+		return "admin/Board/event_board";
+	}
+	
+	//이벤트 게시글 에이작스 리스트
+	@RequestMapping(value="/eventlist.do")
+	@ResponseBody
+	public Map<String, Object> eventlist(int page,int type) throws Exception{
+		
+		
+		return null;
+	}
+	
+	//이벤트 등록
+	@RequestMapping(value="/event_regist.do")
+	public String event_regist(Locale locale,Model model) throws Exception{
+		return "admin/Board/event_regist";
+	}
+	
+	@RequestMapping(value="/event_regist_all.do", method = RequestMethod.POST)
+	public String event_regist_all(EventVO vo,HttpServletRequest request,@RequestParam("image") MultipartFile file1,@RequestParam("banner") MultipartFile file2 ) throws Exception{
+	
+		String image = file1.getOriginalFilename();
+		String banner = file2.getOriginalFilename();
+		
+		String images=null;
+		String banners=null;
+		
+		// 파일 업로드 
+		
+		if(image != null) {
+			// 기존 파일 이름을 받고 확장자 저장
+			String ext = image.substring(image.lastIndexOf("."));
+			
+			// 이름 값 변경을 위한 설정 
+			SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmmssSSS");
+			int rand = (int)(Math.random()*1000);
+			
+			// 파일 이름 변경
+			images = sdf.format(System.currentTimeMillis()) + "_" + rand + ext;
+			
+			// 파일 저장
+			file1.transferTo(new File(FILE_SERVER_PATH2 + images));
+		}
+		if(banner != null) {
+			// 기존 파일 이름을 받고 확장자 저장
+			String ext = banner.substring(banner.lastIndexOf("."));
+			
+			// 이름 값 변경을 위한 설정 
+			SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmmssSSS");
+			int rand = (int)(Math.random()*1000);
+			
+			// 파일 이름 변경
+			banners = sdf.format(System.currentTimeMillis()) + "_" + rand + ext;
+			
+			// 파일 저장
+			file2.transferTo(new File(FILE_SERVER_PATH2 + banners));
+		}
+		System.out.println(vo.getEvent_start());
+		System.out.println(vo.getEvent_end());
+		
+		System.out.println(banners);
+		System.out.println(images);
+		
+		//vo.setBanner(banner);
+		//vo.setImage(image);
+		
+		
+		//ad_boardService.event_insert(vo);
+		
+		return "redirect:/Ad_board/board.do?page=1&type=T";
+	}	
 	
 }
 

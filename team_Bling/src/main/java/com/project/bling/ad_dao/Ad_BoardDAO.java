@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.bling.domain.PageMaker;
+import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
 
 @Repository
@@ -59,5 +60,10 @@ public class Ad_BoardDAO {
 	//공지사항 수정
 	public void modify(NoticeVO vo) throws Exception{
 		sqlSession.update(ps+"modify",vo);
+	}
+	
+	//이벤트 db에 저장
+	public void event_insert(EventVO vo)throws Exception{
+		sqlSession.insert(ps+"event_regist",vo);
 	}
 }

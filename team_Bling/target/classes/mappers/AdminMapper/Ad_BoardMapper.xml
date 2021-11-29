@@ -70,17 +70,6 @@
 		 DELETE FROM bg_notice WHERE nidx=#{nidx}
 	</delete>
 	
-	<!-- 공지사항 데이터 검색 -->
-	<select id="search" resultType="NoticeVO" parameterType="PageMaker">
-		<include refid="listpage_1"></include>
-			<![CDATA[
-					ORDER BY RDATE DESC
-				) A 
-				WHERE rownum <= #{lastPost} AND subject LIKE '%'||#{keyword}||'%'
-			)B
-			WHERE rnum >= #{startPost}
-		]]>
-	</select>
 
 	<!-- 공지사항 데이터 등록 -->
 	<insert id="confirm" parameterType="NoticeVO">
@@ -115,4 +104,18 @@
 		WHERE nidx = #{nidx}
 	</update>
 	
+	
+	
+	<!-- 이벤트 데이터 저장 -->
+	<insert id="event_regist" parameterType="EventVO">
+		INSERT INTO bg_event(eidx,subject,contents,rdate,event_start,event_end)
+		values(
+			eidx_seq.nextval
+			,#{subject}
+			,#{contents}
+			,sysdate
+			,#{image, jdbcType=VARCHAR}
+			,#{event_end}
+		)
+	</insert>
 </mapper>

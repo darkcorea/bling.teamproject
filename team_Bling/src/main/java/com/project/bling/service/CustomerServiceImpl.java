@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project.bling.dao.CustomerDAO;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.NoticeVO;
 import com.project.bling.vo.Product_QuestionVO;
 import com.project.bling.vo.QuestionVO;
 
@@ -73,7 +74,17 @@ public class CustomerServiceImpl implements CustomerService {
 		customerDAO.question_write(qv);
 	}
 	
-	
+	// 고객센테에서 사용하는 문의 내역 총 갯수
+	@Override
+	public int Question_Count( PageMaker pm) throws Exception {
+		return customerDAO.Question_Count(pm);
+	}
+
+	// 고객센테에서 사용하는 페이징
+	@Override
+	public List<NoticeVO> Question_page(PageMaker pm) throws Exception {
+		return customerDAO.Question_page(pm);
+	}
 	
 	
 }

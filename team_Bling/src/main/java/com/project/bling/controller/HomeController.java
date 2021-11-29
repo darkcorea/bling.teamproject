@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
+import com.project.bling.service.NoticeService;
 import com.project.bling.service.ProductService;
 
 @Controller
@@ -22,6 +24,8 @@ public class HomeController {
 	
 	@Autowired
 	ProductService productService;
+	@Autowired
+	NoticeService noticeService;
 	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -73,6 +77,17 @@ public class HomeController {
 		pm.setEnd(3);
 		pm.setStart(1);
 		model.addAttribute("brac", productService.scrollnew(pm));
+		
+		
+		// 공지사항
+		Criteria sc = new Criteria();
+		int count = noticeService.listcount();
+		sc.setPerPageNum(5);
+		sc.setPage(1);
+		pm.setScri(sc);
+		pm.setTotalCount(count);
+		model.addAttribute("notice",noticeService.totalList(pm));
+		
 		
 		return "home";
 	}

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.NoticeVO;
 import com.project.bling.vo.Order_detailVO;
 import com.project.bling.vo.Product_QuestionVO;
 import com.project.bling.vo.QuestionVO;
@@ -69,5 +70,13 @@ public class CustomerDAO {
 	sqlSession.insert(cm +"question_write", qv);
 	}
 	
+	// 고객센터에 사용하는 문의내역 총 갯수
+	public int Question_Count(PageMaker pm) throws Exception {
+		return sqlSession.selectOne(cm +"Question_Count", pm);
+	}
 	
+	// 고객센터에 사용하는 페이징
+	public List<NoticeVO> Question_page(PageMaker pm) throws Exception {
+		return sqlSession.selectList(cm +"Question_page", pm);
+	}
 }

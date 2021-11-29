@@ -1107,12 +1107,10 @@ section {
   		  	 // 페이징 할 수 있는 번호 나오는 곳 뿌려 주기
   		  	 str += "<nav aria-label='Page navigation'>";
   		  	 str += "<ul class='pagination justify-content-center'>";
-  		  	 str += "<li class='page-item'>";
   		  	 //console.log(prev);
   		  	 if (pm.prev == true){
-  		  	     str += "<a class='page-link' aria-label='Previous' onclick='question_Fn("+prev+")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
+  		  	     str += "<li class='page-item'><a class='page-link' aria-label='Previous' onclick='question_Fn("+prev+")'><span aria-hidden='true' class='pointer' >&laquo;</span></a></li>";
   		  	 }
-  		  	 str += "</li>";
   		  	 let startPage = parseInt(pm.startPage);
   		  	 let endPage = parseInt(pm.endPage);
   		  	 for (let k = startPage; k<=endPage; k++ ){
@@ -1122,11 +1120,9 @@ section {
   		  			str += "<li class='page-item'><a class='page-link pointer' onclick='question_Fn("+k+")'>"+k+"</a></li>"; 
   		  		}
   		  	 }
-  		  	 str += "<li class='page-item'>";
   		  	 if(pm.next && pm.endPage > 0){
-  		  	     str += "<a class='page-link' aria-label='Next' onclick='question_Fn("+next+")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
+  		  	     str += "<li class='page-item'><a class='page-link' aria-label='Next' onclick='question_Fn("+next+")'><span aria-hidden='true' class='pointer'>&raquo;</span></a></li>";
   		  	 }
-  		  	 str += "</li>";
   		  	 str += "</ul>";
   		  	 str += "</nav>";
   		  	 
