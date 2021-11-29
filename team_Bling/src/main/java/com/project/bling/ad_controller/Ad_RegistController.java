@@ -28,9 +28,23 @@ public class Ad_RegistController {
 	@Autowired
 	Ad_RegistService ad_registService;
 	
-	/* 파일경로를 입력하면 파일을 삭제하는 메소드 */
-	public void fileDel(String path) {
-		 File deleteFile = new File(path);
+	/* 파일이름를 입력하면 파일을 삭제하는 메소드 image폴더*/
+	public void imageDel(String name) {
+		 String path = "C:\\Users\\MYCOM\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image\\";
+		 File deleteFile = new File(path+name);
+		 if(deleteFile.exists()) {   
+	            // 파일을 삭제합니다.
+	            deleteFile.delete(); 
+	            System.out.println("파일을 삭제하였습니다.");
+	        } else {
+	            System.out.println("파일이 존재하지 않습니다.");
+	        }
+	}
+	
+	/* 파일이름를 입력하면 파일을 삭제하는 메소드 simage폴더*/
+	public void simageDel(String name) {
+		 String path = "C:\\Users\\MYCOM\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage\\";
+		 File deleteFile = new File(path+name);
 		 if(deleteFile.exists()) {   
 	            // 파일을 삭제합니다.
 	            deleteFile.delete(); 
@@ -163,13 +177,11 @@ public class Ad_RegistController {
 		// 자른 문자열로 경로 지정과 파일 삭제하기
 		// 제품 이미지 절대경로 위치, 각 검퓨터 마다 다름
 		if(col1.equals("detail")) {
-			String path = "C:\\Users\\MYCOM\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image\\"+fileName;
 			// 파일을 삭제하는 메소드
-			fileDel(path);
+			imageDel(fileName);
 		}
 		if(col1.equals("showing")) {
-			 String path = "C:\\Users\\MYCOM\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage\\"+fileName;
-			 fileDel(path);
+			 simageDel(fileName);
 		}
 	}
 	
@@ -334,8 +346,7 @@ public class Ad_RegistController {
 					f_main.transferTo(new File(path + imgName));
 					vo.setMain(imgName);
 					// 파일일 삭제 메소드에 파일 이름 넣기
-					path = path + iv.getMain();
-					fileDel(path);
+					imageDel(iv.getMain());
 					}
 				}
 			 
@@ -346,8 +357,7 @@ public class Ad_RegistController {
 					imgName = imgName2(name);
 					f_detail1.transferTo(new File(path + imgName));
 					vo.setDetail1(imgName);
-					path = path + iv.getDetail1();
-					fileDel(path);
+					imageDel(iv.getDetail1());
 					}
 				}			
 
@@ -358,8 +368,7 @@ public class Ad_RegistController {
 					imgName = imgName2(name);
 					f_detail2.transferTo(new File(path + imgName));
 					vo.setDetail2(imgName);
-					path = path + iv.getDetail2();
-					fileDel(path);
+					imageDel(iv.getDetail2());
 				}		
 			}
 			
@@ -370,8 +379,7 @@ public class Ad_RegistController {
 					imgName = imgName2(name);
 					f_detail3.transferTo(new File(path + imgName));
 					vo.setDetail3(imgName);
-					path = path + iv.getDetail3();
-					fileDel(path);
+					imageDel(iv.getDetail3());
 				}
 			}	
 			
@@ -383,7 +391,7 @@ public class Ad_RegistController {
 					f_showing1.transferTo(new File(spath + imgName));
 					vo.setShowing1(imgName);
 					path = spath + iv.getShowing1();
-					fileDel(path);
+					simageDel(path);
 					}
 			}
 			
@@ -395,7 +403,7 @@ public class Ad_RegistController {
 					f_showing2.transferTo(new File(spath + imgName));
 					vo.setShowing2(imgName);
 					path = spath + iv.getShowing2();;
-					fileDel(path);
+					simageDel(path);
 				}
 			}
 			
@@ -407,7 +415,7 @@ public class Ad_RegistController {
 					f_showing3.transferTo(new File(spath + imgName));
 					vo.setShowing3(imgName);
 					path = spath + iv.getShowing3();;
-					fileDel(path);
+					simageDel(path);
 				}
 				
 			}
@@ -419,8 +427,7 @@ public class Ad_RegistController {
 					imgName = imgName1(name);
 					f_showing4.transferTo(new File(spath + imgName));
 					vo.setShowing4(imgName);
-					path = spath + iv.getShowing4();;
-					fileDel(path);
+					simageDel(iv.getShowing4());
 				}
 			}
 			
@@ -431,8 +438,7 @@ public class Ad_RegistController {
 					imgName = imgName1(name);
 					f_showing5.transferTo(new File(spath + imgName));
 					vo.setShowing5(imgName);
-					path = spath + iv.getShowing5();;
-					fileDel(path);
+						simageDel(iv.getShowing5());
 				}	
 			}
 			
