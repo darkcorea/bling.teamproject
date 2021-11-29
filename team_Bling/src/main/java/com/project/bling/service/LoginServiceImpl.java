@@ -43,7 +43,7 @@ public class LoginServiceImpl implements LoginService {
 			session.setAttribute("userId", vo.getId());
 			
 			//세션 유지시간(초 단위)
-			session.setMaxInactiveInterval(20 * 60);
+			session.setMaxInactiveInterval(60 * 60);
 			
 				
 			

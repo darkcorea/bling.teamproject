@@ -5,6 +5,8 @@ public class CombineVO {
 	// product
 	private int pidx;		
 	private String pname;
+	private String kind;
+	private String saleyn;
 	private int price;
 	private int discount;
 	private int saleprice;
@@ -43,6 +45,19 @@ public class CombineVO {
 	
 	
 	
+	
+	public String getSaleyn() {
+		return saleyn;
+	}
+	public void setSaleyn(String saleyn) {
+		this.saleyn = saleyn;
+	}
+	public String getKind() {
+		return kind;
+	}
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
 	public int getPqidx() {
 		return pqidx;
 	}

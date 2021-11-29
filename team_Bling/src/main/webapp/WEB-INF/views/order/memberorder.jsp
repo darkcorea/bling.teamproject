@@ -2,7 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%
+ 
+    request.setCharacterEncoding("UTF-8");
+ 
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +15,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--  위의 3가지는 먼저 와야 합니다. -->
 <title>주문/결제하기</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script src="/js/jquery-3.6.0.min.js"></script>
  <script src="/js/bootstrap.bundle.js"></script>
 <link rel="stylesheet" href="/css/bootstrap.css">
@@ -43,14 +49,22 @@
 	.line{
 		border-bottom:1px solid #C4C4C4;
 	}
+	.line1{
+		border-bottom:1px solid #C4C4C4;
+		width:150px;
+		text-align: center;
+	}
 	.fill{
 		padding-left:20px;
 	}
 	.t {
 		height:30px;
+		width:100px;
 		border-radius: 5px;
 		margin-left:20px;
-		background-color:#6c757d;
+		background-color: #6c757d;
+		border-color: #6c757d;
+		border: 1px solid transparent;
 		color:#fff;
 	}
 	#zip_code{
@@ -65,8 +79,9 @@
 		width:300px;
 	}
 	#addInfo{
-		font-size:8pt;
-		color:gray;
+		font-size:9pt;
+		color:#cd2828;
+		text-decoration-line: none;
 	}
 	.white{
 		color:#ffffff;
@@ -93,11 +108,8 @@
 	#btndiv{
 		text-align: center;
 	}
-	.btn-light {
-		width: 160px;
-	}
 	.btns{
-		width: 160px;
+		width: 250px;
 	}
 	#join{
 		text-decoration-line: none;
@@ -112,78 +124,108 @@
 		text-decoration-line: none;
 		color:gray;
 	}
-	
+	.point{
+		margin-right:45px;
+	}
 	#view:hover{
 		color:#000000;
 	}
 	#header1{
-				background-color:#CB7878;
+		background-color:#CB7878;
+		text-align: center;
 			}
 	#inline{
-		display: inline;
+		width: 15%;
+		float: left;
 		margin-right:20px;
 	}
-	.info{
-		display: inline;
+	.infos{
+		float: left;
+		 width: 30%;
 	}
+	#complete{
+		height:700px;
+		font-size: 22px;
+		font-weight: bold;
+		}
+	#addrlist{
+		float: left;
+		text-align: right;
+		 width: 50%;
+	}
+	#addrbtn{
+		height:30px;
+		width:80px;
+		border-radius: 5px;
+		background-color: #6c757d;
+		border-color: #6c757d;
+		border: 1px solid transparent;
+		color:#fff;
+	}
+	.total,#s1{
+		margin-right:20px;
+	}
+	
 </style>
 </head>
 <body>
-<header>
-	<%@ include file="/WEB-INF/views/header.jsp" %><br><br>
-</header>
-
+	<header>
+		<%@ include file="/WEB-INF/views/header.jsp" %><br><br>
+	</header>
+	<section>
 	<h2>주문/결제</h2>
 	<br><br>
 	<div class="container">
 	<h5>구매자 정보</h5>
-		<form>
+		<form name="frm">
 			<table class="t1">
 				<tr class="line">
 					<td class="gray"><span class="white">이름</span></td>
-					<td class="fill">${midx}</td>
+					<td class="fill name">${uname}</td>
 				</tr>
 				<tr class="line">
 					<td class="gray"><span class="white">이메일</span></td>
-					<td class="fill"></td>
+					<td class="fill email"></td>
 				</tr>
 				<tr>
 					<td class="gray"><span class="white">휴대폰 번호</span></td>
-					<td class="fill"></td>
+					<td class="fill phone"></td>
 				</tr>
 			</table>
 			<input type="hidden" name="midx" value="${midx}" id="midx">
-			<input type="hidden" value="" id="hiddenzip_code">
-			<input type="hidden" value="" id="hiddenaddr1">
-            <input type="hidden" value="" id="hiddenaddr2">
 		<br><br>
 	<h5 id="inline">받는 사람 정보</h5>
-		<div class="info">
+		<div class="infos">
 			<label><input type="radio" name="info" value="same">구매자 정보와 동일</label>
 			<label><input type="radio" name="info" value="new" checked>새로운 배송지</label>
 		</div>
+		<div id="addrlist">
+		<input type="button" value="주소록" onclick="addrlist()" id="addrbtn"></div>
 			<table class="t1">
 				<tr class="line">
 					<td class="gray"><span class="white">이름</span></td>
-					<td class="fill"><input type="text" name="name" id="recipient"></td>
+					<td class="fill"><input type="text" name="recipient" id="recipient"></td>
 				</tr>
 				<tr class="line">
 					<td class="gray"><span class="white">배송 주소</span></td>
 					<td class="fill">
-						<input type="text" name="zip_code" placeholder="우편번호" id="zip_code" readonly>
+						<input type="text" name="zip_code" placeholder="우편번호" id="zip_code" >
 						<input type="button" class="t" value="주소검색" onclick="findmyaddr()"><br>
-                        <input type="text" name="addr1" placeholder="기본주소" readonly class="addr" id="address2"><br>
-                        <input type="text" name="addr2" placeholder="상세주소를 입력하세요." class="addr">
+                        <input type="text" name="addr1" placeholder="기본주소"  class="addr" id="address1"><br>
+                        <input type="text" name="addr2" placeholder="상세주소를 입력하세요." class="addr" id="address2">
 					</td>
 				</tr>
 				<tr>
 					<td class="gray"><span class="white">휴대폰 번호</span></td>
-					<td class="fill"><input type="number" name="phone" id="rphone"></td>
+					<td class="fill"><input type="text" name="rphone" id="rphone"></td>
 				</tr>
 			</table>
 		<br><br>
 	<h5>결제 정보</h5>
-			<input type="hidden" name="tot_price" id="tot_price" value="${tot_price}">
+			<input type="hidden" name="tot_price" id="tot_price">
+			<input type="hidden" name="productname" id="productname" value="${productname}">
+			<input type="hidden" name="mileage" id="mileage">
+			<input type="hidden" name="addmile" id="addmile">
 			<table class="t1">
 				<tr class="line">
 					<td class="gray"><span class="white">총상품가격</span></td>
@@ -195,22 +237,29 @@
 				</tr>
 				<tr class="line">
 					<td class="gray"><span class="white">적립금</span></td>
-					<td class="fill"><span id="addInfo">비회원은 적립금이 없습니다</span><a href="/Join/normal.do" id="join">회원가입 바로가기</a></td>
+					<td class="fill"><span class="point"></span><a href="" id="addInfo" data-bs-toggle="modal" data-bs-target="#exampleModal">등급별 적립금 혜택 보기</a></td>
 				</tr>
 				<tr class="line">
 					<td class="gray"><span class="white">총결제금액</span></td>
-					<td class="fill"><div class="total"></div></td>
+					<td class="fill">
+						<span class="total"></span>
+						<span id="s1"><input type="text" name="mile" placeholder="사용할 적립금 입력" class="mile"></span>
+						<span><input type="checkbox" id="checkBoxId">적립금 전액 사용</span>
+						<span id="addInfo">(내 적립금 : ${mileage}원)</span>
+					</td>
 				</tr>
 				<tr>
 					<td class="gray"><span class="white">결제방법</span></td>
 					<td class="fill">
 						<div class="change">
-						<label><input type="radio" name="payment" value="신용/체크카드" id="card" checked>신용/체크카드</label>
+						<label><input type="radio" name="payment" value="카드" id="card" checked>신용/체크카드</label>
 						<label><input type="radio" name="payment" value="계좌이체" id="transfer">실시간계좌이체</label>
-						<label><input type="radio" name="payment" value="무통장입금" id="cwhiteit">무통장입금</label>
+						<label><input type="radio" name="payment" value="무통장" id="cwhiteit">무통장입금</label>
 						
 						<div id="content">
 							<p id="text">소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다</p>
+							<input type='hidden' name='depositor' value='카드'>
+							<input type='hidden' name='order_yn' value='Y'>
 						</div>
 						
 						</div>
@@ -218,8 +267,7 @@
 				</tr>
 			</table>
 		<br><br>
-		
-			</form>
+		</form>
 		<br><br>
 		<div class="agree">
 			<p id="checkall" class="line"><input type="checkbox" name="all">모든 약관 동의</p>
@@ -239,13 +287,52 @@
 			<br><br>
 		</div>
 		<div id="btndiv">
-		<button type="button" class="btn btn-secondary btns">결제하기</button> 
-		<button type="button" class="btn btn-light">취소하기</button>
+		<input type="button" class="btn btn-secondary btns" value="결제하기" onclick="iamport(); mileage();">
 		</div>
+		<div id="form2"></div>
 		<br><br>
 	</div>
-
-
+</section>
+<!--benefits Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header"  id="header1">
+        <h5 class="modal-title w-100 text-light" id="exampleModalLabel">등급별 적립금 혜택</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+    	<p>골드 : 결제금액의 2% 적립</p>
+    	<p>실버 : 결제금액의 1% 적립</p>
+      </div>
+      <div class="modal-footer mx-auto">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="header1">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 주소록 모달창 -->
+<div class="modal fade" id="addr_select" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header"  id="header1">
+        <h5 class="modal-title">배송 주소 선택</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      	
+      	<div  id="addr_select1">
+      
+      	</div>
+      </div>
+      <div class="modal-footer" id="addr_select2">
+        <button type="button" class="btn btn-secondary"  id="header1" data-bs-dismiss="modal" onclick="modal_select()">확인</button>&ensp;&ensp;
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="modal_button2">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+	<!--약관 Modal -->
 	<div class="modal fade" id="Show_Modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
 		   <div class="modal-content">
@@ -263,61 +350,363 @@
 		  </div>
 	</div>
 
-<footer>
-		<%@ include file="/WEB-INF/views/footer.jsp" %>
+	
+	<footer>
+			<%@ include file="/WEB-INF/views/footer.jsp" %>
 	</footer> 
-<script>
+	
+	<script>
+	
+	function addrlist(){
+		let midx= "${sessionScope.UserVO.midx}";
+		console.log(midx);
+		$.ajax({
+			url:"/Order/addr_select.do",
+			data:{"midx":midx},
+			dataType:"json",
+			type:"get",
+			success:function(data){
+				//alert(data);
+				if(data.length == 0) {
+					alert("등록한 주소가 없습니다");	
+				}else{
+					let str = "";
+					str += "<h3>주소록</h3><br><br>";
+					str += "<table class='t1'>";
+					str += "	<tr class='line1'>";
+					str += "	<th>배송지이름</th>";
+					str += "	<th>우편번호</th>";
+					str += "	<th>주소</th>";
+					str += "	<th>상세주소</th>";
+					str += "	<th>받는 사람</th>";
+					str += "	<th>휴대폰 번호</th>";
+					str += "	</tr>";
+					for (let i =0; i<data.length; i++){
+						str += "	<tr class='line1'>";
+						str += "	<td><input type='radio' name='addr'>"+data[i].addr_name+"</td>";
+						str += "	<td>"+data[i].zip_code+"</td>";
+						str += "	<td>"+data[i].addr1+"</td>";
+						str += "	<td>"+data[i].addr2+"</td>";
+						str += "	<td>"+data[i].name+"</td>";
+						str += "	<td>"+data[i].rphone+"</td>";
+						str += "	</tr>";
+						}
+					str += "</table>";
+					
+					$("#addr_select1").html(str);
+					$("#addr_select").modal("show");
+					}
+								
+			},
+			error:function(){
+				alert("에러입니다");
+			}
+		});
+		
+	}
 
-let Json = JSON.parse('${jsonData}');
-console.log(Json);
-for(let i =0 ; i<Json.length ; i++){
-    var oidx = Json[i].oidx;
-    var quntity = Json[i].quntity;
-    console.log("oidx>>>>>>>>>"+oidx);
-    console.log("수량>>>>>>>>"+quntity);
+function modal_select(){
+	var zip_code = $("input[name='addr']:checked").parent().siblings(':eq(0)').text();
+	var addr1 = $("input[name='addr']:checked").parent().siblings(':eq(1)').text();
+	var addr2 = $("input[name='addr']:checked").parent().siblings(':eq(2)').text();
+	var recipient = $("input[name='addr']:checked").parent().siblings(':eq(3)').text();
+	var rphone = $("input[name='addr']:checked").parent().siblings(':eq(4)').text();
+	$("#recipient").val(recipient);
+	$("#rphone").val(rphone);
+	$("#address1").val(addr1);
+	$("#address2").val(addr2);
+	$("#zip_code").val(zip_code);
 }
-
+	
+function mileage(){
+	var mile = $("#mileage").val();
+	var mymile = ${mileage};
+	var addmile = $("#addmile").val();
+	mile = parseInt(mile);
+	addmile = parseInt(addmile);
+	$("#mileage").val(mile+addmile);
+	var formData = $("form[name=frm]").serialize();
+	console.log(formData);
+	$.ajax({
+		url:"/Order/mileageupdate.do",
+		type:"POST",
+		data:formData,
+		ContentType:"application/json",
+		success:function(data){
+		},
+		error:function(){
+			alert("실행오류");
+		}
+	});
+}	
+function iamport(){
+	var agree = $('input:checkbox[name="c1"]').is(":checked");
+	var payment = $("input[name='payment']:checked").val();
+	var productname = $("#productname").val();
+	var tot_price = $("#tot_price").val();
+	var productname = $("#productname").val();
+	IMP.init('imp72441252');
+	if(agree == false){
+		alert("동의체크");
+		 return;
+	}
+	else{ if(payment=="카드"){
+		IMP.request_pay({
+		    pg : 'kcp',
+		    pay_method : 'card',
+		    merchant_uid : 'merchant_' + new Date().getTime(),
+		    name : productname, //결제창에서 보여질 이름
+		    amount : tot_price, //실제 결제되는 가격
+		}, function(rsp) {
+			console.log(rsp);
+				// 결제검증
+				$.ajax({
+					type:"post",
+					url:"/Order/"+rsp.imp_uid
+				}).done(function(data){
+						console.log(data);
+				// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
+				    if (rsp.paid_amount == data.response.amount) {
+						var formData = $("form[name=frm]").serialize();
+						var msg = '결제가 완료되었습니다.';
+						 $.ajax({
+								url:"/Order/memberorderinsert.do",
+								type:"POST",
+								data:formData,
+								ContentType:"application/json",
+								success:function(data){
+								var str = "";
+								let Json = JSON.parse('${jsonData}');
+								var formData2 = "";
+								for(let i =0; i<Json.length; i++){
+									str += "<form name='fm"+i+"'>";
+								    var oidx = Json[i].oidx;
+								    var quantity = Json[i].quntity;
+								    console.log("oidx는 ????"+oidx);
+								    str += "<input type='hidden' name='nonidx' value='"+data+"'>";
+									str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
+									str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
+									
+									str += "</form>";
+									$("#form2").html(str);
+									
+									
+									formData2 = $("form[name=fm"+i+"]").serialize();
+									console.log(formData2);
+									 $.ajax({
+											url:"/Order/orderdetailinsert.do",
+											type:"POST",
+											data:formData2,
+											async: false,
+											ContentType:"application/json",
+											success:function(data){
+											},
+											error:function(){
+												alert("실행오류");
+											}
+										});
+									 
+									}
+								},
+								error:function(){
+									alert("실행오류");
+								}
+							});
+				    } else {
+				    	 var msg = '결제에 실패하였습니다.';
+				         msg += '에러내용 : ' + rsp.error_msg;
+				    }
+		   			alert(msg);
+				});
+			});
+		}else if(payment=="계좌이체"){
+			IMP.request_pay({
+			    pg : 'kcp',
+			    pay_method : 'trans',
+			    merchant_uid: 'merchant_' + new Date().getTime(), //상점에서 생성한 고유 주문번호
+			    name : productname, //결제창에서 보여질 이름
+			    amount : tot_price, //실제 결제되는 가격
+			}, function(rsp) {
+			    if ( !rsp.success ) {
+			    	//결제 시작 페이지로 리디렉션되기 전에 오류가 난 경우
+			        var msg = '오류로 인하여 결제가 시작되지 못하였습니다.';
+			        msg += '에러내용 : ' + rsp.error_msg;
+			        alert(msg);
+			    }
+			});
+		}
+		else if(payment=="무통장"){
+			var formData = $("form[name=frm]").serialize();
+			var productname = $("#productname").val();
+			 $.ajax({
+					url:"/Order/memberorderinsert.do",
+					type:"POST",
+					data:formData,
+					ContentType:"application/json",
+					success:function(data){
+					alert(productname+" 주문이 완료되었습니다");
+					var str = "";
+					let Json = JSON.parse('${jsonData}');
+					var formData2 = "";
+					for(let i =0 ; i<Json.length ; i++){
+						str += "<form name='fm"+i+"'>";
+					    var oidx = Json[i].oidx;
+					    var quantity = Json[i].quntity;
+					    console.log("oidx는 ????"+oidx);
+					    str += "<input type='hidden' name='order_idx' value='"+data+"'>";
+						str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
+						str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
+						str += "</form>";
+						$("#form2").html(str);
+						formData2 = $("form[name=fm"+i+"]").serialize();
+						console.log(formData2);
+						 $.ajax({
+								url:"/Order/morderdetailinsert.do",
+								type:"POST",
+								data:formData2,
+								async: false,
+								ContentType:"application/json",
+								success:function(data){
+								},
+								error:function(){
+									alert("실행오류");
+								}
+							});
+						 
+						}
+					$("section").html("<div id='complete'>주문이 완료되었습니다 <a href=''> 주문내역 가기</a></div>");
+					},
+					error:function(){
+						alert("실행오류");
+					}
+				});
+		}
+	}
+}
 
 $(document).ready(function(){
 	
-	var productPrice = $("#tot_price").val();
-	const shipping = 2500;
-	if(productPrice<100000){
-		$(".shipping").text(shipping.toLocaleString());
-	}
+	let email = "${sessionScope.UserVO.email}";
+	let phone = "${sessionScope.UserVO.phone}";
+	let grade = "${sessionScope.UserVO.grade}";
 	var price = ${tot_price};
+	var G = price*0.02;
+	var S = price*0.01;
+	var mymile = ${mileage};
+	$(".email").html(email);
+	$(".phone").html(phone);
+	if(grade=="G"){
+		$(".point").html(G.toLocaleString());
+		$("#mileage").val(mymile);
+		$("#addmile").val(G);
+	}else if(grade=="S"){
+		$(".point").html(S.toLocaleString());
+		$("#mileage").val(mymile);
+		$("#addmile").val(S);
+	}else{
+		$(".point").html(0);
+		$("#mileage").val(mymile);
+		$("#addmile").val(0);
+	}
+	
 	$(".productprice").text(price.toLocaleString());
 	
-	var tot_price = price+shipping;
-	$(".total").text(tot_price.toLocaleString());
+	const shipping = 2500;
+	var total = price+shipping;
 	
+	if(price<100000){
+		$(".shipping").text(shipping.toLocaleString());
+		$(".total").text(total.toLocaleString());
+		$("#tot_price").val(total);
+	}
+	else{
+		$(".total").text(price.toLocaleString());
+		$("#tot_price").val(price);
+	}
+	
+	
+	 $("#checkBoxId").change(function(){
+		 	var mile = $("#mileage").val();
+		 	var totalprice = $("#tot_price").val();
+		 	var result = mile-mymile;
+		 	var result2 = totalprice-mymile;
+	        if($("#checkBoxId").is(":checked")){
+	           $(".mile").val(mymile);
+	           $("#mileage").val(result);
+	           $("#tot_price").val(result2);
+	           $(".total").text(result2.toLocaleString());
+	        }else{
+	        	 $(".mile").val("");
+	        	 $("#mileage").val(mymile);
+	        	 if(price<100000){
+	        			$("#tot_price").val(total);
+	        			$(".total").text(total.toLocaleString());
+	        		}
+	        		else{
+	        			$("#tot_price").val(price);
+	        			$(".total").text(price.toLocaleString());
+	        		}
+	        }
+	    });
+	 $("input[name='mile']").blur(function(){
+		 var value = $(this).val();
+		 var mile = $("#mileage").val();
+		 var totalprice = $("#tot_price").val();
+		 var result = mile-value;
+		 var result2 = totalprice-value;
+		 
+		 if(value>mymile){
+			 alert("내 적립금보다 큽니다");
+		 }else{
+	           $("#mileage").val(result);
+	           $("#tot_price").val(result2);
+	           $(".total").text(result2.toLocaleString());
+		 }
+	 });
+	 
 	$(".change input:radio").change(function(){
 		var value = $(this).val();
-		if(value=="무통장입금"){
+		var name = $(".name").text();
+		if(value=="무통장"){
 			str="<p>입금은행 : 이젠은행 032123-04-003344 (주)블링</p>";
 			str+="입금자명 : <input type='text' name='depositor'>";
+			str+="<input type='hidden' name='order_yn' value='N'>";
 			$("#content").html(str);
+			$("input[name='depositor']").val(name);
 		}
-		else if(value=="신용/체크카드"){
-			$("#content").html("<p id='text'>소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다</p>");
+		else if(value=="카드"){
+			str="<p id='text'>소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다</p>";
+			str+="<input type='hidden' name='depositor'>";
+			str+="<input type='hidden' name='order_yn' value='Y'>";
+			$("#content").html(str);
+			$("input[name='depositor']").val("카드");
 		}
 		else if(value=="계좌이체"){
-			$("#content").html("예금주명 : <input type='text' name='AccountHolder'>");
+			$("#content").html("예금주명 : <input type='text' name='depositor'><input type='hidden' name='order_yn' value='Y'>");
+			$("input[name='depositor']").val(name);
 		}
 	});
 	
-	$(".info input:radio").change(function(){
+	$(".infos input:radio").change(function(){
 		var value = $(this).val();
-		var name = $("#name").val();
-		var phone = $("#phone").val();
+		var name = $(".name").text();
+		var phone = $(".phone").text();
+		let addr1 = "${sessionScope.UserVO.addr1}";
+		let addr2 = "${sessionScope.UserVO.addr2}";
+		let zipcode = "${sessionScope.UserVO.zip_code}";
 		if(value=="same"){
 			$("#recipient").val(name);
 			$("#rphone").val(phone);
-			
+			$("#address1").val(addr1);
+			$("#address2").val(addr2);
+			$("#zip_code").val(zipcode);
 		}
 		else if(value=="new"){
 			$("#recipient").val("");
 			$("#rphone").val("");
+			$("#address1").val("");
+			$("#address2").val("");
+			$("#zip_code").val("");
 		}
 		
 	});
@@ -329,7 +718,6 @@ $(document).ready(function(){
 			$(".agree input[name='c1']").prop("checked",false);
 		}
 	});
-	
 	$(".impor").blur(function(){
 		var checkName = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g;
 		var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/g;
@@ -353,7 +741,6 @@ $(document).ready(function(){
 				}
 			}else if(id == "phone"){
 				var test = checkPhone.test(value);
-				console.log(test+"1");
 				if(!test){
 					$(this).siblings(".check").text("*형식오류").css("color","red").show();
 				}
@@ -367,21 +754,15 @@ $(document).ready(function(){
 function findmyaddr(){
 	new daum.Postcode({
         oncomplete: function(data) {
-        	
-        	console.log(data);
-        	
-            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-            // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
             var roadAddr = data.roadAddress; // 도로명 주소 변수
             var jibunAddr = data.jibunAddress; // 지번 주소 변수
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             document.getElementById('zip_code').value = data.zonecode;
             if(roadAddr !== ''){
-                document.getElementById("address2").value = roadAddr;
+                document.getElementById("address1").value = roadAddr;
             } 
             else if(jibunAddr !== ''){
-                document.getElementById("address2").value = jibunAddr;
+                document.getElementById("address1").value = jibunAddr;
             }
         }
     }).open();
