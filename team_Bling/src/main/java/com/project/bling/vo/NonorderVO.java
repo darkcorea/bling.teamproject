@@ -12,12 +12,12 @@ public class NonorderVO {
 	private int detail_idx;
 	private String name;
 	private String email;
-	private int phone;
+	private String phone;
 	private String recipient;
 	private int zip_code;
 	private String addr1;
 	private String addr2;
-	private int rphone;
+	private String rphone;
 	private String payment;
 	private String depositor;
 	
@@ -85,11 +85,11 @@ public class NonorderVO {
 		this.email = email;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
@@ -125,11 +125,11 @@ public class NonorderVO {
 		this.addr2 = addr2;
 	}
 
-	public int getRphone() {
+	public String getRphone() {
 		return rphone;
 	}
 
-	public void setRphone(int rphone) {
+	public void setRphone(String rphone) {
 		this.rphone = rphone;
 	}
 

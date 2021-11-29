@@ -2,155 +2,250 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content ="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>게시판관리</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
-
-	<style>
-		div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
-		a {text-decoration:none;}
-		
-		.quickmenu {position:absolute;width:120px;height:500px;top:20%;margin-top:-50px;left:50px;background:#cb7878;padding:20px;}
-		.quickmenu ul {position:relative;float:left;width:100%;display:inline-block;*display:inline;}
-		.quickmenu ul li {float:left;width:100%;text-align:center;display:inline-block;*display:inline;}
-		.quickmenu ul li a {position:relative;float:left;width:100%;height:50px;line-height:30px;text-align:center;color:#fff;font-size:12pt;}
-		.quickmenu ul li a:hover {color:#000;}
-		.quickmenu ul li:last-child {border-bottom:0;}
-		
-		.content {position:relative;min-height:1000px;}
-		
-	</style>
-</head>
-<body>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content ="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>공지사항관리</title>
+		<script src="/js/jquery-3.6.0.min.js"></script>
+		<script src="/js/bootstrap.bundle.js"></script>
+		<link rel="stylesheet" href="/css/bootstrap.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	
-	<header>
-		<%@ include file="/WEB-INF/views/admin/ad_header.jsp" %><BR>
-	</header>
-<!-- 옆 nav 바 -->
-	<div class="d1">
-		<div class="quickmenu">
-			  <ul>
-			 	<li><a href="#">문의게시판</a></li>
-			    <li><a href="#">공지사항</a></li>
-				<li><a href="#">고객센터</a></li>
-			    <li><a href="#">이벤트</a></li>
-			    <li><a href="#">리뷰관리</a></li> 
-			  </ul>
-		</div>
-	</div>
-
-<!--여기서부터 본문-->
-	<div id="notice_contents">
-		<h1 class="text-center">공지사항</h1>
-		<br>
-		<!-- 게시글 검색 -->
-		<div class="row">
-			<div class="col-6">
+			<style>
+				div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
+				a {text-decoration:none;}
+				
+				.quickmenu {position:absolute;width:120px;height:500px;top:20%;margin-top:-50px;left:50px;background:#cb7878;padding:20px;}
+				.quickmenu ul {position:relative;float:left;width:100%;display:inline-block;*display:inline;}
+				.quickmenu ul li {float:left;width:100%;text-align:center;display:inline-block;*display:inline;}
+				.quickmenu ul li a {position:relative;float:left;width:100%;height:50px;line-height:30px;text-align:center;color:#fff;font-size:12pt;}
+				.quickmenu ul li a:hover {color:#000;}
+				.quickmenu ul li:last-child {border-bottom:0;}
+				
+				.content {position:relative;min-height:1000px;}
+				
+			</style>
+		</head>
+	<body>
+		
+		<header>
+			<%@ include file="/WEB-INF/views/admin/ad_header.jsp" %><BR>
+		</header>
+	<!-- 옆 nav 바 -->
+		<div class="d1">
+			<div class="quickmenu">
+				  <ul>
+				 	<li><a href="#">문의게시판</a></li>
+				    <li><a href="/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
+				    <li><a href="#">이벤트</a></li>
+				    <li><a href="#">리뷰관리</a></li> 
+				  </ul>
 			</div>
-			<div class="col-6">
-				<div class="input-group mb-3">
-					<input type="text" class="form-control" placeholder="게시글 검색" aria-label="Recipient's username" aria-describedby="button-addon2">
-					<button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
+		</div>
+	
+	<!--여기서부터 본문-->
+		<div id="notice_contents">
+			<h1 class="text-center">공지사항</h1>
+			<br>
+			<!-- 게시글 검색 -->
+			<div class="row">
+				<div class="col-6">
+				</div>
+				<div class="col-6">
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" placeholder="게시글 제목 검색" aria-label="Recipient's username" aria-describedby="button-addon2" id="searchsomething">
+						<button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="searchword()">검색</button>
+ 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- 게시글 표 -->	
-		<div id="notice_table">
-			<table class="table">
-				<thead>
-				  <tr class="text-center">
-					<th scope="col" style="width:5%">삭제</th>
-					<th scope="col" style="width:5%">번호</th>
-					<th scope="col" style="width:15%">
-						<select class="form-select form-select-sm" aria-label="Default select example">
-							<option selected>타입</option>
-							<option value="1">기본공지사항(N)</option>
-							<option value="2">중요공지사항(S)</option>
-						  </select>
-	
-	
-					</th>
-					<th scope="col">제목</th>
-					<th scope="col" style="width:15%">작성날짜</th>
-				  </tr>
-				</thead>
-				<tbody>
-				  <tr>
-					<td scope="row">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-						</div>
-					</td>
-					<th class="text-center">1</th>
-					<td>기본(N)</td>
-					<td>Otto</td>
-					<td class="text-center">2021-11-17 11:29</td>
-				  </tr>
-				  <tr>
-					<td scope="row">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-						</div>
-					</td>
-					<th class="text-center">2</th>
-					<td>중요공지사항(S)</td>
-					<td>Thornton</td>
-					<td class="text-center">2021-11-16 23:00</td>
-				  </tr>
-				  <tr>
-					<td scope="row">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-						</div>
-					</td>
-					<th class="text-center">3</th>
-					<td>고객센터(Q)</td>
-					<td>Thornton</td>
-					<td class="text-center">2021-11-15 10:00</td>
-				  </tr>
-				</tbody>
-			  </table>
-		</div>
-	
-		<br>
-		<!-- 게시글 페이징 nav바 -->
-		<nav aria-label="Page navigation example">
-			<ul class="pagination justify-content-center">
-			  <li class="page-item">
-				<a class="page-link" href="#" aria-label="Previous">
-				  <span aria-hidden="true">&laquo;</span>
-				</a>
-			  </li>
-			  <li class="page-item"><a class="page-link" href="#">1</a></li>
-			  <li class="page-item"><a class="page-link" href="#">2</a></li>
-			  <li class="page-item"><a class="page-link" href="#">3</a></li>
-			  <li class="page-item">
-				<a class="page-link" href="#" aria-label="Next">
-				  <span aria-hidden="true">&raquo;</span>
-				</a>
-			  </li>
-			</ul>
-		</nav>
-	
-		<!-- 게시글 등록/삭제 -->
-		<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-			<button type="button" class="btn btn-outline-primary" onclick="enrollment();">등록</button>
-			<button type="button" class="btn btn-outline-danger">삭제</button>
-		</div>
-	
-		<br>
-	</div>
-</body>
-
-<script>
-	function enrollment(){
-		$("#notice_contents").html("");
+			<!-- 게시글 표 -->	
+			<div id="notice_table">
+				
+			</div>
 		
-	}
-</script>
+			<!-- 게시글 등록/삭제 -->
+			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='/Ad_board/regist.do'">등록</button>
+				<button type="button" class="btn btn-outline-danger" onclick="deleteArry()">삭제</button>
+			</div>
+		
+			<br>
+		</div>
+	</body>
+	
+	<script>
+		var page = 0;
+		var type = null;
+			
+			if(page == null) {page=1};
+			if(type == null) {type="T"};
+		
+		$(function(){
+			list_fn(page,type);
+		});
+		
+		
+		function list_fn(page,type,keyword){
+				$.ajax({
+					url:"/Ad_board/list.do",
+					type:"POST",
+					data:{"page":page, "type":type,"keyword":keyword},
+					dataType: 'json',
+					success:function(data){
+					
+						let notice_list = data.totalList;
+						let pm = data.pm;
+						let prev = parseInt(pm.startPage - 1) ;
+					  	let next = parseInt(pm.endPage + 1) ;
+					  	
+					  	let str = "";
+					  	
+					  	console.log("start"+pm.startPage);
+					  	console.log("end"+pm.endPage);
+					  	
+						str +="<table class='table'>";
+						str +="<thead>";
+						str +="<tr class='text-center'>";
+						str +="<th scope='col' style='width:5%'>삭제</th>";
+						str +="<th scope='col' style='width:5%'>번호</th>";
+						str +="<th scope='col' style='width:15%'>";
+						
+						str +="<select class='form-select form-select-sm' aria-label='Default select example' id='type' onchange='changeselect()'>";
+						
+						str +="<option value='T'>전체</option>";
+						str +="<option value='N'>기본공지사항(N)</option>";
+						str +="<option value='S'>중요공지사항(S)</option>";
+						str +="<option value='Q'>고객센터(Q)</option>";
+						str +="<option value='T'>전체(T)</option>";
+						
+						str +="</select>";
+						
+						str +="</th>";
+						str +="<th scope='col'>제목</th>";
+						str +="<th scope='col' style='width:20%'>작성날짜</th>";
+						str +="</tr>";
+						str +="</thead>";
+						str +="<tbody>";
+						for(let i=0;i<data.totalList.length;i++){
+							str +="<tr>";
+							str +="<td scope='row'>";
+							str +="<div class='form-check'>";
+							str +="<input class='form-check-input' type='checkbox' value='"+data.totalList[i].nidx+"' id='flexCheckDefault' name='checkname'>";
+							str +="</div>";
+							str +="</td>";
+							str +="<th class='text-center'>"+(i+1)+"</th>";
+							str +="<td class='text-center'>"+data.totalList[i].type+"</td>";
+							str +="<td><a href='/Ad_board/detail.do?nidx="+data.totalList[i].nidx+"' class='link-dark'>"+data.totalList[i].subject+"</a>";
+									
+							//파일 있을시 파일아이콘 제목옆에 붙음
+							if(data.totalList[i].imgfile != null){
+								str += "&nbsp; <i class='bi bi-file-earmark-arrow-down text-primary'></i>";
+							}
+							//이미지 있을 시 아이콘 붙음
+							if(data.totalList[i].imges != null){
+								str += "&nbsp; <i class='bi bi-image text-success'></i>";
+							}
+							
+							str += "</td>";
+							str +="<td class='text-center'>"+data.totalList[i].rdate+"</td>";
+							str +="</tr>";
+							
+						}
+						str +="</tbody>";
+						str +="</table>";
+						
+						str +="<br>";
+						
+						str +="<nav aria-label='Page navigation example'>";
+						str +="<ul class='pagination justify-content-center'>";
+						str +="<li class='page-item'>";
+						str +="<a class='page-link' href='#' aria-label='Previous'>";
+						str +="<span aria-hidden='true'>&laquo;</span>";
+						str +="</a>";
+						str +="</li>";
+						
+						if ((pm.startPage - 1) != 0){
+					  	     str += "<a class='page-link' aria-label='Previous' onclick='list_fn("+prev+",\""+type+"\")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
+					  	 }
+					  	 str += "</li>";
+					  	 
+					  	 for (let k = pm.startPage; k<=pm.endPage; k++ ){
+					  	 	str += "<li class='page-item'><a class='page-link pointer' onclick='list_fn("+k+",\""+type+"\")'>"+k+"</a>";      
+					  	 }
+					  	 
+					  	 str += "<li class='page-item'>";
+					  	
+					  	 if(pm.endPage+1 && pm.endPage > 0){
+					  	     str += "<a class='page-link' aria-label='Next' onclick='list_fn("+next+",\""+type+"\")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
+					  	 }
+					  	 
+					  	 str += "</li>";
+					  	 str += "</ul>";
+					  	 str += "</nav>";
+						
+					  	 // 리뷰 div에 모든 내용 뿌려주기
+						 $("#notice_table").html(str);
+						
+					},error:function(){
+						alert("리스트 불러오기 에러!")
+					}
+				}); 
+			}	
+		
+		// 타입 변경
+		function changeselect(){
+			var selectid = document.getElementById("type");
+			var selectvalue = selectid.options[selectid.selectedIndex].value;
+			
+			//console.log(selectvalue);
+			
+			list_fn(1,selectvalue);
+		}
+		
+		//글 삭제
+		function deleteArry(){
+			alert("정말로 삭제하시겠습니까?");
+			var checkbox = [];
+			$("input:checkbox[name='checkname']:checked").each(function(){
+				checkbox.push($(this).val());
+				//console.log(checkbox);
+			})
+			
+			$.ajax({
+				type:"POST",
+				url:"/Ad_board/deleteArry.do",
+				data:{"checkbox":checkbox},
+				success:function(){
+					location.reload();
+				},error:function(){
+					alert("글 지우기 에러!")
+				}
+			});
+		}
+		
+		function searchword(){
+			var keyword = document.getElementById("searchsomething").value;
+			//console.log(keyword);
+			list_fn(1,'T',keyword);			
+		}
+	</script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

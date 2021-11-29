@@ -2,6 +2,7 @@ package com.project.bling.controller;
 
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.service.OrderService;
 import com.project.bling.vo.NonorderVO;
+import com.project.bling.vo.OrderVO;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -55,21 +57,6 @@ public class OrderController {
 		return "order/nonorder";
 		
 	}
-	@RequestMapping(value="/memberorder.do",method = RequestMethod.POST)
-	public String memberorder(Model model,HttpServletRequest request) throws Exception {
-		
-		String jsonData = request.getParameter("jsonData");
-		System.out.println(jsonData);
-		int midx =  Integer.parseInt(request.getParameter("midx"));
-		int tot_price = Integer.parseInt(request.getParameter("tot_price"));
-		System.out.println(tot_price);
-		System.out.println(midx);
-		model.addAttribute("jsonData", jsonData);
-		model.addAttribute("tot_price", tot_price);
-		model.addAttribute("midx",midx);
-		return "order/memberorder";
-		
-	}
 	@ResponseBody
 	@RequestMapping(value="/{imp_uid}")
 	public IamportResponse<Payment> paymentByImpUid(
@@ -87,16 +74,65 @@ public class OrderController {
 		System.out.println(orderid);
 		model.addAttribute("orderid",orderid);
 		orderService.insert(vo);
-		
 		return vo.getNonidx();
 		
 	}
 	@RequestMapping(value="/orderdetailinsert.do",method = RequestMethod.POST)
 	@ResponseBody
-	public void orderdetailinsert(Model model,NonorderVO vo,HttpServletRequest request) throws Exception {
-		
+	public void orderdetailinsert(NonorderVO vo) throws Exception {
 		orderService.detailInsert(vo);
+	}
+	
+	@RequestMapping(value="/mileageupdate.do",method = RequestMethod.POST)
+	@ResponseBody
+	public void mileageupdate(OrderVO vo) throws Exception {
 		
+		System.out.println("마일리지>>>>>>>>>>"+vo.getMileage());
+		System.out.println("midx>>>>>>>>>>"+vo.getMidx());
+		orderService.mileageupdate(vo);
+	}
+	
+	@RequestMapping(value="/memberorder.do",method = RequestMethod.POST)
+	public String memberorder(Model model,HttpServletRequest request) throws Exception {
+		String productname = request.getParameter("productname");
+		String jsonData = request.getParameter("jsonData");
+		System.out.println(jsonData);
+		int midx =  Integer.parseInt(request.getParameter("midx"));
+		String uname = request.getParameter("uname");
+		int tot_price = Integer.parseInt(request.getParameter("tot_price"));
+		String mileage = request.getParameter("mileage");
+		System.out.println(tot_price);
+		System.out.println(midx);
+		System.out.println(uname);
+		model.addAttribute("productname",productname);
+		model.addAttribute("jsonData", jsonData);
+		model.addAttribute("tot_price", tot_price);
+		model.addAttribute("midx",midx);
+		model.addAttribute("uname",uname);
+		model.addAttribute("mileage",mileage);
+		return "order/memberorder";
+		
+	}
+	@RequestMapping(value="/memberorderinsert.do",method = RequestMethod.POST)
+	@ResponseBody
+	public int memberorderinsert(OrderVO vo) throws Exception {
+		
+		orderService.memberinsert(vo);
+		
+		return vo.getOrder_idx();
+	}
+	@RequestMapping(value="/morderdetailinsert.do",method = RequestMethod.POST)
+	@ResponseBody 
+	public void morderdetailinsert(OrderVO vo) throws Exception {
+		
+		orderService.memberdetailInsert(vo);
+	}
+	@RequestMapping(value="/addr_select.do")
+	@ResponseBody
+	public List<OrderVO> addr_select(int midx) throws Exception {
+		
+		System.out.println("midx>>>>>>>>>"+midx);
+		return orderService.addr_select(midx);
 	}
 	
 }
