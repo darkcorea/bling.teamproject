@@ -16,7 +16,6 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
   	
   	<style>
-/*--------------- header-begin ---------------*/ 
 		header{
 			max-width:1008px;
 			margin:  0px auto;
@@ -188,12 +187,30 @@
 		.pointer {
 			cursor: pointer;
 		}
-		
-/*--------------- header-end ---------------*/
-	#cart_count, #cart_count1{
-		display:none;
-	}
 
+		#cart_count, #cart_count1{
+			display:none;
+		}
+	
+		/* 클래스 붙이면 백그라운드 색상이 블링 색으로 */
+		.bling_color {
+			background-color: #CB7878;
+		}
+		
+		/* 로그가아웃 예 버튼*/
+		#logout_btn {
+			background-color: #CB7878;
+			border-color: #CB7878;
+			width:120px;
+		}
+		/* 로그아웃 아니오 버튼*/
+		#logout_btn_no{
+			width:120px;
+		}
+		
+		.text_center{
+			text-align:center;
+		}
   	</style>
 </head>
 <body>
@@ -234,7 +251,7 @@
 								</div>
 								<a href="/MyPage/main.do" id="hearderMemberJoin">마이페이지</a>
 								<span>｜</span>
-								<a href="${path}/Login/logout.do" id="headerLogin">로그아웃</a>	
+								<a id="headerLogin" data-bs-toggle="modal" data-bs-target="#logOut_motal" class="pointer">로그아웃</a>	
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -328,10 +345,31 @@
 	</div>
   </div>
 
-		<div class="top">
-         <a id="topBtn" href="#"><i class="bi bi-chevron-up" style="font-size:2rem;"></i></a>
-         <div><a id="topBtn" href="#">TOP</a></div>
+<div class="top">
+	<a id="topBtn" href="#"><i class="bi bi-chevron-up" style="font-size:2rem;"></i></a>
+	<div><a id="topBtn" href="#">TOP</a></div>
+ </div>
+
+<!-- 로그아웃 모달창 -->
+<div class="modal" tabindex="-1" id="logOut_motal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bling_color">
+        <h5 class="modal-title" style="color:white;">로그아웃</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <div class="modal-body text_center">
+        <br>
+        <p><b>로그아웃을 하시겠습니까?</b></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="logout_btn_no">아니요</button>
+        <button type="button" class="btn btn-primary"  id="logout_btn" onclick="location.href='${path}/Login/logout.do'" >예</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
 
 <script>
 
@@ -408,5 +446,4 @@ function search_Fn() {
 
 
 </script>
-</body>
 </html>
