@@ -15,7 +15,21 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Autowired
 	NoticeDAO noticeDAO;
+	
+	//첫번째 페이지
+	@Override
+	public List<NoticeVO> special() throws Exception {
+		return noticeDAO.special();
+	}
 
+	@Override
+	public List<NoticeVO> firstpage() throws Exception {
+		return noticeDAO.firstpage();
+	}
+	
+	
+	//두번째 페이지부터 쭉
+	
 	@Override
 	public int listcount() throws Exception {
 		return noticeDAO.listcount();
@@ -30,7 +44,14 @@ public class NoticeServiceImpl implements NoticeService {
 	public List<NoticeVO> totalList(PageMaker pm) throws Exception {
 		return noticeDAO.totalList(pm);
 	}
-
+	
+	//검색
+	@Override
+	public List<NoticeVO> searchList(PageMaker pm) throws Exception {
+		return noticeDAO.searchList(pm);
+	}
+	
+	//하나 디테일
 	@Override
 	public NoticeVO detail(int nidx) throws Exception {
 		return noticeDAO.detail(nidx);

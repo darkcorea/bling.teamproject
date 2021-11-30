@@ -63,7 +63,6 @@
 						<thead>
 						<tr class='text-center'>
 							<th scope='col' style='width:10%'>번호</th>
-							<th scope='col' style='width:10%'>타입</th>
 							<th scope='col'>제목</th>
 							<th scope='col' style='width:20%'>작성날짜</th>
 						</tr>
@@ -89,38 +88,85 @@
 	
 	<script>
 		var page = 1;
-		var type = "T";
+		if(page == null) {page=1};
 		
 		$(function(){
-			list_fn(page,type);
+			list_fn(page);
 		});
 		
-		function list_fn(page,type,keyword){
-				$.ajax({
-					url:"/Notice/list.do",
-					type:"POST",
-					data:{"page":page, "type":type,"keyword":keyword},
-					dataType: 'json',
-					success:function(data){
+		function list_fn(page,keyword){
+			$.ajax({
+				url:"/Notice/list.do",
+				type:"POST",
+				data:{"page":page,"keyword":keyword},
+				dataType: 'json',
+				success:function(data){
+					
+					let pm = data.pm;
+					let prev = parseInt(pm.startPage - 1);
+				  	let next = parseInt(pm.endPage + 1);
+				  	
+				  	var keyword = document.getElementById("searchsomething").value;
+				  	var page = data.page;
+				  	var pagenum = (page-1) * 10;
+				  	
+				  	console.log(page);
+				  	console.log(prev);
+				  	console.log(next);
+				  	
+				  	let str = "";
+				  	let str2 = "";
+				  	
+				  	//첫페이지 S 3개
+				  	if(page ==1){
+				  		console.log(page);
+					  	for(let i=0;i<data.special.length;i++){
+					  		
+					  		str +="<tr bgcolor='#FFEDED'>";
+							str +="<th class='text-center'>중요</th>";
+							str +="<td><a href='/Notice/detail.do?nidx="+data.special[i].nidx+"' class='link-dark' style='text-decoration:none'>"+data.special[i].subject+"</a>";
+									
+							//파일 있을시 파일아이콘 제목옆에 붙음
+							if(data.special[i].imgfile != null){
+								str += "&nbsp; <i class='bi bi-file-earmark-arrow-down text-primary'></i>";
+							}
+							//이미지 있을 시 아이콘 붙음
+							if(data.special[i].imges != null){
+								str += "&nbsp; <i class='bi bi-image text-success'></i>";
+							}
+							
+							str += "</td>";
+							str +="<td class='text-center'>"+data.special[i].rdate.substring(0,10)+"</td>";
+							str +="</tr>";
+					  	}
+						//첫페이지 S,N 7개
+					  	for(let i=0;i<data.firstpage.length;i++){
+					  		str +="<tr>";
+							str +="<th class='text-center'>"+(i+1)+"</th>";
+							str +="<td><a href='/Notice/detail.do?nidx="+data.firstpage[i].nidx+"' class='link-dark' style='text-decoration:none'>"+data.firstpage[i].subject+"</a>";
+									
+							//파일 있을시 파일아이콘 제목옆에 붙음
+							if(data.firstpage[i].imgfile != null){
+								str += "&nbsp; <i class='bi bi-file-earmark-arrow-down text-primary'></i>";
+							}
+							//이미지 있을 시 아이콘 붙음
+							if(data.firstpage[i].imges != null){
+								str += "&nbsp; <i class='bi bi-image text-success'></i>";
+							}
+							
+							str += "</td>";
+							str +="<td class='text-center'>"+data.firstpage[i].rdate.substring(0,10)+"</td>";
+							str +="</tr>";
+					  	}
 						
-						let notice_list = data.totalList;
-						let pm = data.pm;
-						let prev = parseInt(pm.startPage - 1) ;
-					  	let next = parseInt(pm.endPage + 1) ;
+						//내용삽입
+					  	$("#tbody_table").html(str);
 					  	
-					  	var page = data.page;
-					  	var pagenum = (page-1) * 10;
-					  	
-					  	let str = "";
-					  	let str2 = "";
-					  	
-					  	console.log("start"+pm.startPage);
-					  	console.log("end"+pm.endPage);
-					  	
-						for(let i=0;i<data.totalList.length;i++){
+				  	}else{
+				  		for(let i=0;i<data.totalList.length;i++){
+				  			console.log(page);
 							str +="<tr>";
 							str +="<th class='text-center'>"+(pagenum + i+1)+"</th>";
-							str +="<td class='text-center'>"+data.totalList[i].type+"</td>";
 							str +="<td><a href='/Notice/detail.do?nidx="+data.totalList[i].nidx+"' class='link-dark' style='text-decoration:none'>"+data.totalList[i].subject+"</a>";
 									
 							//파일 있을시 파일아이콘 제목옆에 붙음
@@ -133,57 +179,57 @@
 							}
 							
 							str += "</td>";
-							str +="<td class='text-center'>"+data.totalList[i].rdate+"</td>";
+							str +="<td class='text-center'>"+data.totalList[i].rdate.substring(0,10)+"</td>";
 							str +="</tr>";
-							
 						}
-						// 리뷰 div에 모든 내용 뿌려주기
-						 $("#tbody_table").html(str);
-						
-						str2 +="<nav aria-label='Page navigation example'>";
-						str2 +="<ul class='pagination justify-content-center'>";
-						str2 +="<li class='page-item'>";
-						str2 +="<a class='page-link' href='#' aria-label='Previous'>";
-						str2 +="<span aria-hidden='true'>&laquo;</span>";
-						str2 +="</a>";
-						str2 +="</li>";
-						
-						if ((pm.startPage - 1) != 0){
-					  	     str2 += "<a class='page-link' aria-label='Previous' onclick='list_fn("+prev+",\""+type+"\",\""+keyword+"\")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
-					  	 }
-					  	 str2 += "</li>";
-					  	 
-					  	 for (let k = pm.startPage; k<=pm.endPage; k++ ){
-					  		 if(page == k){
-					  			str2 += "<li class='page-item active'><a class='page-link pointer' onclick='list_fn("+k+",\""+type+"\",\""+keyword+"\")'>"+k+"</a>";    
-					  		 }else{
-					  			str2 += "<li class='page-item'><a class='page-link pointer' onclick='list_fn("+k+",\""+type+"\",\""+keyword+"\")'>"+k+"</a>";    
-					  		 }
-					  	 }
-					  	 
-					  	 str2 += "<li class='page-item'>";
-					  	
-					  	 if(pm.endPage+1 && pm.endPage > 0){
-					  	     str2 += "<a class='page-link' aria-label='Next' onclick='list_fn("+next+",\""+type+"\",\""+keyword+"\")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
-					  	 }
-					  	 
-					  	 str2 += "</li>";
-					  	 str2 += "</ul>";
-					  	 str2 += "</nav>";
-						
-					  	 // 리뷰 div에 네비게이션바 뿌려주기
-					  	$("#nav_bar").html(str2);
-						
-					},error:function(){
-						alert("리스트 불러오기 에러!")
-					}
-				}); 
-			}	
+				  		
+				  		//내용삽입
+					  	$("#tbody_table").html(str);
+				  	}
+				  	
+				  	///네비게이션 바
+
+				  	str2 +="<nav aria-label='Page navigation example'>";
+					str2 +="<ul class='pagination justify-content-center'>";
+					str2 +="<li class='page-item'>";
+				  	
+					if ((pm.startPage - 1) != 0){
+				  	     str2 += "<a class='page-link' aria-label='Previous' onclick='list_fn("+prev+")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
+				  	 }
+				  	 str2 += "</li>";
+			  		 for (let k = pm.startPage; k<=(pm.endPage+1); k++ ){
+			  			 
+				  		 if(page == k){
+				  			str2 += "<li class='page-item active'><a class='page-link pointer' onclick='list_fn("+k+")'>"+k+"</a></li>";    
+				  		 }else{
+				  			str2 += "<li class='page-item'><a class='page-link pointer' onclick='list_fn("+k+")'>"+k+"</a></li>";    
+				  		 }
+				  	 }
+				  	
+				  	 str2 += "<li class='page-item'>";
+				  	
+				  	 if(pm.next && pm.endPage > 0){
+				  	     str2 += "<a class='page-link' aria-label='Next' onclick='list_fn("+next+")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
+				  	 }
+				  	 
+				  	str2 += "</li>";
+				  	str2 += "</ul>";
+				  	str2 += "</nav>";
+				  	 
+				 	//네비게이션바 삽입
+					$("#nav_bar").html(str2);
+				  	
+					
+				},error:function(){
+					alert("리스트 불러오기 에러!")
+				}
+			}); 
+		}	 
 		
-		function searchword(){
-			var keyword = document.getElementById("searchsomething").value;
-			//console.log(keyword);
-			list_fn(1,'T',keyword);			
-		}
+	function searchword(){
+		var keyword = document.getElementById("searchsomething").value;
+		console.log(keyword);
+		list_fn(1,keyword);			
+	} 
 	</script>
 </html>

@@ -85,8 +85,6 @@ public class Ad_BoardController {
 			typenum = 2;
 			
 		}
-		System.out.println("count값"+count);
-		System.out.println("토탈타입이 아닌 다른 타입확인"+type);
 		
 		// 페이징 하기 위해서 필요한 값들 넣음
 		PageMaker pm = new PageMaker();
@@ -96,10 +94,6 @@ public class Ad_BoardController {
 		
 		Map<String, Object> noticelist = new HashMap<String, Object>();
 		noticelist.put("pm", pm);
-		
-		//System.out.println(">>>>>>>type>>>>>>>>>"+count);
-		//System.out.println(">>>>>>>typenum>>>>>>>>>"+typenum);
-		System.out.println("<<<<<"+page);
 		
 		if(typenum == 1) {
 			noticelist.put("totalList", ad_boardService.totalList(pm));
