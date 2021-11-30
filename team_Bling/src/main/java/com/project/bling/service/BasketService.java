@@ -13,4 +13,6 @@ public interface BasketService {
 	
 	//관심상품 삭제
 	void likeDelete(LikeVO vo);
+	
+	int cart_count(int midx) throws Exception;
 }

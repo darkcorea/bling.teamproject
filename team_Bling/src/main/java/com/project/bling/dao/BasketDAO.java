@@ -30,4 +30,9 @@ public class BasketDAO {
 		sqlSession.delete(bm+"likeDelete",vo);
 	}
 	
+	//midx에 따른 관심상품 갯수
+	public int cart_count(int midx) throws Exception {
+		return sqlSession.selectOne(bm+"cart_count", midx);
+	}
+
 }
