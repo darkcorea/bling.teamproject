@@ -84,11 +84,11 @@
 			list_fn(page);
 		});
 		
-		function list_fn(page,keyword){
+		function list_fn(page){
 			$.ajax({
 				url:"/Notice/list.do",
 				type:"POST",
-				data:{"page":page,"keyword":keyword},
+				data:{"page":page},
 				dataType: 'json',
 				success:function(data){
 					
@@ -96,7 +96,6 @@
 					let prev = parseInt(pm.startPage - 1);
 				  	let next = parseInt(pm.endPage + 1);
 				  	
-				  	var keyword = document.getElementById("searchsomething").value;
 				  	var page = data.page;
 				  	var pagenum = (page-1) * 10;
 				  	
@@ -215,11 +214,6 @@
 				}
 			}); 
 		}	 
-		
-	function searchword(){
-		var keyword = document.getElementById("searchsomething").value;
-		console.log(keyword);
-		list_fn(1,keyword);			
-	} 
+	
 	</script>
 </html>
