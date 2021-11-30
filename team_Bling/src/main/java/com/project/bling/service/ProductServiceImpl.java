@@ -71,5 +71,11 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.image(pidx);
 	}
 
-	
+	// 상품 검색
+	@Override
+	public List<CombineVO> search_Product(PageMaker pm) throws Exception {
+		return productDAO.search_Product(pm);
+	}
+		
+		
 }

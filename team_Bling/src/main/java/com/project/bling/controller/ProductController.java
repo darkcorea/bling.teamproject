@@ -156,9 +156,6 @@ public class ProductController {
 	@ResponseBody
 	public  Map<String, Object> detail_review(int pidx, int page, String type) throws Exception  {	
 		
-	//System.out.println("pidx>>>>>>>>>>>>>>>>>"+pidx);
-	//System.out.println("page>>>>>>>>>>>>>>>>>"+page);
-
 		// pidx에 대한 리뷰 갯수
 		int reviewCount = reviewService.reviewCount(pidx);
 		// 가져오는 페이지 수 3
@@ -173,14 +170,6 @@ public class ProductController {
 		pm.setPidx(pidx);
 		pm.setTotalCount(reviewCount);
   
-		//System.out.println("리뷰 갯수   >>>>"+reviewCount);
-		//System.out.println("페이지 번호>>>>"+sc.getPage());
-		//System.out.println("StartPage>>>>>>>>>>>"+pm.getStartPage());
-		//System.out.println("EndPage>>>>>>>>>>>>>>"+pm.getEndPage());
-		//System.out.println("시작하는 페이지 번호>>>>>>>>>>"+pm.getStartPost());
-		//System.out.println("끝나는 페이지 번호>>>>>>>>>>"+pm.getLastPost());
-		//System.out.println("타입>>>>>>>>>>"+type);
-
 		// 페이징 된 리뷰와 페이징에 필요한 값 넣음
 		Map<String, Object> review_1 = new HashMap<String, Object>();
 		review_1.put("pm", pm);
@@ -223,5 +212,20 @@ public class ProductController {
 
 		return question;
 	}
+		
+	// 헤더 검색 기능
+	@RequestMapping(value="/search.do" )
+	public String search_Product(Locale locale, Model model, Criteria sc) throws Exception{
+		
+		// 페이지 메이커에 검색에 필요한 값들을 넣어 줌
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		
+		model.addAttribute("list", productService.search_Product(pm));
+		model.addAttribute("pm", pm);
+		
+		return "product/search";
+	}
 
+	
 }

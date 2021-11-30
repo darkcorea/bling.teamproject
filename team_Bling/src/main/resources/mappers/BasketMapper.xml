@@ -31,4 +31,10 @@
 			WHERE midx=#{midx} AND pidx=#{pidx}
 		]]>
 	</delete>
+	
+	<!-- midx에 따른 관심상품 갯수 -->
+	<select id="cart_count" parameterType="int" resultType="int">
+		SELECT count(*) FROM bg_cart WHERE midx=#{midx}
+	</select>
+	
 </mapper>
