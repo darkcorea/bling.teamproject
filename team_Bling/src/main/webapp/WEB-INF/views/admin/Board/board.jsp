@@ -163,16 +163,12 @@
 							str +="</tr>";
 							
 						}
-						// 리뷰 div에 모든 내용 뿌려주기
+						// div에 모든 내용 삽입
 						 $("#tbody_table").html(str);
 						
 						str2 +="<nav aria-label='Page navigation example'>";
 						str2 +="<ul class='pagination justify-content-center'>";
 						str2 +="<li class='page-item'>";
-						str2 +="<a class='page-link' href='#' aria-label='Previous'>";
-						str2 +="<span aria-hidden='true'>&laquo;</span>";
-						str2 +="</a>";
-						str2 +="</li>";
 						
 						if ((pm.startPage - 1) != 0){
 					  	     str2 += "<a class='page-link' aria-label='Previous' onclick='list_fn("+prev+",\""+type+"\",\""+keyword+"\")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
@@ -181,15 +177,15 @@
 					  	 
 					  	 for (let k = pm.startPage; k<=pm.endPage; k++ ){
 					  		 if(page == k){
-					  			str2 += "<li class='page-item active'><a class='page-link pointer' onclick='list_fn("+k+",\""+type+"\",\""+keyword+"\")'>"+k+"</a>";    
+					  			str2 += "<li class='page-item active'><a class='page-link pointer' onclick='list_fn("+k+",\""+type+"\",\""+keyword+"\")'>"+k+"</a></li>";    
 					  		 }else{
-					  			str2 += "<li class='page-item'><a class='page-link pointer' onclick='list_fn("+k+",\""+type+"\",\""+keyword+"\")'>"+k+"</a>";    
+					  			str2 += "<li class='page-item'><a class='page-link pointer' onclick='list_fn("+k+",\""+type+"\",\""+keyword+"\")'>"+k+"</a></li>";    
 					  		 }
 					  	 }
 					  	 
 					  	 str2 += "<li class='page-item'>";
 					  	
-					  	 if(pm.endPage+1 && pm.endPage > 0){
+					  	 if(pm.next && pm.endPage > 0){
 					  	     str2 += "<a class='page-link' aria-label='Next' onclick='list_fn("+next+",\""+type+"\",\""+keyword+"\")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
 					  	 }
 					  	 
@@ -197,7 +193,7 @@
 					  	 str2 += "</ul>";
 					  	 str2 += "</nav>";
 						
-					  	 // 리뷰 div에 네비게이션바 뿌려주기
+					  	//네비게이션바 삽입
 					  	$("#nav_bar").html(str2);
 						
 					},error:function(){
