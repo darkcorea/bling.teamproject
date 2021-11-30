@@ -39,9 +39,7 @@ public class CustomerController {
 		
 
 		// 필요한 페이지 넘버와 키워드 그리고 한 페이지당 10개의 리스트 보여주기
-		sc.setPage(sc.getPage());
 		sc.setPerPageNum(10);
-		sc.setKeyword(sc.getKeyword());
 		
 		// 페이징 하기 위해서 필요한 값들 넣음
 		PageMaker pm = new PageMaker();

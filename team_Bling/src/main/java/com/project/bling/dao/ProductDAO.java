@@ -80,4 +80,10 @@ public class ProductDAO {
 	}
 	
 	
+	
+	/*상품 검색*/
+	public List<CombineVO> search_Product(PageMaker pm) throws Exception {
+		return sqlSession.selectList(ps+"search_Product", pm);
+	}
+	
 }

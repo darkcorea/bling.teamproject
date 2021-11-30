@@ -11,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.domain.PageMaker;
+import com.project.bling.service.BasketService;
 import com.project.bling.service.ProductService;
 
 @Controller
@@ -22,6 +24,10 @@ public class HomeController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	BasketService basketService;
+	
 	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -77,6 +83,12 @@ public class HomeController {
 		return "home";
 	}
 	
+	//관심상풍 페이지로 이동
+	@RequestMapping(value="/Header_cart.do")
+	@ResponseBody
+	public int cart_count(Locale locale, Model model, int midx) throws Exception{
+		return basketService.cart_count(midx);
+	}
 	
 	
 	

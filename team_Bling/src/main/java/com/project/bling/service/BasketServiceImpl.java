@@ -29,5 +29,14 @@ public class BasketServiceImpl implements BasketService {
 	public void likeDelete(LikeVO vo) {
 		basketDAO.likeDelete(vo);
 	}
-
+	
+	//midx에 따른 관심상품 갯수
+	@Override
+	public int cart_count(int midx) throws Exception{
+		return basketDAO.cart_count(midx);
+	}
+	
+	
+	
+	
 }

@@ -224,4 +224,26 @@ public class ProductController {
 		return question;
 	}
 
+	// 헤더 검색 기능
+	@RequestMapping(value="/search.do" )
+	public String search_Product(Locale locale, Model model, Criteria sc) throws Exception{
+		
+		// 페이지 메이커에 검색에 필요한 값들을 넣어 줌
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		
+		/*
+		System.out.println("키워드>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+pm.getScri().getKeyword());
+		System.out.println("종류>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+pm.getScri().getKind());
+		System.out.println("가격>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+pm.getScri().getPrice());
+		System.out.println("시작가격>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+pm.getScri().getStart_price());
+		System.out.println("끝가격>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+pm.getScri().getLast_price());
+		*/
+		
+		model.addAttribute("list", productService.search_Product(pm));
+		model.addAttribute("pm", pm);
+		
+		return "product/search";
+	}
+	
 }
