@@ -46,17 +46,7 @@
 			<div class="container margin15">
 				<h1 class="text-center">공지사항</h1>
 				<br>
-				<!-- 게시글 검색 -->
-				<div class="row">
-				<div class="col-6">
-				</div>
-				<div class="col-6">
-					<div class="input-group mb-3">
-						<input type="text" class="form-control" placeholder="게시글 제목 검색" aria-label="Recipient's username" aria-describedby="button-addon2" id="searchsomething">
-						<button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="searchword()">검색</button>
- 					</div>
-				</div>
-				</div>
+				
 				<!-- 게시글 표 -->	
 				<div id="notice_table">
 					<table class='table'>
