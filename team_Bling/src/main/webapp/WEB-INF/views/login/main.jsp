@@ -51,12 +51,12 @@
 		}
 		#btnDiv{
 			position: relative;
-			top: 40px;
+			top: 60px;
 			text-align: center;
 		}
 		#btnDiv2{
 			position: relative;
-			top: 60px;
+			top: 80px;
 			text-align: center;
 		}
 		#formText{
@@ -89,10 +89,15 @@
 		#caution{
 			position: relative;
 			left: 123px;
-			top: 40px;
+			top: 60px;
 		}
 		#cautionDiv{
-			height: 50px;
+			height: 60px;
+		}
+		#rememberLogin{
+			position: relative;
+			left: 123px;
+			top: 50px;			
 		}
 /*--------------- section-end ---------------*/
   	</style>
@@ -129,6 +134,11 @@
 								<input id="login_Pw" name="pwd" type="password">
 								<span class="check"></span>
 							</div>
+						</div>
+						<div id="rememberLogin">
+							<!-- <label>
+								<input type="checkbox" name="useCookie"> 로그인 유지
+							</label> -->
 						</div>
 						<div id="cautionDiv">
 							<c:if test="${msg == 'failure'}">

@@ -34,10 +34,24 @@ public class MyPageServiceImpl implements MyPageService {
 
 	@Override
 	public void reviewWrite(CombineVO vo) throws Exception {
+		System.out.println("마이페이지 서비스-image2 : "+vo.getImage2());
 		myPageDAO.reviewWrite(vo);
+		
+	}
+
+	@Override
+	public void reviewWrite1(CombineVO vo) throws Exception {
+		myPageDAO.reviewWrite1(vo);
+		
+	}
+
+	@Override
+	public void reviewWrite2(CombineVO vo) throws Exception {
+		myPageDAO.reviewWrite2(vo);
 		
 	}
 	
 	
+
 	
 }

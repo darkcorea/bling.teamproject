@@ -10,4 +10,7 @@ public interface MyPageService {
 	public CombineVO deliveryStat(CombineVO vo) throws Exception;
 	public List<CombineVO> recentOrder(CombineVO vo) throws Exception;
 	public void reviewWrite(CombineVO vo) throws Exception;
+	public void reviewWrite1(CombineVO vo) throws Exception;
+	public void reviewWrite2(CombineVO vo) throws Exception;
+	
 }
