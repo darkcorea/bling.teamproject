@@ -103,7 +103,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xl-8" id="eventDiv">
-				<span><a id="subMenu1" href="">Event</a></span>
+				<span><a id="subMenu1" href="/Event/main.do">Event</a></span>
 				<div id="carouselExampleIndicators2" class="carousel slide" data-bs-ride="carousel">
 					<div class="carousel-indicators">
 					<button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -113,13 +113,13 @@
 					<div class="carousel-inner">
 						<c:set var="event" value="${event}" />
 							<div class="carousel-item active" >
-								<img src="/resources/event/${event[0].banner}" class="d-block w-100" style="height:256px;">
+								<a href="/Event/detail.do?eidx=${event[0].eidx}"><img src="/resources/event/${event[0].banner}" class="d-block w-100" style="height:256px;"></a>
 							</div>
 							<div class="carousel-item" >
-								<img src="/resources/event/${event[1].banner}" class="d-block w-100" style="height:256px;">
+								<a href="/Event/detail.do?eidx=${event[1].eidx}"><img src="/resources/event/${event[1].banner}" class="d-block w-100" style="height:256px;"></a>
 							</div>
 							<div class="carousel-item">
-								<img src="/resources/event/${event[2].banner}" class="d-block w-100" style="height:256px;">
+								<a href="/Event/detail.do?eidx=${event[2].eidx}"><img src="/resources/event/${event[2].banner}" class="d-block w-100" style="height:256px;"></a>
 							</div>
 					</div>
 					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="prev">
