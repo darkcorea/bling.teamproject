@@ -1,10 +1,14 @@
 package com.project.bling.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.bling.vo.CartVO;
 import com.project.bling.vo.LikeVO;
+import com.project.bling.vo.OrderVO;
 
 @Repository
 public class BasketDAO {
@@ -28,6 +32,18 @@ public class BasketDAO {
 	//관심상품 삭제
 	public void likeDelete(LikeVO vo) {
 		sqlSession.delete(bm+"likeDelete",vo);
+	}
+	
+	public void cartinsert(OrderVO vo) throws Exception{
+		sqlSession.insert(bm+"cartinsert",vo);
+		
+	}
+	public int cartdouble_check(OrderVO vo) throws Exception{
+		return sqlSession.selectOne(bm+"double_check",vo);
+		
+	}
+	public List<CartVO> cartlist(int midx) throws Exception{
+		return sqlSession.selectList(bm+"cartlist", midx);
 	}
 	
 	//midx에 따른 관심상품 갯수

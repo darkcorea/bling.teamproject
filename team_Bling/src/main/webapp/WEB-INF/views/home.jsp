@@ -67,9 +67,6 @@
 </style>	
 </head>
 
-
-	<a href="/Order/order.do">주문하기</a><br>
-
 <header>
 	<%@ include file="/WEB-INF/views/header.jsp" %><br><br>
 </header>
