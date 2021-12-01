@@ -1,5 +1,8 @@
 package com.project.bling.service;
 
+import java.util.List;
+
+import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.LikeVO;
 
 public interface BasketService {
@@ -15,4 +18,7 @@ public interface BasketService {
 	void likeDelete(LikeVO vo);
 	
 	int cart_count(int midx) throws Exception;
+	List<CombineVO> like_list(CombineVO cv) throws Exception;
+	void likeDel(LikeVO vo) throws Exception;
+	void like_del_ch(List<Integer> list) throws Exception ;
 }

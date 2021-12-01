@@ -223,7 +223,7 @@
 		                <a id="header_notice" href="/Notice/notice_main.do">NOTICE</a>
 		                <a id="header_event" href="">EVENT</a>
 	                <!-- heart icon -->
-						<a href="/Basket/like1.do"><i class="bi bi-suit-heart-fill header_heart"></i></a>
+						<a href="/Basket/like1.do?kind=A"><i class="bi bi-suit-heart-fill header_heart"></i></a>
 		            </div>
 		            <div class="col-1 col-md-4"></div>
 		            <div class="col-3 col-md-2" id="headerCol2">
