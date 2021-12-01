@@ -136,7 +136,7 @@
 				str += "		</c:if>";
 				
 				str += "		<div id='deleteBtn'>";
-				str += "			<button>삭제하기</button>";
+				str += "			<button class='btn' id='delBtn'>삭제하기</button>";
 				str += "		</div>";
 				str += "	</div>";
 				str += "</c:forEach>";
@@ -286,7 +286,22 @@
 		    -webkit-line-clamp: 3;	/* 표시하고자 하는 라인 수 */
 		    -webkit-box-orient: vertical; 
 		}
-		
+		#delBtn{
+			background-color: #CB7878;
+			border: none;
+			color: #ffffff;
+			padding: 0px 6px;
+			width: 80px;
+			height: 30px;
+		}
+		#delBtn:hover{
+			color: #CB7878;
+			background-color: #ffffff;
+			border: 1px solid #CB7878;
+			padding: 0px 6px;
+			width: calc(81px - 1px);
+			height: calc(31px - 1px);
+		}
 		
 		
 		/* ----------더보기/접기---------- */
@@ -362,7 +377,42 @@
 			border: none;
 		}
 		#date1,#date2{
-			width: 160px;
+			width: 140px;
+		}
+		#btnNdate{
+			word-spacing: 1px;
+		}
+		#dateBtn1{
+			background-color: #CB7878;
+			border: none;
+			color: #ffffff;
+			padding: 6px 3px;
+			width: 48px;
+			height: 36px;
+		}
+		#dateBtn1:hover{
+			color: #CB7878;
+			background-color: #ffffff;
+			border: 1px solid #CB7878;
+			padding: 6px 3px;
+			width: calc(49px - 1px);
+			height: calc(37px - 1px);
+		}
+		#dateBtn2{
+			background-color: #CB7878;
+			border: none;
+			color: #ffffff;
+			padding: 6px 6px;
+			width: 63px;
+			height: 36px;
+		}
+		#dateBtn2:hover{
+			color: #CB7878;
+			background-color: #ffffff;
+			border: 1px solid #CB7878;
+			padding: 6px 6px;
+			width: calc(64px - 1px);
+			height: calc(37px - 1px);
 		}
 /* -------------------------- article css -------------------------- */
 	</style>
@@ -381,69 +431,24 @@
 				<div class="row">
 					<!-- nav바   -->
 					<div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-						<h2><b><a id="myPageTitle" href="/MyPage/main.do">마이페이지</a></b></h2>
-						<div id="basicInfo">
-							<div><b>${sessionScope.UserVO.id}</b>님</div>
-							<div>내 등급 : 
-								<c:choose>
-									<c:when test="${sessionScope.UserVO.grade == B}">
-										<b>Bronze</b>
-									</c:when>
-									<c:when test="${sessionScope.UserVO.grade == S}">
-										<b>Silver</b>
-									</c:when>
-									<c:otherwise>
-										<b>Gold</b>
-									</c:otherwise>
-								</c:choose>
-							</div>
-							<div>내 적립금 : 
-								<b>
-									<fmt:formatNumber value="${sessionScope.UserVO.mileage}" pattern="#,###" />
-								</b>
-							</div>
-						</div>
-						<!-- 쇼핑정도, 나의 황동, 회원 정보 NAV -->
-						<div id="navMenu">
-							<div id="menuHead">쇼핑정보</div>
-							<div id="navSub">
-								<div class="pa_top"><a class="navA" href="">주문확인/배송조회</a></div>
-								<div class="pa_top"><a class="navA" href="/Basket/like1.do">관심상품</a></div>
-								<div class="pa_top"><a class="navA" href="/Basket/cart.do">장바구니</a></div>
-							</div>
-						</div>
-						<div id="navMenu">
-							<div id="menuHead">나의 활동</div>
-							<div id="navSub">
-								<div class="pa_top"><a class="navA" href="/MyPageR/myReview.do">나의 리뷰</a></div>
-								<div class="pa_top"><a class="navA" href="">나의 문의 내역</a></div>
-							</div>
-						</div>
-						<div>
-							<div id="menuHead">회원정보</div>
-							<div id="navSub">
-								<div class="pa_top"><a class="navA" href="">나의 정보/수정</a></div>
-								<div class="pa_top"><a class="navA" href="">배송지 목록</a></div>
-								<div class="pa_top"><a class="navA" href="">회원탈퇴</a></div>
-							</div>
-						</div>
+						<%@ include file="/WEB-INF/views/myPage/nav.jsp" %>
 					</div>
 					
 					<div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9" id="sectionCol">
 						<div id="secTitle">나의 리뷰 보기</div>
 						<div id="reviewList">
 							<div id="btnNdate">
-								<button type="button" onclick="day_fn('A')">오늘</button>
-								<button type="button" onclick="day_fn('B')">1개월</button>
-								<button type="button" onclick="day_fn('C')">3개월</button>
-								<button type="button" onclick="day_fn('D')">6개월</button>
-								<button type="button" onclick="day_fn('E')">1년</button>
-								<button type="button" onclick="day_fn('F')">3년</button>
+								<button type="button" class="btn" id="dateBtn1" onclick="day_fn('A')">오늘</button>
+								<button type="button" class="btn" id="dateBtn2" onclick="day_fn('B')">1개월</button>
+								<button type="button" class="btn" id="dateBtn2" onclick="day_fn('C')">3개월</button>
+								<button type="button" class="btn" id="dateBtn2" onclick="day_fn('D')">6개월</button>
+								<button type="button" class="btn" id="dateBtn1" onclick="day_fn('E')">1년</button>
+								<button type="button" class="btn" id="dateBtn1" onclick="day_fn('F')">3년</button>
 								
 								<input type="date" id="date1" value="${date.rdate1}" >
 								~
 								<input type="date" id="date2" value="${date.rdate2}" >
-								<button onclick="day_fn('G')">조회</button>
+								<button class="btn" id="dateBtn1" onclick="day_fn('G')">조회</button>
 							</div>
 						</div>
 						
@@ -468,7 +473,7 @@
 		
 		frm.name = "frm";
 		frm.method = "post";
-		frm.action = "/MyPageR/myReview.do";
+		frm.action = "/Review/myReview.do";
 		
 		let input1 = document.createElement("input");
 		input1.setAttribute("type","hidden");
