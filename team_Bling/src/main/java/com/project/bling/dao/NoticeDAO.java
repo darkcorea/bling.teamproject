@@ -37,17 +37,6 @@ public class NoticeDAO {
 		return sqlSession.selectList(ps+"totalList",pm);
 	}
 	
-	//공지사항 검색 총 개수
-	public int searchcount(String keyword) throws Exception{
-		return sqlSession.selectOne(ps+"searchcount",keyword);
-	}
-		
-	
-	//검색리스트
-	public List<NoticeVO> searchList(PageMaker pm)throws Exception{
-		return sqlSession.selectList(ps+"totalList",pm);
-	}
-	
 	//공지사항 detail
 	public NoticeVO detail(int nidx) throws Exception{
 		return sqlSession.selectOne(ps+"sp_detail",nidx);

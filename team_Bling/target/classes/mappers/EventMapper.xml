@@ -5,7 +5,7 @@
  
 <mapper namespace="com.project.bling.mapper.eventMapper">
 
-
+	<!-- 홈화면 이벤트슬라이드 -->
 	<select id="eventlist" resultType="EventVO">
 		<![CDATA[
 			SELECT * FROM bg_event
@@ -13,6 +13,68 @@
 			ORDER BY rdate desc
 		]]>	
 	</select>
-
 	
+	<!-- 이벤트 리스트 갯수 -->
+	<select id="event_Count_tot" resultType="int">
+		<![CDATA[
+			SELECT count(eidx)
+			FROM bg_event
+		]]>
+	</select>
+	<select id="event_Count_ing" resultType="int">
+		<![CDATA[
+			SELECT count(eidx)
+			FROM bg_event
+			WHERE sysdate <= event_end 
+		]]>
+	</select>
+	<select id="event_Count_end" resultType="int">
+		<![CDATA[
+			SELECT count(eidx)
+			FROM bg_event
+			WHERE sysdate > event_end 
+		]]>
+	</select>
+	
+	<!-- 이벤트 리스트 -->
+	<select id="event_Total" resultType="EventVO" parameterType="PageMaker">
+		<!-- 전체(tot) -->
+		<![CDATA[
+			SELECT * 
+			FROM (
+				SELECT rownum as rnum, A.* 
+				FROM (
+					SELECT *
+					FROM bg_event	
+		]]>
+		
+		<!-- 진행중옵션 -->
+		<if test = 'type == "ing"'>
+			<![CDATA[
+				WHERE sysdate <= event_end 
+			]]>
+		</if>
+		
+		<!-- 종료옵션 -->
+		<if test = 'type == "end"'>
+			<![CDATA[
+				WHERE sysdate > event_end 
+			]]>
+		</if>		
+					
+		<![CDATA[
+					ORDER BY event_end desc
+				) A 
+				WHERE rownum <= #{lastPost}
+			)B
+			WHERE rnum >= #{startPost}
+		]]>
+	</select>
+	
+	<!-- 이벤트 detail -->
+	<select id="detail" resultType="EventVO" parameterType="int">
+		SELECT *
+		FROM bg_event
+		WHERE eidx=#{eidx}
+	</select>
 </mapper>

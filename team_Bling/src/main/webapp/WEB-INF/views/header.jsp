@@ -221,7 +221,7 @@
 		            <!-- home icon -->
 		                <a href="/"><i class="bi bi-house-fill"></i></a>
 		                <a id="header_notice" href="/Notice/notice_main.do">NOTICE</a>
-		                <a id="header_event" href="">EVENT</a>
+		                <a id="header_event" href="/Event/main.do">EVENT</a>
 	                <!-- heart icon -->
 						<a href="/Basket/like1.do"><i class="bi bi-suit-heart-fill header_heart"></i></a>
 		            </div>

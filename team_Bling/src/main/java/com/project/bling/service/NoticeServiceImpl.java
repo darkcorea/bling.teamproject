@@ -36,19 +36,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 	
 	@Override
-	public int searchcount(String keyword) throws Exception {
-		return noticeDAO.searchcount(keyword);
-	}
-	
-	@Override
 	public List<NoticeVO> totalList(PageMaker pm) throws Exception {
 		return noticeDAO.totalList(pm);
-	}
-	
-	//검색
-	@Override
-	public List<NoticeVO> searchList(PageMaker pm) throws Exception {
-		return noticeDAO.searchList(pm);
 	}
 	
 	//하나 디테일
