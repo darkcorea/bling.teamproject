@@ -21,40 +21,102 @@
 		function reviewList(){
 			var str = "";
 			
-			
-			if(${reviewList == null}){
+			/*
+				${reviewList}는 배열이기 때문에 ${reviewList == null}로 조건은 설정하면 적용되지 않는다.
+				if(${reviewList == []})와 같이 빈 배열로 조건을 설정하면 적용된다.
+			*/
+			if(${reviewList == []}){
 				str += "<div id='noneReview'>기간내 등록된 리뷰가 없습니다.</div>";
 			} else{
-				str += "<c:forEach items='${reviewList}' var='list' begin='0' end='2'>";
+				str += "<c:forEach items='${reviewList}' var='list' varStatus='status' begin='0' end='20'>";
+				str += "	<c:set var='oname' value='${fn:substringBefore(list.oname, \" +\")}' />";
 				str += "	<div id='reviewDiv'>";
 								/* <div> inline-block 적용하기 */
 				str += "		<div id='prodImgDiv'>";
 				str += "			<img id='rvImg' src='/resources/image/${list.main}' alt='제품 대표 사진'>";
 				str += "		</div>";
 				str += "		<div id='prodData'>";
-				str += "			${list.pname}";
-				str += "			${list.oname}";
-				str += "			${list.quantity}";
+				str += "			${list.pname}<br>";
+				str += "			<span id='textColor'>[옵션] ${oname}</span><br>";
+				str += "			<span id='textColor'>[수량] ${list.quantity}개</span>";
 				str += "		</div>";
 				
 				str += "		<div id='reviewData'>";
 									/* star_rating */
-				str += "			<div class='rating'>";
-				str += "				<input type='radio' name='rating' value='5' id='5' class='star'>";
-				str += "					<label for='5'>☆</label>"; 
-				str += "				<input type='radio' name='rating' value='4' id='4' class='star'>";
-				str += "					<label for='4'>☆</label>"; 
-				str += "				<input type='radio' name='rating' value='3' id='3' class='star'>";
-				str += "					<label for='3'>☆</label>"; 
-				str += "				<input type='radio' name='rating' value='2' id='2' class='star'>";
-				str += "					<label for='2'>☆</label>"; 
-				str += "				<input type='radio' name='rating' value='1' id='1' class='star'>";
-				str += "					<label for='1'>☆</label>";
-				str += "			</div>";
+				str += "			<c:if test='${list.grade == 5}'>";
+				str += "				<div class='rating'>";
+				str += "					<input type='radio' name='rating${status.index}' id='5' value='5' class='star' onclick='return(false)' checked>";
+				str += "						<label for='5'>☆</label>";
+				str += "					<input type='radio' name='rating' value='4' id='4' class='star' onclick='return(false)'>";
+				str += "						<label for='4'>☆</label>";
+				str += "					<input type='radio' name='rating' value='3' id='3' class='star' onclick='return(false)'>";
+				str += "						<label for='3'>☆</label>";
+				str += "					<input type='radio' name='rating' value='2' id='2' class='star' onclick='return(false)'>";
+				str += "						<label for='2'>☆</label>";
+				str += "					<input type='radio' name='rating' value='1' id='1' class='star' onclick='return(false)'>";
+				str += "						<label for='1'>☆</label>";
+				str += "				</div>";
+				str += "			</c:if>";
+				str += "			<c:if test='${list.grade == 4}'>";
+				str += "				<div class='rating'>";
+				str += "					<input type='radio' name='rating' value='5' id='5' class='star' onclick='return(false)'>";
+				str += "						<label for='5'>☆</label>";
+				str += "					<input type='radio' name='rating${status.index}' value='4' id='4' class='star' onclick='return(false)' checked>";
+				str += "						<label for='4'>☆</label>";
+				str += "					<input type='radio' name='rating' value='3' id='3' class='star' onclick='return(false)'>";
+				str += "						<label for='3'>☆</label>";
+				str += "					<input type='radio' name='rating' value='2' id='2' class='star' onclick='return(false)'>";
+				str += "						<label for='2'>☆</label>";
+				str += "					<input type='radio' name='rating' value='1' id='1' class='star' onclick='return(false)'>";
+				str += "						<label for='1'>☆</label>";
+				str += "				</div>";
+				str += "			</c:if>";
+				str += "			<c:if test='${list.grade == 3}'>";
+				str += "				<div class='rating'>";
+				str += "					<input type='radio' name='rating' value='5' id='5' class='star' onclick='return(false)'>";
+				str += "						<label for='5'>☆</label>";
+				str += "					<input type='radio' name='rating' value='4' id='4' class='star' onclick='return(false)'>";
+				str += "						<label for='4'>☆</label>";
+				str += "					<input type='radio' name='rating${status.index}' value='3' id='3' class='star' onclick='return(false)' checked>";
+				str += "						<label for='3'>☆</label>";
+				str += "					<input type='radio' name='rating' value='2' id='2' class='star' onclick='return(false)'>";
+				str += "						<label for='2'>☆</label>";
+				str += "					<input type='radio' name='rating' value='1' id='1' class='star' onclick='return(false)'>";
+				str += "						<label for='1'>☆</label>";
+				str += "				</div>";
+				str += "			</c:if>";
+				str += "			<c:if test='${list.grade == 2}'>";
+				str += "				<div class='rating'>";
+				str += "					<input type='radio' name='rating' value='5' id='5' class='star' onclick='return(false)'>";
+				str += "						<label for='5'>☆</label>";
+				str += "					<input type='radio' name='rating' value='4' id='4' class='star' onclick='return(false)'>";
+				str += "						<label for='4'>☆</label>";
+				str += "					<input type='radio' name='rating' value='3' id='3' class='star' onclick='return(false)'>";
+				str += "						<label for='3'>☆</label>";
+				str += "					<input type='radio' name='rating${status.index}' value='2' id='2' class='star' onclick='return(false)' checked>";
+				str += "						<label for='2'>☆</label>";
+				str += "					<input type='radio' name='rating' value='1' id='1' class='star' onclick='return(false)'>";
+				str += "						<label for='1'>☆</label>";
+				str += "				</div>";
+				str += "			</c:if>";
+				str += "			<c:if test='${list.grade == 1}'>";
+				str += "				<div class='rating'>";
+				str += "					<input type='radio' name='rating' value='5' id='5' class='star' onclick='return(false)'>";
+				str += "						<label for='5'>☆</label>";
+				str += "					<input type='radio' name='rating' value='4' id='4' class='star' onclick='return(false)'>";
+				str += "						<label for='4'>☆</label>";
+				str += "					<input type='radio' name='rating' value='3' id='3' class='star' onclick='return(false)'>";
+				str += "						<label for='3'>☆</label>";
+				str += "					<input type='radio' name='rating' value='2' id='2' class='star' onclick='return(false)'>";
+				str += "						<label for='2'>☆</label>";
+				str += "					<input type='radio' name='rating${status.index}' value='1' id='1' class='star' onclick='return(false)' checked>";
+				str += "						<label for='1'>☆</label>";
+				str += "				</div>";
+				str += "			</c:if>";
 				
 				str += "			<div id='reviewContents'>";
 										/* 리뷰 contents 출력하기 / 3줄 이상 더보기 적용 */
-				str += "				${list.contents}";						
+				str += "				${list.contents}";
 				str += "			</div>";
 				str += "		</div>";
 				
@@ -86,189 +148,12 @@
 		}
 		
 		
-		
-		function orderDate1(){
-			let date1 = document.querySelector("input[id='date1']").value;
-			
-			return date1;
-		}
-		
-		
-		function orderDate2(){
-			let date1 = "";
-			let date2 = document.querySelector("input[id='date2']").value;
-			
-			date1 = orderDate1();
-			
-			
-			if(date1 == null){
-				alert("시작일을 먼저 선택해주세요.");
-			}
-			else{
-				$.ajax({
-					url: "/MyPage/myReview.do",
-					type: "post",
-					data: "date1="+date1+"&date2="+date2,
-					ContentType: "json",
-					success: function(data){
-						console.log("리뷰목록 성공");
-					},
-					error: function(){
-						alert("리뷰목록 에러");
-					}
-				});
-			}
-			
-		}
+
+		/* 텍스트 접기/더보기 */
 		
 		
 		
 		
-		
-		
-		
-		
-		
-		function uploadFile(){
-			let files = document.querySelector("input[name='uploadBtn']").files;
-			console.log("files : "+files);
-			
-			let image1 = files[0];
-			let image2 = files[1];
-			console.log("image1 : "+image1);
-			console.log("image2 : "+image2);
-			
-			let formData = new FormData();
-			formData.append("image1", image1);
-			formData.append("image2", image2);
-			
-			$.ajax({
-				url: "/MyPage/upload.do",
-				type: "post",
-				data: formData,
-				// processData: true=> get방식, false => post방식
-                dataType: "text",
-                // contentType: true => application/x-www-form-urlencoded, 
-                //                false => multipart/form-data
-                processData: false,
-                contentType: false,
-                success: function(data){
-                	if(data == "true"){
-                		console.log("파일 업로드 성공");
-                	}
-                	else if(data == "false"){
-                		console.log("지정된 이미지 파일이 아닙니다.");
-                		console.log("파일 업로드 실패");
-                    	alert("파일 업로드 실패");
-                    	modalReset();
-                	}
-                }
-			});
-		}
-		
-		
-		function contentsCheck(){
-			//리뷰내용 가져오기(contents)
-			let textArea1 = document.querySelector("textarea").value;
-			let contents = "";
-			
-			if(textArea1 != null){
-				contents = textArea1;
-				if(contents.length<10){
-					contents = "";
-					Swal.fire({
-						  icon: 'error',
-						  title: '내용을 입력해주세요!',
-						  text: '최소 10자부터 최대 500자까지 입력 가능합니다.',
-						});
-				}
-				else if(contents.length>500){
-					contents = "";
-					Swal.fire({
-						  icon: 'error',
-						  title: '내용을 입력해주세요!',
-						  text: '최소 10자부터 최대 500자까지 입력 가능합니다.',
-						});
-				}
-				else if(contents.length>=10 && contents.length<=500){
-					
-				}
-			}
-			else if(textArea1 == null){
-				Swal.fire({
-					  icon: 'error',
-					  title: '내용을 입력해주세요!',
-					  text: '최소 10자부터 최대 500자까지 입력 가능합니다.',
-					});
-				console.log("내용을 입력해주세요.");
-				modalReset();
-			}
-			
-			console.log("contentsCheck()에서 return값 : "+contents);
-			return contents;
-		}
-		
-		
-		function reviewWrite(){
-			//detail_idx 값 가져오기
-			//console.log(event.currentTarget.value);
-			//let detail_idx = event.currentTarget.value;
-			
-			//detail_idx 확인
-			//console.log(idx);
-			
-			//console.log(event.currentTarget);
-			//let detail_idx = event.currentTarget.value;
-			
-			
-			//Uncaught TypeError: Cannot read properties of null (reading 'value')
-			// -> JavaScript는 존재하지 않는 것의 값을 읽을 수 없어서 오류 발생
-			
-			//별점 value 가져오기(grade)
-			let starRating = document.querySelector("input[name='rating']:checked");
-			let grade = "";
-			let contents = "";
-			
-			if(starRating != null){
-				grade = document.querySelector("input[name='rating']:checked").value;
-				console.log(grade);
-				
-				contents = contentsCheck();
-				console.log("reviewWrite()에서 contentsCheck() 호출 후 return값 : "+contentsCheck());
-			}
-			else if(starRating == null){
-				Swal.fire({
-					  icon: 'error',
-					  title: '별점을 선택해주세요!',
-					  text: '별점은 1점부터 5점까지 선택 가능합니다.',
-					});
-				console.log("별점을 선택해주세요.");
-				modalReset();
-			}
-			
-			
-			$.ajax({
-				url: "/MyPage/reviewWrite.do",
-				type: "post",
-				data: "contents="+contents+"&grade="+grade,
-				ContentType: "json",
-				success: function(data){
-					console.log("리뷰작성 성공");
-					console.log(grade);
-				},
-				error: function(){
-					console.log("!!!!!리뷰작성 에러!!!!!");
-				}
-			});
-		}
-		
-		
-		function modalReset(){
-			//document.getElementById("textArea").value = "";
-			//document.getElementById("uploadBtn").value = "";
-			$("#modalForm")[0].reset();
-			
-		}
 		
 		
 	</script>
@@ -306,109 +191,31 @@
 		.navA:hover{
 			color: #CB7878;
 		}
+		.pa_top{
+			padding-top:7px;
+		}
+		#myPageTitle{
+			text-decoration: none;
+			color: #000000;
+		}
 	/* nav 메뉴 css */
 	
 	
-	/* modal */
-		/* modal 가운데 위치 */
-		.modal {
-	        text-align: center;
-		}
-		@media screen and (min-width: 768px) { 
-		        .modal:before {
-		                display: inline-block;
-		                vertical-align: middle;
-		                content: " ";
-		                height: 100%;
-		        }
-		}
-		/* modal 가운데 위치 */
-	 
-		.modal-dialog {
-		        display: inline-block;
-		        text-align: left;
-		        vertical-align: middle;
-		}
-		.modal-header{
-			background-color: #CB7878;
-		}
-		.modal-title{
-			color: #ffffff;
-			font-size: 30px;
-			position: relative;
-			left: 175px;
-		}
-		#modalText1{
-			text-align: center;
-			font-weight: bold;
-			font-size: 20px;
-		}
-		#textArea{
-			width: 465px;
-			height: 200px;
-			resize: none;
-			background-color: #C4C4C4;
-			opacity: 0.5;
-		}
-		#textArea::placeholder{
-			color: #000000;
-		}
-		#closeBtn{
-			width: 80px;
-			color: #000000;
-			background-color: #ffffff;
-			border: 2px solid #C4C4C4;
-			position: relative;
-			right: 150px;
-		}
-		#saveBtn{
-			width: 80px;
-			color: #ffffff;
-			background-color: #CB7878;
-			border: 2px solid #CB7878;
-			position: relative;
-			right: 150px;
-		}
-		#saveBtn:hover{
-			color: #CB7878;
-			background-color: #ffffff;
-			border: 2px solid #CB7878;
-		}
-		#uploadDiv{
-			width: 465px;
-			height: 40px;
-			background-color: #CB7878;
-		}
-		#uploadBtn{
-			display: none;
-		}
-		.fileBtn{
-			width: 465px;
-			height: 40px;
-		}
-		#fileBtnText{
-			font-size: 18px;
-			color: #ffffff;
-		}
-		.bi-camera::before{
-			margin: 0px 10px 0px 0px;
-			font-size: 23px;
-		}
-	/* modal */
-	
-	/* modal - star rating */
+	/* star rating */
+		/* 위치변경 : .rating{justify-content} */
 		.rating {
 		    display: flex;
 		    flex-direction: row-reverse;
-		    justify-content: center
+		    justify-content: flex-end;
 		}
 		.rating>input {
 		    display: none
 		}
+		/* 크키조절 : .rating>label{font-size} */
 		.rating>label {
 		    position: relative;
 		    width: 1em;
-		    font-size: 2vw;
+		    font-size: 1.1vw;
 		    color: #FF3A00;
 		    cursor: pointer
 		}
@@ -417,57 +224,31 @@
 		    position: absolute;
 		    opacity: 0
 		}
-		.rating>label:hover:before,
-		.rating>label:hover~label:before {
-		    opacity: 1 !important
-		}
 		.rating>input:checked~label:before {
 		    opacity: 1
 		}
-		.rating:hover>input:checked~label:before {
-		    opacity: 0.4
-		}
-		body {
-		    background: #222225;
-		    color: white
-		}
-		h1,p {
-		    text-align: center
-		}
-		h1 {
-		    margin-top: 150px
-		}
-		p {
-		    font-size: 1.2rem
-		}
-		@media only screen and (max-width: 600px) {
-		    h1 {
-		        font-size: 14px
-		    }
-		    p {
-		        font-size: 12px
-		    }
-		}
-	/* modal - star rating */
+	/* star rating */
 	
 	
 /* -------------------------- article css -------------------------- */
-	/* 		onload로 화면 출력		 */
+	/* --------------------onload로 화면 출력-------------------- */	
 		#noneReview{
 			text-align: center;
+			position: relative;
+			top: 30px;
 		}
 		#reviewDiv{
 			display: block;
 			width: 100%;
 		}
 		#prodImgDiv{
-			width: 80px;
-			height: 80px;
+			width: 70px;
+			height: 70px;
 			display: inline-block;
 		}
 		#rvImgDiv{
 			width: 150px;
-			height: 80px;
+			height: 70px;
 			display: inline-block;
 		}
 		#rvImg{
@@ -476,28 +257,43 @@
 			display: inline-block;
 		}
 		#prodData{
-			width: 100px;
+			width: 130px;
 			display: inline-block;
+			position: relative;
+			top: 25px;
+		}
+		#textColor{
+			color: #CB7878;
+			font-size: 12px;	
 		}
 		#reviewData{
 			width: 270px;
 			display: inline-block;
+			position: relative;
+			top: 10px;
 		}
 		#deleteBtn{
-			width: 100px;
+			width: 80px;
 			display: inline-block;
 		}
 		#reviewContents{
 			overflow: hidden;
 		    text-overflow: ellipsis;
+		    white-space: normal;
+		    text-align: left;
+		    word-wrap: break-word;
 		    display: -webkit-box;
-		    line-height: 16px;    
-		    max-height: 32px;     
-		    -webkit-line-clamp: 4; /* 표시하고자 하는 라인 수 */
-		    -webkit-box-orient: vertical;
+		    -webkit-line-clamp: 3;	/* 표시하고자 하는 라인 수 */
+		    -webkit-box-orient: vertical; 
 		}
 		
-	/* 		onload로 화면 출력		 */	
+		
+		
+		/* ----------더보기/접기---------- */
+		
+        /* ----------더보기/접기---------- */
+		
+	/* --------------------onload로 화면 출력-------------------- */	
 	
 		#secTitle{
 			font-size: 30px;
@@ -565,6 +361,9 @@
 			background-color: #ffffff;
 			border: none;
 		}
+		#date1,#date2{
+			width: 160px;
+		}
 /* -------------------------- article css -------------------------- */
 	</style>
 	
@@ -574,22 +373,23 @@
 	<header>
 		<%@ include file="/WEB-INF/views/header.jsp" %><br><br>
 	</header>
-	
+
 	
 	<section>
 		<article>
 			<div class="container">
 				<div class="row">
+					<!-- nav바   -->
 					<div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-						<h2><b>마이페이지</b></h2>
+						<h2><b><a id="myPageTitle" href="/MyPage/main.do">마이페이지</a></b></h2>
 						<div id="basicInfo">
 							<div><b>${sessionScope.UserVO.id}</b>님</div>
 							<div>내 등급 : 
 								<c:choose>
-									<c:when test="${sessionScope.UserVO.grade == b}">
+									<c:when test="${sessionScope.UserVO.grade == B}">
 										<b>Bronze</b>
 									</c:when>
-									<c:when test="${sessionScope.UserVO.grade == s}">
+									<c:when test="${sessionScope.UserVO.grade == S}">
 										<b>Silver</b>
 									</c:when>
 									<c:otherwise>
@@ -603,30 +403,28 @@
 								</b>
 							</div>
 						</div>
+						<!-- 쇼핑정도, 나의 황동, 회원 정보 NAV -->
 						<div id="navMenu">
 							<div id="menuHead">쇼핑정보</div>
 							<div id="navSub">
-								<div>
-									<div>주문확인</div>
-									<div>/배송조회</div>
-								</div>
-								<div>관심상품</div>
-								<div>장바구니</div>
+								<div class="pa_top"><a class="navA" href="">주문확인/배송조회</a></div>
+								<div class="pa_top"><a class="navA" href="/Basket/like1.do">관심상품</a></div>
+								<div class="pa_top"><a class="navA" href="/Basket/cart.do">장바구니</a></div>
 							</div>
 						</div>
 						<div id="navMenu">
 							<div id="menuHead">나의 활동</div>
 							<div id="navSub">
-								<div>나의 리뷰</div>
-								<div>나의 문의 내역</div>
+								<div class="pa_top"><a class="navA" href="/MyPageR/myReview.do">나의 리뷰</a></div>
+								<div class="pa_top"><a class="navA" href="">나의 문의 내역</a></div>
 							</div>
 						</div>
 						<div>
 							<div id="menuHead">회원정보</div>
 							<div id="navSub">
-								<div>나의 정보/수정</div>
-								<div>배송지 목록</div>
-								<div>회원탈퇴</div>
+								<div class="pa_top"><a class="navA" href="">나의 정보/수정</a></div>
+								<div class="pa_top"><a class="navA" href="">배송지 목록</a></div>
+								<div class="pa_top"><a class="navA" href="">회원탈퇴</a></div>
 							</div>
 						</div>
 					</div>
@@ -635,17 +433,17 @@
 						<div id="secTitle">나의 리뷰 보기</div>
 						<div id="reviewList">
 							<div id="btnNdate">
-								<button type="button">오늘</button>
-								<button type="button">1개월</button>
-								<button type="button">3개월</button>
-								<button type="button">6개월</button>
-								<button type="button">1년</button>
-								<button type="button">3년</button>
+								<button type="button" onclick="day_fn('A')">오늘</button>
+								<button type="button" onclick="day_fn('B')">1개월</button>
+								<button type="button" onclick="day_fn('C')">3개월</button>
+								<button type="button" onclick="day_fn('D')">6개월</button>
+								<button type="button" onclick="day_fn('E')">1년</button>
+								<button type="button" onclick="day_fn('F')">3년</button>
 								
-								<input type="date" id="date1" onchange="orderDate1()" value="2021-10-29" min="2019-01-01" max="2021-12-31">
+								<input type="date" id="date1" value="${date.rdate1}" >
 								~
-								<input type="date" id="date2" onchange="orderDate2()" value="2021-10-29" min="2019-01-01" max="2021-12-31">
-								<button>조회</button>
+								<input type="date" id="date2" value="${date.rdate2}" >
+								<button onclick="day_fn('G')">조회</button>
 							</div>
 						</div>
 						
@@ -663,4 +461,42 @@
 		</article>
 	</section>
 </body>
+
+<script>
+	function day_fn(type){
+		let frm = document.createElement("form");
+		
+		frm.name = "frm";
+		frm.method = "post";
+		frm.action = "/MyPageR/myReview.do";
+		
+		let input1 = document.createElement("input");
+		input1.setAttribute("type","hidden");
+	    input1.setAttribute("name","kind");
+	    input1.setAttribute("value",type);
+	    frm.appendChild(input1);
+	    
+	    if(type == "G"){
+	    	let date1 = document.querySelector("input[id='date1']").value;
+	    	
+	    	let input2 = document.createElement("input");
+			input2.setAttribute("type","hidden");
+		    input2.setAttribute("name","rdate1");
+		    input2.setAttribute("value",date1);
+		    frm.appendChild(input2);
+		    
+		    let date2 = document.querySelector("input[id='date2']").value;
+		    
+		    let input3 = document.createElement("input");
+			input3.setAttribute("type","hidden");
+		    input3.setAttribute("name","rdate2");
+		    input3.setAttribute("value",date2);
+		    frm.appendChild(input3);
+	    }
+	    
+	    document.body.appendChild(frm);
+		frm.submit();
+		
+	}
+</script>
 </html>

@@ -56,10 +56,10 @@
 				str += "		</c:if>";
 				
 				str += "		<c:if test='${ro.contents != null}'>";
-				str += "			<td id='td7'><span id='t7'><button class='btn btn-primary' id='reviewBtn' onclick='' value='${ro.detail_idx}' >리뷰 확인</button></span></td>";
+				str += "			<td id='td7'><span id='t7'><input id='reviewWrite' onclick='' value='리뷰 확인' readonly></span></td>";
 				str += "		</c:if>";
 				str += "		<c:if test='${ro.contents == null}'>";
-				str += "			<td id='td7'><span id='t7'><button class='btn btn-primary' id='reviewBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop' onclick='detailIdx()' value='${ro.detail_idx}' >리뷰 작성</button></span></td>";
+				str += "			<td id='td7'><span id='t7'><input id='reviewWrite' data-bs-toggle='modal' data-bs-target='#staticBackdrop' onclick='detailIdx(${ro.detail_idx})' value='리뷰 작성' readonly></span></td>";
 				str += "		</c:if>";
 				str += "	</tr>";
 				str += "</c:forEach>";
@@ -70,9 +70,8 @@
 		}
 		
 		
-		function detailIdx(){
-			console.log(event.currentTarget.value);
-			let detail_idx = event.currentTarget.value;
+		function detailIdx(detail_idx){
+			//console.log(event.currentTarget.value);
 			
 			$.ajax({
 				url: "/MyPage/detailIdx.do",
@@ -80,7 +79,7 @@
 				data: "detail_idx="+detail_idx,
 				ContentType: "json",
 				success: function(data){
-					console.log(detail_idx);
+					console.log("detail_idx : "+detail_idx);
 					
 				},
 				error: function(){
@@ -123,7 +122,7 @@
                 		Swal.fire({
     						icon: 'error',
     						title: '지정된 이미지 파일이 아닙니다!',
-    						text: 'jpg,jpeg,png 파일만 선택 가능합니다.',
+    						text: 'jpg, jpeg, png 파일만 선택 가능합니다.',
     					});
                 		pictureReset();
                 	}
@@ -277,24 +276,20 @@
 		.navA:hover{
 			color: #CB7878;
 		}
+		.pa_top{
+			padding-top:7px;
+		}
+		#myPageTitle{
+			text-decoration: none;
+			color: #000000;
+		}
 	/* nav 메뉴 css */
 	
 	
 	/* modal */
-		/* modal 가운데 위치 */
 		.modal {
 	        text-align: center;
 		}
-		@media screen and (min-width: 768px) { 
-		        .modal:before {
-		                display: inline-block;
-		                vertical-align: middle;
-		                content: " ";
-		                height: 100%;
-		        }
-		}
-		/* modal 가운데 위치 */
-	 
 		.modal-dialog {
 		        display: inline-block;
 		        text-align: left;
@@ -423,7 +418,7 @@
 	
 	
 /* -------------------------- article css -------------------------- */
-	/* 		onload로 화면 출력		 */
+	/* --------------------onload로 화면 출력-------------------- */	
 		#noneOrder{
 			text-align: center;
 		}
@@ -449,7 +444,7 @@
 			font-size: 14px;
 		}
 		#t7{
-			width: 100px;
+			width: 70px;
 			text-align: center;
 			font-size: 14px;
 		}
@@ -479,10 +474,10 @@
 			text-align: center;
 		}
 		#td7{
-			width: 100px;
+			width: 80px;
 			text-align: center;
 		}
-	/* 		onload로 화면 출력		 */	
+	/* --------------------onload로 화면 출력-------------------- */	
 	
 		#secTitle{
 			font-size: 30px;
@@ -545,10 +540,12 @@
 		#review{
 			cursor: pointer;
 		}
-		#reviewBtn{
+		#reviewWrite{
 			color: #000000;
 			background-color: #ffffff;
 			border: none;
+			cursor: pointer;
+			width: 70px;
 		}
 /* -------------------------- article css -------------------------- */
 	</style>
@@ -562,7 +559,7 @@
 	
 	<!-- Modal -->
 	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 			
 				<div class="modal-header">
@@ -618,16 +615,17 @@
 		<article>
 			<div class="container">
 				<div class="row">
+					<!-- nav바   -->
 					<div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-						<h2><b>마이페이지</b></h2>
+						<h2><b><a id="myPageTitle" href="/MyPage/main.do">마이페이지</a></b></h2>
 						<div id="basicInfo">
 							<div><b>${sessionScope.UserVO.id}</b>님</div>
 							<div>내 등급 : 
 								<c:choose>
-									<c:when test="${sessionScope.UserVO.grade == b}">
+									<c:when test="${sessionScope.UserVO.grade == B}">
 										<b>Bronze</b>
 									</c:when>
-									<c:when test="${sessionScope.UserVO.grade == s}">
+									<c:when test="${sessionScope.UserVO.grade == S}">
 										<b>Silver</b>
 									</c:when>
 									<c:otherwise>
@@ -641,30 +639,28 @@
 								</b>
 							</div>
 						</div>
+						<!-- 쇼핑정도, 나의 황동, 회원 정보 NAV -->
 						<div id="navMenu">
 							<div id="menuHead">쇼핑정보</div>
 							<div id="navSub">
-								<div>
-									<div>주문확인</div>
-									<div>/배송조회</div>
-								</div>
-								<div>관심상품</div>
-								<div>장바구니</div>
+								<div class="pa_top"><a class="navA" href="">주문확인/배송조회</a></div>
+								<div class="pa_top"><a class="navA" href="/Basket/like1.do">관심상품</a></div>
+								<div class="pa_top"><a class="navA" href="/Basket/cart.do">장바구니</a></div>
 							</div>
 						</div>
 						<div id="navMenu">
 							<div id="menuHead">나의 활동</div>
 							<div id="navSub">
-								<div><a class="navA" href="/MyPageR/myReview.do">나의 리뷰</a></div>
-								<div>나의 문의 내역</div>
+								<div class="pa_top"><a class="navA" href="/MyPageR/myReview.do">나의 리뷰</a></div>
+								<div class="pa_top"><a class="navA" href="">나의 문의 내역</a></div>
 							</div>
 						</div>
 						<div>
 							<div id="menuHead">회원정보</div>
 							<div id="navSub">
-								<div>나의 정보/수정</div>
-								<div>배송지 목록</div>
-								<div>회원탈퇴</div>
+								<div class="pa_top"><a class="navA" href="">나의 정보/수정</a></div>
+								<div class="pa_top"><a class="navA" href="">배송지 목록</a></div>
+								<div class="pa_top"><a class="navA" href="">회원탈퇴</a></div>
 							</div>
 						</div>
 					</div>

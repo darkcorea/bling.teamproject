@@ -16,9 +16,9 @@ public class MyPage_myReviewServiceImpl implements MyPage_myReviewService {
 
 	@Override
 	public List<CombineVO> reviewList(CombineVO vo) throws Exception {
-		System.out.println("마이페이지 서비스-구매일1 : "+vo.getRdate1());
-		System.out.println("마이페이지 서비스-구매일1 : "+vo.getRdate2());
-		System.out.println("마이페이지 서비스-midx : "+vo.getMidx());
+		//System.out.println("마이페이지 서비스-구매일1 : "+vo.getRdate1());
+		//System.out.println("마이페이지 서비스-구매일1 : "+vo.getRdate2());
+		//System.out.println("마이페이지 서비스-midx : "+vo.getMidx());
 		return myPage_myReviewDAO.reviewList(vo);
 	}
 

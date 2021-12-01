@@ -18,6 +18,7 @@
   	<style>
 		header{
 			max-width:1008px;
+			height: 411.5px;
 			margin:  0px auto;
 		}			
 		/* header home icon */
@@ -31,6 +32,7 @@
 			font-size:18px;
 			color:red;
 			float: none;
+			padding: 0px;
 		}
 		#header_notice,#header_event,#customerCenter{
 			text-decoration-line: none;
@@ -60,6 +62,9 @@
 			height: 45px;
 		}
 		#headerRow1{
+			height: 45px;
+		}
+		#headerRow2{
 			height:64px;
 		}
 		#title_image{
@@ -72,8 +77,19 @@
 			text-align: right;
 			padding: 10px;
 		}
-		#headercol5{text-align: right;
-			padding: 10px;}
+		#headerRow3{
+			height: 88px;
+			text-align: right;
+			padding: 10px;
+		}
+		#headerRow4{
+			height: 93.5px;
+			text-align: right;
+			padding: 10px;
+		}
+		#headerRow5{
+			height: 45px;
+		}
 		#hearderMemberJoin,#headerLogin{
 			text-decoration-line: none;
 			color : #000000;
@@ -88,6 +104,7 @@
 			margin-top: 15px;
 		}
 		#topCart{
+			height: 63.5px;
 			font-size:25px;
 			float: right;
 			margin-right: 20px;
@@ -121,9 +138,6 @@
 		#amenu:hover{
 			color:#989191;
 		}
-		.badge{
-			font-size:8pt;
-		}	
 		.bi-cart2{
 			color:#000000;
 		}
@@ -196,8 +210,7 @@
 		.bling_color {
 			background-color: #CB7878;
 		}
-		
-		/* 로그가아웃 예 버튼*/
+		/* 로그아웃 예 버튼*/
 		#logout_btn {
 			background-color: #CB7878;
 			border-color: #CB7878;
@@ -216,14 +229,14 @@
 <body>
 		<!-- header -->
 			<div class="mainNav container">
-		        <div class="row">
+		        <div class="row" id="headerRow1">
 		            <div class="col-8 col-md-6" id="headerCol1">
 		            <!-- home icon -->
 		                <a href="/"><i class="bi bi-house-fill"></i></a>
 		                <a id="header_notice" href="/Notice/notice_main.do">NOTICE</a>
 		                <a id="header_event" href="/Event/main.do">EVENT</a>
 	                <!-- heart icon -->
-						<a href="/Basket/like1.do"><i class="bi bi-suit-heart-fill header_heart"></i></a>
+						<a href="/Basket/like1.do?kind=A"><i class="bi bi-suit-heart-fill header_heart"></i></a>
 		            </div>
 		            <div class="col-1 col-md-4"></div>
 		            <div class="col-3 col-md-2" id="headerCol2">
@@ -231,9 +244,9 @@
 		            </div>
 		        </div>
 		
-				<div class="row" id="headerRow1"></div>
+				<div class="row" id="headerRow2"></div>
 		
-				<div class="row">
+				<div class="row" id="headerRow3">
 					<div class="col-md-4"></div>
 					<div class="col-md-4" id="headerCol3">
 						<a href="/"><img id="title_image" src="/resources/simage/logo.png" alt=""></a>
@@ -256,7 +269,7 @@
 						</c:choose>
 					</div>
 				</div>
-				<div  class="row" id="headercol5">
+				<div  class="row" id="headerRow4">
 					<!-- cart icon -->
 					<div id="topCart">
 						<!-- 검색 -->
@@ -280,7 +293,7 @@
 			<br>
 	
 			<!-- top menu -->
-			<div class="container">
+			<div class="container" id="headerRow5">
 				<div class="row">
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
 						<span id="smenu"><a id="amenu" href="/Product/best_new.do?kind=best">BEST</a></span>

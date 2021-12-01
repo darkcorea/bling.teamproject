@@ -1,10 +1,15 @@
 package com.project.bling.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.bling.vo.CartVO;
+import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.LikeVO;
+import com.project.bling.vo.OrderVO;
 
 @Repository
 public class BasketDAO {
@@ -30,9 +35,36 @@ public class BasketDAO {
 		sqlSession.delete(bm+"likeDelete",vo);
 	}
 	
+	public void cartinsert(OrderVO vo) throws Exception{
+		sqlSession.insert(bm+"cartinsert",vo);
+		
+	}
+	public int cartdouble_check(OrderVO vo) throws Exception{
+		return sqlSession.selectOne(bm+"double_check",vo);
+		
+	}
+	public List<CartVO> cartlist(int midx) throws Exception{
+		return sqlSession.selectList(bm+"cartlist", midx);
+	}
+	
 	//midx에 따른 관심상품 갯수
 	public int cart_count(int midx) throws Exception {
 		return sqlSession.selectOne(bm+"cart_count", midx);
+	}
+	
+	//midx와 종류에 대한  관심상품 리스트
+	public List<CombineVO> like_list(CombineVO cv) throws Exception {
+		return sqlSession.selectList(bm+"like_list", cv);
+	}
+
+	//관심상품 삭제 interest_idx 사용
+	public void likeDel(LikeVO vo) throws Exception {
+		sqlSession.delete(bm+"likeDel",vo);
+	}
+	
+	//관심상품 여러개 삭제 interest_idx 사용
+	public void like_del_ch(List<Integer> list) throws Exception {
+		sqlSession.delete(bm+"like_del_ch",list);
 	}
 
 }
