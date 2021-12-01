@@ -56,10 +56,10 @@
 				str += "		</c:if>";
 				
 				str += "		<c:if test='${ro.contents != null}'>";
-				str += "			<td id='td7'><span id='t7'><input id='reviewWrite' onclick='' value='리뷰 확인' readonly></span></td>";
+				str += "			<td id='td7'><span id='t7'><input id='reviewWrite' data-bs-toggle='modal' data-bs-target='#staticBackdrop2' onclick='ridx(${ro.ridx})' value='리뷰 확인' readonly></span></td>";
 				str += "		</c:if>";
 				str += "		<c:if test='${ro.contents == null}'>";
-				str += "			<td id='td7'><span id='t7'><input id='reviewWrite' data-bs-toggle='modal' data-bs-target='#staticBackdrop' onclick='detailIdx(${ro.detail_idx})' value='리뷰 작성' readonly></span></td>";
+				str += "			<td id='td7'><span id='t7'><input id='reviewWrite' data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${ro.detail_idx})' value='리뷰 작성' readonly></span></td>";
 				str += "		</c:if>";
 				str += "	</tr>";
 				str += "</c:forEach>";
@@ -86,6 +86,12 @@
 					alert("detai_idx 넘기기 에러");
 				}
 			});
+		}
+		
+		
+		function ridx(ridx){
+			
+			return ridx;
 		}
 		
 		
@@ -557,18 +563,70 @@
 		<%@ include file="/WEB-INF/views/header.jsp" %><br><br>
 	</header>
 	
-	<!-- Modal -->
-	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<!-- 리뷰 작성 Modal -->
+	<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 			
 				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">리뷰작성</h5>
+					<h5 class="modal-title" id="staticBackdropLabel">리뷰 작성</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="modalReset()"></button>
 				</div>
 				
 				<div class="modal-body">
 					<div id="modalText1">상품은 만족하셨나요?</div>
+					<form id="modalForm">				
+						<!-- star_rating -->
+						<div class="rating">
+							<input type="radio" name="rating" value="5" id="5" class="star">
+								<label for="5">☆</label> 
+							<input type="radio" name="rating" value="4" id="4" class="star">
+								<label for="4">☆</label> 
+							<input type="radio" name="rating" value="3" id="3" class="star">
+								<label for="3">☆</label> 
+							<input type="radio" name="rating" value="2" id="2" class="star">
+								<label for="2">☆</label> 
+							<input type="radio" name="rating" value="1" id="1" class="star">
+								<label for="1">☆</label>
+						</div>
+						<br>
+						<textarea id="textArea" placeholder="상품에 대한 후기를 남겨 주세요.&#13;&#10;사진은 2장까지 첨부 가능합니다."></textarea>
+						<br>
+					</form>
+					<form id="pictureForm">
+						<div id="uploadDiv">
+						<!-- 파일을 업로드할 영역 -->
+							<input type="file" id="uploadBtn" name="uploadBtn" multiple accept=".jpg, .jpeg, .png" onchange="uploadFile()">
+							<label for="uploadBtn" class="fileBtn btn">
+								<span id="fileBtnText">
+									<i class="bi bi-camera"></i>사진 첨부하기
+								</span>
+							</label>
+							<span id="fileName"></span>
+						</div>
+					</form>
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal" onclick="modalReset()">닫기</button>
+					<button type="button" class="btn btn-primary" id="saveBtn" data-bs-dismiss="modal" onclick="javascript:reviewWrite(); modalReset();">저장</button>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<!-- 리뷰 확인 Modal -->
+	<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+			
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">리뷰 확인</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="modalReset()"></button>
+				</div>
+				
+				<div class="modal-body">
 					<form id="modalForm">				
 						<!-- star_rating -->
 						<div class="rating">
@@ -617,52 +675,7 @@
 				<div class="row">
 					<!-- nav바   -->
 					<div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-						<h2><b><a id="myPageTitle" href="/MyPage/main.do">마이페이지</a></b></h2>
-						<div id="basicInfo">
-							<div><b>${sessionScope.UserVO.id}</b>님</div>
-							<div>내 등급 : 
-								<c:choose>
-									<c:when test="${sessionScope.UserVO.grade == B}">
-										<b>Bronze</b>
-									</c:when>
-									<c:when test="${sessionScope.UserVO.grade == S}">
-										<b>Silver</b>
-									</c:when>
-									<c:otherwise>
-										<b>Gold</b>
-									</c:otherwise>
-								</c:choose>
-							</div>
-							<div>내 적립금 : 
-								<b>
-									<fmt:formatNumber value="${sessionScope.UserVO.mileage}" pattern="#,###" />
-								</b>
-							</div>
-						</div>
-						<!-- 쇼핑정도, 나의 황동, 회원 정보 NAV -->
-						<div id="navMenu">
-							<div id="menuHead">쇼핑정보</div>
-							<div id="navSub">
-								<div class="pa_top"><a class="navA" href="">주문확인/배송조회</a></div>
-								<div class="pa_top"><a class="navA" href="/Basket/like1.do">관심상품</a></div>
-								<div class="pa_top"><a class="navA" href="/Basket/cart.do">장바구니</a></div>
-							</div>
-						</div>
-						<div id="navMenu">
-							<div id="menuHead">나의 활동</div>
-							<div id="navSub">
-								<div class="pa_top"><a class="navA" href="/MyPageR/myReview.do">나의 리뷰</a></div>
-								<div class="pa_top"><a class="navA" href="">나의 문의 내역</a></div>
-							</div>
-						</div>
-						<div>
-							<div id="menuHead">회원정보</div>
-							<div id="navSub">
-								<div class="pa_top"><a class="navA" href="">나의 정보/수정</a></div>
-								<div class="pa_top"><a class="navA" href="">배송지 목록</a></div>
-								<div class="pa_top"><a class="navA" href="">회원탈퇴</a></div>
-							</div>
-						</div>
+						<%@ include file="/WEB-INF/views/myPage/nav.jsp" %>
 					</div>
 					
 					<div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9" id="sectionCol">
