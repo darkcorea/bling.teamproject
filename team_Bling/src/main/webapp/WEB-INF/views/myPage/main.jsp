@@ -399,27 +399,7 @@
 		.rating:hover>input:checked~label:before {
 		    opacity: 0.4
 		}
-		body {
-		    background: #222225;
-		    color: white
-		}
-		h1,p {
-		    text-align: center
-		}
-		h1 {
-		    margin-top: 150px
-		}
-		p {
-		    font-size: 1.2rem
-		}
-		@media only screen and (max-width: 600px) {
-		    h1 {
-		        font-size: 14px
-		    }
-		    p {
-		        font-size: 12px
-		    }
-		}
+		
 	/* modal - star rating */
 	
 	
@@ -660,8 +640,8 @@
 				</div>
 				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal" onclick="modalReset()">닫기</button>
-					<button type="button" class="btn btn-primary" id="saveBtn" data-bs-dismiss="modal" onclick="javascript:reviewWrite(); modalReset();">저장</button>
+					<button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal" onclick="">닫기</button>
+					<button type="button" class="btn btn-primary" id="saveBtn" data-bs-dismiss="modal" onclick="">삭제</button>
 				</div>
 				
 			</div>
@@ -774,11 +754,17 @@
 							
 						</table>
 						
-						
 					</div>
 				</div>
 			</div>
 		</article>
 	</section>
+	
+	<br><br><br><br>
+	
+	<footer>
+		<%@ include file="/WEB-INF/views/footer.jsp" %>
+	</footer>
+	
 </body>
 </html>
