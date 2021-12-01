@@ -69,25 +69,6 @@
 		]]>
 	</select>
 	
-	<!-- 검색 리스트 -->
-	<select id="searchList" resultType="NoticeVO" parameterType="PageMaker">
-		<![CDATA[
-			SELECT * 
-			FROM (
-				SELECT rownum as rnum, A.* 
-				FROM (
-					SELECT nidx,subject,rdate,type,imgfile,imges
-					FROM bg_notice	
-					WHERE TYPE NOT IN('Q')
-					ORDER BY RDATE DESC
-				) A 
-				WHERE rownum <= #{lastPost}
-				AND subject LIKE '%'||#{scri.keyword}||'%'
-			)B
-			WHERE rnum >= #{startPost}
-		]]>
-	</select>
-	
 	<!-- 공지사항 detail -->
 	<select id="sp_detail" resultType="NoticeVO" parameterType="int">
 		SELECT * 
