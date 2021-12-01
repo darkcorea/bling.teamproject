@@ -7,17 +7,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.project.bling.service.BuyService;
+import com.project.bling.service.DeliveryService;
 
-@RequestMapping(value="/Buy")
+@RequestMapping(value="/Delivery")
 @Controller
-public class BuyController {
+public class DeliveryController {
 
 	@Autowired
-	BuyService buyService;
+	DeliveryService deliveryService;
 	
 	@RequestMapping(value="/main.do")
-	public String main(Locale locale, Model model) {
-		return "buy/main";
+	public String cart(Locale locale, Model model) {
+		return "delivery/main";
 	}
 }

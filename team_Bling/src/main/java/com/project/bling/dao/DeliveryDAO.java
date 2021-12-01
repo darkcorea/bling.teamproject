@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BuyDAO {
+public class DeliveryDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
 	
-	private String am = "com.project.bling.mapper.addrMapper.";
+	private String dm = "com.project.bling.mapper.deliveryMapper.";
 	
 }

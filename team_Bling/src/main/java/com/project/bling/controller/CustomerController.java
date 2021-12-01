@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.service.CustomerService;
-import com.project.bling.service.NoticeService;
 import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.Product_QuestionVO;
 import com.project.bling.vo.QuestionVO;

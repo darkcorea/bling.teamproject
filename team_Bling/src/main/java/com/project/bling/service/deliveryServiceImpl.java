@@ -3,13 +3,13 @@ package com.project.bling.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.bling.dao.BuyDAO;
+import com.project.bling.dao.DeliveryDAO;
 
-@Service("BuyService")
-public class BuyServiceImpl implements BuyService {
+@Service("DeliveryService")
+public class deliveryServiceImpl implements DeliveryService {
 
 	@Autowired
-	BuyDAO buyDAO;
+	DeliveryDAO deliveryDAO;
 	
 	
 	
