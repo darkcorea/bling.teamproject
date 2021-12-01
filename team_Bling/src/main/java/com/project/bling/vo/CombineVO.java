@@ -36,6 +36,8 @@ public class CombineVO {
 	// order
 	private int order_idx;
 	private int midx;
+	// like
+	private int interest_idx;
 	// 임의로 정한 
 	private int reviewCount;
 	private int quantitySum;
@@ -48,6 +50,12 @@ public class CombineVO {
 	
 	
 	
+	public int getInterest_idx() {
+		return interest_idx;
+	}
+	public void setInterest_idx(int interest_idx) {
+		this.interest_idx = interest_idx;
+	}
 	public String getSaleyn() {
 		return saleyn;
 	}
