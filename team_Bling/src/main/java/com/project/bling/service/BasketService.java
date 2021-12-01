@@ -1,6 +1,10 @@
 package com.project.bling.service;
 
+import java.util.List;
+
+import com.project.bling.vo.CartVO;
 import com.project.bling.vo.LikeVO;
+import com.project.bling.vo.OrderVO;
 
 public interface BasketService {
 	
@@ -13,4 +17,10 @@ public interface BasketService {
 	
 	//관심상품 삭제
 	void likeDelete(LikeVO vo);
+	
+	void cartinsert(OrderVO vo) throws Exception;
+	
+	int cartdouble_check(OrderVO vo) throws Exception;
+	
+	List<CartVO> cartlist(int midx) throws Exception;
 }

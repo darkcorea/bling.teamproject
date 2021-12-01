@@ -428,7 +428,7 @@ section {
 						<c:otherwise>
 							<div class="btn-two">
 								<button type="button" class="btn btn-danger" onclick="memberorder()">바로구매</button>
-								<button type="button" class="btn btn-light">장바구니</button>
+								<button type="button" class="btn btn-light" onclick="cart()">장바구니</button>
 								&ensp;<i class="bi bi-suit-heart" id="heart" onclick="heart(${detail.pidx})"></i>	
 							</div>
 						</c:otherwise>
@@ -436,7 +436,7 @@ section {
 				</div>
 			</div>
 		</div>
-
+		
 		<div>
 			<hr class="explan-bottom">
 		</div>
@@ -561,7 +561,7 @@ section {
 		<div class="detail-guide">
 			<img src="/resources/simage/제품구매가이드.jpg">
 		</div>
-	
+		<div id="form2"></div>
 	</section>
 
 	<footer>
@@ -608,7 +608,78 @@ section {
 </div>
 </body>
 <script type="text/javascript">
-
+	
+	function cart(){
+		var option = $("#select-result").text();
+		var oname1 = $(".option_tb1").text();
+		var oname = oname1.trim();
+		let midx = "${sessionScope.UserVO.midx}";
+		console.log("oname>>>>>>>"+oname);
+		if(option == ""){
+			alert("옵션을 선택하세요");
+		}
+		else{
+		  let option1 = 0;
+	      let quntity = 0;
+	     
+	      let List = new Array;
+	      <c:forEach items="${options}" var="options">
+	      var data = new Object();
+	      option1 = <c:out value="${options.oidx}"/>;
+	      quntity = $("#add_option"+option1).text();
+	     
+	      if (quntity != "" ){
+	    	data.oname = oname;
+	         data.oidx = option1;
+	         data.quntity = quntity;
+	         List.push(data);
+	      }
+	      </c:forEach>
+	     
+	      let jsonData = JSON.stringify(List);
+	      let Json = JSON.parse(jsonData);
+	   		console.log(Json);
+				
+		var str = "";
+		var formData2 = "";
+		for(let i =0 ; i<Json.length ; i++){
+			str += "<form name='fm"+i+"'>";
+		    var oidx = Json[i].oidx;
+		    var quantity = Json[i].quntity;
+		    var oname = Json[i].oname;
+		    
+		    str += "<input type='hidden' name='midx' value='"+midx+"'>";
+		    str += "<input type='hidden' name='oname' value='"+oname+"'>";
+			str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
+			str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
+			str += "</form>";
+			$("#form2").html(str);
+			formData2 = $("form[name=fm"+i+"]").serialize();
+			console.log(formData2);
+			
+			 $.ajax({
+					url:"/Basket/cartinsert.do",
+					type:"POST",
+					data:formData2,
+					async: false,
+					ContentType:"application/json",
+					success:function(data){
+						if(data=="save"){
+							alert("장바구니에 담겼습니다");
+						}else{
+							alert(data+' 상품이 장바구니에 존재합니다');
+						}
+					},
+					error:function(){
+						alert("실행오류");
+					}
+					
+			});
+		}
+	}
+}	
+	
+	
 	/* DOM Tree 생성 완료 후*/
 	$(function(){
 		
@@ -648,7 +719,6 @@ section {
 		    let oidx = opvalue.split(",")[0];
 		    let stock = opvalue.split(",")[1];
 		    
-		    
 			// 아이디가 존재하지 않으면  0을 리턴, 있다면 1부터, 선택한 옵션이 있다면 추가가 안됨
 			let select_oidx = $("#"+"add_option"+oidx).length;
 			
@@ -684,10 +754,10 @@ section {
 			    str += "<td class='font12 option_tb1'>" +opName+ "</td>";
 			    str += "<td class='option_tb2'>";
 			    str += "<input type='button' class='btn btn-light p-0 size27 align-middle' onclick='count(\"minus\"," +oidx+ "," +produt_price+ "," +stock+ ")' value='-'/>";
-				str += "<span id='add_option" +oidx+ "'> 1 </span>"
+				str += "<span id='add_option"+oidx+"'> 1 </span>"
 				str += "<input type='button' class='btn btn-light p-0 size27 align-middle' onclick='count(\"plus\"," +oidx+ "," +produt_price+ "," +stock+ ")' value='+'/>";
 				str += "<td class='option_tb3'><span class='fw-bold' id='change_price" +oidx+ "'>" +addprice+ "</span><span> 원 </span>"
-				str += "<input id='option_delete" +oidx+ "' onclick='option_delete(" +oidx+ "," +produt_price+ ")' type='button' class='btn btn-light p-0 size25 align-middle' value='X'/></td>";
+				str += "<input id='option_delete"+oidx+"' onclick='option_delete(" +oidx+ "," +produt_price+ ")' type='button' class='btn btn-light p-0 size25 align-middle' value='X'/></td>";
 			    str += "<input type='hidden' id ='price_value" +oidx+ "' value='" +price2+ "'>";
 			    str += "<input type='hidden' id ='price_option" +oidx+ "' value='" +produt_price+ "'>";				
 			    str += "</tr>";

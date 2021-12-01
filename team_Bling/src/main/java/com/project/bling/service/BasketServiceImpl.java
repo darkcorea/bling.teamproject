@@ -1,10 +1,14 @@
 package com.project.bling.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.bling.dao.BasketDAO;
+import com.project.bling.vo.CartVO;
 import com.project.bling.vo.LikeVO;
+import com.project.bling.vo.OrderVO;
 
 @Service("BasketService")
 public class BasketServiceImpl implements BasketService {
@@ -28,6 +32,24 @@ public class BasketServiceImpl implements BasketService {
 	@Override
 	public void likeDelete(LikeVO vo) {
 		basketDAO.likeDelete(vo);
+	}
+
+	@Override
+	public void cartinsert(OrderVO vo) throws Exception {
+		basketDAO.cartinsert(vo);
+	}
+
+	@Override
+	public int cartdouble_check(OrderVO vo) throws Exception {
+		
+		return basketDAO.cartdouble_check(vo);
+		
+	}
+
+	@Override
+	public List<CartVO> cartlist(int midx) throws Exception {
+		
+		return basketDAO.cartlist(midx);
 	}
 
 }

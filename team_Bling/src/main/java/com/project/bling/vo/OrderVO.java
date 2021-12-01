@@ -22,7 +22,14 @@ public class OrderVO {
 	private int mileage;
 	private String addr_name;
 	private String name;
-	
+	private int cart_idx;
+	private String oname;
+	public String getOname() {
+		return oname;
+	}
+	public void setOname(String oname) {
+		this.oname = oname;
+	}
 	public String getAddr_name() {
 		return addr_name;
 	}
@@ -142,6 +149,12 @@ public class OrderVO {
 	}
 	public void setDelivery_yn(String delivery_yn) {
 		this.delivery_yn = delivery_yn;
+	}
+	public int getCart_idx() {
+		return cart_idx;
+	}
+	public void setCart_idx(int cart_idx) {
+		this.cart_idx = cart_idx;
 	}
 	
 }
