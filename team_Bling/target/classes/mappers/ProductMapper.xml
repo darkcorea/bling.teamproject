@@ -195,5 +195,68 @@
 		WHERE pidx = #{pidx}
 	</select>
 	
+	<!-- 상품 검색 기능에 쓰이는 매퍼 -->
+	<select id="search_Product" parameterType="PageMaker" resultType="CombineVO">
+	<![CDATA[
+	WITH pi
+	    AS(
+	        SELECT p.pidx,
+	               p.pname,
+	               p.kind,
+	               p.discount,
+	               p.price,
+	               p.saleprice,
+	               i.main
+	        FROM bg_product p
+	        LEFT OUTER JOIN bg_image i
+	        ON p.pidx=i.pidx
+	    ),
+	oro
+	    AS(
+	        SELECT op.pidx,
+	               od.quantity,
+	               r.ridx
+	        FROM bg_Order_detail od
+	        
+	        RIGHT OUTER JOIN bg_option op
+	        ON od.oidx=op.oidx
+	        
+	        LEFT OUTER JOIN bg_review r
+	        ON od.detail_idx=r.detail_idx
+	    )
+	SELECT pi.pidx,
+	       pi.pname,
+	       pi.kind,
+	       pi.discount,
+	       pi.saleprice,
+	       pi.price,
+	       pi.main,
+	       count(oro.ridx) as reviewCount,
+	       sum(oro.quantity) as quantitySum
+	FROM oro
+	RIGHT OUTER JOIN pi
+	ON oro.pidx=pi.pidx
+	where 1=1
+	]]>
+	
+		<if test="scri.keyword != null ">AND pi.pname LIKE '%'||#{scri.keyword}||'%'</if>
+		<if test='scri.kind == "R"'>AND pi.kind='R'</if>
+		<if test='scri.kind == "E"'>AND pi.kind='E'</if>
+		<if test='scri.kind == "N"'>AND pi.kind='N'</if>
+		<if test='scri.kind == "B"'>AND pi.kind='B'</if>
+		<if test="scri.price == 20000 "> <![CDATA[ AND pi.price <= 20000 ]]></if>
+		<if test="scri.price == 50000 "> <![CDATA[ AND pi.price <= 50000 ]]></if>
+		<if test="scri.price == 100000 "> <![CDATA[ AND pi.price <= 100000 ]]></if>
+		<if test="scri.price == 200000 "> <![CDATA[ AND pi.price <= 200000 ]]></if>
+		<if test="scri.price == 300000 "> <![CDATA[ AND pi.price >= 300000 ]]></if>
+		<if test="scri.start_price != 0"> <![CDATA[ AND pi.price >= #{scri.start_price} ]]></if>
+		<if test="scri.last_price != 0"> <![CDATA[ AND pi.price <= #{scri.last_price} ]]></if>
 
+	<![CDATA[
+	GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price
+	ORDER BY pi.pidx ASC nulls last
+	]]>
+	</select>
+	
+	
 </mapper>
