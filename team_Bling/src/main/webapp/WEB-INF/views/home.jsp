@@ -114,15 +114,16 @@
 					<button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="2" aria-label="Slide 3"></button>
 					</div>
 					<div class="carousel-inner">
-					<div class="carousel-item active">
-						<img src="/resources/image/event_1.png" class="d-block w-100" style="height:256px;">
-					</div>
-					<div class="carousel-item">
-						<img src="/resources/image/event_1.png" class="d-block w-100" style="height:256px;">
-					</div>
-					<div class="carousel-item">
-						<img src="/resources/image/event_1.png" class="d-block w-100" style="height:256px;">
-					</div>
+						<c:set var="event" value="${event}" />
+							<div class="carousel-item active" >
+								<img src="/resources/event/${event[0].banner}" class="d-block w-100" style="height:256px;">
+							</div>
+							<div class="carousel-item" >
+								<img src="/resources/event/${event[1].banner}" class="d-block w-100" style="height:256px;">
+							</div>
+							<div class="carousel-item">
+								<img src="/resources/event/${event[2].banner}" class="d-block w-100" style="height:256px;">
+							</div>
 					</div>
 					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="prev">
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span>

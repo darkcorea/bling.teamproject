@@ -1,5 +1,10 @@
 package com.project.bling.service;
 
-public interface EventService {
+import java.util.List;
 
+import com.project.bling.vo.EventVO;
+
+public interface EventService {
+	
+	List<EventVO> eventlist() throws Exception;
 }

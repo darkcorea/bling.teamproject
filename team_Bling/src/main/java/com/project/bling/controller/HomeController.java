@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.service.BasketService;
+import com.project.bling.service.EventService;
 import com.project.bling.service.NoticeService;
 import com.project.bling.service.ProductService;
 
@@ -30,6 +31,8 @@ public class HomeController {
 	NoticeService noticeService;
 	@Autowired
 	BasketService basketService;
+	@Autowired
+	EventService eventService;
 	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -91,6 +94,9 @@ public class HomeController {
 		pm.setScri(sc);
 		pm.setTotalCount(count);
 		model.addAttribute("notice",noticeService.totalList(pm));
+		
+		// 이벤트
+		model.addAttribute("event",eventService.eventlist());
 
 		return "home";
 	}
