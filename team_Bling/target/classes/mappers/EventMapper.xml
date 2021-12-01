@@ -5,5 +5,14 @@
  
 <mapper namespace="com.project.bling.mapper.eventMapper">
 
-	  
+
+	<select id="eventlist" resultType="EventVO">
+		<![CDATA[
+			SELECT * FROM bg_event
+			WHERE sysdate <= event_end
+			ORDER BY rdate desc
+		]]>	
+	</select>
+
+	
 </mapper>
