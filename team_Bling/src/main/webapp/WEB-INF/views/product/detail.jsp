@@ -609,77 +609,6 @@ section {
 </body>
 <script type="text/javascript">
 	
-	function cart(){
-		var option = $("#select-result").text();
-		var oname1 = $(".option_tb1").text();
-		var oname = oname1.trim();
-		let midx = "${sessionScope.UserVO.midx}";
-		console.log("oname>>>>>>>"+oname);
-		if(option == ""){
-			alert("옵션을 선택하세요");
-		}
-		else{
-		  let option1 = 0;
-	      let quntity = 0;
-	     
-	      let List = new Array;
-	      <c:forEach items="${options}" var="options">
-	      var data = new Object();
-	      option1 = <c:out value="${options.oidx}"/>;
-	      quntity = $("#add_option"+option1).text();
-	     
-	      if (quntity != "" ){
-	    	data.oname = oname;
-	         data.oidx = option1;
-	         data.quntity = quntity;
-	         List.push(data);
-	      }
-	      </c:forEach>
-	     
-	      let jsonData = JSON.stringify(List);
-	      let Json = JSON.parse(jsonData);
-	   		console.log(Json);
-				
-		var str = "";
-		var formData2 = "";
-		for(let i =0 ; i<Json.length ; i++){
-			str += "<form name='fm"+i+"'>";
-		    var oidx = Json[i].oidx;
-		    var quantity = Json[i].quntity;
-		    var oname = Json[i].oname;
-		    
-		    str += "<input type='hidden' name='midx' value='"+midx+"'>";
-		    str += "<input type='hidden' name='oname' value='"+oname+"'>";
-			str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
-			str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
-			str += "</form>";
-			$("#form2").html(str);
-			formData2 = $("form[name=fm"+i+"]").serialize();
-			console.log(formData2);
-			
-			 $.ajax({
-					url:"/Basket/cartinsert.do",
-					type:"POST",
-					data:formData2,
-					async: false,
-					ContentType:"application/json",
-					success:function(data){
-						if(data=="save"){
-							alert("장바구니에 담겼습니다");
-						}else{
-							alert(data+' 상품이 장바구니에 존재합니다');
-						}
-					},
-					error:function(){
-						alert("실행오류");
-					}
-					
-			});
-		}
-	}
-}	
-	
-	
 	/* DOM Tree 생성 완료 후*/
 	$(function(){
 		
@@ -1211,25 +1140,63 @@ section {
   	      });
   	 }
 	
-	
-	// 하트버튼 누르면 관심상품에 넣고 다시 누르면 빼고
+    // 페이지 로드 하면 회원로그인 체크해서 관심상품 하트표시 하기
+  	function like(){
+  		let pidx = <c:out value="${detail.pidx}"/>;
+		$.ajax({
+			url:"/Basket/checklike.do",
+			type:"POST",
+			data:{"pidx":pidx},
+			ContentType:"application/json",
+			success:function(data){
+				if(data == ""){
+				}else{
+					$("#heart").attr("class","bi bi-suit-heart-fill");
+				}
+			},error:function(){
+				alert("관심상품존재찾기 에러!")
+			}
+		});
+	}
+  	like();
+  	
+  	//관심상품 추가
 	function heart(pidx){
-		if($("#heart").hasClass('bi bi-suit-heart-fill')==true){
-			$("#heart").attr('class','bi bi-suit-heart');
-			alert("관심상품에서 제외되었습니다.");
-			
-		}else{
-			$("#heart").attr('class','bi bi-suit-heart-fill');
-			alert("관심상품에서 추가되었습니다.");
-		}
 		
+		var uid = '${sessionScope.UserVO.id}';
+		var like = 0;
+		if(uid==""){
+			alert("로그인하셔야합니다.");
+		}else{
+			if($("#heart").hasClass("bi bi-suit-heart-fill")==true){
+			    alert("관심 상품을 취소하셨습니다.");
+				$("#heart").attr("class","bi bi-suit-heart");
+				like = 0;
+			}else{
+				$("#heart").attr("class","bi bi-suit-heart-fill");
+				alert("관심 상품에 담았습니다");
+				like = 1;
+			}
+			$.ajax({
+				url:"/Basket/like.do",
+				type:"POST",
+				data:{"yn":like,"pidx":pidx},
+				ContentType:"application/json",
+				success:function(data){
+				},error:function(){
+					alert("관심상품등록 에러!")
+				}
+			});
+		}
 	}
 	
+	
+	/* 비회원 주문하기 버튼 */
 	function nonorder(){
 		var option = $("#select-result").text();
 		var tot_price = $("#total_price_in").val();
 		var productname = "<c:out value='${detail.pname}'/>";
-		console.log(productname);
+		//console.log(productname);
 		
 										
 		if(option == ""){
@@ -1247,7 +1214,7 @@ section {
 	      option1 = <c:out value="${options.oidx}"/>;
 	     
 	      quntity = $("#add_option"+option1).text();
-	      console.log(quntity);
+	      //console.log(quntity);
 	      if (quntity != "" ){
 	         data.oidx = option1;
 	         data.quntity = quntity;
@@ -1255,7 +1222,7 @@ section {
 	      }
 	      </c:forEach>
 	      let jsonData = JSON.stringify(List);
-	      console.log(jsonData);
+	      //console.log(jsonData);
 		
 																	 
 	      var frm = document.createElement("form");
@@ -1288,7 +1255,7 @@ section {
 	}
 	
 	
-	
+	/* 회원주문하기  */
 	function memberorder(){
 		var option = $("#select-result").text();
 		var tot_price = $("#total_price_in").val();
@@ -1296,7 +1263,7 @@ section {
 		let midx = "${sessionScope.UserVO.midx}";
 		let uname = "${sessionScope.UserVO.uname}";
 		let mileage = "${sessionScope.UserVO.mileage}";
-		console.log("midx>>>>>>>>>>>>>>>"+midx);
+		//console.log("midx>>>>>>>>>>>>>>>"+midx);
 		if(option == ""){
 			alert("옵션을 선택하세요");
 		}
@@ -1311,7 +1278,7 @@ section {
 	      option1 = <c:out value="${options.oidx}"/>;
 	     
 	      quntity = $("#add_option"+option1).text();
-	      console.log(quntity);
+	      //console.log(quntity);
 	      if (quntity != "" ){
 	         data.oidx = option1;
 	         data.quntity = quntity;
@@ -1319,7 +1286,7 @@ section {
 	      }
 	      </c:forEach>
 	      let jsonData = JSON.stringify(List);
-	      console.log(jsonData);
+	      //console.log(jsonData);
 		
 	      var frm = document.createElement("form");
 	      frm.name = 'frm';
@@ -1376,8 +1343,6 @@ section {
 		
 		// 로그인을 했지만 다른 사람의 문의 글을 클릭 했을 경우 
 		}else if ( umidx != midx){
-			console.log(midx);
-			console.log(umidx);
 			alert("다른사람의 글입니다");
 			
 		}else {
@@ -1440,5 +1405,75 @@ section {
 	}
 
 
+	/* 장바구니 담기*/
+	function cart(){
+		var option = $("#select-result").text();
+		var oname1 = $(".option_tb1").text();
+		var oname = oname1.trim();
+		let midx = "${sessionScope.UserVO.midx}";
+		//console.log("oname>>>>>>>"+oname);
+		if(option == ""){
+			alert("옵션을 선택하세요");
+		}
+		else{
+		  let option1 = 0;
+	      let quntity = 0;
+	     
+	      let List = new Array;
+	      <c:forEach items="${options}" var="options">
+	      var data = new Object();
+	      option1 = <c:out value="${options.oidx}"/>;
+	      quntity = $("#add_option"+option1).text();
+	     
+	      if (quntity != "" ){
+	    	data.oname = oname;
+	         data.oidx = option1;
+	         data.quntity = quntity;
+	         List.push(data);
+	      }
+	      </c:forEach>
+	     
+	      let jsonData = JSON.stringify(List);
+	      let Json = JSON.parse(jsonData);
+	   		//console.log(Json);
+				
+		var str = "";
+		var formData2 = "";
+		for(let i =0 ; i<Json.length ; i++){
+			str += "<form name='fm"+i+"'>";
+		    var oidx = Json[i].oidx;
+		    var quantity = Json[i].quntity;
+		    var oname = Json[i].oname;
+		    
+		    str += "<input type='hidden' name='midx' value='"+midx+"'>";
+		    str += "<input type='hidden' name='oname' value='"+oname+"'>";
+			str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
+			str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
+			str += "</form>";
+			$("#form2").html(str);
+			formData2 = $("form[name=fm"+i+"]").serialize();
+			//console.log(formData2);
+			
+			 $.ajax({
+					url:"/Basket/cartinsert.do",
+					type:"POST",
+					data:formData2,
+					async: false,
+					ContentType:"application/json",
+					success:function(data){
+						if(data=="save"){
+							alert("장바구니에 담겼습니다");
+						}else{
+							alert(data+' 상품이 장바구니에 존재합니다');
+						}
+					},
+					error:function(){
+						alert("실행오류");
+					}
+				});
+			}
+		}
+	}
+	
 </script>
 </html>
