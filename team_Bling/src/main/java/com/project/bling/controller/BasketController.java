@@ -1,5 +1,6 @@
 package com.project.bling.controller;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
@@ -8,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.service.BasketService;
+import com.project.bling.vo.CartVO;
 import com.project.bling.vo.LikeVO;
+import com.project.bling.vo.OrderVO;
 import com.project.bling.vo.UserVO;
 
 @RequestMapping(value="/Basket")
@@ -24,6 +28,34 @@ public class BasketController {
 	@RequestMapping(value="/cart.do")
 	public String cart(Locale locale, Model model) {
 		return "basket/cart";
+	}
+	
+	@RequestMapping(value="/cartlist.do")
+	@ResponseBody
+	public List <CartVO> cartlist(int midx) throws Exception {
+		
+		List <CartVO> vo = basketService.cartlist(midx);
+		
+		return vo;
+	}
+	@RequestMapping(value="/cartinsert.do",method = RequestMethod.POST, produces = "application/test;charset=utf8")
+	@ResponseBody
+	public String orderinsert(Model model,OrderVO vo) throws Exception {
+		
+		
+		String abc = null;
+		System.out.println("midx>>>>>>>>"+vo.getMidx());
+		int count = basketService.cartdouble_check(vo);
+		System.out.println("count>>>>>>>>>"+count);
+		String oname = vo.getOname();
+		System.out.println(oname);
+		if(count == 0) {
+			basketService.cartinsert(vo);
+			abc = "save";
+		}else {
+			abc = oname;
+		}
+		return abc;
 	}
 	
 	//관심상품 존재여부확인

@@ -31,7 +31,37 @@
 			WHERE midx=#{midx} AND pidx=#{pidx}
 		]]>
 	</delete>
+	<!-- 장바구니 중복 확인 -->
+	<select id="double_check" parameterType="OrderVO" resultType="int">
+		<![CDATA[
+		 	select count(*) from bg_cart where (midx = #{midx})
+			and (oidx = #{oidx})
+			]]>
+	</select>
 	
+	<!-- 장바구니 등록 -->
+	<insert id="cartinsert" parameterType="OrderVO">
+		
+		<![CDATA[
+			insert into bg_cart(cart_idx, midx, oidx, QUANTITY)
+			values (cart_seq.nextval, #{midx}, #{oidx}, #{quantity})
+		]]>
+	</insert>
+	
+	<!-- 장바구니 리스트 조회 -->
+	<select id="cartlist" parameterType="int" resultType="CartVO">
+		<![CDATA[
+		select d.main, b.pname, c.oname, a.quantity, c.addprice, b.price, b.saleprice, c.pidx
+		from bg_cart a join bg_option c
+					on a.oidx=c.oidx
+					join bg_product b
+                    on c.pidx=b.pidx
+					join bg_image d
+                    on b.pidx=d.pidx
+                    where midx=#{midx}
+		]]>
+	</select>
+		
 	<!-- midx에 따른 관심상품 갯수 -->
 	<select id="cart_count" parameterType="int" resultType="int">
 		SELECT count(*) FROM bg_cart WHERE midx=#{midx}
