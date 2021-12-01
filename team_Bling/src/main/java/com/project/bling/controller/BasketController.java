@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -69,4 +68,12 @@ public class BasketController {
 			basketService.likeInsert(lvo);
 		}
 	}
+	
+	//관심상풍 페이지로 이동
+	@RequestMapping(value="/like1.do")
+	public String like(Locale locale, Model model) { 
+		return "basket/like";
+	}
+	
+	
 }

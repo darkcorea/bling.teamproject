@@ -29,5 +29,8 @@ public interface ProductService {
 	ProductVO detail(int pidx) throws Exception;
 	List<OptionVO> options(int pidx) throws Exception;
 	ImageVO image(int pidx) throws Exception;
+	
+	// 상품검색에 쓰이는 서비스
+	List<CombineVO> search_Product(PageMaker pm) throws Exception;
 
 }

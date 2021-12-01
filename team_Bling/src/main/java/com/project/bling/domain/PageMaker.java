@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 
 public class PageMaker {
 	
+	//필요한 값 : totalCount, scri.getPage,displayPageNum
 	private int totalCount;		//전체 데이터 갯수, 전체 테이터 갯수가 들어가야 모든 출력값이 나옴.
 	private int startPage;		// 네비게이션 바의 시작 번호
 	private int endPage;		// 네이게이션 바의 끝 번호

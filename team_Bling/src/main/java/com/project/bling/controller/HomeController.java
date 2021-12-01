@@ -11,9 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
+import com.project.bling.service.BasketService;
+import com.project.bling.service.EventService;
 import com.project.bling.service.NoticeService;
 import com.project.bling.service.ProductService;
 
@@ -26,6 +29,10 @@ public class HomeController {
 	ProductService productService;
 	@Autowired
 	NoticeService noticeService;
+	@Autowired
+	BasketService basketService;
+	@Autowired
+	EventService eventService;
 	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -88,11 +95,18 @@ public class HomeController {
 		pm.setTotalCount(count);
 		model.addAttribute("notice",noticeService.totalList(pm));
 		
-		
+		// 이벤트
+		model.addAttribute("event",eventService.eventlist());
+
 		return "home";
 	}
 	
-	
+	//회원 로그인시 장바구니 갯수 가져오기
+	@RequestMapping(value="/Header_cart.do")
+	@ResponseBody
+	public int cart_count(Locale locale, Model model, int midx) throws Exception{
+		return basketService.cart_count(midx);
+	}
 	
 	
 	
