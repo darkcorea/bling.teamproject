@@ -450,10 +450,6 @@
 						$('#addr_idx1').val(data.addr_idx);
 						$('#midx1').val(data.midx);
 						
-						if(data.basic_addr == 1){
-							$('input:checkbox[name=checkbasic1]').attr("checked", true);
-						}
-	        	
 					},error:function(){
 						
 					}
