@@ -7,10 +7,17 @@ public class Address_listVO {
 	private int zip_code;
 	private String addr1;
 	private String addr2;
-	private int phone;
+	private String rphone;
 	private String name;
+	private int basic_addr;
 	
 	
+	public int getBasic_addr() {
+		return basic_addr;
+	}
+	public void setBasic_addr(int basic_addr) {
+		this.basic_addr = basic_addr;
+	}
 	public int getAddr_idx() {
 		return addr_idx;
 	}
@@ -47,11 +54,11 @@ public class Address_listVO {
 	public void setAddr2(String addr2) {
 		this.addr2 = addr2;
 	}
-	public int getPhone() {
-		return phone;
+	public String getRphone() {
+		return rphone;
 	}
-	public void setPhone(int phone) {
-		this.phone = phone;
+	public void setRphone(String rphone) {
+		this.rphone = rphone;
 	}
 	public String getName() {
 		return name;

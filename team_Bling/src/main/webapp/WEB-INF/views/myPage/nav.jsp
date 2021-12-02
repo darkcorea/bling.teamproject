@@ -102,8 +102,9 @@
 	<div>
 		<div id="menuHead">회원정보</div>
 		<div id="navSub">
+
 			<div class="pa_top"><a class="navA" href="/MyPage/information.do">나의 정보/수정</a></div>
-			<div class="pa_top"><a class="navA" href="/Addr/main.do">배송지 목록</a></div>
+			<div class="pa_top"><a class="navA" href="/Addr/main.do?page=1">배송지 목록</a></div>
 			<div class="pa_top"><a class="navA" href="">회원탈퇴</a></div>
 		</div>
 	</div>
