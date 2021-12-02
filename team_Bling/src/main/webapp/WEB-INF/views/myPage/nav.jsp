@@ -96,13 +96,13 @@
 		<div id="menuHead">나의 활동</div>
 		<div id="navSub">
 			<div class="pa_top"><a class="navA" href="/Review/myReview.do">나의 리뷰</a></div>
-			<div class="pa_top"><a class="navA" href="">나의 문의 내역</a></div>
+			<div class="pa_top"><a class="navA" href="/Customer/my_qestion.do">나의 문의 내역</a></div>
 		</div>
 	</div>
 	<div>
 		<div id="menuHead">회원정보</div>
 		<div id="navSub">
-			<div class="pa_top"><a class="navA" href="">나의 정보/수정</a></div>
+			<div class="pa_top"><a class="navA" href="/MyPage/information.do">나의 정보/수정</a></div>
 			<div class="pa_top"><a class="navA" href="">배송지 목록</a></div>
 			<div class="pa_top"><a class="navA" href="">회원탈퇴</a></div>
 		</div>
