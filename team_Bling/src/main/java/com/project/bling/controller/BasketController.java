@@ -40,6 +40,22 @@ public class BasketController {
 		
 		return vo;
 	}
+	
+	@RequestMapping(value="/cartupdate.do")
+	@ResponseBody
+	public int cart_update(CartVO vo) throws Exception {
+		
+		return basketService.cart_update(vo);
+	}
+	
+	@RequestMapping(value="/cartdelete.do")
+	@ResponseBody
+	public int cart_delete(int cart_idx) throws Exception{
+		System.out.println("cart_idx>>>>>>>>>>"+cart_idx);
+		basketService.cart_delete(cart_idx);
+		return 1;
+	}
+	
 	@RequestMapping(value="/cartinsert.do",method = RequestMethod.POST, produces = "application/test;charset=utf8")
 	@ResponseBody
 	public String orderinsert(Model model,OrderVO vo) throws Exception {
