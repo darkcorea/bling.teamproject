@@ -1,7 +1,9 @@
 package com.project.bling.controller;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -37,6 +39,10 @@ public class MyPageController {
 	@RequestMapping(value="/main.do")
 	public String main(Locale locale, Model model, CombineVO vo, HttpSession session) throws Exception {
 		
+		// 로그인이 풀렸을 떄 대비해서 넣음
+		if(session.getAttribute("UserVO") == null) {
+			return "redirect:/Login/main.do";
+		}
 		//로그인시 세션에 저장된 회원정보 불러오기
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		//회원정보에서 회원번호만 선택
@@ -205,6 +211,7 @@ public class MyPageController {
 		int detail_idx = (Integer)session.getAttribute("detailIdx");
 		vo.setDetail_idx(detail_idx);
 		
+		
 		//로그인시 세션에 저장된 회원정보 불러오기
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		//회원정보에서 회원번호만 선택
@@ -276,5 +283,55 @@ public class MyPageController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/reviewDetail.do")
+	public Map<String, Object> reviewDetail(int ridx, HttpSession session) throws Exception {
+		System.out.println("마이페이지 컨트롤러-ridx : "+ridx);
+		
+		String prodImg = "/resources/image/";
+		String rvImg = "/resources/review_img/";
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("rvData", myPageService.reviewDetail(ridx));
+		map.put("path", rvImg);
+		map.put("imgPath",prodImg);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/delete.do")
+	public void reviewDelete(int ridx) throws Exception {
+		System.out.println("마이페이지 delete 메소드 실행");
+		System.out.println("마이페이지 컨트롤러-reviewDelete-ridx : "+ridx);
+		
+		CombineVO rvData = myPageService.reviewDetail(ridx);
+		String delRvImg1 = rvData.getImage1();
+		String delRvImg2 = rvData.getImage2();
+		System.out.println("마이페이지 컨트롤러-삭제할 리뷰이미지1-imgName1 : "+delRvImg1);
+		System.out.println("마이페이지 컨트롤러-삭제할 리뷰이미지1-imgName2 : "+delRvImg2);
+		
+		//파일이름를 입력하면 파일을 삭제하는 메소드 -> review_img 폴더
+		String path = uploadPath;
+		
+		
+		if(delRvImg1 != null && delRvImg2 != null) {
+			File delTarget1 = new File(path,delRvImg1);
+			File delTarget2 = new File(path,delRvImg2);
+			// 파일을 삭제합니다.
+			delTarget1.delete(); 
+			delTarget2.delete();
+			System.out.println("파일을 2개 삭제하였습니다.");
+        }else if(delRvImg1 != null && delRvImg2 == null) {
+        	File delTarget1 = new File(path,delRvImg1);
+			// 파일을 삭제합니다.
+			delTarget1.delete(); 
+			System.out.println("파일을 1개 삭제하였습니다.");
+        }else if(delRvImg1 == null && delRvImg2 == null) {
+        	System.out.println("파일이 존재하지 않습니다.");
+        }
+		
+		myPageService.reviewDelete(ridx);
+	}
 	
 }

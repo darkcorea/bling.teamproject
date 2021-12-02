@@ -50,7 +50,17 @@ public class MyPageServiceImpl implements MyPageService {
 		myPageDAO.reviewWrite2(vo);
 		
 	}
-	
+
+	@Override
+	public CombineVO reviewDetail(int ridx) throws Exception {
+		
+		return myPageDAO.reviewDetail(ridx);
+	}
+
+	@Override
+	public void reviewDelete(int ridx) throws Exception {
+		myPageDAO.reviewDelete(ridx);
+	}
 	
 
 	

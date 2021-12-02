@@ -91,6 +91,10 @@ public class ReviewController {
 	@RequestMapping(value="/myReview.do")
 	public String reviewList(Model model, CombineVO vo, HttpSession session) throws Exception {
 		
+		// 로그인이 풀렸을 떄 대비해서 넣음
+		if(session.getAttribute("UserVO") == null) {
+			return "redirect:/Login/main.do";
+		}
 		//session의 midx를 CombineVO에 저장
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		int midx = uv.getMidx();

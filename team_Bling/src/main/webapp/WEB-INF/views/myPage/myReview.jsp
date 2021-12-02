@@ -136,7 +136,7 @@
 				str += "		</c:if>";
 				
 				str += "		<div id='deleteBtn'>";
-				str += "			<button class='btn' id='delBtn'>삭제하기</button>";
+				str += "			<button class='btn' id='delBtn' onclick='delQ(${list.ridx})'>삭제하기</button>";
 				str += "		</div>";
 				str += "	</div>";
 				str += "</c:forEach>";
@@ -153,7 +153,49 @@
 		
 		
 		
+		function delQ(ridx){
+			console.log("dqlQ-ridx : "+ridx);
+			
+			Swal.fire({
+				icon: 'question',
+				text: '작성하신 리뷰를 정말 삭제하시겠습니까?',
+				showCancelButton: true
+			}).then((result) => {
+				  /* Read more about isConfirmed, isDenied below */
+				  if (result.isConfirmed) {
+				    delReview(ridx);
+				  } else if (result.isDenied) {
+			   }
+			});
+		}
 		
+		function delReview(ridx){
+			console.log("delReview-ridx : "+ridx);
+			
+			$.ajax({
+				url: "/MyPage/delete.do",
+				type: "post",
+				data: {"ridx":ridx},
+				ContentType: "json",
+				success:function(){
+					console.log("리뷰삭제 성공");
+					Swal.fire('리뷰가 삭제되었습니다!', '', 'success');
+					Swal.fire({
+						icon: 'success',
+						text: '리뷰가 삭제되었습니다!',
+					}).then((result) => {
+						  /* Read more about isConfirmed, isDenied below */
+						  if (result.isConfirmed) {
+							   window.location.replace("/Review/myReview.do");
+						  } else if (result.isDenied) {
+					   }
+					});
+				},
+				error:function(){
+					console.log("리뷰삭제 에러");
+				}
+			});
+		}
 		
 		
 	</script>
@@ -238,7 +280,6 @@
 			top: 30px;
 		}
 		#reviewDiv{
-			display: block;
 			width: 100%;
 		}
 		#prodImgDiv{
@@ -350,9 +391,6 @@
 		#orderMenu{
 			border-bottom: 2px solid black;
 			height: 40px;
-		}
-		#sectionCol{
-			height: 1000px;
 		}
 		#th3{
 			width: 255px;

@@ -13,6 +13,8 @@
   	<!-- Bootstrap core JavaScript -->
   		<script src="/resources/js/jquery-3.6.0.min.js"></script>
 		<script src="/resources/js/bootstrap.bundle.js"></script>
+	<!-- Bootstrap icon -->	
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	<!-- SweetAlert2(alert,modal창) -->
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	
@@ -56,10 +58,10 @@
 				str += "		</c:if>";
 				
 				str += "		<c:if test='${ro.contents != null}'>";
-				str += "			<td id='td7'><span id='t7'><input id='reviewWrite' data-bs-toggle='modal' data-bs-target='#staticBackdrop2' onclick='ridx(${ro.ridx})' value='리뷰 확인' readonly></span></td>";
+				str += "			<td id='td7'><span id='t7'><input id='reviewWrite2' data-bs-toggle='modal' data-bs-target='#staticBackdrop2' onclick='reviewDetail(${ro.ridx})' value='리뷰 확인' readonly></span></td>";
 				str += "		</c:if>";
 				str += "		<c:if test='${ro.contents == null}'>";
-				str += "			<td id='td7'><span id='t7'><input id='reviewWrite' data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${ro.detail_idx})' value='리뷰 작성' readonly></span></td>";
+				str += "			<td id='td7'><span id='t7'><input id='reviewWrite1' data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${ro.detail_idx})' value='리뷰 작성' readonly></span></td>";
 				str += "		</c:if>";
 				str += "	</tr>";
 				str += "</c:forEach>";
@@ -89,9 +91,76 @@
 		}
 		
 		
-		function ridx(ridx){
+		function reviewDetail(ridx){
+			$.ajax({
+				url: "/MyPage/reviewDetail.do",
+				type: "post",
+				data: "ridx="+ridx,
+				ContentType: "json",
+				success: function(data){
+					console.log("ridx에 해당하는 리뷰내용 가져오기");
+					console.log(data);
+					let prodData = data.rvData;
+					
+					let str1 = "";
+					let str2 = "";
+					let str3 = "";
+					let str4 = "";
+					let oname = prodData.oname.split("+")[0].trim();
+					let str5 = "";
+					let grade = prodData.grade;
+					let star1 = "<i class='bi bi-star'></i>";
+					let star2 = "<i class='bi bi-star-fill'></i>";
+					 
+					
+					
+					str1 += "<img id='prodImg' src='"+data.imgPath+"\/"+prodData.main+"'>";
+					str2 += "<img class='rvImg' src='"+data.path+"\/"+prodData.image1+"'>";
+					str3 += "<img class='rvImg' src='"+data.path+"\/"+prodData.image2+"'>";
+					str4 += "[옵션] "+oname;
+					
+					if(grade == 1){
+						str5 += 	star2+" "+star1+" "+star1+" "+star1+" "+star1;	
+					}
+					else if(grade == 2){
+						str5 += 	star2+" "+star2+" "+star1+" "+star1+" "+star1;	
+					}
+					else if(grade == 3){
+						str5 += 	star2+" "+star2+" "+star2+" "+star1+" "+star1;	
+					}
+					else if(grade == 4){
+						str5 += 	star2+" "+star2+" "+star2+" "+star2+" "+star1;	
+					}
+					else if(grade == 5){
+						str5 += 	star2+" "+star2+" "+star2+" "+star2+" "+star2;	
+					}
+					
+
+					
+					document.querySelector("div[id='prodName']").innerHTML = prodData.pname;
+					document.querySelector("div[id='prodQty']").innerHTML = "[수량] "+prodData.quantity+"개";
+					document.querySelector("textarea[id='textArea2']").innerHTML = prodData.contents;
+					
+					
+					document.querySelector("div[id='prodPic']").innerHTML = str1;
+					if(prodData.image1 != null && prodData.image2 != null){
+						document.querySelector("div[id='rvPic1']").innerHTML = str2;
+						document.querySelector("div[id='rvPic2']").innerHTML = str3;
+					}else if(prodData.image1 != null && prodData.image2 == null){
+						document.querySelector("div[id='rvPic1']").innerHTML = str2;
+					}else if(prodData.image1 == null && prodData.image2 == null){
+						
+					}
+					
+					document.querySelector("div[id='prodOption']").innerHTML = str4;
+					document.querySelector("div[id='starRating']").innerHTML = str5;
+					document.querySelector("button[id='delBtn']").value = ridx;
+				},
+				error: function(){
+					alert("ridx 넘기기 에러");
+				}
+			});
 			
-			return ridx;
 		}
 		
 		
@@ -166,10 +235,10 @@
 			}
 			else if(textArea1 == null){
 				Swal.fire({
-					  icon: 'error',
-					  title: '내용을 입력해주세요!',
-					  text: '최소 10자부터 최대 500자까지 입력 가능합니다.',
-					});
+					icon: 'error',
+					title: '내용을 입력해주세요!',
+					text: '최소 10자부터 최대 500자까지 입력 가능합니다.',
+				});
 				console.log("내용을 입력해주세요.");
 				modalReset();
 			}
@@ -200,7 +269,7 @@
 			let contents = "";
 			
 			if(starRating != null){
-				grade = document.querySelector("input[name='rating']:checked").value;
+				grade = starRating.value;
 				console.log(grade);
 				
 				contents = contentsCheck();
@@ -208,10 +277,10 @@
 			}
 			else if(starRating == null){
 				Swal.fire({
-					  icon: 'error',
-					  title: '별점을 선택해주세요!',
-					  text: '별점은 1점부터 5점까지 선택 가능합니다.',
-					});
+					icon: 'error',
+					title: '별점을 선택해주세요!',
+					text: '별점은 1점부터 5점까지 선택 가능합니다.',
+				});
 				console.log("별점을 선택해주세요.");
 				modalReset();
 			}
@@ -244,6 +313,51 @@
 		
 		function pictureReset(){
 			document.querySelector("form[id='pictureForm']").reset();
+		}
+		
+		
+		function delQ(){
+			let ridx = document.querySelector("button[id='delBtn']").value;
+			
+			Swal.fire({
+				icon: 'question',
+				text: '작성하신 리뷰를 정말 삭제하시겠습니까?',
+				showCancelButton: true
+			}).then((result) => {
+				  /* Read more about isConfirmed, isDenied below */
+				  if (result.isConfirmed) {
+				    delReview(ridx);
+				  } else if (result.isDenied) {
+			   }
+			});
+		}
+		
+		function delReview(ridx){
+			console.log("delReview-ridx : "+ridx);
+			
+			$.ajax({
+				url: "/MyPage/delete.do",
+				type: "post",
+				data: {"ridx":ridx},
+				ContentType: "json",
+				success:function(){
+					console.log("리뷰삭제 성공");
+					Swal.fire('리뷰가 삭제되었습니다!', '', 'success');
+					Swal.fire({
+						icon: 'success',
+						text: '리뷰가 삭제되었습니다!',
+					}).then((result) => {
+						  /* Read more about isConfirmed, isDenied below */
+						  if (result.isConfirmed) {
+							   window.location.replace("/MyPage/main.do");
+						  } else if (result.isDenied) {
+					   }
+					});
+				},
+				error:function(){
+					console.log("리뷰삭제 에러");
+				}
+			});
 		}
 		
 		
@@ -296,6 +410,11 @@
 		.modal {
 	        text-align: center;
 		}
+		/* 모달창 배경색 */
+		.modal-backdrop {
+			background-color: #000000 !important;
+			opacity: 0.3 !important;
+		}
 		.modal-dialog {
 		        display: inline-block;
 		        text-align: left;
@@ -315,7 +434,7 @@
 			font-weight: bold;
 			font-size: 20px;
 		}
-		#textArea{
+		#textArea1,#textArea2{
 			width: 465px;
 			height: 200px;
 			resize: none;
@@ -346,6 +465,19 @@
 			background-color: #ffffff;
 			border: 2px solid #CB7878;
 		}
+		#delBtn{
+			width: 80px;
+			color: #ffffff;
+			background-color: #CB7878;
+			border: 2px solid #CB7878;
+			position: relative;
+			right: 150px;
+		}
+		#delBtn:hover{
+			color: #CB7878;
+			background-color: #ffffff;
+			border: 2px solid #CB7878;
+		}
 		#uploadDiv{
 			width: 465px;
 			height: 40px;
@@ -366,6 +498,62 @@
 			margin: 0px 10px 0px 0px;
 			font-size: 23px;
 		}
+		/* modal 2 */
+		#rvPicDiv{
+			width: 465px;
+			height: 100px;
+		}
+		#rvPic1,#rvPic2{
+			width: 100px;
+			height: 100px;
+			display: inline-block;
+		}
+		img{
+			vertical-align: baseline !important;
+		}
+		.rvImg{
+			width: 100%;
+			height: 100%;
+		}
+		#prodData{
+			width: 465px;
+			height: 80px;
+			display: inline-block;
+		}
+		#prodPic{
+			width: 100px;
+			height: 100px;
+			display: inline-block;
+		}
+		#prodImg{
+			width: 100%;
+			height: 100%;
+		}
+		#prodDetail{
+			width: 170px;
+			height: 100px;
+			display: inline-block;
+		}
+		#prodName{
+			font-weight: bold;
+		}
+		#prodOption{
+			color: #CB7878;
+		}
+		#prodQty{
+			color: #CB7878;
+		}
+		#starRating{
+			display: inline-block;
+		}
+		.bi-star{
+			font-size: 20px;
+		}
+		.bi-star-fill{
+			color: #FF3A00;
+			font-size: 20px;
+		}
+		/* modal 2 */
 	/* modal */
 	
 	/* modal - star rating */
@@ -506,9 +694,6 @@
 			border-bottom: 2px solid black;
 			height: 40px;
 		}
-		#sectionCol{
-			height: 1000px;
-		}
 		#th3{
 			width: 255px;
 			text-align: center;
@@ -526,7 +711,14 @@
 		#review{
 			cursor: pointer;
 		}
-		#reviewWrite{
+		#reviewWrite1{
+			color: #CB7878;
+			background-color: #ffffff;
+			border: none;
+			cursor: pointer;
+			width: 70px;
+		}
+		#reviewWrite2{
 			color: #000000;
 			background-color: #ffffff;
 			border: none;
@@ -570,7 +762,7 @@
 								<label for="1">☆</label>
 						</div>
 						<br>
-						<textarea id="textArea" placeholder="상품에 대한 후기를 남겨 주세요.&#13;&#10;사진은 2장까지 첨부 가능합니다."></textarea>
+						<textarea id="textArea1" placeholder="상품에 대한 후기를 남겨 주세요.&#13;&#10;사진은 2장까지 첨부 가능합니다."></textarea>
 						<br>
 					</form>
 					<form id="pictureForm">
@@ -597,7 +789,7 @@
 	</div>
 	
 	<!-- 리뷰 확인 Modal -->
-	<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal fade" id="staticBackdrop2" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 			
@@ -607,41 +799,38 @@
 				</div>
 				
 				<div class="modal-body">
-					<form id="modalForm">				
-						<!-- star_rating -->
-						<div class="rating">
-							<input type="radio" name="rating" value="5" id="5" class="star">
-								<label for="5">☆</label> 
-							<input type="radio" name="rating" value="4" id="4" class="star">
-								<label for="4">☆</label> 
-							<input type="radio" name="rating" value="3" id="3" class="star">
-								<label for="3">☆</label> 
-							<input type="radio" name="rating" value="2" id="2" class="star">
-								<label for="2">☆</label> 
-							<input type="radio" name="rating" value="1" id="1" class="star">
-								<label for="1">☆</label>
+					<form id="modalForm">
+						<div id="prodData">
+							<div id="prodPic">
+								
+							</div>
+							<div id="prodDetail">
+								<div id="prodName"></div>
+								<div id="prodOption"></div>
+								<div id="prodQty"></div>
+							</div>
+									
+							<!-- star_rating -->
+							<div id="starRating">
+								
+							</div>
 						</div>
-						<br>
-						<textarea id="textArea" placeholder="상품에 대한 후기를 남겨 주세요.&#13;&#10;사진은 2장까지 첨부 가능합니다."></textarea>
+						<br><br>
+						<textarea id="textArea2" readonly></textarea>
 						<br>
 					</form>
 					<form id="pictureForm">
-						<div id="uploadDiv">
-						<!-- 파일을 업로드할 영역 -->
-							<input type="file" id="uploadBtn" name="uploadBtn" multiple accept=".jpg, .jpeg, .png" onchange="uploadFile()">
-							<label for="uploadBtn" class="fileBtn btn">
-								<span id="fileBtnText">
-									<i class="bi bi-camera"></i>사진 첨부하기
-								</span>
-							</label>
-							<span id="fileName"></span>
+						<div id="rvPicDiv">
+						<!-- 리뷰사진 영역 -->
+							<div id="rvPic1"></div>
+							<div id="rvPic2"></div>
 						</div>
 					</form>
 				</div>
 				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal" onclick="">닫기</button>
-					<button type="button" class="btn btn-primary" id="saveBtn" data-bs-dismiss="modal" onclick="">삭제</button>
+					<button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary" id="delBtn" data-bs-dismiss="modal" onclick="delQ()">삭제</button>
 				</div>
 				
 			</div>

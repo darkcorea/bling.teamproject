@@ -42,11 +42,12 @@ public class CombineVO {
 	private int reviewCount;
 	private int quantitySum;
 	private int quantity;
+	private String rdate1;
+	private String rdate2;
+	private String path;
 	// 임의(MyPageMapper)
 	private int orderCompCnt;
 	private int deliStatCnt;
-	private String rdate1;
-	private String rdate2;
 	
 	
 	
@@ -253,6 +254,12 @@ public class CombineVO {
 	}
 	public void setRdate2(String rdate2) {
 		this.rdate2 = rdate2;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
 	}
 	
 	
