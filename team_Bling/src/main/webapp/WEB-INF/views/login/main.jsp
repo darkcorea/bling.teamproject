@@ -169,8 +169,11 @@
 				</div>
 			</div>
 		</div>
-		
 	</section>
+	
+	<footer>
+		<%@ include file="/WEB-INF/views/footer.jsp" %>
+	</footer>
 		
 </body>
 </html>
