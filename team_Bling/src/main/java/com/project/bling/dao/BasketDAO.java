@@ -53,6 +53,10 @@ public class BasketDAO {
 	public void cart_delete(int cart_idx) throws Exception{
 		sqlSession.update(bm+"cart_delete",cart_idx);
 	}
+	public void cartcheck_del(List<Integer> list) throws Exception {
+		sqlSession.delete(bm+"cartcheck_del",list);
+	}
+	
 	
 	//midx에 따른 관심상품 갯수
 	public int cart_count(int midx) throws Exception {

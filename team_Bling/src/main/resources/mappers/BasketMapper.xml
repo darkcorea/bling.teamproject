@@ -78,7 +78,13 @@
 	<delete id="cart_delete" parameterType="int">
 		DELETE FROM bg_cart WHERE cart_idx = #{cart_idx}
 	</delete>
-	
+	<!-- 장바구니 여러개 삭제 -->
+	<delete id="cartcheck_del" parameterType="list">
+		DELETE FROM bg_cart WHERE cart_idx IN (
+		<foreach collection="list" item="item" separator=",">
+			#{item}
+		</foreach> )
+	</delete>
 	<!-- 관심상품 삭제 interest_idx -->
 	<delete id="likeDel" parameterType="LikeVO">
 		DELETE FROM bg_like WHERE interest_idx=#{interest_idx}

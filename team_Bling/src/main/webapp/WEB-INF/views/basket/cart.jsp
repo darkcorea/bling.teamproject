@@ -311,12 +311,26 @@
 	
 	function check_del(){
 	      let len = $(".cart_idx:checked").length;
-	      
+	      var list = [];
 	      if(len > 1){
 	         $(".cart_idx:checked").each(function(e){      
 	              let value =  $(this).val();
-	              
+	              list.push(value);
 	          });
+	         
+	         $.ajax({
+					url:"/Basket/check_delete.do",
+					data:{"list":list},
+					dataType:"json",
+					type:"POST",
+					success:function(data){
+						location.reload();
+					},
+					erorr:function(){
+						alert("삭제 에러입니다");
+					}
+				});
+	         
 	         
 	      }else{
 	          let cart_idx = $(".cart_idx:checked").val();
