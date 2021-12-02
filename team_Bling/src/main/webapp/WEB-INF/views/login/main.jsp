@@ -154,7 +154,7 @@
 						</div>
 						<div id="btnDiv2">
 							<input class="btn btn-primary" id="nonMemberBuy" type="button" 
-							onclick="location.href='/Order/nonorder.do'" value="비회원으로 구매하기">
+							onclick="location.href='/Order/nonorder.do'" value="비회원으로 구매하기" style="display:none;">
 						</div>
 						<div id="searchDiv">
 							<span id="searchSpan"><a href="/Login/idFind.do" id="searchA">아이디 찾기</a></span>
@@ -169,8 +169,11 @@
 				</div>
 			</div>
 		</div>
-		
 	</section>
+	
+	<footer>
+		<%@ include file="/WEB-INF/views/footer.jsp" %>
+	</footer>
 		
 </body>
 </html>

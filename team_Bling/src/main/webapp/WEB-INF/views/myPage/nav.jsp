@@ -20,10 +20,6 @@
 	
 	
 	<style>
-		section{
-			max-width:1008px;
-			margin:  0px auto;
-		}
 	/* nav 메뉴 css */
 		#basicInfo{
 			background-color: #CB7878;
@@ -91,7 +87,7 @@
 	<div id="navMenu">
 		<div id="menuHead">쇼핑정보</div>
 		<div id="navSub">
-			<div class="pa_top"><a class="navA" href="">주문확인/배송조회</a></div>
+			<div class="pa_top"><a class="navA" href="/Delivery/main.do">주문확인/배송조회</a></div>
 			<div class="pa_top"><a class="navA" href="/Basket/like1.do?kind=A">관심상품</a></div>
 			<div class="pa_top"><a class="navA" href="/Basket/cart.do">장바구니</a></div>
 		</div>
@@ -100,13 +96,14 @@
 		<div id="menuHead">나의 활동</div>
 		<div id="navSub">
 			<div class="pa_top"><a class="navA" href="/Review/myReview.do">나의 리뷰</a></div>
-			<div class="pa_top"><a class="navA" href="">나의 문의 내역</a></div>
+			<div class="pa_top"><a class="navA" href="/Customer/my_qestion.do">나의 문의 내역</a></div>
 		</div>
 	</div>
 	<div>
 		<div id="menuHead">회원정보</div>
 		<div id="navSub">
-			<div class="pa_top"><a class="navA" href="">나의 정보/수정</a></div>
+
+			<div class="pa_top"><a class="navA" href="/MyPage/information.do">나의 정보/수정</a></div>
 			<div class="pa_top"><a class="navA" href="/Addr/main.do?page=1">배송지 목록</a></div>
 			<div class="pa_top"><a class="navA" href="">회원탈퇴</a></div>
 		</div>

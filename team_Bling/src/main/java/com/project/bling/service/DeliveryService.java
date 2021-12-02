@@ -1,5 +1,5 @@
 package com.project.bling.service;
 
-public interface BuyService {
+public interface DeliveryService {
 
 }

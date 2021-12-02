@@ -13,302 +13,8 @@
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script src="/js/bootstrap.bundle.js"></script>
 <link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-<style>
-/* 메인 페이지 설정   */ 
-section {
-	width: 1008px;
-	/* height:20000px; */
-	/* border:1px solid black; */
-	margin: 5px auto;
-}
-
-/* 폰트사이즈  */
-.font12 {
-	font-size: 12px;
-}
-
-/* 아이콘 크기 등 설정 */
-.size27 {
-	height: 27px;
-	width: 27px;
-}
-
-.size25 {
-	height: 25px;
-	width: 25px;
-}
-
-/* 상품 이미지, 옵션 , 가격, 결제, 장바구니 */
-.explan {
-	height: 680px;
-}
-
-/* 보여지는 이미지 틀*/
-.explan .image1 {
-	width: 490px;
-	height: 630px;
-	margin: 20px 6px;
-	float: left;
-}
-
-/* 커다란 이미지 */
-.explan .image1 .image2 {
-	width: 490px;
-	height: 490px;
-	margin-bottom: 15px;
-}
-
-/* 작은 이미지들 1~4 */
-.explan .image1 .image3 {
-	width: 100px;
-	height: 100px;
-	float: left;
-	margin: 5px;
-}
-
-/* 이미지 옆에 이름, 옵션, 가격, 결제, 장바구니 버튼등의 큰들*/
-.explan .text1 {
-	width: 490px;
-	height: 630px;
-	margin: 20px 3px;
-	float: left;
-}
-
-/* 이름, 옵션 나오는 곳*/
-.explan .text1 .text2 {
-	width: 468px;
-	height: 480px;
-	float: right;
-}
-
-/* 상품명 위에 있는 커다란 선 */
-.explan .myhr {
-	background-color: black;
-	height: 3px;
-	margin: 0px 0px 10px 0px;
-}
-
-/* 가격, 옵션 텍스트 */
-.select .select-text, .explan .text2 .price1 {
-	float: left;
-}
-
-/* 옵션 드롭 셀릭트 박스  */
-.select .form-select {
-	width: 70%;
-}
-
-/* 옵션을 선택하면 표시되는 곳 */
-.explan .text1 .text2 .select-result {
-	width: 100%;
-	height: 270px;
-	overflow: auto;
-}
-
-/* 옵션에 선택시 나오는 박스 크기 */
-.option_box {
-	width: 100%;
-	height: 45px;
-	padding-top: 3px;
-	border-bottom: 1px solid #BEB5B5;
-}
-
-/* 옵션 선택 박스 안에 있는 테이블 크기*/
-.option_tb1 {
-	width: 220px;
-}
-
-/* 옵션의 숫자를 조절 하는 단추 컨트롤러 */
-.option_tb2 {
-	width: 100px;
-	text-align: light;
-}
-
-/* 선택한 옵션들에 대한 종합 가격 */
-.explan .text1 .text2 .select-price {
-	text-align: right;
-	height: 30px;
-	margin: 5px 70px 10px 0px;
-}
-
-/* 버튼들 위치 가운데 */
-.explan .text2 .btn-two {
-	text-align: center;
-}
-
-/* 바로구매 버튼 */
-.explan .text2 .btn-two .btn-danger {
-	background-color: #CB7878;
-	border: 1px solid #CB7878;
-	width: 160px;
-}
-
-/* 장바구니 버튼 */
-.explan .text2 .btn-two .btn-light {
-	width: 160px;
-}
-
-/* 하트 아이콘  */
-.bi-suit-heart, .bi-suit-heart-fill {
-	font-size: 25px;
-	color: red;
-}
-
-/* explan밑에 있는 hr줄의 마진  */
-.explan-bottom {
-	margin-bottom: 50px;
-}
-
-/* 상세정보 후기 상품문의 구매가이드  바*/
-.detail-nav {
-	text-align: center;
-	font-size: 20px;
-	margin: 20px auto;
-	padding: 20px;
-	border-bottom: 1px solid #BEB5B5;
-}
-
-/* 상세정보, 후기, 상품문의, 구매가이드  */
-.detail-nav-1 {
-	margin: 20px;
-}
-
-/* 예비 클래스 3개 */
-.detail-nav-2, .detail-nav-3, .detail-nav-4 {
-	
-}
-
-/* 상세정보, 후기, 상품문의, 구매가이드 각각 아래 발간색 줄 */
-#move_info, #move_review, #move_question, #move_giude {
-	border: #CB7878 solid;
-	border-width: 0 0 10px 0;
-}
-
-/* 상세정보 이미지 가운데로 */
-.detail-image, .detail-guide {
-	text-align: center;
-}
-
-/* 평점 평균, 개별 평점, 사진10개 */
-.detail-review-view {
-	width: 990px;
-	height: 250px;
-	margin: 5px auto;
-	/*	border:1px solid black; */
-	padding: 20px;
-}
-
-/* 평점 평균 나오는곳 과 전체리뷰 수*/
-.detail-review-view .review-average {
-	width: 125px;
-	height: 125px;
-	float: left;
-	text-align: center;
-	margin: 50px 50px;
-}
-
-/* 평점평균 나오는 곳 */
-.detail-review-view .review-average .review-average1 {
-	width: 125px;
-	height: 100px;
-	background-color: black;
-	color: white;
-	font-size: 65px;
-}
-
-/* 개별 평점 */
-.detail-review-view .review-score {
-	float: left;
-	width: 200px;
-	height: 150px;
-	margin-top: 37px;
-}
-
-/* 평점 안에 들어가 있는 prograce 바 */
-.review-score .file {
-	height: 16px;
-	vertical-align: middle;
-}
-
-/* 이미지 10개 틀 */
-.detail-review-view .review-image {
-	width: 500px;
-	height: 200px;
-	float: right;
-	margin: 0px;
-}
-
-/* 후기 개별 이미지들, 리뷰 이미지 2개 */
-.review-image1 {
-	width: 90px;
-	height: 90px;
-	float: left;
-	margin: 3px;
-}
-
-/* 리뷰 리스트 테이블 */
-#review_table {
-	width: 986;
-	/* height:440px; */
-	margin: 5px auto;
-	/*	border:1px solid black; */
-}
-
-/* 각 리뷰들의 높이 */
-.review_tr {
-	height: 120px;
-	font-size: 15px;
-}
-
-/* 리뷰 안에 들어가는 별의 크기와 색깔 */
-.bi-star-fill {
-	font-size: 10px;
-	color: #CB7878;
-}
-
-/*  페이징 번호들을 붙이기 위해서 */
-.page-item {
-	padding: 0px;
-}
-
-/* 상품문의  크기와 높이*/
-#detail-Inquiry {
-	width: 986;
-	margin: 5px auto;
-}
-
-/* 상품문의 하기 버튼 */
-#btn-question{
-	background-color: #CB7878;
-	border: 1px solid #CB7878;
-	width: 130px;
-	float: right;
-}
-
-/* 모달 버튼 */
-#modal_button, #modal_button2 {
-	background-color: #CB7878;
-}
-
-/* 클래스 붙이면 백그라운드 색상이 블링 색으로 */
-.bling_color {
-	background-color: #CB7878;
-}
-
-/* 클래스 추가하면 텍스트 센터*/
-.text_align {
-	text-align: center;
-}
-
-/* 클래스 추가하면 가져다 대면 손모양 나옴*/
-.pointer {
-	cursor: pointer;
-}
-</style>
-
-
+<link rel="stylesheet"	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="/css/pro_detail.css">
 </head>
 <body>
 
@@ -608,77 +314,6 @@ section {
 </div>
 </body>
 <script type="text/javascript">
-	
-	function cart(){
-		var option = $("#select-result").text();
-		var oname1 = $(".option_tb1").text();
-		var oname = oname1.trim();
-		let midx = "${sessionScope.UserVO.midx}";
-		console.log("oname>>>>>>>"+oname);
-		if(option == ""){
-			alert("옵션을 선택하세요");
-		}
-		else{
-		  let option1 = 0;
-	      let quntity = 0;
-	     
-	      let List = new Array;
-	      <c:forEach items="${options}" var="options">
-	      var data = new Object();
-	      option1 = <c:out value="${options.oidx}"/>;
-	      quntity = $("#add_option"+option1).text();
-	     
-	      if (quntity != "" ){
-	    	data.oname = oname;
-	         data.oidx = option1;
-	         data.quntity = quntity;
-	         List.push(data);
-	      }
-	      </c:forEach>
-	     
-	      let jsonData = JSON.stringify(List);
-	      let Json = JSON.parse(jsonData);
-	   		console.log(Json);
-				
-		var str = "";
-		var formData2 = "";
-		for(let i =0 ; i<Json.length ; i++){
-			str += "<form name='fm"+i+"'>";
-		    var oidx = Json[i].oidx;
-		    var quantity = Json[i].quntity;
-		    var oname = Json[i].oname;
-		    
-		    str += "<input type='hidden' name='midx' value='"+midx+"'>";
-		    str += "<input type='hidden' name='oname' value='"+oname+"'>";
-			str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
-			str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
-			str += "</form>";
-			$("#form2").html(str);
-			formData2 = $("form[name=fm"+i+"]").serialize();
-			console.log(formData2);
-			
-			 $.ajax({
-					url:"/Basket/cartinsert.do",
-					type:"POST",
-					data:formData2,
-					async: false,
-					ContentType:"application/json",
-					success:function(data){
-						if(data=="save"){
-							alert("장바구니에 담겼습니다");
-						}else{
-							alert(data+' 상품이 장바구니에 존재합니다');
-						}
-					},
-					error:function(){
-						alert("실행오류");
-					}
-					
-			});
-		}
-	}
-}	
-	
 	
 	/* DOM Tree 생성 완료 후*/
 	$(function(){
@@ -1211,25 +846,63 @@ section {
   	      });
   	 }
 	
-	
-	// 하트버튼 누르면 관심상품에 넣고 다시 누르면 빼고
+    // 페이지 로드 하면 회원로그인 체크해서 관심상품 하트표시 하기
+  	function like(){
+  		let pidx = <c:out value="${detail.pidx}"/>;
+		$.ajax({
+			url:"/Basket/checklike.do",
+			type:"POST",
+			data:{"pidx":pidx},
+			ContentType:"application/json",
+			success:function(data){
+				if(data == ""){
+				}else{
+					$("#heart").attr("class","bi bi-suit-heart-fill");
+				}
+			},error:function(){
+				alert("관심상품존재찾기 에러!")
+			}
+		});
+	}
+  	like();
+  	
+  	//관심상품 추가
 	function heart(pidx){
-		if($("#heart").hasClass('bi bi-suit-heart-fill')==true){
-			$("#heart").attr('class','bi bi-suit-heart');
-			alert("관심상품에서 제외되었습니다.");
-			
-		}else{
-			$("#heart").attr('class','bi bi-suit-heart-fill');
-			alert("관심상품에서 추가되었습니다.");
-		}
 		
+		var uid = '${sessionScope.UserVO.id}';
+		var like = 0;
+		if(uid==""){
+			alert("로그인하셔야합니다.");
+		}else{
+			if($("#heart").hasClass("bi bi-suit-heart-fill")==true){
+			    alert("관심 상품을 취소하셨습니다.");
+				$("#heart").attr("class","bi bi-suit-heart");
+				like = 0;
+			}else{
+				$("#heart").attr("class","bi bi-suit-heart-fill");
+				alert("관심 상품에 담았습니다");
+				like = 1;
+			}
+			$.ajax({
+				url:"/Basket/like.do",
+				type:"POST",
+				data:{"yn":like,"pidx":pidx},
+				ContentType:"application/json",
+				success:function(data){
+				},error:function(){
+					alert("관심상품등록 에러!")
+				}
+			});
+		}
 	}
 	
+	
+	/* 비회원 주문하기 버튼 */
 	function nonorder(){
 		var option = $("#select-result").text();
 		var tot_price = $("#total_price_in").val();
 		var productname = "<c:out value='${detail.pname}'/>";
-		console.log(productname);
+		//console.log(productname);
 		
 										
 		if(option == ""){
@@ -1247,7 +920,7 @@ section {
 	      option1 = <c:out value="${options.oidx}"/>;
 	     
 	      quntity = $("#add_option"+option1).text();
-	      console.log(quntity);
+	      //console.log(quntity);
 	      if (quntity != "" ){
 	         data.oidx = option1;
 	         data.quntity = quntity;
@@ -1255,7 +928,7 @@ section {
 	      }
 	      </c:forEach>
 	      let jsonData = JSON.stringify(List);
-	      console.log(jsonData);
+	      //console.log(jsonData);
 		
 																	 
 	      var frm = document.createElement("form");
@@ -1288,7 +961,7 @@ section {
 	}
 	
 	
-	
+	/* 회원주문하기  */
 	function memberorder(){
 		var option = $("#select-result").text();
 		var tot_price = $("#total_price_in").val();
@@ -1296,7 +969,7 @@ section {
 		let midx = "${sessionScope.UserVO.midx}";
 		let uname = "${sessionScope.UserVO.uname}";
 		let mileage = "${sessionScope.UserVO.mileage}";
-		console.log("midx>>>>>>>>>>>>>>>"+midx);
+		//console.log("midx>>>>>>>>>>>>>>>"+midx);
 		if(option == ""){
 			alert("옵션을 선택하세요");
 		}
@@ -1311,7 +984,7 @@ section {
 	      option1 = <c:out value="${options.oidx}"/>;
 	     
 	      quntity = $("#add_option"+option1).text();
-	      console.log(quntity);
+	      //console.log(quntity);
 	      if (quntity != "" ){
 	         data.oidx = option1;
 	         data.quntity = quntity;
@@ -1319,7 +992,7 @@ section {
 	      }
 	      </c:forEach>
 	      let jsonData = JSON.stringify(List);
-	      console.log(jsonData);
+	      //console.log(jsonData);
 		
 	      var frm = document.createElement("form");
 	      frm.name = 'frm';
@@ -1376,8 +1049,6 @@ section {
 		
 		// 로그인을 했지만 다른 사람의 문의 글을 클릭 했을 경우 
 		}else if ( umidx != midx){
-			console.log(midx);
-			console.log(umidx);
 			alert("다른사람의 글입니다");
 			
 		}else {
@@ -1440,5 +1111,75 @@ section {
 	}
 
 
+	/* 장바구니 담기*/
+	function cart(){
+		var option = $("#select-result").text();
+		var oname1 = $(".option_tb1").text();
+		var oname = oname1.trim();
+		let midx = "${sessionScope.UserVO.midx}";
+		//console.log("oname>>>>>>>"+oname);
+		if(option == ""){
+			alert("옵션을 선택하세요");
+		}
+		else{
+		  let option1 = 0;
+	      let quntity = 0;
+	     
+	      let List = new Array;
+	      <c:forEach items="${options}" var="options">
+	      var data = new Object();
+	      option1 = <c:out value="${options.oidx}"/>;
+	      quntity = $("#add_option"+option1).text();
+	     
+	      if (quntity != "" ){
+	    	data.oname = oname;
+	         data.oidx = option1;
+	         data.quntity = quntity;
+	         List.push(data);
+	      }
+	      </c:forEach>
+	     
+	      let jsonData = JSON.stringify(List);
+	      let Json = JSON.parse(jsonData);
+	   		//console.log(Json);
+				
+		var str = "";
+		var formData2 = "";
+		for(let i =0 ; i<Json.length ; i++){
+			str += "<form name='fm"+i+"'>";
+		    var oidx = Json[i].oidx;
+		    var quantity = Json[i].quntity;
+		    var oname = Json[i].oname;
+		    
+		    str += "<input type='hidden' name='midx' value='"+midx+"'>";
+		    str += "<input type='hidden' name='oname' value='"+oname+"'>";
+			str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
+			str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
+			str += "</form>";
+			$("#form2").html(str);
+			formData2 = $("form[name=fm"+i+"]").serialize();
+			//console.log(formData2);
+			
+			 $.ajax({
+					url:"/Basket/cartinsert.do",
+					type:"POST",
+					data:formData2,
+					async: false,
+					ContentType:"application/json",
+					success:function(data){
+						if(data=="save"){
+							alert("장바구니에 담겼습니다");
+						}else{
+							alert(data+' 상품이 장바구니에 존재합니다');
+						}
+					},
+					error:function(){
+						alert("실행오류");
+					}
+				});
+			}
+		}
+	}
+	
 </script>
 </html>
