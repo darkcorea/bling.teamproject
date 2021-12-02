@@ -47,6 +47,13 @@ public class BasketDAO {
 		return sqlSession.selectList(bm+"cartlist", midx);
 	}
 	
+	public int cart_update(CartVO vo) throws Exception{
+		return sqlSession.update(bm+"cart_update",vo);
+	}
+	public void cart_delete(int cart_idx) throws Exception{
+		sqlSession.update(bm+"cart_delete",cart_idx);
+	}
+	
 	//midx에 따른 관심상품 갯수
 	public int cart_count(int midx) throws Exception {
 		return sqlSession.selectOne(bm+"cart_count", midx);

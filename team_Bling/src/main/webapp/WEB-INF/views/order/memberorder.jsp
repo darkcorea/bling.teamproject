@@ -302,8 +302,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-    	<p>골드 : 결제금액의 2% 적립</p>
-    	<p>실버 : 결제금액의 1% 적립</p>
+    	<p>골   드 : 결제금액의 2% 적립</p>
+    	<p>실   버 : 결제금액의 1% 적립</p>
+    	<p>브론즈 : 적립 없음</p>
       </div>
       <div class="modal-footer mx-auto">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="header1">확인</button>

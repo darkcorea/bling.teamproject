@@ -52,6 +52,18 @@ public class BasketServiceImpl implements BasketService {
 		
 		return basketDAO.cartlist(midx);
 	}
+
+	@Override
+	public int cart_update(CartVO vo) throws Exception {
+		
+		return basketDAO.cart_update(vo);
+	}
+
+	@Override
+	public void cart_delete(int cart_idx) throws Exception {
+		
+		basketDAO.cart_delete(cart_idx);
+	}
 	
 	//midx에 따른 관심상품 갯수
 	@Override
