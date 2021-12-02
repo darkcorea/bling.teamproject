@@ -76,6 +76,13 @@ public class BasketController {
 		return abc;
 	}
 	
+	@RequestMapping(value="/check_delete.do",  method = RequestMethod.POST)
+	@ResponseBody
+	public int cartcheck_del(	@RequestParam("list[]") List<Integer> list) throws Exception { 
+		basketService.cartcheck_del(list);
+		return 1;
+	}
+	
 	//관심상품 존재여부확인
 	@RequestMapping(value="/checklike.do")
 	@ResponseBody

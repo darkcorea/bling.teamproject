@@ -87,6 +87,12 @@ public class BasketServiceImpl implements BasketService {
 	public void like_del_ch(List<Integer> list) throws Exception {
 		basketDAO.like_del_ch(list);
 	}
+
+	@Override
+	public void cartcheck_del(List<Integer> list) throws Exception {
+		basketDAO.cartcheck_del(list);
+		
+	}
 	
 	
 }
