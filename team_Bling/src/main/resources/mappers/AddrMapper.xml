@@ -4,6 +4,83 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.project.bling.mapper.addrMapper">
-
-	  
+	
+	<!-- 주소록 갯수 -->
+	<select id="count" resultType="int" parameterType="int">
+		SELECT count(midx)
+		FROM bg_address_list
+		WHERE midx=#{midx}
+	</select>
+	<!-- 주소록 리스트 중 기본 배송지 -->
+	<select id="one" resultType="Address_listVO" parameterType="int">
+		SELECT * 
+		FROM bg_address_list 
+		WHERE midx=#{midx} and basic_addr=1
+	</select>
+	<!-- 주소록 리스트 -->
+	<select id="list" resultType="Address_listVO" parameterType="PageMaker">
+		<![CDATA[
+			SELECT * 
+			FROM (
+				SELECT rownum as rnum, A.* 
+				FROM (
+					SELECT * 
+					FROM bg_address_list 
+					WHERE midx=#{pidx} and basic_addr=0
+				) A 
+				WHERE rownum <= #{lastPost}
+			)B
+			WHERE rnum >= #{startPost}
+		]]>			
+	</select>
+	
+	<!-- 기본배송지있는지 확인 및 있으면 0으로 바꿔주기 -->
+	<update id="basic" parameterType="int">
+		UPDATE bg_address_list
+		SET basic_addr = 0
+		WHERE midx = #{midx} AND basic_addr = 1
+	</update>
+		 
+	<!-- 주소 저장 -->
+	<insert id="insert" parameterType="Address_listVO">
+		INSERT INTO bg_address_list
+			(addr_idx,midx,addr_name,zip_code,addr1,addr2,rphone,name,basic_addr)
+		VALUES(
+			addr_seq.nextval
+			,#{midx}
+			,#{addr_name}
+			,#{zip_code}
+			,#{addr1}
+			,#{addr2}
+			,#{rphone}
+			,#{name}
+			,#{basic_addr}
+		)
+	</insert>
+	
+	<!-- 주소 정보 가져오기 -->
+	<select id="modify" parameterType="int" resultType="Address_listVO">
+		SELECT * 
+		FROM bg_address_list
+		WHERE addr_idx = #{addr_idx}
+	</select>
+	
+	<!-- 주소 수정 -->
+	<update id="Remodify" parameterType="Address_listVO">
+		UPDATE bg_address_list
+		SET 
+		addr_name = #{addr_name},
+		zip_code = #{zip_code},
+		addr1 = #{addr1},
+		addr2 = #{addr2},
+		rphone = #{rphone},
+		name = #{name},
+		basic_addr = #{basic_addr}
+		WHERE addr_idx = #{addr_idx}
+	</update>
+	
+	<!-- 주소 삭제 -->
+	<delete id="delete" parameterType="int">
+		 DELETE FROM bg_address_list WHERE addr_idx = #{addr_idx}
+	</delete>
 </mapper>
