@@ -32,6 +32,11 @@ public class MyPageController {
     String uploadPath;
     
     
+    /* 마이페이지 나의 정보 수정 페이지로 이동 */
+	@RequestMapping(value="/information.do")
+	public String information(Locale locale, Model model) {
+		return "myPage/information";
+	}
 	
 	//MyPage 메인페이지 -> 실행시 바로 화면에 최근 주문 정보 출력
 	@RequestMapping(value="/main.do")
@@ -275,6 +280,5 @@ public class MyPageController {
 		System.out.println("마이페이지 컨트롤러-session.getAttribute(\"imageData2\") 삭제 확인: "+session.getAttribute("imageData2"));
 		
 	}
-	
-	
+
 }

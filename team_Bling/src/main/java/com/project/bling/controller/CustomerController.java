@@ -5,8 +5,6 @@ package com.project.bling.controller;
 import java.util.List;
 import java.util.Locale;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -120,6 +118,12 @@ public class CustomerController {
 	@ResponseBody
 	public Product_QuestionVO product_pqidx(Locale locale, Model model,Product_QuestionVO pq) throws Exception {
 		return customerService.product_pqidx(pq);
+	}
+	
+	// 나의 문의 내역 페이지 이동
+	@RequestMapping(value="/my_qestion.do")
+	public String my_qestion(Locale locale, Model model) {
+		return "customer/my_qestion";
 	}
 	
 }

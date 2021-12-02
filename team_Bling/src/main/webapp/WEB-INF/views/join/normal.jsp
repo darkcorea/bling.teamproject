@@ -15,10 +15,10 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	    <!-- Bootstrap CSS -->
-  		<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+  		<link href="/resources/css/bootstrap.css" rel="stylesheet">
 	  	<!-- Bootstrap core JavaScript -->
   		<script src="/resources/js/jquery-3.6.0.min.js"></script>
-  		<script src="/resources/js/bootstrap.bundle.min.js"></script>
+  		<script src="/resources/js/bootstrap.bundle.js"></script>
   		
   		<!-- 주소 검색 api -->
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -256,10 +256,6 @@
 		</style>
 </head>
 <body>
-
-	<a href="/Admin/list.do">관리자 상품 리스트</a><br>
-	<a href="/Admin/regist.do">관리자 상품 등록</a><br>
-	
 <header>
 	<%@ include file="/WEB-INF/views/header.jsp" %><br><br>
 </header>
@@ -373,8 +369,8 @@
                     
                     <div class="rows h" id="liner">
                         <label for="phone1">연락처<span class="red">*</span></label>
-                        <input type="number" class="imporx impor" name="phone" placeholder="연락처를 입력하세요" maxlength="11" id="phone">
-                        <input type="button" class="phone" value="인증번호 받기">
+                        <input type="number" class="imporx impor" name="phone" placeholder="연락처를 입력하세요" maxlength="11" id="phone" style="width:382px">
+                        <input type="button" class="phone" value="인증번호 받기" style="display:none;">
                         <span class="check"></span>
                     </div>
                     
@@ -389,7 +385,7 @@
 
                     <div class="rows h d-grid gap-2 col-6 mx-auto" id="formbtn">
                     	<input type="submit" class="btn btn-primary " value="가입하기">
-						<button type="button" class="btn btn-secondary" id="btn2">취소하기</button>
+						<button type="button" class="btn btn-secondary" id="btn2" onclick="location.href='/'">취소하기</button>
                     </div>
                     <br>
                     <br>
@@ -452,7 +448,7 @@
 						  </div>
 						</div> 
   <!-- 회원가입완료 -->						
-						<!-- <div class="modal fade" id="joincomplete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						 <!-- <div class="modal fade" id="joincomplete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
 						    <div class="modal-content">
 						      <div class="modal-header text-center" id="header1">
@@ -468,7 +464,7 @@
 						      </div>
 						    </div>
 						  </div>
-						</div>  -->
+						</div> -->
                 </form>
              </section>
 		</div>
