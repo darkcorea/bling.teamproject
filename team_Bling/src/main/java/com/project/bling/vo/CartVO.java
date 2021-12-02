@@ -13,7 +13,7 @@ public class CartVO {
 	private int addprice;
 	private int price;
 	private int saleprice;
-	
+	private int stock;
 	
 	public int getCart_idx() {
 		return cart_idx;
@@ -81,6 +81,12 @@ public class CartVO {
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	public int getStock() {
+		return stock;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 	
 }

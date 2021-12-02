@@ -25,4 +25,8 @@ public interface BasketService {
 	List<CartVO> cartlist(int midx) throws Exception;
 	
 	int cart_count(int midx) throws Exception;
+	
+	int cart_update(CartVO vo) throws Exception;
+	
+	void cart_delete(int cart_idx) throws Exception;
 }

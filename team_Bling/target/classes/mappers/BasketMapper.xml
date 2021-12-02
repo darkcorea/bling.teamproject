@@ -51,7 +51,7 @@
 	<!-- 장바구니 리스트 조회 -->
 	<select id="cartlist" parameterType="int" resultType="CartVO">
 		<![CDATA[
-		select d.main, b.pname, c.oname, a.quantity, c.addprice, b.price, b.saleprice, c.pidx
+		select d.main, b.pname, c.oname, a.quantity, c.addprice, b.price, b.saleprice, c.pidx, a.cart_idx,c.STOCK
 		from bg_cart a join bg_option c
 					on a.oidx=c.oidx
 					join bg_product b
@@ -62,6 +62,23 @@
 		]]>
 	</select>
 		
+	<update id="cart_update" parameterType="CartVO">
+	
+	update bg_cart set QUANTITY=#{quantity} where cart_idx=#{cart_idx}
+	 
+	 <selectKey resultType="int" keyProperty="quantity" order="AFTER">
+	
+	select QUANTITY from bg_cart WHERE	1 = 1
+		AND cart_idx=#{cart_idx}
+	
+	</selectKey>
+	 
+	</update>
+	
+	<delete id="cart_delete" parameterType="int">
+		DELETE FROM bg_cart WHERE cart_idx = #{cart_idx}
+	</delete>
+	
 	<!-- midx에 따른 관심상품 갯수 -->
 	<select id="cart_count" parameterType="int" resultType="int">
 		SELECT count(*) FROM bg_cart WHERE midx=#{midx}

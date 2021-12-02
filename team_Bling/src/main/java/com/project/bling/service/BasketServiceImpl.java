@@ -57,6 +57,18 @@ public class BasketServiceImpl implements BasketService {
 	public int cart_count(int midx) throws Exception{
 		return basketDAO.cart_count(midx);
 	}
+
+	@Override
+	public int cart_update(CartVO vo) throws Exception {
+		
+		return basketDAO.cart_update(vo);
+	}
+
+	@Override
+	public void cart_delete(int cart_idx) throws Exception {
+		
+		basketDAO.cart_delete(cart_idx);
+	}
 	
 	
 }
