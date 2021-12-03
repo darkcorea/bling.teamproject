@@ -410,11 +410,6 @@ function iamge_fn(form){
 		form.main.focus();
 		return;
 	}
-	if(form.detail1.value == ""){
-		alert("상세이미지를 등록하세요.");
-		form.detail1.focus();
-		return;
-	}
 	if(form.showing1.value == ""){
 		alert("설명이미지를 등록하세요.");
 		form.showing1.focus();

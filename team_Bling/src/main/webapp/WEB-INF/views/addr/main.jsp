@@ -424,7 +424,7 @@
 					var test = checkPhone.test(rphone);
 					
 					if(!test){
-						alert("010부터 숫자만적어주세요");
+						alert("정확한 전화 번호를 입력해주세요.");
 					}else{
 						
 						if($("input:checkbox[name=checkbasic]").is(":checked") == true) {
@@ -494,7 +494,7 @@
 				}else{
 					var test = checkPhone.test(rphone);
 					if(!test){
-						alert("010부터 숫자만적어주세요");
+						alert("정확한 전화 번호를 입력해주세요.");
 					}else{
 						if($("input:checkbox[name=checkbasic1]").is(":checked") == true) {
 							basic_addr = 1;
