@@ -18,7 +18,7 @@
   	
   	
   	<style>
-  		section, header{
+  		section{
 			max-width:1008px;
 			margin:  0px auto;
 		}
@@ -83,7 +83,7 @@
 <body>
 
 	<section>
-		<div class="container">
+		<div class="container"  style="margin-top:200px;">
 			<div class="row">
 				<div class="col-0 col-sm-2 col-md-2 col-lg-2 col-xl-2">
 				

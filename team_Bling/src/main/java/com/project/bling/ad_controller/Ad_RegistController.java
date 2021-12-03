@@ -80,7 +80,7 @@ public class Ad_RegistController {
 		// 페이징에 필요한 값 넣기
 		Criteria sc = new Criteria();
 		sc.setPage(page);
-		sc.setPerPageNum(20);
+		sc.setPerPageNum(10);
 		
 		PageMaker pm = new PageMaker();
 		pm.setScri(sc);
