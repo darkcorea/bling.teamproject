@@ -66,7 +66,6 @@ public class BasketController {
 		int count = basketService.cartdouble_check(vo);
 		System.out.println("count>>>>>>>>>"+count);
 		String oname = vo.getOname();
-		System.out.println(oname);
 		if(count == 0) {
 			basketService.cartinsert(vo);
 			abc = "save";
@@ -129,9 +128,11 @@ public class BasketController {
 	//관심상풍 페이지로 이동
 	@RequestMapping(value="/like1.do")
 	public String like(Locale locale, Model model, HttpSession session, String kind) throws Exception{
-		UserVO vo = (UserVO)session.getAttribute("UserVO");
-		int midx = vo.getMidx();
+		// 로그인이 풀렸을 떄 대비해서 넣음
+		if ( session.getAttribute("UserVO") == null) {return "redirect:/Login/main.do";}
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		
+		int midx = uv.getMidx();
 		CombineVO cv = new CombineVO();
 		cv.setMidx(midx);
 		cv.setKind(kind);

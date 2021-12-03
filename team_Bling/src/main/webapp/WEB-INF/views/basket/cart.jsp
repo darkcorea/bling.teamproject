@@ -103,7 +103,7 @@
 	<br><br>
 	<div class="cartlist"></div>
 	<br><br><br><br>
-	<form name="form">
+	
 		<input type="hidden" name="price" id="price">
 		<input type="hidden" id="discount" name="discount">
 		<input type="hidden" id="total" name="total">
@@ -121,10 +121,10 @@
 	</table>
 	<br><br>
 	<div class="btndiv">
-		<button type="submit" class="btn btn-secondary t">선택상품 주문</button>
+		<button type="button" class="btn btn-secondary t" onclick="check_order()">선택상품 주문</button>
 		<button type="button" class="btn btn-secondary t1" onclick="check_del()">선택상품 삭제</button>
 	</div>
-	</form>
+	
 	<br><br>
 	</section>
 	<footer>
@@ -144,11 +144,11 @@
 				var str = "";
 				str += "<table class='tab'>";
 				str += "<tr class='line1'>";
-				str += "	<th><input type='checkbox' name='all' onclick='checkAll(this)'></th>";
+				str += "	<th><input type='checkbox' name='all' class='tot_order' onclick='checkAll(this)'></th>";
 				str += "	<th>사진</th>";
 				str += "	<th>제품명</th>";
 				str += "	<th class='th1'>수량</th>";
-				str += "	<th>상품가격</th>";
+				str += "	<th>상품금액</th>";
 				str += "	<th>할인금액</th>";
 				str += "	<th>결제금액</th>";
 				str += "	<th>취소</th>";
@@ -160,7 +160,11 @@
 					var tot_price = price-discount;
 					
 					str += "<tr class='line'>";
-					str += "	<td class='pre'><input class='cart_idx' type='checkbox' name='cart_idx' value='"+item.cart_idx+"'></td>";
+					str += "	<td class='pre'><input class='cart_idx' type='checkbox' name='cart_idx' value='"+item.cart_idx+"'>";
+					str += "	<input type='hidden' name='oidx' value='"+item.oidx+"'>";
+					str += "	<input type='hidden' name='quantity' value='"+item.quantity+"'>";
+					str += "	<input type='hidden' name='pname' value='"+item.pname+"'>";
+					str += "	</td>";
 					str += "	<td><img class='img-fluid' src='/resources/image/"+item.main+"'></td>";
 					str += "	<td><a class='deco' href='javascript:view("+item.pidx+")'>"+item.pname+"</a>";
 					str += "		<p>옵션명 : "+item.oname+"</p>";
@@ -170,9 +174,9 @@
 					str += "	<span class='quantity' id='q_"+item.cart_idx+"'>"+item.quantity+"</span>"
 					str += "	<input type='button' class='btn btn-light p-0 size27 align-middle' onclick='plus("+item.cart_idx+")' value='+'/>";
 					str += "	<br><button class='btn1' onclick='updateFn("+item.cart_idx+")'>수정</button></td>";
-					str += "	<td>"+price+"<span>원</span></td>";
-					str += "	<td>"+discount+"<span>원</span></td>";
-					str += "	<td>"+tot_price+"<span>원</span></td>";
+					str += "	<td class='price1'><span>"+price+"</span><span>원</span></td>";
+					str += "	<td class='discount1'>"+discount+"<span>원</span></td>";
+					str += "	<td class='tot_price1'>"+tot_price+"<span>원</span></td>";
 					str += "	<td><button class='btn2' onclick='deleteFn("+item.cart_idx+")'>삭제</button></td>";
 					str += "</tr>";
 				}
@@ -246,15 +250,65 @@
         
         
 	});
+	
+	
+	$(document).on('change', '.tot_order',function(event){
+		
+		var sum=0;
+		var dis_sum=0;
+		var tot_sum=0;
+		var price = $(".price1").text();
+		var discount = $(".discount1").text();
+		var tot_price = $(".tot_price1").text();
+		var price1 = price.split("원");
+		var discount1 = discount.split("원");
+		var tot_price1 = tot_price.split("원");
+		var c = price1.map(Number);
+		var dis = discount1.map(Number);
+		var tot = tot_price1.map(Number);
+		
+		if ($(this).is(":checked") == true){
+		
+			for(i=0;i<c.length;i++){
+				sum = sum+c[i];
+			}
+			for(i=0;i<dis.length;i++){
+				dis_sum = dis_sum+dis[i];
+			}
+			for(i=0;i<tot.length;i++){
+				tot_sum = tot_sum+tot[i];
+			}
+			
+			$(".price").text(sum.toLocaleString()+"원");
+     		$("#price").val(sum);
+     		 $("#discount").val(dis_sum);
+             $(".discount").text("-"+dis_sum.toLocaleString()+"원");
+     		$("#total").val(tot_sum);
+     		$(".total").text("="+tot_sum.toLocaleString()+"원");
+     		
+		}else{
+			$(".price").text("0원");
+     		$("#price").val("");
+     		 $("#discount").val("");
+             $(".discount").text("-0원");
+     		$("#total").val("");
+     		$(".total").text("=0원");
+		}
+		
+	});
 	function checkAll(checkAll){
 	      let checkboxs = document.getElementsByName("cart_idx");
-	      let price = document.getElementsByClassName("price");
+	     
 	      checkboxs.forEach((checkbox) => {
+	    	
 	         checkbox.checked = checkAll.checked;
-	        console.log();
+	     
 	      });
 	   }
 
+	
+	
+	
 	function plus(cart_idx){
 		var stock =  $("#s_"+cart_idx).val();
 		var qt = $("#q_"+cart_idx).text();
@@ -351,6 +405,62 @@
 	  		});
 	       }
 	   }
+	function check_order(){
+		
+		var tot_price = $("#total").val();
+		var pnameList = [];
+		 let List = new Array;
+		 let len = $(".cart_idx:checked").length;
+	    
+	      if(len < 1){
+	        alert("상품을 선택하세요");
+	         
+	      }else{
+	         
+	          $(".cart_idx:checked").each(function(e){      
+	              let oidx =  $(this).siblings(':eq(0)').val();
+	              let quantity =  $(this).siblings(':eq(1)').val();
+	              let pname =  $(this).siblings(':eq(2)').val();
+	              var data = new Object();
+	              data.oidx = oidx;
+	 	         data.quntity = quantity;
+	 	         List.push(data);
+	             pnameList.push(pname);
+	          });
+	          let jsonData = JSON.stringify(List);
+	         
+	          var frm = document.createElement("form");
+		      frm.name = 'frm';
+		      frm.method = 'post';
+		      frm.action = '/Order/memberorder.do';
+		      
+		      var input1 = document.createElement("input");
+		     
+		      var input2 = document.createElement("input");
+		    
+		      var input3 = document.createElement("input");
+		     
+		      input1.setAttribute("type","hidden");
+		      input1.setAttribute("name","jsonData");
+		      input1.setAttribute("value",jsonData);
+		      
+		      input2.setAttribute("type","hidden");
+		      input2.setAttribute("name","tot_price");
+		      input2.setAttribute("value",tot_price);
+		   
+		      input3.setAttribute("type","hidden");
+		      input3.setAttribute("name","productname");
+		      input3.setAttribute("value",pnameList);
+		      
+		      frm.appendChild(input1);
+		      frm.appendChild(input2);
+		      frm.appendChild(input3);
+		      document.body.appendChild(frm);
+				frm.submit();
+	          
+	       }
+	}	
+	
 	</script>
 </body>
 </html>

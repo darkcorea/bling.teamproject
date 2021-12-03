@@ -97,19 +97,17 @@ public class OrderController {
 		String productname = request.getParameter("productname");
 		String jsonData = request.getParameter("jsonData");
 		System.out.println(jsonData);
-		int midx =  Integer.parseInt(request.getParameter("midx"));
-		String uname = request.getParameter("uname");
+		
 		int tot_price = Integer.parseInt(request.getParameter("tot_price"));
-		String mileage = request.getParameter("mileage");
+		
 		System.out.println(tot_price);
-		System.out.println(midx);
-		System.out.println(uname);
+		
+		
 		model.addAttribute("productname",productname);
 		model.addAttribute("jsonData", jsonData);
 		model.addAttribute("tot_price", tot_price);
-		model.addAttribute("midx",midx);
-		model.addAttribute("uname",uname);
-		model.addAttribute("mileage",mileage);
+		
+		
 		return "order/memberorder";
 		
 	}
