@@ -181,18 +181,18 @@
 			<table class="t1">
 				<tr class="line">
 					<td class="gray"><span class="white">이름</span></td>
-					<td class="fill name">${uname}</td>
+					<td class="fill name">${sessionScope.UserVO.uname}</td>
 				</tr>
 				<tr class="line">
 					<td class="gray"><span class="white">이메일</span></td>
-					<td class="fill email"></td>
+					<td class="fill email">${sessionScope.UserVO.email}</td>
 				</tr>
 				<tr>
 					<td class="gray"><span class="white">휴대폰 번호</span></td>
-					<td class="fill phone"></td>
+					<td class="fill phone">${sessionScope.UserVO.phone}</td>
 				</tr>
 			</table>
-			<input type="hidden" name="midx" value="${midx}" id="midx">
+			<input type="hidden" name="midx" value="${sessionScope.UserVO.midx}" id="midx">
 		<br><br>
 	<h5 id="inline">받는 사람 정보</h5>
 		<div class="infos">
@@ -245,7 +245,7 @@
 						<span class="total"></span>
 						<span id="s1"><input type="text" name="mile" placeholder="사용할 적립금 입력" class="mile"></span>
 						<span><input type="checkbox" id="checkBoxId">적립금 전액 사용</span>
-						<span id="addInfo">(내 적립금 : ${mileage}원)</span>
+						<span id="addInfo">(내 적립금 : ${sessionScope.UserVO.mileage}원)</span>
 					</td>
 				</tr>
 				<tr>
@@ -357,7 +357,16 @@
 	</footer> 
 	
 	<script>
-	
+
+	 let Json = JSON.parse('${jsonData}');
+		console.log(Json);
+		for(let i =0 ; i<Json.length ; i++){
+		    var oidx = Json[i].oidx;
+		    var quantity = Json[i].quntity;
+		    console.log("oidx>>>>>>>>>"+oidx);
+		    console.log("수량>>>>>>>>"+quantity);
+		}
+		
 	function addrlist(){
 		let midx= "${sessionScope.UserVO.midx}";
 		console.log(midx);
@@ -421,7 +430,7 @@ function modal_select(){
 	
 function mileage(){
 	var mile = $("#mileage").val();
-	var mymile = ${mileage};
+	var mymile = "${sessionScope.UserVO.mileage}";
 	var addmile = $("#addmile").val();
 	mile = parseInt(mile);
 	addmile = parseInt(addmile);
@@ -484,7 +493,7 @@ function iamport(){
 								    var oidx = Json[i].oidx;
 								    var quantity = Json[i].quntity;
 								    console.log("oidx는 ????"+oidx);
-								    str += "<input type='hidden' name='nonidx' value='"+data+"'>";
+								    str += "<input type='hidden' name='order_idx' value='"+data+"'>";
 									str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
 									str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
 									
@@ -591,37 +600,35 @@ $(document).ready(function(){
 	let phone = "${sessionScope.UserVO.phone}";
 	let grade = "${sessionScope.UserVO.grade}";
 	var price = ${tot_price};
-	var G = price*0.02;
-	var S = price*0.01;
-	var mymile = ${mileage};
+	var G = parseInt(price*0.02);
+	var S = parseInt(price*0.01);
+	var mymile =  "${sessionScope.UserVO.mileage}";
+	$("#mileage").val(mymile);
 	$(".email").html(email);
 	$(".phone").html(phone);
 	if(grade=="G"){
-		$(".point").html(G.toLocaleString());
-		$("#mileage").val(mymile);
+		$(".point").html(G.toLocaleString()+"원");
 		$("#addmile").val(G);
 	}else if(grade=="S"){
-		$(".point").html(S.toLocaleString());
-		$("#mileage").val(mymile);
+		$(".point").html(S.toLocaleString()+"원");
 		$("#addmile").val(S);
 	}else{
 		$(".point").html(0);
-		$("#mileage").val(mymile);
 		$("#addmile").val(0);
 	}
 	
-	$(".productprice").text(price.toLocaleString());
+	$(".productprice").text(price.toLocaleString()+"원");
 	
 	const shipping = 2500;
 	var total = price+shipping;
 	
 	if(price<100000){
-		$(".shipping").text(shipping.toLocaleString());
-		$(".total").text(total.toLocaleString());
+		$(".shipping").text(shipping.toLocaleString()+"원");
+		$(".total").text(total.toLocaleString()+"원");
 		$("#tot_price").val(total);
 	}
 	else{
-		$(".total").text(price.toLocaleString());
+		$(".total").text(price.toLocaleString()+"원");
 		$("#tot_price").val(price);
 	}
 	

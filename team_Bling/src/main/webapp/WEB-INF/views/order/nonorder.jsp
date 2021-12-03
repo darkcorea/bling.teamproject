@@ -133,6 +133,7 @@
 		height:700px;
 		font-size: 22px;
 		font-weight: bold;
+		text-align:center;
 		}
 </style>
 </head>
@@ -414,7 +415,7 @@ function iamport(){
 					data:formData,
 					ContentType:"application/json",
 					success:function(data){
-					alert("주문 완료. 주문조회번호 : "+orderid);
+					alert("주문이 완료되었습니다");
 					var str = "";
 					
 					let Json = JSON.parse('${jsonData}');
@@ -445,7 +446,7 @@ function iamport(){
 							});
 						 
 						}
-					$("section").html("<div id='complete'>주문이 완료되었습니다</div>");
+					$("section").html("<div id='complete'>주문이 완료되었습니다 <br>주문번호 : <span style='color:red;'>"+orderid+"</span></div>");
 					},
 					error:function(){
 						alert("실행오류");

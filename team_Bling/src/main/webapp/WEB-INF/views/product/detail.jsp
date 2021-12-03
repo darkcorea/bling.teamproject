@@ -966,10 +966,7 @@
 		var option = $("#select-result").text();
 		var tot_price = $("#total_price_in").val();
 		var productname = "<c:out value='${detail.pname}'/>";
-		let midx = "${sessionScope.UserVO.midx}";
-		let uname = "${sessionScope.UserVO.uname}";
-		let mileage = "${sessionScope.UserVO.mileage}";
-		//console.log("midx>>>>>>>>>>>>>>>"+midx);
+		
 		if(option == ""){
 			alert("옵션을 선택하세요");
 		}
@@ -1000,36 +997,27 @@
 	      frm.action = '/Order/memberorder.do';
 	      
 	      var input1 = document.createElement("input");
-	      var input2 = document.createElement("input");
+	     
 	      var input3 = document.createElement("input");
-	      var input4 = document.createElement("input");
-	      var input5 = document.createElement("input");
+	    
 	      var input6 = document.createElement("input");
 	     
 	      input1.setAttribute("type","hidden");
 	      input1.setAttribute("name","jsonData");
 	      input1.setAttribute("value",jsonData);
-	      input2.setAttribute("type","hidden");
-	      input2.setAttribute("name","midx");
-	      input2.setAttribute("value",midx);
+	      
 	      input3.setAttribute("type","hidden");
 	      input3.setAttribute("name","tot_price");
 	      input3.setAttribute("value",tot_price);
-	      input4.setAttribute("type","hidden");
-	      input4.setAttribute("name","uname");
-	      input4.setAttribute("value",uname);
-	      input5.setAttribute("type","hidden");
-	      input5.setAttribute("name","mileage");
-	      input5.setAttribute("value",mileage);
+	   
 	      input6.setAttribute("type","hidden");
 	      input6.setAttribute("name","productname");
 	      input6.setAttribute("value",productname);
 	      
 	      frm.appendChild(input1);
-	      frm.appendChild(input2);
+	     
 	      frm.appendChild(input3);
-	      frm.appendChild(input4);
-	      frm.appendChild(input5);
+	     
 	      frm.appendChild(input6);
 	      document.body.appendChild(frm);
 			frm.submit();

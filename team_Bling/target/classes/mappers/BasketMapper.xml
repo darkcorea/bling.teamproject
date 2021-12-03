@@ -51,7 +51,7 @@
 	<!-- 장바구니 리스트 조회 -->
 	<select id="cartlist" parameterType="int" resultType="CartVO">
 		<![CDATA[
-		select  cart_idx,d.main, b.pname, c.oname, a.quantity, c.addprice, b.price, b.saleprice, c.pidx, c.stock
+		select cart_idx, d.main, b.pname, c.oname, a.quantity, c.addprice, b.price, b.saleprice, c.pidx, c.stock, c.oidx
 		from bg_cart a join bg_option c
 					on a.oidx=c.oidx
 					join bg_product b
