@@ -31,6 +31,8 @@ public interface BasketService {
 	
 	void cart_delete(int cart_idx) throws Exception;
 	
+	void order_after_del(CartVO vo) throws Exception;
+	
 	int cart_count(int midx) throws Exception;
 	List<CombineVO> like_list(CombineVO cv) throws Exception;
 	void likeDel(LikeVO vo) throws Exception;

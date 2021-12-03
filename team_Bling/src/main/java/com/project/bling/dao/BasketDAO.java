@@ -78,4 +78,8 @@ public class BasketDAO {
 		sqlSession.delete(bm+"like_del_ch",list);
 	}
 
+	public void order_after_del(CartVO vo) throws Exception {
+		sqlSession.delete(bm+"order_after_del",vo);
+	}
+	
 }

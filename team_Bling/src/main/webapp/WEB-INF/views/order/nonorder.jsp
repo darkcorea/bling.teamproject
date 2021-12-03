@@ -331,7 +331,7 @@ function iamport(){
 						var formData = $("form[name=frm]").serialize();
 						var orderid = $("#orderid").val();
 						var msg = '결제가 완료되었습니다.';
-						msg += '주문조회번호 : ' +orderid;
+						
 						 $.ajax({
 								url:"/Order/orderinsert.do",
 								type:"POST",
@@ -379,7 +379,8 @@ function iamport(){
 				    	 var msg = '결제에 실패하였습니다.';
 				         msg += '에러내용 : ' + rsp.error_msg;
 				    }
-		   			alert(msg);
+				    alert("주문이 완료되었습니다");
+				    $("section").html("<div id='complete'>주문이 완료되었습니다 <br>주문번호 : <span style='color:red;'>"+orderid+"</span></div>");
 				});
 			});
 		}else if(payment=="계좌이체"){

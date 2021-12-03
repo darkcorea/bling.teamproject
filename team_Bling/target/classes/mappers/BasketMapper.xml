@@ -78,6 +78,11 @@
 	<delete id="cart_delete" parameterType="int">
 		DELETE FROM bg_cart WHERE cart_idx = #{cart_idx}
 	</delete>
+	<!-- 장바구니 주문 후 삭제 -->
+	<delete id="order_after_del" parameterType="CartVO">
+		DELETE FROM bg_cart WHERE oidx = #{oidx}
+	</delete>
+	
 	<!-- 장바구니 여러개 삭제 -->
 	<delete id="cartcheck_del" parameterType="list">
 		DELETE FROM bg_cart WHERE cart_idx IN (

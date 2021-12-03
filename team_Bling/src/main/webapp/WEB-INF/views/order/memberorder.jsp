@@ -504,7 +504,7 @@ function iamport(){
 									formData2 = $("form[name=fm"+i+"]").serialize();
 									console.log(formData2);
 									 $.ajax({
-											url:"/Order/orderdetailinsert.do",
+											url:"/Order/morderdetailinsert.do",
 											type:"POST",
 											data:formData2,
 											async: false,
@@ -554,7 +554,7 @@ function iamport(){
 					data:formData,
 					ContentType:"application/json",
 					success:function(data){
-					alert(productname+" 주문이 완료되었습니다");
+					alert("주문이 완료되었습니다");
 					var str = "";
 					let Json = JSON.parse('${jsonData}');
 					var formData2 = "";
@@ -577,6 +577,19 @@ function iamport(){
 								async: false,
 								ContentType:"application/json",
 								success:function(data){
+									
+									$.ajax({
+										url:"/Basket/order_after_del.do",
+										type:"POST",
+										data:formData2,
+										async: false,
+										ContentType:"application/json",
+										success:function(data){
+										},
+										error:function(){
+											alert("실행오류");
+										}
+									});
 								},
 								error:function(){
 									alert("실행오류");

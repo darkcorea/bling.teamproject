@@ -93,6 +93,12 @@ public class BasketServiceImpl implements BasketService {
 		basketDAO.cartcheck_del(list);
 		
 	}
+
+	@Override
+	public void order_after_del(CartVO vo) throws Exception {
+		basketDAO.order_after_del(vo);
+		
+	}
 	
 	
 }
