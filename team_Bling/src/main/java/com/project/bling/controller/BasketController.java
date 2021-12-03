@@ -56,6 +56,15 @@ public class BasketController {
 		return 1;
 	}
 	
+
+	@RequestMapping(value="/order_after_del.do")
+	@ResponseBody
+	public int order_after_del(CartVO vo) throws Exception{
+		System.out.println("oidx>>>>>>>>>>"+vo.getOidx());
+		basketService.order_after_del(vo);
+		return 1;
+	}
+	
 	@RequestMapping(value="/cartinsert.do",method = RequestMethod.POST, produces = "application/test;charset=utf8")
 	@ResponseBody
 	public String orderinsert(Model model,OrderVO vo) throws Exception {
