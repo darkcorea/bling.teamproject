@@ -370,6 +370,7 @@ function iamport(){
 										});
 									 
 									}
+								 $("section").html("<div id='complete'>주문이 완료되었습니다 <br>주문번호 : <span style='color:red;'>"+orderid+"</span></div>");
 								},
 								error:function(){
 									alert("실행오류");
@@ -379,8 +380,6 @@ function iamport(){
 				    	 var msg = '결제에 실패하였습니다.';
 				         msg += '에러내용 : ' + rsp.error_msg;
 				    }
-				    alert("주문이 완료되었습니다");
-				    $("section").html("<div id='complete'>주문이 완료되었습니다 <br>주문번호 : <span style='color:red;'>"+orderid+"</span></div>");
 				});
 			});
 		}else if(payment=="계좌이체"){

@@ -79,8 +79,9 @@ public class OrderController {
 	}
 	@RequestMapping(value="/orderdetailinsert.do",method = RequestMethod.POST)
 	@ResponseBody
-	public void orderdetailinsert(NonorderVO vo) throws Exception {
+	public int orderdetailinsert(NonorderVO vo) throws Exception {
 		orderService.detailInsert(vo);
+		return 1;
 	}
 	
 	@RequestMapping(value="/mileageupdate.do",method = RequestMethod.POST)
