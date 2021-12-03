@@ -175,9 +175,6 @@
 
 <script>
 
-// 장바구니에 숫자 표시
-cart_count_fn();
-
 $(document).ready(function(){
 
     var navHeight = $(".mainNav").height(); 
@@ -205,6 +202,7 @@ scrollTop 은 윈도우에서 스크롤의 위치가 가장 상위에 있다는 
 });
 
 
+
 // 장바구니 갯수 표시
 function cart_count_fn(){
 	let midx = "<c:out value='${sessionScope.UserVO.midx}'/>";
@@ -230,6 +228,8 @@ function cart_count_fn(){
 		});
 	}	
 }
+cart_count_fn();
+
 
 /* 검색어를 입력하고 검색 버튼을 눌렀을 떄 */
 function search_Fn() {

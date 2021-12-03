@@ -2,7 +2,7 @@ package com.project.bling.vo;
 
 public class DeliveryVO {
 	private int didx;
-	private int invoice_num;
+	private long invoice_num;
 	private int order_idx;
 	private String cancel;
 	private String refund;
@@ -11,7 +11,18 @@ public class DeliveryVO {
 	private String deli_stat;
 	private String send_day;
 	private String order_yn;
+	private String confirm_yn;
 	
+	
+	
+	public String getConfirm_yn() {
+		return confirm_yn;
+	}
+
+	public void setConfirm_yn(String confirm_yn) {
+		this.confirm_yn = confirm_yn;
+	}
+
 	public DeliveryVO() {
 		
 	}
@@ -22,10 +33,10 @@ public class DeliveryVO {
 	public void setDidx(int didx) {
 		this.didx = didx;
 	}
-	public int getInvoice_num() {
+	public long getInvoice_num() {
 		return invoice_num;
 	}
-	public void setInvoice_num(int invoice_num) {
+	public void setInvoice_num(long invoice_num) {
 		this.invoice_num = invoice_num;
 	}
 	public int getOrder_idx() {
