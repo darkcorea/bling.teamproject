@@ -405,6 +405,7 @@
 			
 			//주소 저장
 			function address(){
+				
 				var addr_name = $('#addr_name').val();
 				var name = $('#name').val();
 				var zip_code = $('#zip_code').val();
@@ -413,22 +414,38 @@
 				var rphone = $('#rphone').val();
 				var basic_addr = 0;
 				
-				if($("input:checkbox[name=checkbasic]").is(":checked") == true) {
-					basic_addr = 1;
-				}
+				//유효성검사
+				var checkPhone = /^[0-9]{10,11}/g;
 				
-				$.ajax({
-					url:"/Addr/insert.do",
-					type:"post",
-					data:{"addr_name":addr_name,"name":name,"zip_code":zip_code,
-						"addr1":addr1,"addr2":addr2,"rphone":rphone,"basic_addr":basic_addr},
-					ContentType:"json",
-					success:function(data){
-						window.location.replace("/Addr/main.do?page=1");
-					},error:function(){
-						alert("주소저장에러!");
+				if(addr_name == "" || name == "" || zip_code == ""
+					|| addr1 == "" || rphone == "" ){
+					alert("필수사항 적어주세요");
+				}else{
+					var test = checkPhone.test(rphone);
+					
+					if(!test){
+						alert("010부터 숫자만적어주세요");
+					}else{
+						
+						if($("input:checkbox[name=checkbasic]").is(":checked") == true) {
+							basic_addr = 1;
+						}
+						
+						$.ajax({
+							url:"/Addr/insert.do",
+							type:"post",
+							data:{"addr_name":addr_name,"name":name,"zip_code":zip_code,
+								"addr1":addr1,"addr2":addr2,"rphone":rphone,"basic_addr":basic_addr},
+							ContentType:"json",
+							success:function(data){
+								window.location.replace("/Addr/main.do?page=1");
+							},error:function(){
+								alert("주소저장에러!");
+							}
+						});
 					}
-				});
+					
+				}
 			}
 			
 			//주소 정보 가져오기
@@ -468,22 +485,34 @@
 				var rphone = $('#rphone1').val();
 				var basic_addr = 0;
 				
-				if($("input:checkbox[name=checkbasic1]").is(":checked") == true) {
-					basic_addr = 1;
-				}
+				//유효성검사
+				var checkPhone = /^[0-9]{10,11}/g;
 				
-				$.ajax({
-					url:"/Addr/Remodify.do",
-					type:"post",
-					data:{"addr_idx":addr_idx,"midx":midx,"addr_name":addr_name,"name":name,"zip_code":zip_code,
-						"addr1":addr1,"addr2":addr2,"rphone":rphone,"basic_addr":basic_addr},
-					ContentType:"json",
-					success:function(data){
-						window.location.replace("/Addr/main.do?page=1");
-					},error:function(){
-						alert("주소저장에러!");
+				if(addr_name == "" || name == "" || zip_code == ""
+					|| addr1 == "" || rphone == "" ){
+					alert("필수사항 적어주세요");
+				}else{
+					var test = checkPhone.test(rphone);
+					if(!test){
+						alert("010부터 숫자만적어주세요");
+					}else{
+						if($("input:checkbox[name=checkbasic1]").is(":checked") == true) {
+							basic_addr = 1;
+						}
+						$.ajax({
+							url:"/Addr/Remodify.do",
+							type:"post",
+							data:{"addr_idx":addr_idx,"midx":midx,"addr_name":addr_name,"name":name,"zip_code":zip_code,
+								"addr1":addr1,"addr2":addr2,"rphone":rphone,"basic_addr":basic_addr},
+							ContentType:"json",
+							success:function(data){
+								window.location.replace("/Addr/main.do?page=1");
+							},error:function(){
+								alert("주소저장에러!");
+							}
+						});
 					}
-				});
+				}
 			}
 			
 		</script>
