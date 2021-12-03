@@ -64,7 +64,27 @@
 	#botCarouselBtn{
 		background-color: #CB7878;
 	}
-</style>	
+</style>
+<script>
+/*하트 표시하는 에이작스 통신*/
+function like(pidx){
+		$.ajax({
+			url:"/Basket/checklike.do",
+			type:"POST",
+			data:{"pidx":pidx},
+			async: false,
+			ContentType:"application/json",
+			success:function(data){
+				if(data == ""){
+				}else{
+					$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
+				}
+			},error:function(){
+				alert("관심상품존재찾기 에러!")
+			}
+		});
+	}
+</script>
 </head>
 
 <header>
@@ -189,6 +209,7 @@
 									<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${best.price}" pattern="#,###" />원</span>
 									</c:when>
 								</c:choose>
+								<script>like(${best.pidx});</script>
 								</div><br><br>
 							</div>
 						</div>
@@ -238,6 +259,7 @@
 									&nbsp;&nbsp;<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${newProd.price}" pattern="#,###" />원</span>
 									</c:when>
 									</c:choose>
+									<script>like(${newProd.pidx});</script>
 								</div><br><br>
 							</div>
 						</div>
@@ -286,6 +308,7 @@
 									&nbsp;&nbsp;<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${ring.price}" pattern="#,###" />원</span>
 									</c:when>
 								</c:choose>
+								<script>like(${ring.pidx});</script>
 								</div><br><br>
 							</div>
 						</div>
@@ -344,6 +367,7 @@
 									&nbsp;&nbsp;<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${neck.price}" pattern="#,###" />원</span>
 									</c:when>
 								</c:choose>
+								<script>like(${neck.pidx});</script>
 								</div><br><br>
 							</div>
 						</div>
@@ -392,6 +416,7 @@
 									&nbsp;&nbsp;<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${ear.price}" pattern="#,###" />원</span>
 									</c:when>
 									</c:choose>
+									<script>like(${ear.pidx});</script>
 								</div><br>
 							</div>
 						</div>
@@ -440,6 +465,7 @@
 									&nbsp;&nbsp;<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${brac.price}" pattern="#,###" />원</span>
 									</c:when>
 								</c:choose>	
+								<script>like(${brac.pidx});</script>
 								</div><br><br>
 							</div>
 						</div>
@@ -455,16 +481,37 @@
 	</footer> 
 </body>
  <script>
-    /* 하트를 눌렀을 때 채워 주고 비워주고 하는 기능, 관심상품 */
-   	function heart(pidx){
-        if($(".emptyHeart"+pidx).hasClass('bi bi-suit-heart')==true){
-        	$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
-	           alert("관심 상품에 담았습니다.");
-        }else{
-        	alert("관심 상품을 취소하셨습니다.");
-			$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart emptyHeart"+pidx);
-        }
-	}		
+	 
+	//관심상품 추가
+		function heart(pidx){
+			
+			var uid = '${sessionScope.UserVO.id}';
+			var like = 0;
+			if(uid==""){
+				alert("로그인하셔야합니다.");
+			}else{
+				if($(".emptyHeart"+pidx).hasClass("bi bi-suit-heart-fill")==true){
+				    alert("관심 상품을 취소하셨습니다.");
+					$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart emptyHeart"+pidx);
+					like = 0;
+				}else{
+					$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
+					alert("관심 상품에 담았습니다");
+					like = 1;
+				}
+				$.ajax({
+					url:"/Basket/like.do",
+					type:"POST",
+					data:{"yn":like,"pidx":pidx},
+					ContentType:"application/json",
+					success:function(data){
+						console.log(data);
+					},error:function(){
+						alert("관심상품등록 에러!")
+					}
+				});
+			}
+		}		
 </script>
 
 </html>
