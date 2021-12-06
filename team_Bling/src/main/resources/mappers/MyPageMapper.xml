@@ -257,4 +257,11 @@
 		zip_code = #{zip_code}
 		where midx = #{midx}
 	</update>
+	
+	<!-- 탈퇴 -->
+	<update id="del" parameterType="int">
+		update bg_user set
+		delyn = 0
+		where midx=#{midx}
+	</update>
 </mapper>
