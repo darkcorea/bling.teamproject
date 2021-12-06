@@ -94,7 +94,7 @@
 	</div>
 	<div id="navMenu">
 		<div id="menuHead">나의 활동</div>
-		<div id="navSub">
+		<div id="navSub">ㅎㅎ
 			<div class="pa_top"><a class="navA" href="/Review/myReview.do">나의 리뷰</a></div>
 			<div class="pa_top"><a class="navA" href="/Customer/my_qestion.do">나의 문의 내역</a></div>
 		</div>
