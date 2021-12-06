@@ -5,6 +5,11 @@
  
 <mapper namespace="com.project.bling.mapper.myPageMapper">
 
+	<!-- 회원번호(midx)에 따른 리뷰수 -->
+	<select id="reviewCount" parameterType="int" resultType="int">
+		select count(*) from bg_review where midx=#{midx}
+	</select>
+
 	<!-- 회원번호(midx)에 따른 결제완료 건수 -->
 	<select id="orderComp" resultType="CombineVO">
 		SELECT count(d.order_yn) AS orderCompCnt
@@ -26,59 +31,68 @@
 	</select>
 	
 	<!-- 최근 주문 정보(product,option,order,order_detail,delivery,review 6개 테이블 join) -->
-	<select id="recentOrder" resultType="CombineVO">
-		WITH po
-		     AS(
-		        SELECT p.pname,
-		               p.saleprice,
-		               op.oname,
-		               op.addprice,
-		               op.oidx
-		        FROM bg_product p
-		        INNER JOIN bg_option op
-		        ON p.pidx=op.pidx 
-		     ),
-		     oOdDr
-		     AS(
-		        SELECT o.rdate,
-		               o.order_idx,
-		               od.detail_idx,
-		               od.quantity,
-		               d.deli_stat,
-		               d.order_yn,
-		               od.oidx,
-		               o.midx,
-		               r.ridx,
-		               r.contents
-		        FROM bg_order_detail od
-		        
-		        RIGHT OUTER JOIN bg_order o
-		        ON od.order_idx=o.order_idx
-		        
-		        LEFT OUTER JOIN bg_delivery d
-		        ON od.order_idx=d.order_idx
-		        
-		        LEFT OUTER JOIN bg_review r
-		        ON od.detail_idx=r.detail_idx
-		     )
-		SELECT oOdDr.rdate,
-		       oOdDr.order_idx,
-		       oOdDr.detail_idx,
-		       po.pname,
-		       po.oname,
-		       po.saleprice,
-		       po.addprice,
-		       sum(oOdDr.quantity) AS quantitySum,
-		       oOdDr.deli_stat,
-		       oOdDr.ridx,
-		       oOdDr.contents
-		FROM oOdDr
-		INNER JOIN po
-		ON oOdDr.oidx=po.oidx
-		WHERE oOdDr.midx=#{midx} AND NOT oOdDr.deli_stat='N'
-		GROUP BY oOdDr.rdate,oOdDr.order_idx,oOdDr.detail_idx,po.pname,po.oname,po.saleprice,po.addprice,oOdDr.deli_stat,oOdDr.ridx,oOdDr.contents
-		ORDER BY oOdDr.rdate
-		DESC
+	<select id="recentOrder" resultType="CombineVO" parameterType="PageMaker">
+	<![CDATA[
+	SELECT * FROM 
+		    ( SELECT rownum as rnum, A.* from
+		        (WITH po
+				     AS(
+				        SELECT p.pname,
+				               p.saleprice,
+				               op.oname,
+				               op.addprice,
+				               op.oidx
+				        FROM bg_product p
+				        INNER JOIN bg_option op
+				        ON p.pidx=op.pidx 
+				     ),
+				     oOdDr
+				     AS(
+				        SELECT o.rdate,
+				               o.order_idx,
+				               od.detail_idx,
+				               od.quantity,
+				               d.deli_stat,
+				               d.order_yn,
+				               d.deli_com,
+				               od.oidx,
+				               o.midx,
+				               r.ridx,
+				               r.contents
+				        FROM bg_order_detail od
+				        
+				        RIGHT OUTER JOIN bg_order o
+				        ON od.order_idx=o.order_idx
+				        
+				        LEFT OUTER JOIN bg_delivery d
+				        ON od.order_idx=d.order_idx
+				        
+				        LEFT OUTER JOIN bg_review r
+				        ON od.detail_idx=r.detail_idx
+				     )
+				SELECT oOdDr.rdate,
+				       oOdDr.deli_com,
+				       (TRUNC(sysdate) - TO_DATE(oOdDr.deli_com)) AS date_differ,
+				       oOdDr.order_idx,
+				       oOdDr.detail_idx,
+				       po.pname,
+				       po.oname,
+				       po.saleprice,
+				       po.addprice,
+				       sum(oOdDr.quantity) AS quantitySum,
+				       oOdDr.deli_stat,
+				       oOdDr.ridx,
+				       oOdDr.contents
+				FROM oOdDr
+				INNER JOIN po
+				ON oOdDr.oidx=po.oidx
+				WHERE oOdDr.midx=#{midx} AND NOT oOdDr.deli_stat='(null)'
+				GROUP BY oOdDr.rdate, oOdDr.deli_com, oOdDr.order_idx,oOdDr.detail_idx,po.pname,po.oname,po.saleprice,po.addprice,oOdDr.deli_stat,oOdDr.ridx,oOdDr.contents
+				ORDER BY oOdDr.rdate
+				DESC) A 
+		     WHERE rownum <= #{lastPost} ) B
+	 	WHERE rnum >= #{startPost}
+	 	]]>
 	</select>
 	
 	

@@ -51,7 +51,7 @@
 								<div>
 									<a id="loginName" href="/MyPage/main.do">${sessionScope.UserVO.uname}</a> 님
 								</div>
-								<a href="/MyPage/main.do" id="hearderMemberJoin">마이페이지</a>
+								<a href="/MyPage/main.do?page=1" id="hearderMemberJoin">마이페이지</a>
 								<span>｜</span>
 								<a id="headerLogin" data-bs-toggle="modal" data-bs-target="#logOut_motal" class="pointer">로그아웃</a>	
 							</c:otherwise>
