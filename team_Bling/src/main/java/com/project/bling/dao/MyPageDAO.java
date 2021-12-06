@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.UserVO;
 
 @Repository
 public class MyPageDAO {
@@ -40,4 +41,13 @@ public class MyPageDAO {
 		sqlSession.insert(mm+"reviewWrite2", vo);
 	}
 	
+	//회원정보수정 첫번째 비밀번호 확인시 갖고오는 이름정보
+	public UserVO confirm(int midx) throws Exception{
+		return sqlSession.selectOne(mm+"confirm",midx);
+	}
+	
+	//회원정보 수정
+	public void remodify(UserVO uv) throws Exception{
+		sqlSession.update(mm+"remodify",uv);
+	}
 }

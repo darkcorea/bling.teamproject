@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.bling.dao.MyPageDAO;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.UserVO;
 
 @Service("MyPageService")
 public class MyPageServiceImpl implements MyPageService {
@@ -51,7 +52,17 @@ public class MyPageServiceImpl implements MyPageService {
 		
 	}
 	
+	//회원정보수정 첫번째 비밀번호 확인시 갖고오는 이름정보
+	@Override
+	public UserVO confirm(int midx) throws Exception {
+		return myPageDAO.confirm(midx);
+	}
 	
-
+	//회원정보 수정
+	@Override
+	public void remodify(UserVO uv) throws Exception {
+		myPageDAO.remodify(uv);
+	}
+	
 	
 }

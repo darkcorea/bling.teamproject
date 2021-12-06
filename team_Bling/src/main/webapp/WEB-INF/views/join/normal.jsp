@@ -447,24 +447,6 @@
 						    </div>
 						  </div>
 						</div> 
-  <!-- 회원가입완료 -->						
-						 <!-- <div class="modal fade" id="joincomplete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-						    <div class="modal-content">
-						      <div class="modal-header text-center" id="header1">
-						        <h3 class="modal-title w-100 text-light" id="exampleModalLabel" >회원 가입 완료</h3>
-						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						      </div>
-						      <div class="modal-body">
-						        	가입이 정상적으로 완료되었습니다.
-						      </div>
-						      <div class="modal-footer mx-auto ">
-						        <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal" id="header1">홈으로</button>
-						        <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal" id="header1">확인</button>
-						      </div>
-						    </div>
-						  </div>
-						</div> -->
                 </form>
              </section>
 		</div>
