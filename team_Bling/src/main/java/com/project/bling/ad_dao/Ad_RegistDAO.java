@@ -72,7 +72,7 @@ public class Ad_RegistDAO {
 	
 	//제품 옵션 삭제하기
 	public void deleteOpt(int oidx) throws Exception{
-		sqlSession.delete(am+"deleteOpt", oidx);
+		sqlSession.update(am+"deleteOpt", oidx);
 	}
 	
 	// pidx로 제품 이미지 가져오기

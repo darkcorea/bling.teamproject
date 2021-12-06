@@ -24,6 +24,7 @@
 					        FROM bg_product p
 					        LEFT OUTER JOIN bg_image i
 					        ON p.pidx=i.pidx
+					        where p.saleyn='Y'
 					    ),
 				    oro
 					    AS(
@@ -56,7 +57,7 @@
 	<select id="productCount" resultType="int" parameterType="String">
 		SELECT count(pidx) 
 		FROM bg_product 
-		WHERE kind=#{kind}
+		WHERE kind=#{kind} AND saleyn='Y'
 	</select>
 	
 	<!-- 홈, 상품 리스트에서 같이 쓰는 메퍼-->
@@ -184,7 +185,7 @@
 	<select id="optionsProduct" parameterType="int" resultType="OptionVO">
 		SELECT oidx, pidx, oname, addprice, stock
 		FROM bg_option
-		WHERE pidx = #{pidx} AND saleyn='Y'
+		WHERE pidx = #{pidx} AND saleyn='Y' and delyn='N'
 	</select>
 	
 	<!-- 상품 이미지 -->
@@ -206,10 +207,12 @@
 	               p.discount,
 	               p.price,
 	               p.saleprice,
-	               i.main
+	               i.main,
+	               p.saleyn
 	        FROM bg_product p
 	        LEFT OUTER JOIN bg_image i
 	        ON p.pidx=i.pidx
+	        where p.saleyn='Y'
 	    ),
 	oro
 	    AS(

@@ -85,7 +85,7 @@
 	
 	<!-- 상품 옵션 불러오기 -->
 	<select id="oblist" resultType="OptionVO" parameterType="int">
-	SELECT * FROM bg_option WHERE 1=1
+	SELECT * FROM bg_option WHERE 1=1 AND delyn='N'
 	<if test=" _parameter != null">AND pidx=#{pidx}</if>
 	</select>
 	
@@ -109,9 +109,9 @@
 	</update>
 	
 	<!-- 제품 옵션 삭제하기 -->
-	<delete id="deleteOpt" parameterType="int">
-		DELETE FROM bg_option WHERE oidx=#{oidx}
-	</delete>
+	<update id="deleteOpt" parameterType="int">
+		UPDATE bg_option SET delyn='Y' WHERE oidx=#{oidx}
+	</update>
 	
 	<!-- pidx로 제품이미지 가져오기 -->
 	<select id="image" parameterType="int" resultType="ImageVO">
