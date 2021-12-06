@@ -1157,6 +1157,7 @@
 					success:function(data){
 						if(data=="save"){
 							alert("장바구니에 담겼습니다");
+							location.reload();
 						}else{
 							alert(data+' 상품이 장바구니에 존재합니다');
 						}
