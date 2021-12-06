@@ -40,4 +40,12 @@ public class MyPageDAO {
 		sqlSession.insert(mm+"reviewWrite2", vo);
 	}
 	
+	public CombineVO reviewDetail(int ridx) throws Exception {
+		return sqlSession.selectOne(mm+"reviewDetail", ridx);
+	}
+	
+	public void reviewDelete(int ridx) throws Exception {
+		System.out.println("마이페이지 DAO-delete - ridx : "+ridx);
+		sqlSession.delete(mm+"reviewDelete", ridx);
+	}
 }

@@ -12,5 +12,6 @@ public interface MyPageService {
 	public void reviewWrite(CombineVO vo) throws Exception;
 	public void reviewWrite1(CombineVO vo) throws Exception;
 	public void reviewWrite2(CombineVO vo) throws Exception;
-	
+	public CombineVO reviewDetail(int ridx) throws Exception;
+	public void reviewDelete(int ridx) throws Exception;
 }

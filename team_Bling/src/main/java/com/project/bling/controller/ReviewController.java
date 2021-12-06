@@ -3,7 +3,9 @@ package com.project.bling.controller;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
@@ -28,8 +32,7 @@ public class ReviewController {
 	@Autowired
 	ReviewService reviewService;
 	
-	@Autowired
-    String uploadPath;
+    String uploadPath = "D:\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
 	
 	
 	
@@ -68,15 +71,6 @@ public class ReviewController {
 		pm.setScri(sc);
 		pm.setTotalCount(reviewCount);
 		
-		
-		/*
-		 * System.out.println("페이지 번호>>>>"+sc.getPage());
-		 * System.out.println("StartPage>>>>>>>>>>>"+pm.getStartPage());
-		 * System.out.println("EndPage>>>>>>>>>>>>>>"+pm.getEndPage());
-		 * System.out.println("시작하는 페이지 번호>>>>>>>>>>"+pm.getStartPost());
-		 * System.out.println("마지막 페이지 번호>>>>>>>>>>"+pm.getLastPost());
-		 */
-		 
 		 
 		// 페이징 된 리뷰들 
 		model.addAttribute("page", reviewService.reviewProduct_1(pm));
@@ -89,26 +83,82 @@ public class ReviewController {
 	
 	/* ---------------------------myPage reviewList--------------------------- */
 	@RequestMapping(value="/myReview.do")
-	public String reviewList(Model model, CombineVO vo, HttpSession session) throws Exception {
+	public String reviewList(HttpSession session) throws Exception {
+		if(session.getAttribute("UserVO") == null) {
+			return "redirect:/Login/main.do";
+		}
+		return "myPage/myReview";
+	}
+	
+	@RequestMapping(value="/reviewlist.do")
+	@ResponseBody
+	public Map<String, Object> reviewlist(CombineVO vo, int page, HttpSession session,String type,String date1,String date2) throws Exception {
 		
-		//session의 midx를 CombineVO에 저장
-		UserVO uv = (UserVO)session.getAttribute("UserVO");
-		int midx = uv.getMidx();
-		vo.setMidx(midx);
+		// 로그인이 풀렸을 떄 대비해서 넣음
+				
+			
+			//session의 midx를 CombineVO에 저장
+			UserVO uv = (UserVO)session.getAttribute("UserVO");
+			int midx = uv.getMidx();
+			vo.setMidx(midx);
+			
+			// midx에 대한 리뷰 개수
+			int reviewCount = reviewService.reviewCnt(midx);
+			// 가져오는 페이지 수 5
+			Criteria sc = new Criteria();
+			sc.setPerPageNum(5);
+			sc.setPage(page);
+			
+			// 페이징 하기 위해서 필요한 값들 넣음
+			PageMaker pm = new PageMaker();
+			pm.setScri(sc);
+			pm.setMidx(midx);	//PageMaker 필드 수정 안 하려고 pidx필드에 그냥 midx setter주입
+			pm.setTotalCount(reviewCount);
+			pm.setType(type);
+			pm.setKind(type);
+			sc.setRdate1(date1);
+			sc.setRdate2(date2);
+			
+			Map<String, Object> review_list = new HashMap<String, Object>();
+			
+			review_list.put("reviewList", reviewService.reviewPaging(pm));
+			review_list.put("pm", pm);
+			review_list.put("page",page);
+			
+			System.out.println(">>>>page+"+page);
+			System.out.println("pagenum"+sc.getPerPageNum());
+			System.out.println(">>>>+pm.startpage++"+pm.getLastPost());
+			System.out.println(">>>>+pm.endpage++"+pm.getStartPost());
+			
+			return review_list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/type.do")
+	public Map<String,Object> type(CombineVO vo, PageMaker pm, HttpSession session,String type,String date1,String date2) throws Exception {
 		
 		CombineVO vo2 = new CombineVO();
-		
+		vo.setKind(type);
 		/* LocalDate now = LocalDate.now(); */
 		
 		String pattern = "yyyy-MM-dd";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
+		
 		//오늘 날짜
 		String today = simpleDateFormat.format(new Date());
 		//현재시간
 		Calendar cal = Calendar.getInstance();
 		
-		//System.out.println("마이페이지 컨트롤러2- kind 값 : "+vo.getKind());
+		Criteria cri = new Criteria();
+		
+		System.out.println("마이페이지 컨트롤러2- kind 값 : "+vo.getKind());
+		
+		
+		System.out.println("date1 : "+date1);
+		System.out.println("date2 : "+date2);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
 		
 		if("A".equals(vo.getKind())) {
 			System.out.println("A실행");
@@ -158,22 +208,29 @@ public class ReviewController {
 		}else if("G".equals(vo.getKind())) {
 			System.out.println("F실행");
 			//3년 전
-			vo2.setRdate1(vo.getRdate1());
-			vo2.setRdate2(vo.getRdate2());
+			
+			cri.setRdate1(date1);
+			cri.setRdate2(date2);
+			
+			
 		}
-		
-		model.addAttribute("reviewList", reviewService.reviewList(vo));
-		//System.out.println("마이페이지 컨트롤러-DB>리뷰리스트 : "+myPage_myReviewService.reviewList(vo));
-		//System.out.println("마이페이지 컨트롤러-DB>리뷰리스트>index 0 : "+myPage_myReviewService.reviewList(vo).get(0));
-		//System.out.println("마이페이지 컨트롤러-DB>리뷰리스트(index 1)-main 사진 : "+myPage_myReviewService.reviewList(vo).get(1).getMain());
-		//System.out.println("마이페이지 컨트롤러-DB>리뷰리스트(index 0)-image1 사진 : "+myPage_myReviewService.reviewList(vo).get(0).getImage1());
 		
 		//새로 vo2에 넣지 않고 위의 vo(=CombineVO)에 데이터를 넣으면 리턴값이 List이기 때문에 원하는 값을 화면에 출력할 수 없다.
 		//따라서 새로 vo2를 만들어서 List<CombineVO>가 아닌 그냥 CombineVO의 필드값으로 저장해야 원하는 값을 화면에 출력할 수 있다.
-		model.addAttribute("date", vo2);
 		
-		return "myPage/myReview";
+		if("G".equals(vo.getKind())) {
+			map.put("date1", cri.getRdate1() );
+			map.put("date2", cri.getRdate2());
+		}else {
+			map.put("date1", vo2.getRdate1() );
+			map.put("date2", vo2.getRdate2());
+		}
+		
+		
+		System.out.println(cri.getRdate1());
+		
+		return map;
+		
 	}
-	
 	
 }

@@ -33,86 +33,24 @@ public class CombineVO {
 	private String rdate;
 	// delivery
 	private String deli_stat;
-	private String cancel;
-	private String refund;
-	private String exchange;
-	private String order_yn;
-	private long invoice_num;
-	private String confirm_yn;
 	// order
 	private int order_idx;
 	private int midx;
-	private int tot_price;
 	// like
 	private int interest_idx;
 	// 임의로 정한 
 	private int reviewCount;
 	private int quantitySum;
 	private int quantity;
-	private int count;
-	private int	date_differ;
+	private String rdate1;
+	private String rdate2;
+	private String path;
 	// 임의(MyPageMapper)
 	private int orderCompCnt;
 	private int deliStatCnt;
-	private String rdate1;
-	private String rdate2;
 	
 	
 	
-	public int getDate_differ() {
-		return date_differ;
-	}
-	public void setDate_differ(int date_differ) {
-		this.date_differ = date_differ;
-	}
-	public int getCount() {
-		return count;
-	}
-	public void setCount(int count) {
-		this.count = count;
-	}
-	public String getCancel() {
-		return cancel;
-	}
-	public void setCancel(String cancel) {
-		this.cancel = cancel;
-	}
-	public String getRefund() {
-		return refund;
-	}
-	public void setRefund(String refund) {
-		this.refund = refund;
-	}
-	public String getExchange() {
-		return exchange;
-	}
-	public void setExchange(String exchange) {
-		this.exchange = exchange;
-	}
-	public String getOrder_yn() {
-		return order_yn;
-	}
-	public void setOrder_yn(String order_yn) {
-		this.order_yn = order_yn;
-	}
-	public long getInvoice_num() {
-		return invoice_num;
-	}
-	public void setInvoice_num(long invoice_num) {
-		this.invoice_num = invoice_num;
-	}
-	public String getConfirm_yn() {
-		return confirm_yn;
-	}
-	public void setConfirm_yn(String confirm_yn) {
-		this.confirm_yn = confirm_yn;
-	}
-	public int getTot_price() {
-		return tot_price;
-	}
-	public void setTot_price(int tot_price) {
-		this.tot_price = tot_price;
-	}
 	public int getInterest_idx() {
 		return interest_idx;
 	}
@@ -316,6 +254,12 @@ public class CombineVO {
 	}
 	public void setRdate2(String rdate2) {
 		this.rdate2 = rdate2;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
 	}
 	
 	

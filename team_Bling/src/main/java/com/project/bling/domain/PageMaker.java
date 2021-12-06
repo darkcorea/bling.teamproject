@@ -17,11 +17,19 @@ public class PageMaker {
 	private Criteria scri;			// 페이지와 화면에 표현될 게시글의 숫자 값이 담긴 클래스, 서치 할 떄도 사용가능
 	// pidx 추가 매퍼 입력 할 때 이게 없으면 파라미터 타입이 2개가 됨
 	private int pidx;
+	private int midx;
 	private String kind;
 	private int start;
 	private int end;
 	private String type;
 	
+	
+	public int getMidx() {
+		return midx;
+	}
+	public void setMidx(int midx) {
+		this.midx = midx;
+	}
 	public String getType() {
 		return type;
 	}

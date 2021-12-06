@@ -13,6 +13,8 @@ public class Criteria {
 	private int price;
 	private int start_price;
 	private int last_price;
+	private String rdate1;
+	private String rdate2;
 	
 
 	public String getKind() {
@@ -62,6 +64,18 @@ public class Criteria {
 	}
 	public void setPerPageNum(int perPageNum) {
 		this.perPageNum = perPageNum;
+	}
+	public String getRdate1() {
+		return rdate1;
+	}
+	public void setRdate1(String rdate1) {
+		this.rdate1 = rdate1;
+	}
+	public String getRdate2() {
+		return rdate2;
+	}
+	public void setRdate2(String rdate2) {
+		this.rdate2 = rdate2;
 	}
 	
 	
