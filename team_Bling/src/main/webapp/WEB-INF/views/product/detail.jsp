@@ -127,7 +127,7 @@
 						<c:when test="${sessionScope.UserVO.id == null}">
 							<div class="btn-two">
 								<button type="button" class="btn btn-danger" onclick="nonorder()">비회원 바로구매</button>
-								<button type="button" class="btn btn-light">장바구니</button>
+								<button type="button" class="btn btn-light" onclick="location.href='/Basket/cart.do'">장바구니</button>
 								&ensp;<i class="bi bi-suit-heart" id="heart" onclick="heart(${detail.pidx})"></i>	
 							</div>
 						</c:when>

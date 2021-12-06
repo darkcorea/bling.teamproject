@@ -78,7 +78,7 @@
 	.email{
 		width:300px;
 	}
-	#addInfo{
+	.addInfo{
 		font-size:9pt;
 		color:#cd2828;
 		text-decoration-line: none;
@@ -237,7 +237,7 @@
 				</tr>
 				<tr class="line">
 					<td class="gray"><span class="white">적립금</span></td>
-					<td class="fill"><span class="point"></span><a href="" id="addInfo" data-bs-toggle="modal" data-bs-target="#exampleModal">등급별 적립금 혜택 보기</a></td>
+					<td class="fill"><span class="point"></span><a href="" class="addInfo" data-bs-toggle="modal" data-bs-target="#exampleModal">등급별 적립금 혜택 보기</a></td>
 				</tr>
 				<tr class="line">
 					<td class="gray"><span class="white">총결제금액</span></td>
@@ -245,7 +245,7 @@
 						<span class="total"></span>
 						<span id="s1"><input type="text" name="mile" placeholder="사용할 적립금 입력" class="mile"></span>
 						<span><input type="checkbox" id="checkBoxId">적립금 전액 사용</span>
-						<span id="addInfo">(내 적립금 : ${sessionScope.UserVO.mileage}원)</span>
+						<span class="addInfo" id="point1"></span>
 					</td>
 				</tr>
 				<tr>
@@ -273,13 +273,13 @@
 			<p id="checkall" class="line"><input type="checkbox" name="all">모든 약관 동의</p>
 			<p>
 				<input type="checkbox" name="c1"><span class="red">[필수]</span>쇼핑몰 이용약관 동의
-				<span id="addInfo">
+				<span class="addInfo">
 					<a id="view" href="" data-bs-toggle="modal" data-bs-target="#Show_Modal1">내용보기</a>
 				</span>
 			</p>
 			<p class="line">
 				<input type="checkbox" name="c1"><span class="red">[필수]</span>개인정보 처리방침 동의
-				<span id="addInfo">
+				<span class="addInfo">
 					<a id="view" href="" data-bs-toggle="modal" data-bs-target="#Show_Modal1">내용보기</a>
 				</span>
 			<br><br>
@@ -616,7 +616,14 @@ $(document).ready(function(){
 	var G = parseInt(price*0.02);
 	var S = parseInt(price*0.01);
 	var mymile =  "${sessionScope.UserVO.mileage}";
+	var mym = parseInt(mymile);
+	var point1 = mym.toLocaleString();
+	console.log(point1);
+	var str = "(내 적립금 : ";
+	str += point1;
+	str += "원)";
 	$("#mileage").val(mymile);
+	$("#point1").html(str);
 	$(".email").html(email);
 	$(".phone").html(phone);
 	if(grade=="G"){
@@ -655,17 +662,17 @@ $(document).ready(function(){
 	           $(".mile").val(mymile);
 	           $("#mileage").val(result);
 	           $("#tot_price").val(result2);
-	           $(".total").text(result2.toLocaleString());
+	           $(".total").text(result2.toLocaleString()+"원");
 	        }else{
 	        	 $(".mile").val("");
 	        	 $("#mileage").val(mymile);
 	        	 if(price<100000){
 	        			$("#tot_price").val(total);
-	        			$(".total").text(total.toLocaleString());
+	        			$(".total").text(total.toLocaleString()+"원");
 	        		}
 	        		else{
 	        			$("#tot_price").val(price);
-	        			$(".total").text(price.toLocaleString());
+	        			$(".total").text(price.toLocaleString()+"원");
 	        		}
 	        }
 	    });
