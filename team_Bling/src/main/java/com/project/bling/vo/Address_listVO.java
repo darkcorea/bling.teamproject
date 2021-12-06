@@ -4,7 +4,7 @@ public class Address_listVO {
 	private int addr_idx;
 	private int midx;
 	private String addr_name;
-	private int zip_code;
+	private String zip_code;
 	private String addr1;
 	private String addr2;
 	private String rphone;
@@ -36,10 +36,10 @@ public class Address_listVO {
 	public void setAddr_name(String addr_name) {
 		this.addr_name = addr_name;
 	}
-	public int getZip_code() {
+	public String getZip_code() {
 		return zip_code;
 	}
-	public void setZip_code(int zip_code) {
+	public void setZip_code(String zip_code) {
 		this.zip_code = zip_code;
 	}
 	public String getAddr1() {
