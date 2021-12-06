@@ -301,7 +301,7 @@ function iamport(){
 	var addr = $("#address1").val();
 	IMP.init('imp72441252');
 	if(agree == false){
-		alert("동의체크");
+		alert("약관 동의에 체크해주세요");
 		 return;
 	}
 	else{ if(payment=="카드"){
