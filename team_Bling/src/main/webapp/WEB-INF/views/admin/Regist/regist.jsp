@@ -126,7 +126,7 @@
 						<th>추가 가격 : </th>
 						<td colspan="3"><input type="number" name="addprice" size="13" class="addprice_frm1">  원</td>
 						<th>재고 수량 : </th>
-						<td><input type="number" name="stock" size="8"></td>
+						<td><input type="number" name="stock" size="8" id="stock_frm1"></td>
 					</tr>
 					<tr>
 						<th>옵션 이름 : </th>
@@ -165,7 +165,7 @@
 						<th>추가 가격 : </th>
 						<td colspan="3"><input type="number" name="addprice" size="13" class="addprice_frm2"> 원</td>
 						<th>재고 수량 : </th>
-						<td><input type="number" name="stock" size="8"></td>
+						<td><input type="number" name="stock" size="8" id="stock_frm2"></td>
 					</tr>
 					<tr>
 						<th>옵션 이름 : </th>
@@ -204,7 +204,7 @@
 						<th>추가 가격 : </th>
 						<td colspan="3"><input type="number" name="addprice" size="13" class="addprice_frm3"> 원</td>
 						<th>재고 수량 : </th>
-						<td><input type="number" name="stock" size="8"></td>
+						<td><input type="number" name="stock" size="8" id="stock_frm3"></td>
 					</tr>
 					<tr>
 						<th>옵션 이름 : </th>
@@ -344,6 +344,11 @@ function select_fn(type){
      radioVal += "원 ";
      
      document.getElementById("result_"+type).value=radioVal;
+     
+     let stock = $("#stock_"+type).val();
+     if(stock == 0){
+    	 $("#stock_"+type).val(99999);
+     }
 	
 }
 

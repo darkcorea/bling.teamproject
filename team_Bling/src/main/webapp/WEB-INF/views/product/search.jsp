@@ -281,8 +281,8 @@ function search_fn(){
 	let kind = $('input[name=kind]:checked').val();
 	let price = $('input[name=price]:checked').val();
 	let keyword = $("#keyword").val();
-	let start_price = $("#start_price").val();
-	let last_price = $("#last_price").val();
+	let start_price =  parseInt($("#start_price").val());
+	let last_price =  parseInt($("#last_price").val());
 	
 	console.log("시작 가격: "+start_price);
 	console.log("마지막 가격: "+last_price);

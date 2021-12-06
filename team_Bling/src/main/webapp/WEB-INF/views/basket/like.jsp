@@ -109,7 +109,7 @@
 		</div>
 		
 		<!-- nav옆에 있는 영역 -->
-		<div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9" id="sectionCol">
+		<div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9" id="sectionCol" style="min-height:800px;">
 			<div><br><br><br>
 				<span class="title">관심 상품 </span><span class="title1">최근 1년간의 관심상품 내역이 제공됩니다.</span>
 			</div><br>

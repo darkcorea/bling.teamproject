@@ -93,6 +93,7 @@ public class Ad_RegistController {
 		// 페이징된 리스트와 필요한 값 페이지로 보내기
 		model.addAttribute("pm", pm);
 		model.addAttribute("list", ad_registService.list(pm));
+		model.addAttribute("count", product_count);
 		
 		// 옵션 정보 페이지로 보내기
 		model.addAttribute("oblist", ad_registService.oblist());

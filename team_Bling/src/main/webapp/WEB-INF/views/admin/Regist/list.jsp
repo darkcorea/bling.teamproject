@@ -105,6 +105,7 @@ $(document).ready(function () {
 			<option value="/Ad_regist/list.do?page=1&kind=N">목걸이</option>
 			<option value="/Ad_regist/list.do?page=1&kind=B">팔찌</option>
 		</select>
+		<span> 상품 갯수 : <c:out value="${count}" />개</span>
 		</div>
 		<br><br><br>
 		

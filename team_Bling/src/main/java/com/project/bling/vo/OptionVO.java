@@ -7,12 +7,20 @@ public class OptionVO {
 	private int addprice;
 	private int stock;
 	private String saleyn;
+	private String delyn;
 	private int pidx;
 	private String oname;
 	private String sizes;
 	private String texture;
 	
 	
+	
+	public String getDelyn() {
+		return delyn;
+	}
+	public void setDelyn(String delyn) {
+		this.delyn = delyn;
+	}
 	public int getOidx() {
 		return oidx;
 	}
