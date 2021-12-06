@@ -6,7 +6,7 @@ public class UserVO {
 	private String id;
 	private String pwd;
 	private String email;
-	private int zip_code;
+	private String zip_code;
 	private String addr1;
 	private String addr2;
 	private String phone;
@@ -66,10 +66,10 @@ public class UserVO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getZip_code() {
+	public String getZip_code() {
 		return zip_code;
 	}
-	public void setZip_code(int zip_code) {
+	public void setZip_code(String zip_code) {
 		this.zip_code = zip_code;
 	}
 	public String getAddr1() {

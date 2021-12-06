@@ -280,5 +280,20 @@ public class MyPageController {
 		System.out.println("마이페이지 컨트롤러-session.getAttribute(\"imageData2\") 삭제 확인: "+session.getAttribute("imageData2"));
 		
 	}
+	
+	//회원정보 수정
+	
+	//회원정보수정 첫번째 비밀번호 확인시 갖고오는 이름정보
+	@RequestMapping(value="/modify.do")
+	public String modify(Model model,HttpSession session)throws Exception{
+		//로그인시 세션에 저장된 회원정보 불러오기
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		//회원정보에서 회원번호만 선택
+		int midx = uv.getMidx();
+		
+		
+				
+		return "myPage/modify";
+	}
 
 }
