@@ -14,7 +14,7 @@ public class NonorderVO {
 	private String email;
 	private String phone;
 	private String recipient;
-	private int zip_code;
+	private String zip_code;
 	private String addr1;
 	private String addr2;
 	private String rphone;
@@ -101,11 +101,11 @@ public class NonorderVO {
 		this.recipient = recipient;
 	}
 
-	public int getZip_code() {
+	public String getZip_code() {
 		return zip_code;
 	}
 
-	public void setZip_code(int zip_code) {
+	public void setZip_code(String zip_code) {
 		this.zip_code = zip_code;
 	}
 
