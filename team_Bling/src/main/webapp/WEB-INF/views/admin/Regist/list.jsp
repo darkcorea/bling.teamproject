@@ -127,7 +127,7 @@ $(document).ready(function () {
 				<td><c:out value="${list.pidx}"/></td>
 				
 				<!-- 상품이미지 -->
-				<td><img class="img-thumbnail image" src="/resources/image/${list.main}"></td>
+				<td><a href="/Ad_regist/modify.do?pidx=${list.pidx}"><img class="img-thumbnail image" src="/resources/image/${list.main}"></a></td>
 				
 				<!-- 상품종류 -->
 				<td>
@@ -210,7 +210,7 @@ $(document).ready(function () {
 					<c:if test="${pm.prev == true}">
 					<li class='page-item'>
 					<c:set var="prev" value="${pm.startPage -1}"/>
-						<a class='page-link' aria-label='Previous' href="/Ad_regist/list.do?page=${prev}">
+						<a class='page-link' aria-label='Previous' href="/Ad_regist/list.do?page=${prev}&kind=${pm.kind}">
 							<span aria-hidden='true' class='pointer' >&laquo;</span>
 						</a>
 					</li>
@@ -221,14 +221,14 @@ $(document).ready(function () {
 					<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
 						<c:if test = "${pageNum == page}">
 						<li class="page-item active">	
-							<a class="page-link pointer" href="/Ad_regist/list.do?page=${pageNum}">
+							<a class="page-link pointer" href="/Ad_regist/list.do?page=${pageNum}&kind=${pm.kind}">
 								<c:out value="${pageNum}"/>
 							</a>
 						</li>
 						</c:if>
 						<c:if test = "${pageNum != page}">
 						<li class="page-item">	
-							<a class="page-link pointer" href="/Ad_regist/list.do?page=${pageNum}">
+							<a class="page-link pointer" href="/Ad_regist/list.do?page=${pageNum}&kind=${pm.kind}">
 								<c:out value="${pageNum}"/>
 							</a>
 						</li>
@@ -238,7 +238,7 @@ $(document).ready(function () {
 					<!-- 뒤로 가기 버튼 , 키워드 유지하면서 이동하기 -->
 					<c:if test="${pm.next && pm.endPage > 0}">
 					<li class='page-item'>
-						<a class='page-link' aria-label='Next' href="/Ad_regist/list.do?page=${pm.endPage + 1}">
+						<a class='page-link' aria-label='Next' href="/Ad_regist/list.do?page=${pm.endPage + 1}&kind=${pm.kind}">
 							<span aria-hidden='true' class='pointer'>&raquo;</span>
 						</a>
 					</li>
