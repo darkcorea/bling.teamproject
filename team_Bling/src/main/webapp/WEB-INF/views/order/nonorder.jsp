@@ -460,17 +460,17 @@ $(document).ready(function(){
 	
 	
 	var price = ${tot_price};
-	$(".productprice").text(price.toLocaleString());
+	$(".productprice").text(price.toLocaleString()+"원");
 	const shipping = 2500;
 	var total = price+shipping;
 	
 	if(price<100000){
-		$(".shipping").text(shipping.toLocaleString());
-		$(".total").text(total.toLocaleString());
+		$(".shipping").text(shipping.toLocaleString()+"원");
+		$(".total").text(total.toLocaleString()+"원");
 		$("#tot_price").val(total);
 	}
 	else{
-		$(".total").text(price.toLocaleString());
+		$(".total").text(price.toLocaleString()+"원");
 		$("#tot_price").val(price);
 	}
 	
