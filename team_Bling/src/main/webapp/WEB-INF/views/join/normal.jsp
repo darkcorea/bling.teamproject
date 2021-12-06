@@ -369,7 +369,7 @@
                     
                     <div class="rows h" id="liner">
                         <label for="phone1">연락처<span class="red">*</span></label>
-                        <input type="number" class="imporx impor" name="phone" placeholder="연락처를 입력하세요" maxlength="11" id="phone" style="width:382px">
+                        <input type="number" class="imporx impor" name="phone" placeholder="연락처를 입력하세요(숫자만)" maxlength="11" id="phone" style="width:382px">
                         <input type="button" class="phone" value="인증번호 받기" style="display:none;">
                         <span class="check"></span>
                     </div>
@@ -507,45 +507,56 @@
 			console.log(what);
 			if(what==1){
 				var iddata = $('#id').val();
-				console.log(iddata);
-				 $.ajax({
-					url:"/Join/confirmid.do",
-					type:"POST",
-					data:{"iddata":iddata},
-					ContentType:"application/json",
-					success:function(data){
-						console.log(data);
-						if(data == "no"){
-							document.getElementById("id").value ='';
-							alert("존재하는 아이디입니다.");
-						}else if(data == "yes"){
-							$("#repeat1").val('Y');
-							console.log(document.getElementById("repeat1").value);
-							alert("사용할 수 있는 아이디입니다.");
+				console.log(">>>>>>>>>>>>>>>>>>>>>>>iddata>"+iddata);
+				if(iddata == ""){
+					alert("아이디를 입력해주세요.");
+				}else{
+					console.log(iddata);
+					 $.ajax({
+						url:"/Join/confirmid.do",
+						type:"POST",
+						data:{"iddata":iddata},
+						ContentType:"application/json",
+						success:function(data){
+							console.log(data);
+							if(data == "no"){
+								document.getElementById("id").value ='';
+								alert("존재하는 아이디입니다.");
+							}else if(data == "yes"){
+								$("#repeat1").val('Y');
+								console.log(document.getElementById("repeat1").value);
+								alert("사용할 수 있는 아이디입니다.");
+							}
+						},error:function(){
+							alert("중복확인 에러!")
 						}
-					},error:function(){
-						alert("중복확인 에러!")
-					}
-				}); 
+					}); 
+				}
+				
 			}else if(what==2){
 				var emaildata = $('#email').val();
-				$.ajax({
-					url:"/Join/confirmemail.do",
-					type:"POST",
-					data:{"emaildata":emaildata},
-					ContentType:"application/json",
-					success:function(data){
-						if(data == "no"){
-							document.getElementById("email").value ='';
-							alert("존재하는 이메일입니다.");
-						}else if(data == "yes"){
-							$("#repeat2").val('Y');
-							alert("사용할 수 있는 이메일입니다.");
+				console.log(">>>>>>>>>>>>>>>>>>>>>>>iddata2222>"+iddata);
+				if(emaildata == null){
+					alert("이메일을 입력해주세요.");
+				}else{
+					$.ajax({
+						url:"/Join/confirmemail.do",
+						type:"POST",
+						data:{"emaildata":emaildata},
+						ContentType:"application/json",
+						success:function(data){
+							if(data == "no"){
+								document.getElementById("email").value ='';
+								alert("존재하는 이메일입니다.");
+							}else if(data == "yes"){
+								$("#repeat2").val('Y');
+								alert("사용할 수 있는 이메일입니다.");
+							}
+						},error:function(){
+							alert("중복확인 에러!")
 						}
-					},error:function(){
-						alert("중복확인 에러!")
-					}
-				});
+					});
+				}
 			}
 		}
 		

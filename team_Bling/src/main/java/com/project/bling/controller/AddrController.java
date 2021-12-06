@@ -54,7 +54,7 @@ public class AddrController {
 	//주소록 등록
 	@RequestMapping(value="/insert.do")
 	@ResponseBody
-	public void insert(HttpSession session, Address_listVO al,String addr_name,int zip_code
+	public void insert(HttpSession session, Address_listVO al,String addr_name,String zip_code
 			 ,String addr1,String addr2,String rphone,String name,int basic_addr)throws Exception{
 		//로그인시 세션에 저장된 회원정보 불러오기
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
@@ -88,7 +88,7 @@ public class AddrController {
 	
 	//주소록 수정
 	@RequestMapping(value="/Remodify.do")
-	public String Remodify(Address_listVO al,int midx,int addr_idx,String addr_name,int zip_code
+	public String Remodify(Address_listVO al,int midx,int addr_idx,String addr_name,String zip_code
 			 ,String addr1,String addr2,String rphone,String name,int basic_addr)throws Exception{
 		 
 		al.setAddr_idx(addr_idx);
