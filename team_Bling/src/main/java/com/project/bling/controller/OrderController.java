@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.service.OrderService;
 import com.project.bling.vo.NonorderVO;
+import com.project.bling.vo.OptionVO;
 import com.project.bling.vo.OrderVO;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
@@ -132,6 +133,12 @@ public class OrderController {
 		
 		System.out.println("midx>>>>>>>>>"+midx);
 		return orderService.addr_select(midx);
+	}
+	@RequestMapping(value="/stock_update.do")
+	@ResponseBody
+	public int stock_update(OptionVO vo) throws Exception{
+		orderService.stock_update(vo);
+		return 1;
 	}
 	
 }
