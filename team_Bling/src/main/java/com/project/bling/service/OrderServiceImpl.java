@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.bling.dao.OrderDAO;
 import com.project.bling.vo.NonorderVO;
+import com.project.bling.vo.OptionVO;
 import com.project.bling.vo.OrderVO;
 
 @Service("OrderService")
@@ -49,6 +50,12 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderVO> addr_select(int midx) throws Exception {
 		
 		return orderDAO.addr_select(midx);
+	}
+
+	@Override
+	public void stock_update(OptionVO vo) throws Exception {
+		orderDAO.stock_update(vo);
+		
 	}
 	
 	

@@ -918,17 +918,19 @@
 	      var data = new Object();
 	      
 	      option1 = <c:out value="${options.oidx}"/>;
-	     
+	     stock = <c:out value="${options.stock}"/>;
 	      quntity = $("#add_option"+option1).text();
-	      //console.log(quntity);
+	     // console.log("stock>>>>>"+stock);
+	     // console.log(option1);
 	      if (quntity != "" ){
 	         data.oidx = option1;
 	         data.quntity = quntity;
+	         data.stock = stock;
 	         List.push(data);
 	      }
 	      </c:forEach>
 	      let jsonData = JSON.stringify(List);
-	      //console.log(jsonData);
+	      console.log(jsonData);
 		
 																	 
 	      var frm = document.createElement("form");
@@ -979,12 +981,13 @@
 	      var data = new Object();
 	      
 	      option1 = <c:out value="${options.oidx}"/>;
-	     
+	      stock = <c:out value="${options.stock}"/>;
 	      quntity = $("#add_option"+option1).text();
 	      //console.log(quntity);
 	      if (quntity != "" ){
 	         data.oidx = option1;
 	         data.quntity = quntity;
+	         data.stock = stock;
 	         List.push(data);
 	      }
 	      </c:forEach>

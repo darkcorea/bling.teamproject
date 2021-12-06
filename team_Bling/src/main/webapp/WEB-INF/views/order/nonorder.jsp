@@ -15,15 +15,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--  위의 3가지는 먼저 와야 합니다. -->
 <title>주문/결제하기</title>
+<!-- 주소 검색 api -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script src="/js/jquery-3.6.0.min.js"></script>
  <script src="/js/bootstrap.bundle.js"></script>
 <link rel="stylesheet" href="/css/bootstrap.css">
 
-<!-- 주소 검색 api -->
-		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-		
 <style>
 /* 전반적인 크기에 관한 설정 */
 	section, header {
@@ -179,9 +178,9 @@
 				<tr class="line">
 					<td class="gray"><span class="white">배송 주소</span></td>
 					<td class="fill">
-						<input type="text" name="zip_code" placeholder="우편번호" id="zip_code" readonly>
+						<input type="text" name="zip_code" placeholder="우편번호" id="zip_code" >
 						<input type="button" class="t" value="주소검색" onclick="findmyaddr()"><br>
-                        <input type="text" name="addr1" placeholder="기본주소" readonly class="addr" id="address1"><br>
+                        <input type="text" name="addr1" placeholder="기본주소" class="addr" id="address1"><br>
                         <input type="text" name="addr2" placeholder="상세주소를 입력하세요." class="addr" id="address2">
 					</td>
 				</tr>
@@ -285,10 +284,32 @@
 		for(let i =0 ; i<Json.length ; i++){
 		    var oidx = Json[i].oidx;
 		    var quantity = Json[i].quntity;
+		    var stock = Json[i].stock;
+		   
 		    console.log("oidx>>>>>>>>>"+oidx);
 		    console.log("수량>>>>>>>>"+quantity);
+		    console.log("재고>>>>>>>>"+stock);
+		  
 		}
 
+		//주소 찾기 api
+		function findmyaddr(){
+			new daum.Postcode({
+		        oncomplete: function(data) {
+		            var roadAddr = data.roadAddress; // 도로명 주소 변수
+		            var jibunAddr = data.jibunAddress; // 지번 주소 변수
+		            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+		            document.getElementById('zip_code').value = data.zonecode;
+		            if(roadAddr !== ''){
+		                document.getElementById("address1").value = roadAddr;
+		            } 
+		            else if(jibunAddr !== ''){
+		                document.getElementById("address1").value = jibunAddr;
+		            }
+		        }
+		    }).open();
+		}
+		
 function iamport(){
 	var agree = $('input:checkbox[name="c1"]').is(":checked");
 	var payment = $("input[name='payment']:checked").val();
@@ -345,17 +366,14 @@ function iamport(){
 									str += "<form name='fm"+i+"'>";
 								    var oidx = Json[i].oidx;
 								    var quantity = Json[i].quntity;
-								    console.log("oidx는 ????"+oidx);
+								    var stock1 = Json[i].stock;
+								    var stock = stock1-1;
 								    str += "<input type='hidden' name='nonidx' value='"+data+"'>";
 									str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
 									str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
-									
 									str += "</form>";
 									$("#form2").html(str);
-									
-									
 									formData2 = $("form[name=fm"+i+"]").serialize();
-									console.log(formData2);
 									 $.ajax({
 											url:"/Order/orderdetailinsert.do",
 											type:"POST",
@@ -363,6 +381,18 @@ function iamport(){
 											async: false,
 											ContentType:"application/json",
 											success:function(data){
+												$.ajax({
+													url:"/Order/stock_update.do",
+													type:"POST",
+													data:{"oidx":oidx, "stock":stock},
+													dataType:"json",
+													async: false,
+													success:function(data){
+													},
+													error:function(){
+														alert("실행오류");
+													}
+												});
 											},
 											error:function(){
 												alert("실행오류");
@@ -424,14 +454,15 @@ function iamport(){
 						str += "<form name='fm"+i+"'>";
 					    var oidx = Json[i].oidx;
 					    var quantity = Json[i].quntity;
-					    console.log("oidx는 ????"+oidx);
+					    var stock1 = Json[i].stock;
+					    var stock = stock1-1;
+					   
 					    str += "<input type='hidden' name='nonidx' value='"+data+"'>";
 						str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
 						str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
 						str += "</form>";
 						$("#form2").html(str);
 						formData2 = $("form[name=fm"+i+"]").serialize();
-						console.log(formData2);
 						 $.ajax({
 								url:"/Order/orderdetailinsert.do",
 								type:"POST",
@@ -439,12 +470,23 @@ function iamport(){
 								async: false,
 								ContentType:"application/json",
 								success:function(data){
+									 $.ajax({
+											url:"/Order/stock_update.do",
+											type:"POST",
+											data:{"oidx":oidx, "stock":stock},
+											dataType:"json",
+											async: false,
+											success:function(data){
+											},
+											error:function(){
+												alert("실행오류");
+											}
+										});
 								},
 								error:function(){
 									alert("실행오류");
 								}
 							});
-						 
 						}
 					$("section").html("<div id='complete'>주문이 완료되었습니다 <br>주문번호 : <span style='color:red;'>"+orderid+"</span></div>");
 					},
@@ -553,23 +595,7 @@ $(document).ready(function(){
 	
 });	
 
-//주소 찾기 api
-function findmyaddr(){
-	new daum.Postcode({
-        oncomplete: function(data) {
-            var roadAddr = data.roadAddress; // 도로명 주소 변수
-            var jibunAddr = data.jibunAddress; // 지번 주소 변수
-            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('zip_code').value = data.zonecode;
-            if(roadAddr !== ''){
-                document.getElementById("address1").value = roadAddr;
-            } 
-            else if(jibunAddr !== ''){
-                document.getElementById("address1").value = jibunAddr;
-            }
-        }
-    }).open();
-}
+
 </script>
 </body>
 </html>
