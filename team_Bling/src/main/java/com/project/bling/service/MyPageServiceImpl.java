@@ -74,5 +74,11 @@ public class MyPageServiceImpl implements MyPageService {
 	public void remodify(UserVO uv) throws Exception {
 		myPageDAO.remodify(uv);
 	}
+
+	//탈퇴
+	@Override
+	public void del(int midx) throws Exception {
+		myPageDAO.del(midx);
+	}
 	
 }

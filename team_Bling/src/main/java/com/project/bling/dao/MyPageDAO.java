@@ -60,4 +60,9 @@ public class MyPageDAO {
 		sqlSession.update(mm+"remodify",uv);
 	}
 	
+	//탈퇴
+	public void del(int midx)throws Exception{
+		sqlSession.update(mm+"del",midx);
+	}
+	
 }

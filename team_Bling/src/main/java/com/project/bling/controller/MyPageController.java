@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.project.bling.service.JoinService;
+import com.project.bling.service.LoginService;
 import com.project.bling.service.MyPageService;
 import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.UserVO;
@@ -33,6 +34,9 @@ public class MyPageController {
 	
 	@Autowired
 	JoinService joinService;
+	
+	@Autowired
+	LoginService  loginService;
 	
     String uploadPath = "D:\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
     
@@ -391,4 +395,31 @@ public class MyPageController {
 		myPageService.remodify(uv);
 		return "myPage/modify_fin";
 	}
+	
+/* 회원 탈퇴 */
+	//회원탈퇴
+	@RequestMapping(value="/deletes.do")
+	public String del(Model model, HttpSession session)throws Exception{
+		//로그인시 세션에 저장된 회원정보 불러오기
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		//회원정보에서 회원번호만 선택
+		int midx = uv.getMidx();
+		
+		model.addAttribute("data",myPageService.confirm(midx));
+				
+		return "myPage/delete";
+	}
+	
+	@RequestMapping(value="/deletefin.do")
+	public String delfin(HttpSession session)throws Exception{
+		//로그인시 세션에 저장된 회원정보 불러오기
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		//회원정보에서 회원번호만 선택
+		int midx = uv.getMidx();
+		loginService.logout(session);
+		myPageService.del(midx);
+		return "redirect:/";
+	}
+	
+	
 }
