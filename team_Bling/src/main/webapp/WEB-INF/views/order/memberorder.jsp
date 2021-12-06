@@ -278,7 +278,7 @@
 				</span>
 			</p>
 			<p class="line">
-				<input type="checkbox" name="c1"><span class="red">[필수]</span>비회원 구매시 개인정보 처리방침 동의
+				<input type="checkbox" name="c1"><span class="red">[필수]</span>개인정보 처리방침 동의
 				<span id="addInfo">
 					<a id="view" href="" data-bs-toggle="modal" data-bs-target="#Show_Modal1">내용보기</a>
 				</span>
@@ -457,7 +457,7 @@ function iamport(){
 	var productname = $("#productname").val();
 	IMP.init('imp72441252');
 	if(agree == false){
-		alert("동의체크");
+		alert("약관 동의에 체크해주세요");
 		 return;
 	}
 	else{ if(payment=="카드"){
