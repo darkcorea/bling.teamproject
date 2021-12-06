@@ -342,6 +342,7 @@ public class Ad_RegistController {
 				MultipartFile f_main = request.getFile("main");
 				if(f_main.getOriginalFilename() != null && f_main.getOriginalFilename() != "") {
 					String name = f_main.getOriginalFilename();
+					//파일 이름을 바꿔주는 메소드
 					imgName = imgName1(name);
 					f_main.transferTo(new File(path + imgName));
 					vo.setMain(imgName);
@@ -387,11 +388,10 @@ public class Ad_RegistController {
 				MultipartFile f_showing1 = request.getFile("showing1");
 					if(f_showing1.getOriginalFilename() != null && f_showing1.getOriginalFilename() != "") {
 					String name = f_showing1.getOriginalFilename();
-					imgName1(name);
+					imgName = imgName1(name);
 					f_showing1.transferTo(new File(spath + imgName));
 					vo.setShowing1(imgName);
-					path = spath + iv.getShowing1();
-					simageDel(path);
+					simageDel(iv.getShowing1());
 					}
 			}
 			
@@ -402,8 +402,7 @@ public class Ad_RegistController {
 					imgName = imgName1(name);
 					f_showing2.transferTo(new File(spath + imgName));
 					vo.setShowing2(imgName);
-					path = spath + iv.getShowing2();;
-					simageDel(path);
+					simageDel(iv.getShowing2());
 				}
 			}
 			
@@ -414,8 +413,7 @@ public class Ad_RegistController {
 					imgName = imgName1(name);
 					f_showing3.transferTo(new File(spath + imgName));
 					vo.setShowing3(imgName);
-					path = spath + iv.getShowing3();;
-					simageDel(path);
+					simageDel(iv.getShowing3());
 				}
 				
 			}
@@ -438,7 +436,7 @@ public class Ad_RegistController {
 					imgName = imgName1(name);
 					f_showing5.transferTo(new File(spath + imgName));
 					vo.setShowing5(imgName);
-						simageDel(iv.getShowing5());
+					simageDel(iv.getShowing5());
 				}	
 			}
 			
