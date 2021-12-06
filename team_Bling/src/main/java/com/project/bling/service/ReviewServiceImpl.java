@@ -50,5 +50,21 @@ public class ReviewServiceImpl implements ReviewService {
 		//System.out.println("마이페이지 서비스-midx : "+vo.getMidx());
 		return reviewDAO.reviewList(vo);
 	}
+
+
+	@Override
+	public List<CombineVO> reviewPaging(PageMaker pm) throws Exception {
+
+		return reviewDAO.reviewPaging(pm);
+	}
+
+
+	@Override
+	public int reviewCnt(int midx) throws Exception {
+
+		return reviewDAO.reviewCnt(midx);
+	}
+	
+	
 	
 }

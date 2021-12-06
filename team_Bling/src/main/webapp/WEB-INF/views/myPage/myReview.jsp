@@ -18,134 +18,161 @@
 	
 	
 	<script>
-		function reviewList(){
-			var str = "";
-			
+		var page = 1;
+		if(page == null) {page=1};
+	
+		$(function(){
+			reviewList(1);
+	     });
+	
+		function reviewList(page,type,date1,date2){
+			console.log(page);
+			$.ajax({
+				url:"/Review/reviewlist.do",
+				type:"POST",
+				data:{"page":page,"type":type,"date1":date1,"date2":date2},
+				dataType: 'json',
+				success:function(data){
+					let pm = data.pm;
+					let prev = parseInt(pm.startPage - 1) ;
+				  	let next = parseInt(pm.endPage + 1) ; 
+				  	
+				  	let str = "";
+				  	console.log(data);
+				  	
+				    //var page = data.page;
+                    //var pagenum = (page-1) * 5;
+                    
+				  	if(data.reviewList == null){
+				  		str += "<div id='noneReview'>기간내 등록된 리뷰가 없습니다.</div>";
+				  	}else{
+				  		for(var a = 0 ; a < data.reviewList.length ; a++){
+				  			var list = data.reviewList[a];
+				  			var oname = list.oname.split("+")[0];
+				  		
+						str += "	<div id='reviewDiv'>";
+						/*
+						1번부터 오름차순 번호기입
+						str += a+1+pagenum;
+						*/
+						
+						//사진 옆에 ridx
+						//str += list.ridx;
+						
+										/* <div> inline-block 적용하기 */
+						str += "		<div id='prodImgDiv'>";
+						str += "			<img id='rvImg' src='/resources/image/"+list.main+"' alt='제품 대표 사진'>";
+						str += "		</div>";
+						str += "		<div id='prodData'>";
+						str += list.pname+"<br>";
+						str += "			<span id='textColor'>[옵션] "+oname+"</span><br>";
+						str += "			<span id='textColor'>[수량] "+list.quantity+"개</span>";
+						str += "		</div>";
+						
+						str += "		<div id='reviewData'>";
+											/* star_rating */
+						str += "			<div class='rating'>";
+						
+						
+						// grade에 따른 별점 출력
+						for(var b = 5; b > 0;b--){
+							if(b == list.grade){
+								str += "			<input type='radio' name='rating "+a+"' id='"+b+"' value='"+b+"' class='star' onclick='return(false)' checked>";
+								str += "				<label for='"+b+"'>☆</label>";
+							}
+							else{
+								str += "			<input type='radio' name='rating' id='"+b+"' value='"+b+"' class='star' onclick='return(false)'>";
+								str += "				<label for='"+b+"'>☆</label>";
+							}
+						}
+						
+						str += "			</div>";
+							
+						str += "			<div id='reviewContents'>";
+												/* 리뷰 contents 출력하기 / 3줄 이상 더보기 적용 */
+						str += 					list.contents;
+						str += "			</div>";
+						str += "		</div>";
+						
+						
+						//리뷰사진 개수에 따라 화면출력 조정
+						if(list.image1 != null && list.image2 != null){
+							str += "			<div id='rvImgDiv'>";
+							str += "				<img id='rvImg' src='/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
+							str += "				<img id='rvImg' src='/resources/review_img/"+list.image2+"' alt='리뷰사진 2번'>";
+							str += "			</div>";
+						}
+						else if(list.image1 != null && list.image2 == null){
+							str += "			<div id='rvImgDiv'>";
+							str += "				<img id='rvImg' src='/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
+							str += "			</div>";
+						}
+						else if(list.image1 == null && list.image2 == null){
+							str += "			<div id='rvImgDiv'></div>";
+						}	
+						
+						
+						str += "		<div id='deleteBtn'>";
+						str += "			<button class='btn' id='delBtn' onclick='delQ("+list.ridx+")'>삭제하기</button>";
+						str += "		</div>";
+						str += "	</div>";
+				  		}
+				  		str += "<br><br><br>";
+						// 페이징 할 수 있는 번호 나오는 곳 뿌려 주기
+					  	str += "<nav aria-label='Page navigation'>";
+					  	str += "<ul class='pagination justify-content-center'>";
+					  	str += "<li class='page-item'>";
+					  	
+					  	//console.log(prev);
+					  	if(pm.prev == true){
+					  	    str += "<a class='page-link' aria-label='Previous' onclick='reviewList("+prev+")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
+					  	}
+					  	
+					  	str += "</li>";
+					  	let startPage = parseInt(pm.startPage);
+					  	let endPage = parseInt(pm.endPage);
+					  	
+					  	for (let k = pm.startPage; k<=pm.endPage; k++ ){
+					  		 if(page == k){
+					  			str += "<li class='page-item active'><a class='page-link pointer' onclick='reviewList("+k+")'>"+k+"</a></li>";    
+					  		 }else{
+					  			str += "<li class='page-item'><a class='page-link pointer' onclick='reviewList("+k+")'>"+k+"</a></li>";    
+					  		 }
+					  	 }
+					  	 
+					  	 str += "<li class='page-item'>";
+					  	
+					  	 if(pm.next && pm.endPage > 0){
+					  	     str += "<a class='page-link' aria-label='Next' onclick='reviewList("+next+")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
+					  	 }
+					  	 
+					  	 str += "</li>";
+					  	 str += "</ul>";
+					  	 str += "</nav>";
+					  	
+					  	//날짜 화면출력
+					  	/* let date1 = data.date.rdate1;
+					  	console.log(date1);
+					  	let date2 = data.date.rdate2;
+					  	document.querySelector("input[id='date1']").value = date1;
+					  	document.querySelector("input[id='date2']").value = date2; */
+					  	
+						str += "<br><br><br><br><br><br><br><br>";
+					}
+					document.getElementById("formDiv").innerHTML = str;
+				  	
+				  	
+				},error:function(){
+					alert("리스트 불러오기 에러!")
+				}
+			}); 
+		}
+		
 			/*
 				${reviewList}는 배열이기 때문에 ${reviewList == null}로 조건은 설정하면 적용되지 않는다.
 				if(${reviewList == []})와 같이 빈 배열로 조건을 설정하면 적용된다.
 			*/
-			if(${reviewList == []}){
-				str += "<div id='noneReview'>기간내 등록된 리뷰가 없습니다.</div>";
-			} else{
-				str += "<c:forEach items='${reviewList}' var='list' varStatus='status' begin='0' end='20'>";
-				str += "	<c:set var='oname' value='${fn:substringBefore(list.oname, \" +\")}' />";
-				str += "	<div id='reviewDiv'>";
-								/* <div> inline-block 적용하기 */
-				str += "		<div id='prodImgDiv'>";
-				str += "			<img id='rvImg' src='/resources/image/${list.main}' alt='제품 대표 사진'>";
-				str += "		</div>";
-				str += "		<div id='prodData'>";
-				str += "			${list.pname}<br>";
-				str += "			<span id='textColor'>[옵션] ${oname}</span><br>";
-				str += "			<span id='textColor'>[수량] ${list.quantity}개</span>";
-				str += "		</div>";
-				
-				str += "		<div id='reviewData'>";
-									/* star_rating */
-				str += "			<c:if test='${list.grade == 5}'>";
-				str += "				<div class='rating'>";
-				str += "					<input type='radio' name='rating${status.index}' id='5' value='5' class='star' onclick='return(false)' checked>";
-				str += "						<label for='5'>☆</label>";
-				str += "					<input type='radio' name='rating' value='4' id='4' class='star' onclick='return(false)'>";
-				str += "						<label for='4'>☆</label>";
-				str += "					<input type='radio' name='rating' value='3' id='3' class='star' onclick='return(false)'>";
-				str += "						<label for='3'>☆</label>";
-				str += "					<input type='radio' name='rating' value='2' id='2' class='star' onclick='return(false)'>";
-				str += "						<label for='2'>☆</label>";
-				str += "					<input type='radio' name='rating' value='1' id='1' class='star' onclick='return(false)'>";
-				str += "						<label for='1'>☆</label>";
-				str += "				</div>";
-				str += "			</c:if>";
-				str += "			<c:if test='${list.grade == 4}'>";
-				str += "				<div class='rating'>";
-				str += "					<input type='radio' name='rating' value='5' id='5' class='star' onclick='return(false)'>";
-				str += "						<label for='5'>☆</label>";
-				str += "					<input type='radio' name='rating${status.index}' value='4' id='4' class='star' onclick='return(false)' checked>";
-				str += "						<label for='4'>☆</label>";
-				str += "					<input type='radio' name='rating' value='3' id='3' class='star' onclick='return(false)'>";
-				str += "						<label for='3'>☆</label>";
-				str += "					<input type='radio' name='rating' value='2' id='2' class='star' onclick='return(false)'>";
-				str += "						<label for='2'>☆</label>";
-				str += "					<input type='radio' name='rating' value='1' id='1' class='star' onclick='return(false)'>";
-				str += "						<label for='1'>☆</label>";
-				str += "				</div>";
-				str += "			</c:if>";
-				str += "			<c:if test='${list.grade == 3}'>";
-				str += "				<div class='rating'>";
-				str += "					<input type='radio' name='rating' value='5' id='5' class='star' onclick='return(false)'>";
-				str += "						<label for='5'>☆</label>";
-				str += "					<input type='radio' name='rating' value='4' id='4' class='star' onclick='return(false)'>";
-				str += "						<label for='4'>☆</label>";
-				str += "					<input type='radio' name='rating${status.index}' value='3' id='3' class='star' onclick='return(false)' checked>";
-				str += "						<label for='3'>☆</label>";
-				str += "					<input type='radio' name='rating' value='2' id='2' class='star' onclick='return(false)'>";
-				str += "						<label for='2'>☆</label>";
-				str += "					<input type='radio' name='rating' value='1' id='1' class='star' onclick='return(false)'>";
-				str += "						<label for='1'>☆</label>";
-				str += "				</div>";
-				str += "			</c:if>";
-				str += "			<c:if test='${list.grade == 2}'>";
-				str += "				<div class='rating'>";
-				str += "					<input type='radio' name='rating' value='5' id='5' class='star' onclick='return(false)'>";
-				str += "						<label for='5'>☆</label>";
-				str += "					<input type='radio' name='rating' value='4' id='4' class='star' onclick='return(false)'>";
-				str += "						<label for='4'>☆</label>";
-				str += "					<input type='radio' name='rating' value='3' id='3' class='star' onclick='return(false)'>";
-				str += "						<label for='3'>☆</label>";
-				str += "					<input type='radio' name='rating${status.index}' value='2' id='2' class='star' onclick='return(false)' checked>";
-				str += "						<label for='2'>☆</label>";
-				str += "					<input type='radio' name='rating' value='1' id='1' class='star' onclick='return(false)'>";
-				str += "						<label for='1'>☆</label>";
-				str += "				</div>";
-				str += "			</c:if>";
-				str += "			<c:if test='${list.grade == 1}'>";
-				str += "				<div class='rating'>";
-				str += "					<input type='radio' name='rating' value='5' id='5' class='star' onclick='return(false)'>";
-				str += "						<label for='5'>☆</label>";
-				str += "					<input type='radio' name='rating' value='4' id='4' class='star' onclick='return(false)'>";
-				str += "						<label for='4'>☆</label>";
-				str += "					<input type='radio' name='rating' value='3' id='3' class='star' onclick='return(false)'>";
-				str += "						<label for='3'>☆</label>";
-				str += "					<input type='radio' name='rating' value='2' id='2' class='star' onclick='return(false)'>";
-				str += "						<label for='2'>☆</label>";
-				str += "					<input type='radio' name='rating${status.index}' value='1' id='1' class='star' onclick='return(false)' checked>";
-				str += "						<label for='1'>☆</label>";
-				str += "				</div>";
-				str += "			</c:if>";
-				
-				str += "			<div id='reviewContents'>";
-										/* 리뷰 contents 출력하기 / 3줄 이상 더보기 적용 */
-				str += "				${list.contents}";
-				str += "			</div>";
-				str += "		</div>";
-				
-				str += "		<c:if test='${list.image1 != null && list.image2 != null}'>";
-				str += "			<div id='rvImgDiv'>";
-				str += "				<img id='rvImg' src='/resources/review_img/${list.image1}' alt='리뷰사진 1번'>";
-				str += "				<img id='rvImg' src='/resources/review_img/${list.image2}' alt='리뷰사진 2번'>";
-				str += "			</div>";
-				str += "		</c:if>";
-				str += "		<c:if test='${list.image1 != null && list.image2 == null}'>";
-				str += "			<div id='rvImgDiv'>";
-				str += "				<img id='rvImg' src='/resources/review_img/${list.image1}' alt='리뷰사진 1번'>";
-				str += "			</div>";
-				str += "		</c:if>";
-				str += "		<c:if test='${list.image1 == null && list.image2 == null}'>";
-				str += "			<div id='rvImgDiv'></div>";
-				str += "		</c:if>";
-				
-				str += "		<div id='deleteBtn'>";
-				str += "			<button class='btn' id='delBtn'>삭제하기</button>";
-				str += "		</div>";
-				str += "	</div>";
-				str += "</c:forEach>";
-				
-				
-				str += "<br><br><br><br><br><br><br><br>";
-			}
-			document.getElementById("formDiv").innerHTML = str;
-		}
+			
 		
 		
 
@@ -153,7 +180,49 @@
 		
 		
 		
+		function delQ(ridx){
+			console.log("dqlQ-ridx : "+ridx);
+			
+			Swal.fire({
+				icon: 'question',
+				text: '작성하신 리뷰를 정말 삭제하시겠습니까?',
+				showCancelButton: true
+			}).then((result) => {
+				  /* Read more about isConfirmed, isDenied below */
+				  if (result.isConfirmed) {
+				    delReview(ridx);
+				  } else if (result.isDenied) {
+			   }
+			});
+		}
 		
+		function delReview(ridx){
+			console.log("delReview-ridx : "+ridx);
+			
+			$.ajax({
+				url: "/MyPage/delete.do",
+				type: "post",
+				data: {"ridx":ridx},
+				ContentType: "json",
+				success:function(){
+					console.log("리뷰삭제 성공");
+					Swal.fire('리뷰가 삭제되었습니다!', '', 'success');
+					Swal.fire({
+						icon: 'success',
+						text: '리뷰가 삭제되었습니다!',
+					}).then((result) => {
+						  /* Read more about isConfirmed, isDenied below */
+						  if (result.isConfirmed) {
+							   window.location.replace("/Review/myReview.do");
+						  } else if (result.isDenied) {
+					   }
+					});
+				},
+				error:function(){
+					console.log("리뷰삭제 에러");
+				}
+			});
+		}
 		
 		
 	</script>
@@ -228,7 +297,9 @@
 		    opacity: 1
 		}
 	/* star rating */
-	
+	.page-item{
+         padding:0;
+      }
 	
 /* -------------------------- article css -------------------------- */
 	/* --------------------onload로 화면 출력-------------------- */	
@@ -238,7 +309,6 @@
 			top: 30px;
 		}
 		#reviewDiv{
-			display: block;
 			width: 100%;
 		}
 		#prodImgDiv{
@@ -351,9 +421,6 @@
 			border-bottom: 2px solid black;
 			height: 40px;
 		}
-		#sectionCol{
-			height: 1000px;
-		}
 		#th3{
 			width: 255px;
 			text-align: center;
@@ -418,7 +485,7 @@
 	</style>
 	
 </head>
-<body onload="reviewList()">
+<body>
 	<!-- header -->
 	<header>
 		<%@ include file="/WEB-INF/views/header.jsp" %><br><br>
@@ -445,9 +512,9 @@
 								<button type="button" class="btn" id="dateBtn1" onclick="day_fn('E')">1년</button>
 								<button type="button" class="btn" id="dateBtn1" onclick="day_fn('F')">3년</button>
 								
-								<input type="date" id="date1" value="${date.rdate1}" >
+								<input type="date" id="date1">
 								~
-								<input type="date" id="date2" value="${date.rdate2}" >
+								<input type="date" id="date2">
 								<button class="btn" id="dateBtn1" onclick="day_fn('G')">조회</button>
 							</div>
 						</div>
@@ -474,39 +541,37 @@
 
 <script>
 	function day_fn(type){
-		let frm = document.createElement("form");
 		
-		frm.name = "frm";
-		frm.method = "post";
-		frm.action = "/Review/myReview.do";
+		let date1 = "아무거나";
+		let date2 = "아무거나";
 		
-		let input1 = document.createElement("input");
-		input1.setAttribute("type","hidden");
-	    input1.setAttribute("name","kind");
-	    input1.setAttribute("value",type);
-	    frm.appendChild(input1);
-	    
-	    if(type == "G"){
-	    	let date1 = document.querySelector("input[id='date1']").value;
-	    	
-	    	let input2 = document.createElement("input");
-			input2.setAttribute("type","hidden");
-		    input2.setAttribute("name","rdate1");
-		    input2.setAttribute("value",date1);
-		    frm.appendChild(input2);
-		    
-		    let date2 = document.querySelector("input[id='date2']").value;
-		    
-		    let input3 = document.createElement("input");
-			input3.setAttribute("type","hidden");
-		    input3.setAttribute("name","rdate2");
-		    input3.setAttribute("value",date2);
-		    frm.appendChild(input3);
-	    }
-	    
-	    document.body.appendChild(frm);
-		frm.submit();
+		if(type == "G"){
+	    	date1 = document.querySelector("input[id='date1']").value;
+	    	date2 = document.querySelector("input[id='date2']").value;
+	    	console.log("여기저기"+date1);
+	    	console.log("여기저기"+date2);
+		}
 		
+		$.ajax({
+			url: "/Review/type.do",
+			type: "post",
+			data: {"type":type,"date1":date1,"date2":date2},
+			success:function(data){
+				
+				console.log(data);
+				console.log("dfsfsdfds"+data.date1);
+				console.log("dfsfsdfds"+data.date2);
+				
+				document.querySelector("input[id='date1']").value = data.date1;
+				document.querySelector("input[id='date2']").value = data.date2;
+				
+			},
+			error:function(){
+				alert("실패");
+			}
+		});
+		
+		reviewList(1,type,date1,date2);
 	}
 </script>
 </html>

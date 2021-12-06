@@ -52,14 +52,6 @@
 		<beans:property name="defaultEncoding" value="utf-8" />
 	</beans:bean>
 	
-
-	<!-- 파일업로드를 위한 디렉토리 설정 -->
-	<!-- String uploadPath = new String("업로드 경로") -->
-	<beans:bean id="uploadPath" class="java.lang.String">
-	    <!-- 파일업로드 디렉토리-->
-	    <beans:constructor-arg value="D:\git\bling.teamproject\team_Bling\src\main\webapp\resources\review_img"/>
-	</beans:bean>
-	
 			
 	<!-- 인터셉터 bean 설정 -->
 	<!-- 사용자 세션체크 bean -->

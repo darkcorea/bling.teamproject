@@ -52,4 +52,16 @@ public class ReviewDAO {
 		return reviewList;
 	}
 	
+	public List<CombineVO> reviewPaging(PageMaker pm) throws Exception {
+		
+		List<CombineVO> reviewPaging = sqlSession.selectList(rm+"reviewPaging", pm);
+		
+		return reviewPaging;
+	}
+	
+	// midx로 리뷰 총 개수 가져오기
+	public int reviewCnt(int midx) throws Exception{
+		return sqlSession.selectOne(rm+"reviewCnt", midx);
+	}
+	
 }
