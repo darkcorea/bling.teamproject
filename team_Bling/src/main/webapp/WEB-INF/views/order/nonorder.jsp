@@ -120,7 +120,7 @@
 		color:#000000;
 	}
 	#header1{
-				background-color:#CB7878;
+			background-color:#CB7878;
 			}
 	#inline{
 		display: inline;

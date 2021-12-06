@@ -147,6 +147,7 @@
 		height:700px;
 		font-size: 22px;
 		font-weight: bold;
+		text-align:center;
 		}
 	#addrlist{
 		float: left;
@@ -165,7 +166,12 @@
 	.total,#s1{
 		margin-right:20px;
 	}
-	
+	#mypage{
+		text-decoration-line: none;
+	}
+	#mypage:hover{
+		color:#000000;
+	}
 </style>
 </head>
 <body>
@@ -529,7 +535,7 @@ function iamport(){
 											}
 										});
 									}
-								$("section").html("<div id='complete'>주문이 완료되었습니다<br><a href='/MyPage/main.do'>주문내역 가기</a></div>");
+								$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/MyPage/main.do'>주문내역 가기</a></div>");
 								},
 								error:function(){
 									alert("실행오류");
@@ -610,7 +616,7 @@ function iamport(){
 							});
 						 
 						}
-					$("section").html("<div id='complete'>주문이 완료되었습니다<br><a href='/MyPage/main.do'>주문내역 가기</a></div>");
+					$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/MyPage/main.do'>주문내역 가기</a></div>");
 					},
 					error:function(){
 						alert("실행오류");
