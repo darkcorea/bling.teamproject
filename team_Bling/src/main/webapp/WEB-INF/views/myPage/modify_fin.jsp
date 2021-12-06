@@ -21,9 +21,6 @@
 				max-width:1008px;
 				margin:  0px auto;
 			}
-			table{
-				border-top:1px solid black;
-			}
 		</style>
 	</head>
 	<body>
@@ -39,22 +36,9 @@
 					</div>
 					
 					<div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
-						<h2>나의 정보 확인</h2>
-						<b><c:out value="${data.uname }"/></b>님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인합니다.
-						<br/>
-						<table class="table">
-							<tr>
-								<th class="table-secondary" style="text-align: center;">
-									비밀번호
-								</th>
-								<td>
-									<input type="password" id="pass">
-									<input type="hidden" value="${data.pwd }" id="that">
-								</td>
-							</tr>
-						</table>
-						<button type="button" class="btn btn-outline-primary" onClick="confirm()">확인</button>
-						<button type="button" class="btn btn-outline-primary" onClick="location.href='/MyPage/ssss.do'">커스터마이징</button>
+						<h2>개인 정보 수정이 완료되었습니다.</h2>
+						<hr/>
+						<button type="button" class="btn btn-outline-primary" onClick="location.href='/'">홈으로 가기</button>
 					</div>
 				</div>
 			</div>
@@ -65,16 +49,4 @@
 		</footer>
 	</body>
 	
-	<script>
-		function confirm(){
-			var pass = document.getElementById("pass").value;
-			var real = document.getElementById("that").value;
-			
-			if(pass == real){
-				location.href="/MyPage/modifyInformation.do";
-			}else{
-				alert("비밀번호가 틀렸습니다.");
-			}
-		}
-	</script>
 </html>

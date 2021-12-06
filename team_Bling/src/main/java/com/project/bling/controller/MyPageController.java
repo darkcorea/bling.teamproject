@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.project.bling.service.JoinService;
 import com.project.bling.service.MyPageService;
 import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.UserVO;
@@ -30,9 +31,16 @@ public class MyPageController {
 	@Autowired
 	MyPageService myPageService;
 	
+	@Autowired
+	JoinService joinService;
+	
     String uploadPath = "D:\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
     
-    
+    //커스터마이징
+    @RequestMapping(value="/ssss.do")
+    public String ssss()throws Exception{
+    	return "myPage/sdfsdsdf";
+    }
 	
 	//MyPage 메인페이지 -> 실행시 바로 화면에 최근 주문 정보 출력
 	@RequestMapping(value="/main.do")
@@ -333,4 +341,54 @@ public class MyPageController {
 		myPageService.reviewDelete(ridx);
 	}
 	
+/* 마이페이지 나의 정보 수정 페이지로 이동 */
+	
+	//회원정보수정 첫번째 비밀번호 확인시 갖고오는 이름정보
+	@RequestMapping(value="/modify.do")
+	public String modify(Model model,HttpSession session)throws Exception{
+		//로그인시 세션에 저장된 회원정보 불러오기
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		//회원정보에서 회원번호만 선택
+		int midx = uv.getMidx();
+		
+		model.addAttribute("data",myPageService.confirm(midx));
+				
+		return "myPage/modify";
+	}
+	
+	//회원정보 수정 페이지
+	@RequestMapping(value="/modifyInformation.do")
+	public String modifyInf(Model model,HttpSession session)throws Exception{
+		//로그인시 세션에 저장된 회원정보 불러오기
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		//회원정보에서 회원번호만 선택
+		int midx = uv.getMidx();
+		
+		model.addAttribute("data",myPageService.confirm(midx));
+				
+		return "myPage/modifyInformation";
+	}
+	
+	//이메일 중복확인
+	@RequestMapping(value="/confirmemail.do")
+	@ResponseBody
+	public String confirmemail(Model model,String emaildata)throws Exception{
+		String data = null;
+		
+		data = joinService.confirmemail(emaildata);
+		
+		if(data==null) {
+			data="yes";
+		}else {
+			data="no";
+		}
+		return data;
+	}
+	
+	//수정완료
+	@RequestMapping(value="/remodify.do", method = RequestMethod.POST)
+	public String normal(Locale locale,Model model,UserVO uv)throws Exception {
+		myPageService.remodify(uv);
+		return "myPage/modify_fin";
+	}
 }
