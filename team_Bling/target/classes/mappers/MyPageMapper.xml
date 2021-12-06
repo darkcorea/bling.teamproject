@@ -240,4 +240,21 @@
 		WHERE ridx=#{ridx}
 	</delete>
 	
+	<!-- 회원정보수정 첫번째 비밀번호 확인시 갖고오는 이름정보 -->
+	<select id="confirm" parameterType="int" resultType="UserVO">
+		select * from bg_user where midx=#{midx}
+	</select>
+	
+	<!-- 회원정보 수정 -->
+	<update id="remodify" parameterType="UserVO">
+		update bg_user set 
+		pwd = #{pwd},
+		uname = #{uname},
+		email = #{email},
+		addr1 = #{addr1},
+		addr2 = #{addr2},
+		phone = #{phone},
+		zip_code = #{zip_code}
+		where midx = #{midx}
+	</update>
 </mapper>
