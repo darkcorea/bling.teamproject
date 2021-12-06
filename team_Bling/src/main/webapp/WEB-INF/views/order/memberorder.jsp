@@ -172,6 +172,7 @@
 	#mypage:hover{
 		color:#000000;
 	}
+	
 </style>
 </head>
 <body>
@@ -673,7 +674,7 @@ $(document).ready(function(){
 	var price = ${tot_price};
 	var G = parseInt(price*0.02);
 	var S = parseInt(price*0.01);
-	var mymile =  "${sessionScope.UserVO.mileage}";
+	var mymile =  "${sessionScope.mileage}";
 	var mym = parseInt(mymile);
 	var point1 = mym.toLocaleString();
 	console.log(point1);
@@ -743,6 +744,7 @@ $(document).ready(function(){
 		 
 		 if(value>mymile){
 			 alert("내 적립금보다 큽니다");
+			 $(".mile").val("");
 		 }else{
 	           $("#mileage").val(result);
 	           $("#tot_price").val(result2);

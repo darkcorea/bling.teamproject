@@ -320,8 +320,23 @@ function iamport(){
 	var phone = $("#phone").val();
 	var zipcode = $("#zip_code").val();
 	var addr = $("#address1").val();
+	var rphone = $("#rphone").val();
+	var recipient = $("#recipient").val();
 	IMP.init('imp72441252');
-	if(agree == false){
+	if(name==""){
+		alert("이름을 입력하세요");
+	}else if(email==""){
+		alert("이메일을 입력하세요");
+	}else if(phone==""){
+		alert("휴대폰번호를 입력하세요");
+	}else if(recipient==""){
+		alert("받는 분 이름을 입력하세요");
+	}else if(zipcode==""){
+		alert("주소검색을 하세요");
+	}else if(rphone==""){
+		alert("받는 분 휴대폰번호를 입력하세요");
+	}
+	else if(agree == false){
 		alert("약관 동의에 체크해주세요");
 		 return;
 	}

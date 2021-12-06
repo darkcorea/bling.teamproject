@@ -87,11 +87,12 @@ public class OrderController {
 	
 	@RequestMapping(value="/mileageupdate.do",method = RequestMethod.POST)
 	@ResponseBody
-	public void mileageupdate(OrderVO vo) throws Exception {
+	public void mileageupdate(OrderVO vo,HttpSession session) throws Exception {
 		
 		System.out.println("마일리지>>>>>>>>>>"+vo.getMileage());
 		System.out.println("midx>>>>>>>>>>"+vo.getMidx());
 		orderService.mileageupdate(vo);
+		session.setAttribute("mileage", vo.getMileage());
 	}
 	
 	@RequestMapping(value="/memberorder.do",method = RequestMethod.POST)
