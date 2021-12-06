@@ -510,13 +510,26 @@ function iamport(){
 											async: false,
 											ContentType:"application/json",
 											success:function(data){
+												
+												$.ajax({
+													url:"/Basket/order_after_del.do",
+													type:"POST",
+													data:formData2,
+													async: false,
+													ContentType:"application/json",
+													success:function(data){
+													},
+													error:function(){
+														alert("실행오류");
+													}
+												});
 											},
 											error:function(){
 												alert("실행오류");
 											}
 										});
-									 
 									}
+								$("section").html("<div id='complete'>주문이 완료되었습니다<br><a href='/MyPage/main.do'>주문내역 가기</a></div>");
 								},
 								error:function(){
 									alert("실행오류");
@@ -597,7 +610,7 @@ function iamport(){
 							});
 						 
 						}
-					$("section").html("<div id='complete'>주문이 완료되었습니다 <a href=''> 주문내역 가기</a></div>");
+					$("section").html("<div id='complete'>주문이 완료되었습니다<br><a href='/MyPage/main.do'>주문내역 가기</a></div>");
 					},
 					error:function(){
 						alert("실행오류");
