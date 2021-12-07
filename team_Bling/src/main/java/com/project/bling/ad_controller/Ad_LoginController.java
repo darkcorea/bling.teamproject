@@ -58,7 +58,7 @@ public class Ad_LoginController {
 		System.out.println("컨트롤러 check2 : "+result);
 		
 		if(result == true) {
-			mav.setViewName("admin/Home/home");
+			mav.setViewName("admin/Main/main");
 		}
 		else {
 			mav.setViewName("admin/Login/login2");
