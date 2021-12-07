@@ -256,12 +256,12 @@
 	
 	<!-- 회원정보수정 첫번째 비밀번호 확인시 갖고오는 이름정보 -->
 	<select id="confirm" parameterType="int" resultType="UserVO">
-		select * from bg_user where midx=#{midx}
+		SELECT * FROM bg_user WHERE midx=#{midx}
 	</select>
 	
 	<!-- 회원정보 수정 -->
 	<update id="remodify" parameterType="UserVO">
-		update bg_user set 
+		UPDATE bg_user SET 
 		pwd = #{pwd},
 		uname = #{uname},
 		email = #{email},
@@ -269,13 +269,13 @@
 		addr2 = #{addr2},
 		phone = #{phone},
 		zip_code = #{zip_code}
-		where midx = #{midx}
+		WHERE midx = #{midx}
 	</update>
 	
 	<!-- 탈퇴 -->
 	<update id="del" parameterType="int">
-		update bg_user set
+		UPDATE bg_user SET
 		delyn = 0
-		where midx=#{midx}
+		WHERE midx=#{midx}
 	</update>
 </mapper>

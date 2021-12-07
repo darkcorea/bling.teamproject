@@ -25,44 +25,24 @@
 		WHERE subject LIKE '%'||#{keyword}||'%'
 	</select>
 	
-	<!-- 공지사항 리스트 반복되는 sql -->
-	<sql id="listpage_1">
-		SELECT * 
-			FROM (
-				SELECT rownum as rnum, A.* 
-				FROM (
-					SELECT nidx,subject,rdate,type,imgfile,imges
-					FROM bg_notice
-	</sql>
-	
 	<!-- 공지사항 전체 리스트 -->
 	<select id="totalList" resultType="NoticeVO" parameterType="PageMaker">
-		<include refid="listpage_1"></include>
-			<![CDATA[
-					ORDER BY RDATE DESC
-				) A 
-				WHERE rownum <= #{lastPost}
-			]]>	
-			<if test="scri.keyword != null">
-				AND subject LIKE '%'||#{scri.keyword}||'%'
-			</if>
-			<![CDATA[	
-			)B
-			WHERE rnum >= #{startPost}
-		]]>
+		SELECT nidx,subject,rdate,type,imgfile,imges
+		FROM bg_notice
+		<if test="scri.keyword != null">
+			WHERE subject LIKE '%'||#{scri.keyword}||'%'
+		</if>
+		ORDER BY RDATE DESC
+		Limit #{startPost}, #{scri.perPageNum}
 	</select>
 
 	<!--공지사항 옵션선택 리스트-->
 	<select id="optionList" resultType="NoticeVO" parameterType="PageMaker">
-		<include refid="listpage_1"></include>
-		<![CDATA[
-					WHERE type=#{type}
-					ORDER BY RDATE DESC
-				) A 
-				WHERE rownum <= #{lastPost}
-			)B
-			WHERE rnum >= #{startPost}
-		]]>
+		SELECT nidx,subject,rdate,type,imgfile,imges
+		FROM bg_notice
+		WHERE type=#{type}
+		ORDER BY RDATE DESC
+		Limit #{startPost}, #{scri.perPageNum}
 	</select> 
 	
 	<!-- 공지사항 데이터 삭제 -->
@@ -78,7 +58,7 @@
 			nidx_seq.nextval
 			,#{subject}
 			,#{contents}
-			,sysdate
+			,now()
 			,#{type}
 			,#{imgfile, jdbcType=VARCHAR}
 			,#{imges, jdbcType=VARCHAR}
@@ -96,7 +76,7 @@
 	<update id="modify" parameterType="NoticeVO">
 		UPDATE bg_notice
 		SET subject = #{subject},
-			rdate = sysdate,
+			rdate = now(),
 			type = #{type},
 			contents = #{contents},
 			imgfile =#{imgfile, jdbcType=VARCHAR},
@@ -113,7 +93,7 @@
 			eidx_seq.nextval
 			,#{subject}
 			,#{contents}
-			,sysdate
+			,now()
 			,#{image, jdbcType=VARCHAR}
 			,#{event_end}
 		)
