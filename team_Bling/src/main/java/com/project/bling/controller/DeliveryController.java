@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.service.DeliveryService;
+import com.project.bling.vo.Product_QuestionVO;
 import com.project.bling.vo.UserVO;
 
 @RequestMapping(value="/Delivery")
@@ -32,6 +34,16 @@ public class DeliveryController {
 		return "delivery/main";
 	}
 	
+	
+	// order_idx로 구매확정 하기
+	@RequestMapping(value="/confirm_fn.do")
+	@ResponseBody
+	public int confirm_fn(int order_idx) throws Exception {
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>"+order_idx);
+		deliveryService.confirm_fn(order_idx);
+		return 1;
+	}
+
 	
 	
 	

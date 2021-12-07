@@ -19,6 +19,12 @@ public class deliveryServiceImpl implements DeliveryService {
 	public List<CombineVO> deivery_list(int midx) throws Exception {
 		return deliveryDAO.deivery_list(midx);
 	}
+
+	// order_idx로 구매확정 하기
+	@Override
+	public void confirm_fn(int order_idx) throws Exception {
+		deliveryDAO.confirm_fn(order_idx);
+	}
 	
 	
 	

@@ -150,6 +150,7 @@
 					<td><b><c:out value="${list.quantitySum}"/></b></td>
 					<td><b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.tot_price}" />원</b></td>
 					<td>
+						<!-- 배송 상태 -->
 						<c:if test="${list.deli_stat == 'A'}">
 						<b>배송준비중</b>
 						</c:if>
@@ -161,6 +162,7 @@
 						</c:if>
 					</td>
 					<td>
+						<!-- 구매 상태  -->
 						<c:if test="${list.cancel == 'N'}">
 						<b>취소중</b>
 						</c:if>
@@ -184,6 +186,7 @@
 						</c:if>
 					</td>
 					<td>
+						<!-- 구매 취소 교환 반품 버튼   -->
 						<!--취소가 되면  -->
 						<c:if test="${list.cancel == 'Y'}">
 							<button>취소완료</button>
@@ -212,7 +215,7 @@
 							 <c:if test="${list.date_differ <= 7}">
 							 	<!-- 구매 확정 버튼을 누르지 않았다면 -->
 							 	<c:if test="${list.confirm_yn == 'N'}">
-							 	<button>구매확정</button>
+							 	<button onclick="confirm_fn(${list.order_idx})">구매확정</button>
 							 		<!-- 교환이 완료가 되었으면 -->
 							 		<c:if test="${list.exchange == 'Y'}">
 							 			<br><button>교환완료</button>
@@ -238,7 +241,6 @@
 							 </c:if>
 						 </c:if>	
 					</td>
-					<c:set var="order_iodx" value="${list.order_idx}"/>
 				</tr>
 				</c:forEach>
 			</tbody>
@@ -254,7 +256,25 @@
 </footer>
 </body>
 <script>
+	// 구매 확정 버튼을 눌렀을 떄
+	function confirm_fn(order_idx){
 
+		if (!confirm("구매를 확정 하시겠습니까?")) {
+	     } else {
+	    	 $.ajax({
+	 			url:"/Delivery/confirm_fn.do",
+	 			type:"POST",
+	 			data:{"order_idx":order_idx},
+	 			success:function(data){
+	 				location.reload();
+	 			},error:function(){
+	 				alert("구매확정 버튼 에러!")
+	 			}
+	 		});
+	     }
+	}
+	
+	
 	
 	
 </script>

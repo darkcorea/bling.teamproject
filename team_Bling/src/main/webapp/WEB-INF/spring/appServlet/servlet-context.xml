@@ -72,10 +72,16 @@
 		</interceptor>
 		<!-- 사용자 세션체크 매핑 -->
 		<interceptor>
+			<!-- 마이페이지 , 주문배송 확인, 관심상품, 장바구니, 나의 리류, 나의 문의내역, 나의정보수정, 배송지 목록-->
 			<mapping path="/MyPage/main.do"/>
-			<mapping path="/Basket/cart.do"/>
-			<!-- 관심상품  -->
+			<mapping path="/Delivery/main.do"/>
 			<mapping path="/Basket/like1.do"/>
+			<mapping path="/Basket/cart.do"/>
+			<mapping path="/Review/myReview.do"/>
+			<mapping path="/Customer/my_qestion.do"/>
+			<mapping path="/MyPage/infomation.do"/>
+			<mapping path="/Addr/main.do"/>
+			
 			<!-- 고객센터 또는 디테일,마이페이지에서  상품,일반문의, 문의수정하기 -->
 			<mapping path="/Customer/product.do"/>
 			<mapping path="/Customer/question.do"/>
