@@ -21,4 +21,9 @@ public class DeliveryDAO {
 		return sqlSession.selectList(dm + "deivery_list", midx);
 	}
 	
+	// order_idx로 구매확정 하기
+	public void confirm_fn(int order_idx) throws Exception {
+		sqlSession.update(dm +"confirm_fn", order_idx);
+		}
+	
 }

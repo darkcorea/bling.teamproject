@@ -29,7 +29,7 @@
 			color: #ffffff;
 			font-size: 20px;
 			width: 190px;
-			height: 130px;
+			height: 150px;
 		}
 		#navMenu{
 			margin-bottom: 40px;
@@ -79,7 +79,7 @@
 		</div>
 		<div>내 적립금 : 
 			<b>
-				<fmt:formatNumber value="${sessionScope.UserVO.mileage}" pattern="#,###" />
+				<fmt:formatNumber value="${sessionScope.UserVO.mileage}" pattern="#,###" />원
 			</b>
 		</div>
 	</div>
