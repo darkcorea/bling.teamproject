@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.bling.dao.MyPageDAO;
+import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.UserVO;
 
@@ -28,9 +29,9 @@ public class MyPageServiceImpl implements MyPageService {
 	}
 
 	@Override
-	public List<CombineVO> recentOrder(CombineVO vo) throws Exception {
+	public List<CombineVO> recentOrder(PageMaker pm) throws Exception {
 		
-		return myPageDAO.recentOrder(vo);
+		return myPageDAO.recentOrder(pm);
 	}
 
 	@Override
@@ -61,6 +62,12 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public void reviewDelete(int ridx) throws Exception {
 		myPageDAO.reviewDelete(ridx);
+	}
+	
+	// midx에 따른 리뷰 갯수
+	@Override
+	public int reviewCount(int midx) throws Exception {
+		return myPageDAO.reviewCount(midx);
 	}
 	
 	//회원정보수정 첫번째 비밀번호 확인시 갖고오는 이름정보

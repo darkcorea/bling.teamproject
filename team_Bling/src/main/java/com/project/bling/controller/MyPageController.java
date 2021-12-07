@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.project.bling.domain.Criteria;
+import com.project.bling.domain.PageMaker;
 import com.project.bling.service.JoinService;
 import com.project.bling.service.LoginService;
 import com.project.bling.service.MyPageService;
@@ -48,7 +50,7 @@ public class MyPageController {
 	
 	//MyPage 메인페이지 -> 실행시 바로 화면에 최근 주문 정보 출력
 	@RequestMapping(value="/main.do")
-	public String main(Locale locale, Model model, CombineVO vo, HttpSession session) throws Exception {
+	public String main(Locale locale, Model model, CombineVO vo, HttpSession session, int page) throws Exception {
 		
 		// 로그인이 풀렸을 떄 대비해서 넣음
 		if(session.getAttribute("UserVO") == null) {
@@ -81,7 +83,20 @@ public class MyPageController {
 		
 		
 		//최근 주문 정보(product,option,order,order_detail,delivery,review 6개 테이블 join)
-		model.addAttribute("recentOrder", myPageService.recentOrder(vo));
+		Criteria sc = new Criteria();
+		sc.setPage(page);
+		sc.setPerPageNum(10);
+
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		pm.setMidx(midx);
+		int ReviewCount = myPageService.reviewCount(midx);
+
+		pm.setTotalCount(ReviewCount);
+
+
+		model.addAttribute("pm", pm);
+		model.addAttribute("recentOrder", myPageService.recentOrder(pm));
 				
 		
 		return "myPage/main";
