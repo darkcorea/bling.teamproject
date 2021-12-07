@@ -308,7 +308,7 @@
 				success: function(data){
 					console.log("리뷰작성 성공");
 					console.log(grade);
-					window.location.replace("/MyPage/main.do");
+					window.location.replace("/MyPage/main.do?page=1");
 				},
 				error: function(){
 					console.log("!!!!!리뷰작성 에러!!!!!");
