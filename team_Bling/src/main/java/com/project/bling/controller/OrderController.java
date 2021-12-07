@@ -20,6 +20,7 @@ import com.project.bling.service.OrderService;
 import com.project.bling.vo.NonorderVO;
 import com.project.bling.vo.OptionVO;
 import com.project.bling.vo.OrderVO;
+import com.project.bling.vo.UserVO;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -140,6 +141,11 @@ public class OrderController {
 	public int stock_update(OptionVO vo) throws Exception{
 		orderService.stock_update(vo);
 		return 1;
+	}
+	@RequestMapping(value="/select_midx.do")
+	@ResponseBody
+	public UserVO select_midx(int midx)  throws Exception{
+		return orderService.select_midx(midx);
 	}
 	
 }

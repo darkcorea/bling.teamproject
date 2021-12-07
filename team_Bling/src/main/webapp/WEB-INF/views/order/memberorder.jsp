@@ -192,11 +192,11 @@
 				</tr>
 				<tr class="line">
 					<td class="gray"><span class="white">이메일</span></td>
-					<td class="fill email">${sessionScope.UserVO.email}</td>
+					<td class="fill email"></td>
 				</tr>
 				<tr>
 					<td class="gray"><span class="white">휴대폰 번호</span></td>
-					<td class="fill phone">${sessionScope.UserVO.phone}</td>
+					<td class="fill phone"></td>
 				</tr>
 			</table>
 			<input type="hidden" name="midx" value="${sessionScope.UserVO.midx}" id="midx">
@@ -457,7 +457,6 @@ function modal_select(){
 	
 function mileage(){
 	var mile = $("#mileage").val();
-	var mymile = "${sessionScope.UserVO.mileage}";
 	var addmile = $("#addmile").val();
 	mile = parseInt(mile);
 	addmile = parseInt(addmile);
@@ -668,33 +667,47 @@ function iamport(){
 
 $(document).ready(function(){
 	
-	let email = "${sessionScope.UserVO.email}";
-	let phone = "${sessionScope.UserVO.phone}";
-	let grade = "${sessionScope.UserVO.grade}";
+	var midx = "${sessionScope.UserVO.midx}";
+	var grade = 0;
 	var price = ${tot_price};
-	var G = parseInt(price*0.02);
-	var S = parseInt(price*0.01);
-	var mymile =  "${sessionScope.mileage}";
-	var mym = parseInt(mymile);
-	var point1 = mym.toLocaleString();
-	console.log(point1);
-	var str = "(내 적립금 : ";
-	str += point1;
-	str += "원)";
-	$("#mileage").val(mymile);
-	$("#point1").html(str);
-	$(".email").html(email);
-	$(".phone").html(phone);
-	if(grade=="G"){
-		$(".point").html(G.toLocaleString()+"원");
-		$("#addmile").val(G);
-	}else if(grade=="S"){
-		$(".point").html(S.toLocaleString()+"원");
-		$("#addmile").val(S);
-	}else{
-		$(".point").html(0);
-		$("#addmile").val(0);
-	}
+	$.ajax({
+		url:"/Order/select_midx.do",
+		type:"post",
+		data:{"midx":midx},
+		dataType:"json",
+		success:function(data){
+			grade = data.grade;
+			console.log("data : "+grade);
+			var point = data.mileage;
+			var str = "(내 적립금 : ";
+			str += point;
+			str += "원)";
+			
+			$(".email").html(data.email);
+			$(".phone").html(data.phone);
+			$("#point1").html(str);
+			$("#mileage").val(data.mileage);
+			
+			var G = parseInt(price*0.02);
+			var S = parseInt(price*0.01);
+			console.log("grade : "+grade);
+			console.log(G);
+			if(grade=="G"){
+				$(".point").html(G.toLocaleString()+"원");
+				$("#addmile").val(G);
+			}else if(grade=="S"){
+				$(".point").html(S.toLocaleString()+"원");
+				$("#addmile").val(S);
+			}else{
+				$(".point").html(0);
+				$("#addmile").val(0);
+			}
+			
+		},
+		error:function(){
+			alert("실행오류");
+		}
+	});
 	
 	$(".productprice").text(price.toLocaleString()+"원");
 	

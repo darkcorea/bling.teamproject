@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.project.bling.vo.NonorderVO;
 import com.project.bling.vo.OptionVO;
 import com.project.bling.vo.OrderVO;
+import com.project.bling.vo.UserVO;
 
 @Repository
 public class OrderDAO {
@@ -39,5 +40,8 @@ public class OrderDAO {
 	}
 	public void stock_update(OptionVO vo) throws Exception {
 		sqlSession.update(om+"stock_update",vo);
+	}
+	public UserVO select_midx(int midx) throws Exception {
+		return sqlSession.selectOne(om+"select_midx",midx);
 	}
 }
