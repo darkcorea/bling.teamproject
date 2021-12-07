@@ -61,7 +61,7 @@
 </head>
 <body>
 	<!-- nav바   -->
-	<h2><b><a id="myPageTitle" href="/MyPage/main.do">마이페이지</a></b></h2>
+	<h2><b><a id="myPageTitle" href="/MyPage/main.do?page=1">마이페이지</a></b></h2>
 	<div id="basicInfo">
 		<div><b>${sessionScope.UserVO.id}</b>님</div>
 		<div>내 등급 : 

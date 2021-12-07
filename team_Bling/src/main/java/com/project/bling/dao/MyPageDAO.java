@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.UserVO;
 
@@ -25,8 +26,8 @@ public class MyPageDAO {
 		return sqlSession.selectOne(mm+"deliveryStat",vo);
 	}
 	
-	public List<CombineVO> recentOrder(CombineVO vo) throws Exception {
-		return sqlSession.selectList(mm+"recentOrder", vo);
+	public List<CombineVO> recentOrder(PageMaker pm) throws Exception {
+		return sqlSession.selectList(mm+"recentOrder", pm);
 	}
 	
 	public void reviewWrite(CombineVO vo) throws Exception {
@@ -49,6 +50,12 @@ public class MyPageDAO {
 		System.out.println("마이페이지 DAO-delete - ridx : "+ridx);
 		sqlSession.delete(mm+"reviewDelete", ridx);
 	}
+	
+	// midx에 따른 리뷰 갯수
+	public int reviewCount(int midx) throws Exception {
+		return sqlSession.selectOne(mm+"reviewCount", midx);
+	}
+	
 	
 	//회원정보수정 첫번째 비밀번호 확인시 갖고오는 이름정보
 	public UserVO confirm(int midx) throws Exception{

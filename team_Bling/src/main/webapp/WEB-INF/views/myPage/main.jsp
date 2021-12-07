@@ -24,8 +24,8 @@
 			console.log("orderInfo 실행됨");
 			var str = "";
 			
-			if(${recentOrder == null}){
-				str += "<td colspan='7' id='noneOrder'><span>최근 주문내역이 없습니다.</span></td>";
+			if(${recentOrder == []}){
+				str += "<td colspan='7'><span id='noneOrder'>최근 주문내역이 없습니다.</span></td>";
 			} else{
 				str += "<c:forEach items='${recentOrder}' var='ro'>";
 				
@@ -57,16 +57,21 @@
 				str += "			<td id='td6'><span id='t6'>배송완료</span></td>";
 				str += "		</c:if>";
 				
-				str += "		<c:if test='${ro.contents != null}'>";
-				str += "			<td id='td7'><span id='t7'><input id='reviewWrite2' data-bs-toggle='modal' data-bs-target='#staticBackdrop2' onclick='reviewDetail(${ro.ridx})' value='리뷰 확인' readonly></span></td>";
+				str += "		<c:if test='${ro.date_differ <= 30}'>";
+				str += "			<c:if test='${ro.contents != null}'>";
+				str += "				<td id='td7'><span id='t7'><input id='reviewWrite2' data-bs-toggle='modal' data-bs-target='#staticBackdrop2' onclick='reviewDetail(${ro.ridx})' value='리뷰 확인' readonly></span></td>";
+				str += "			</c:if>";
+				str += "			<c:if test='${ro.contents == null}'>";
+				str += "				<td id='td7'><span id='t7'><input id='reviewWrite1' data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${ro.detail_idx})' value='리뷰 작성' readonly></span></td>";
+				str += "			</c:if>";
 				str += "		</c:if>";
-				str += "		<c:if test='${ro.contents == null}'>";
-				str += "			<td id='td7'><span id='t7'><input id='reviewWrite1' data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${ro.detail_idx})' value='리뷰 작성' readonly></span></td>";
+				str += "		<c:if test='${ro.date_differ > 31}'>";
+				str += "				<td id='td7'><span id='t7'><input id='reviewWrite3' onclick='purchaseCom()' value='구매 확정' readonly></span></td>";
 				str += "		</c:if>";
 				str += "	</tr>";
 				str += "</c:forEach>";
 				
-				str += "<br><br><br><br><br><br><br><br>";
+				str += "<br>";
 			}
 			document.getElementById("formDiv").innerHTML = str;
 		}
@@ -87,6 +92,15 @@
 				error: function(){
 					alert("detai_idx 넘기기 에러");
 				}
+			});
+		}
+		
+		
+		function purchaseCom(){
+			Swal.fire({
+				icon: 'warning',
+				title: '리뷰 작성기간 초과',
+				text: '배송완료일 기준 30일이 지나면 리뷰를 작성하실 수 없습니다.',
 			});
 		}
 		
@@ -594,7 +608,8 @@
 /* -------------------------- article css -------------------------- */
 	/* --------------------onload로 화면 출력-------------------- */	
 		#noneOrder{
-			text-align: center;
+			position: relative;
+			left: 280px;
 		}
 		#t1,#t4{
 			width: 100px;
@@ -725,6 +740,16 @@
 			cursor: pointer;
 			width: 70px;
 		}
+		#reviewWrite3{
+			color: #C1B2B2;
+			background-color: #ffffff;
+			border: none;
+			cursor: pointer;
+			width: 70px;
+		}
+		.page-item{
+            padding:0;
+        }
 /* -------------------------- article css -------------------------- */
 	</style>
 	
@@ -923,6 +948,7 @@
 							</span>
 						</div>
 						<div id="secTitle">최근 주문 정보</div>
+						<div>
 						<table>
 							<tr id="orderMenu">
 								<th id="td1"><span>주문일자</span><span id="line">|</span></th>
@@ -942,8 +968,53 @@
 						<table id="formDiv">
 							
 						</table>
+						</div>	
 						
-					</div>
+						<!-- 페이징 바 뿌려주기 -->
+						<div>
+							<nav aria-label="Page navigation">
+								<ul class="pagination justify-content-center">
+									<!-- 앞으로  가기 버튼 , 키워드 유지하면서 이동하기 -->
+								<c:if test="${pm.prev == true}">
+								<li class='page-item'>
+								<c:set var="prev" value="${pm.startPage -1}"/>
+									<a class='page-link' aria-label='Previous' href="/MyPage/main.do?page=${prev}">
+										<span aria-hidden='true' class='pointer' >&laquo;</span>
+									</a>
+								</li>
+								</c:if>
+								
+								<!-- 페이징 번호, 키워드 유지하면서 이동 하기  -->
+								<c:set var="page" value="${pm.scri.page}"/>
+								<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
+									<c:if test = "${pageNum == page}">
+									<li class="page-item active">	
+										<a class="page-link pointer" href="/MyPage/main.do?page=${pageNum}">
+											<c:out value="${pageNum}"/>
+										</a>
+									</li>
+									</c:if>
+									<c:if test = "${pageNum != page}">
+									<li class="page-item">	
+										<a class="page-link pointer" href="/MyPage/main.do?page=${pageNum}">
+											<c:out value="${pageNum}"/>
+										</a>
+									</li>
+									</c:if>
+								</c:forEach>
+								
+								<!-- 뒤로 가기 버튼 , 키워드 유지하면서 이동하기 -->
+								<c:if test="${pm.next && pm.endPage > 0}">
+								<li class='page-item'>
+									<a class='page-link' aria-label='Next' href="/MyPage/main.do?page=${pm.endPage + 1}">
+										<span aria-hidden='true' class='pointer'>&raquo;</span>
+									</a>
+								</li>
+								</c:if>
+									</ul>
+								</nav>
+							</div>					
+						</div>
 				</div>
 			</div>
 		</article>
