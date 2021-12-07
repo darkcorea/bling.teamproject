@@ -136,7 +136,7 @@
         function options(type,option){
         	var str2 = "";
         	if(type == 3){
-        		str2 += "<div ><img src='/resources/custom/장식"+option+".png' id='optionss' class='drag'><button type='button'>X</button></div>";
+        		str2 += "<div ><img src='/resources/custom/장식"+option+".png' id='optionss' class='drag'></div>";
         	}else{
         		str2 += "<img src='/resources/custom/고리"+option+".png' id='optionss' class='drag'>";
         	}
