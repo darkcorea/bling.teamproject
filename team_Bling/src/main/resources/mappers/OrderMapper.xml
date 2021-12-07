@@ -60,4 +60,9 @@
 	]]>
 	</update>
 	
+	<select id="select_midx" parameterType="int" resultType="UserVO">
+	<![CDATA[
+		SELECT email,phone,grade,mileage FROM BG_USER WHERE MIDX=#{midx}
+	]]>
+	</select>
 </mapper>
