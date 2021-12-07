@@ -8,11 +8,11 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName"  value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url"  value="jdbc:oracle:thin:@192.168.0.77:1521:xe" />
+		<property name="url"  value="jdbc:oracle:thin:@localhost.3306" />
 		<!-- 오라클 사용자 이름 -->
-		<property name="username" value="system" />
+		<property name="username" value="open_a_user" />
 		<!-- 오라클 사용자 비밀번호 -->
-		<property name="password" value="darkcorea" />
+		<property name="password" value="user1234!!" />
 	</bean>  
 	
 	<!-- MyBatis 객체 등록 -->
