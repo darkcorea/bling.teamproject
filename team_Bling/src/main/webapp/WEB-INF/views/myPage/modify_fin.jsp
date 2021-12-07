@@ -6,64 +6,47 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="UTF-8">
+		<title>비밀번호 확인</title>
 		<!-- Bootstrap core CSS -->
   		<link href="/resources/css/bootstrap.css" rel="stylesheet">
   	<!-- Bootstrap core JavaScript -->
   		<script src="/resources/js/jquery-3.6.0.min.js"></script>
 		<script src="/resources/js/bootstrap.bundle.js"></script>
-	<!-- Bootstrap icon -->	
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	<!-- SweetAlert2(alert,modal창) -->
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-		<meta charset="UTF-8">
-		<title>관리자 홈</title>
+		
 		<style>
-			section {
+			section{
 				max-width:1008px;
-				margin:  5px auto;
+				margin:  0px auto;
 			}
-				
 		</style>
 	</head>
 	<body>
 		<header>
-			<%@ include file="/WEB-INF/views/admin/ad_header.jsp" %><BR>
+			<%@ include file="/WEB-INF/views/header.jsp" %><BR>
 		</header>
-	
 		<section>
-			<div>
-				주문관리
-				<table>
-					<tr>
-						<td>
-							입금대기
-						</td>
-						<td>
-							결제완료
-						</td>
-						<td>
-							상품준비중
-						</td>
-						<td>
-							배송중
-						</td>
-					</tr>
-					<tr>
-						<td>
-							배송완료
-						</td>
-						<td>
-							구매확정
-						</td>
-						<td>
-							환불접수
-						</td>
-						<td>
-							교환접수
-						</td>
-					</tr>
-				</table>
+			<div class="container">
+				<div class="row">
+					<!-- nav바   -->
+					<div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+						<%@ include file="/WEB-INF/views/myPage/nav.jsp" %>
+					</div>
+					
+					<div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+						<h2>개인 정보 수정이 완료되었습니다.</h2>
+						<hr/>
+						<button type="button" class="btn btn-outline-primary" onClick="location.href='/'">홈으로 가기</button>
+					</div>
+				</div>
 			</div>
 		</section>
+		
+		<footer>
+				<%@ include file="/WEB-INF/views/footer.jsp" %>
+		</footer>
 	</body>
+	
 </html>

@@ -21,6 +21,11 @@ public class LoginDAO {
 		//System.out.println("DAO에서 비밀번호 : "+vo.getPwd());
 		return (name == null) ? false : true;
 	}
+	
+	public int delyn(UserVO vo) throws Exception{
+		return sqlSession.selectOne(lm+"delyn",vo);
+	}
+	
 	// 01_02. 회원 로그인 정보
 	public UserVO viewMember(UserVO vo) throws Exception{
 		return sqlSession.selectOne(lm+"viewMember", vo);

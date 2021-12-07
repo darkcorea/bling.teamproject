@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.bling.vo.NonorderVO;
+import com.project.bling.vo.OptionVO;
 import com.project.bling.vo.OrderVO;
 
 @Repository
@@ -35,5 +36,8 @@ public class OrderDAO {
 	}
 	public List<OrderVO> addr_select(int midx) throws Exception {
 		return sqlSession.selectList(om+"addr_select",midx);
+	}
+	public void stock_update(OptionVO vo) throws Exception {
+		sqlSession.update(om+"stock_update",vo);
 	}
 }

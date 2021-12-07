@@ -20,6 +20,7 @@ public class NonorderVO {
 	private String rphone;
 	private String payment;
 	private String depositor;
+	private int stock;
 	
 	public int getNonidx() {
 		return nonidx;
@@ -167,6 +168,14 @@ public class NonorderVO {
 	}
 	public void setTot_price(int tot_price) {
 		this.tot_price = tot_price;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 
 }

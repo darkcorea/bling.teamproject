@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.service.OrderService;
 import com.project.bling.vo.NonorderVO;
+import com.project.bling.vo.OptionVO;
 import com.project.bling.vo.OrderVO;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
@@ -86,11 +87,12 @@ public class OrderController {
 	
 	@RequestMapping(value="/mileageupdate.do",method = RequestMethod.POST)
 	@ResponseBody
-	public void mileageupdate(OrderVO vo) throws Exception {
+	public void mileageupdate(OrderVO vo,HttpSession session) throws Exception {
 		
 		System.out.println("마일리지>>>>>>>>>>"+vo.getMileage());
 		System.out.println("midx>>>>>>>>>>"+vo.getMidx());
 		orderService.mileageupdate(vo);
+		session.setAttribute("mileage", vo.getMileage());
 	}
 	
 	@RequestMapping(value="/memberorder.do",method = RequestMethod.POST)
@@ -132,6 +134,12 @@ public class OrderController {
 		
 		System.out.println("midx>>>>>>>>>"+midx);
 		return orderService.addr_select(midx);
+	}
+	@RequestMapping(value="/stock_update.do")
+	@ResponseBody
+	public int stock_update(OptionVO vo) throws Exception{
+		orderService.stock_update(vo);
+		return 1;
 	}
 	
 }

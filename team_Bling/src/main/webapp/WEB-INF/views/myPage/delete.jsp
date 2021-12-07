@@ -6,25 +6,25 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title>비밀번호 확인</title>
+	<meta charset="UTF-8">
+	<title>탈퇴</title>
 		<!-- Bootstrap core CSS -->
-  		<link href="/resources/css/bootstrap.css" rel="stylesheet">
-  	<!-- Bootstrap core JavaScript -->
-  		<script src="/resources/js/jquery-3.6.0.min.js"></script>
-		<script src="/resources/js/bootstrap.bundle.js"></script>
-	<!-- SweetAlert2(alert,modal창) -->
-		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	  		<link href="/resources/css/bootstrap.css" rel="stylesheet">
+	  	<!-- Bootstrap core JavaScript -->
+	  		<script src="/resources/js/jquery-3.6.0.min.js"></script>
+			<script src="/resources/js/bootstrap.bundle.js"></script>
+		<!-- Bootstrap icon -->	
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+		<!-- SweetAlert2(alert,modal창) -->
+			<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+			
+			<style>
+				section{
+					max-width:1008px;
+					margin:  0px auto;
+				}
+			</style>
 		
-		<style>
-			section{
-				max-width:1008px;
-				margin:  0px auto;
-			}
-			table{
-				border-top:1px solid black;
-			}
-		</style>
 	</head>
 	<body>
 		<header>
@@ -39,8 +39,8 @@
 					</div>
 					
 					<div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
-						<h2>나의 정보 확인</h2>
-						<b><c:out value="${data.uname }"/></b>님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인합니다.
+						<h2>탈퇴하기</h2>
+						비밀번호를 입력하시면 회원탈퇴가 완료됩니다.
 						<br/>
 						<table class="table">
 							<tr>
@@ -54,7 +54,6 @@
 							</tr>
 						</table>
 						<button type="button" class="btn btn-outline-primary" onClick="confirm()">확인</button>
-						<button type="button" class="btn btn-outline-primary" onClick="location.href='/MyPage/ssss.do'">커스터마이징</button>
 					</div>
 				</div>
 			</div>
@@ -64,14 +63,14 @@
 				<%@ include file="/WEB-INF/views/footer.jsp" %>
 		</footer>
 	</body>
-	
 	<script>
 		function confirm(){
 			var pass = document.getElementById("pass").value;
 			var real = document.getElementById("that").value;
 			
 			if(pass == real){
-				location.href="/MyPage/modifyInformation.do";
+				alert("탈퇴되었습니다.");
+				location.href="/MyPage/deletefin.do";
 			}else{
 				alert("비밀번호가 틀렸습니다.");
 			}

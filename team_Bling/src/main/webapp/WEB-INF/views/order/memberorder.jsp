@@ -78,7 +78,7 @@
 	.email{
 		width:300px;
 	}
-	#addInfo{
+	.addInfo{
 		font-size:9pt;
 		color:#cd2828;
 		text-decoration-line: none;
@@ -147,6 +147,7 @@
 		height:700px;
 		font-size: 22px;
 		font-weight: bold;
+		text-align:center;
 		}
 	#addrlist{
 		float: left;
@@ -164,6 +165,12 @@
 	}
 	.total,#s1{
 		margin-right:20px;
+	}
+	#mypage{
+		text-decoration-line: none;
+	}
+	#mypage:hover{
+		color:#000000;
 	}
 	
 </style>
@@ -237,7 +244,7 @@
 				</tr>
 				<tr class="line">
 					<td class="gray"><span class="white">적립금</span></td>
-					<td class="fill"><span class="point"></span><a href="" id="addInfo" data-bs-toggle="modal" data-bs-target="#exampleModal">등급별 적립금 혜택 보기</a></td>
+					<td class="fill"><span class="point"></span><a href="" class="addInfo" data-bs-toggle="modal" data-bs-target="#exampleModal">등급별 적립금 혜택 보기</a></td>
 				</tr>
 				<tr class="line">
 					<td class="gray"><span class="white">총결제금액</span></td>
@@ -245,7 +252,7 @@
 						<span class="total"></span>
 						<span id="s1"><input type="text" name="mile" placeholder="사용할 적립금 입력" class="mile"></span>
 						<span><input type="checkbox" id="checkBoxId">적립금 전액 사용</span>
-						<span id="addInfo">(내 적립금 : ${sessionScope.UserVO.mileage}원)</span>
+						<span class="addInfo" id="point1"></span>
 					</td>
 				</tr>
 				<tr>
@@ -273,13 +280,13 @@
 			<p id="checkall" class="line"><input type="checkbox" name="all">모든 약관 동의</p>
 			<p>
 				<input type="checkbox" name="c1"><span class="red">[필수]</span>쇼핑몰 이용약관 동의
-				<span id="addInfo">
+				<span class="addInfo">
 					<a id="view" href="" data-bs-toggle="modal" data-bs-target="#Show_Modal1">내용보기</a>
 				</span>
 			</p>
 			<p class="line">
 				<input type="checkbox" name="c1"><span class="red">[필수]</span>개인정보 처리방침 동의
-				<span id="addInfo">
+				<span class="addInfo">
 					<a id="view" href="" data-bs-toggle="modal" data-bs-target="#Show_Modal1">내용보기</a>
 				</span>
 			<br><br>
@@ -363,8 +370,28 @@
 		for(let i =0 ; i<Json.length ; i++){
 		    var oidx = Json[i].oidx;
 		    var quantity = Json[i].quntity;
+		    var stock = Json[i].stock;
 		    console.log("oidx>>>>>>>>>"+oidx);
 		    console.log("수량>>>>>>>>"+quantity);
+		    console.log("재고>>>>>>>>"+stock);
+		}
+	
+		//주소 찾기 api
+		function findmyaddr(){
+			new daum.Postcode({
+		        oncomplete: function(data) {
+		            var roadAddr = data.roadAddress; // 도로명 주소 변수
+		            var jibunAddr = data.jibunAddress; // 지번 주소 변수
+		            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+		            document.getElementById('zip_code').value = data.zonecode;
+		            if(roadAddr !== ''){
+		                document.getElementById("address1").value = roadAddr;
+		            } 
+		            else if(jibunAddr !== ''){
+		                document.getElementById("address1").value = jibunAddr;
+		            }
+		        }
+		    }).open();
 		}
 		
 	function addrlist(){
@@ -492,17 +519,14 @@ function iamport(){
 									str += "<form name='fm"+i+"'>";
 								    var oidx = Json[i].oidx;
 								    var quantity = Json[i].quntity;
-								    console.log("oidx는 ????"+oidx);
+								    var stock1 = Json[i].stock;
+								    var stock = stock1-1;
 								    str += "<input type='hidden' name='order_idx' value='"+data+"'>";
 									str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
 									str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
-									
 									str += "</form>";
 									$("#form2").html(str);
-									
-									
 									formData2 = $("form[name=fm"+i+"]").serialize();
-									console.log(formData2);
 									 $.ajax({
 											url:"/Order/morderdetailinsert.do",
 											type:"POST",
@@ -510,13 +534,37 @@ function iamport(){
 											async: false,
 											ContentType:"application/json",
 											success:function(data){
+												$.ajax({
+													url:"/Basket/order_after_del.do",
+													type:"POST",
+													data:formData2,
+													async: false,
+													ContentType:"application/json",
+													success:function(data){
+														 $.ajax({
+																url:"/Order/stock_update.do",
+																type:"POST",
+																data:{"oidx":oidx, "stock":stock},
+																dataType:"json",
+																async: false,
+																success:function(data){
+																},
+																error:function(){
+																	alert("실행오류");
+																}
+															});
+													},
+													error:function(){
+														alert("실행오류");
+													}
+												});
 											},
 											error:function(){
 												alert("실행오류");
 											}
 										});
-									 
 									}
+								$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/MyPage/main.do'>주문내역 가기</a></div>");
 								},
 								error:function(){
 									alert("실행오류");
@@ -562,7 +610,8 @@ function iamport(){
 						str += "<form name='fm"+i+"'>";
 					    var oidx = Json[i].oidx;
 					    var quantity = Json[i].quntity;
-					    console.log("oidx는 ????"+oidx);
+					    var stock1 = Json[i].stock;
+					    var stock = stock1-1;
 					    str += "<input type='hidden' name='order_idx' value='"+data+"'>";
 						str += "<input type='hidden' name='oidx' value='"+oidx+"'>";
 						str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
@@ -577,7 +626,6 @@ function iamport(){
 								async: false,
 								ContentType:"application/json",
 								success:function(data){
-									
 									$.ajax({
 										url:"/Basket/order_after_del.do",
 										type:"POST",
@@ -585,6 +633,18 @@ function iamport(){
 										async: false,
 										ContentType:"application/json",
 										success:function(data){
+											 $.ajax({
+													url:"/Order/stock_update.do",
+													type:"POST",
+													data:{"oidx":oidx, "stock":stock},
+													dataType:"json",
+													async: false,
+													success:function(data){
+													},
+													error:function(){
+														alert("실행오류");
+													}
+												});
 										},
 										error:function(){
 											alert("실행오류");
@@ -595,9 +655,8 @@ function iamport(){
 									alert("실행오류");
 								}
 							});
-						 
 						}
-					$("section").html("<div id='complete'>주문이 완료되었습니다 <a href=''> 주문내역 가기</a></div>");
+					$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/MyPage/main.do'>주문내역 가기</a></div>");
 					},
 					error:function(){
 						alert("실행오류");
@@ -615,8 +674,15 @@ $(document).ready(function(){
 	var price = ${tot_price};
 	var G = parseInt(price*0.02);
 	var S = parseInt(price*0.01);
-	var mymile =  "${sessionScope.UserVO.mileage}";
+	var mymile =  "${sessionScope.mileage}";
+	var mym = parseInt(mymile);
+	var point1 = mym.toLocaleString();
+	console.log(point1);
+	var str = "(내 적립금 : ";
+	str += point1;
+	str += "원)";
 	$("#mileage").val(mymile);
+	$("#point1").html(str);
 	$(".email").html(email);
 	$(".phone").html(phone);
 	if(grade=="G"){
@@ -655,17 +721,17 @@ $(document).ready(function(){
 	           $(".mile").val(mymile);
 	           $("#mileage").val(result);
 	           $("#tot_price").val(result2);
-	           $(".total").text(result2.toLocaleString());
+	           $(".total").text(result2.toLocaleString()+"원");
 	        }else{
 	        	 $(".mile").val("");
 	        	 $("#mileage").val(mymile);
 	        	 if(price<100000){
 	        			$("#tot_price").val(total);
-	        			$(".total").text(total.toLocaleString());
+	        			$(".total").text(total.toLocaleString()+"원");
 	        		}
 	        		else{
 	        			$("#tot_price").val(price);
-	        			$(".total").text(price.toLocaleString());
+	        			$(".total").text(price.toLocaleString()+"원");
 	        		}
 	        }
 	    });
@@ -678,6 +744,7 @@ $(document).ready(function(){
 		 
 		 if(value>mymile){
 			 alert("내 적립금보다 큽니다");
+			 $(".mile").val("");
 		 }else{
 	           $("#mileage").val(result);
 	           $("#tot_price").val(result2);
@@ -771,23 +838,7 @@ $(document).ready(function(){
 	
 });	
 
-//주소 찾기 api
-function findmyaddr(){
-	new daum.Postcode({
-        oncomplete: function(data) {
-            var roadAddr = data.roadAddress; // 도로명 주소 변수
-            var jibunAddr = data.jibunAddress; // 지번 주소 변수
-            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('zip_code').value = data.zonecode;
-            if(roadAddr !== ''){
-                document.getElementById("address1").value = roadAddr;
-            } 
-            else if(jibunAddr !== ''){
-                document.getElementById("address1").value = jibunAddr;
-            }
-        }
-    }).open();
-}
+
 </script>
 </body>
 </html>

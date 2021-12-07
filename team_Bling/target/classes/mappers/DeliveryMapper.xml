@@ -18,6 +18,4 @@
 	 	UPDATE bg_delivery SET confirm_yn='Y' WHERE order_idx=#{order_idx}
 	 </update>
 	  
-	  
-	  
 </mapper>

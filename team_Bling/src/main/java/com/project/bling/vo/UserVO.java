@@ -16,8 +16,14 @@ public class UserVO {
 	private String agree_sms;
 	private String agree_email;
 	private String agree_shopping;
+	private int delyn;
 	
-	
+	public int getDelyn() {
+		return delyn;
+	}
+	public void setDelyn(int delyn) {
+		this.delyn = delyn;
+	}
 	public String getAgree_sms() {
 		return agree_sms;
 	}

@@ -53,4 +53,11 @@
 		SELECT addr_name,ZIP_CODE,ADDR1,ADDR2,RPHONE,NAME FROM BG_ADDRESS_LIST WHERE MIDX=#{midx}
 	]]>
 	</select>
+	
+	<update id="stock_update" parameterType="OptionVO">
+	<![CDATA[
+	UPDATE bg_option set stock=#{stock} where oidx=#{oidx}
+	]]>
+	</update>
+	
 </mapper>
