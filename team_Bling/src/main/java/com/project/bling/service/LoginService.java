@@ -8,6 +8,7 @@ import com.project.bling.vo.UserVO;
 public interface LoginService {
 	// 01_01. 회원 로그인 체크
 	public boolean loginCheck(UserVO vo, HttpSession session, HttpServletRequest request) throws Exception;
+	public int delyn(UserVO vo)throws Exception;
 	// 01_02. 회원 로그인 정보
 	public UserVO viewMember(UserVO vo) throws Exception;
 	// 02. 회원 로그아웃

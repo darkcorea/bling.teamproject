@@ -8,12 +8,16 @@
 	<meta http-equiv="X-UA-Compatible" content ="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--  위의 3가지는 먼저 와야 합니다. -->
-	<title>Home</title>
+	<title>커스터마이징</title>
  	<script src="/js/jquery-3.6.0.min.js"></script>
  	<script src="/js/bootstrap.bundle.js"></script>
+ 	<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="/css/bootstrap.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-	
+	<!-- IE10, 11 지원을 위한 es6-promise --> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js"></script>
+
 	<style type="text/css">
 		
 		 #select{
@@ -81,9 +85,9 @@
                 <td id="kind">
                     <div style="height: 800px;overflow: auto;">
                         목걸이 필수템들
-                        <a style="cursor:pointer;" onclick="javascript:types(1)"><img src="/resources/making/체인.JPG" id="type"></a>
-                        <a style="cursor:pointer;" onclick="javascript:types(2)"><img src="/resources/making/고리.jpg" id="type"></a>
-                        <a style="cursor:pointer;" onclick="javascript:types(3)"><img src="/resources/making/장식.jpeg" id="type"></a>
+                        <a style="cursor:pointer;" onclick="javascript:types(1)"><img src="/resources/custom/체인.JPG" id="type"></a>
+                        <a style="cursor:pointer;" onclick="javascript:types(2)"><img src="/resources/custom/고리.jpg" id="type"></a>
+                        <a style="cursor:pointer;" onclick="javascript:types(3)"><img src="/resources/custom/장식.jpeg" id="type"></a>
                     </div>
                 </td>
             </tr>
@@ -94,7 +98,7 @@
                     </div>
                 </td>
                 <td id="but">
-                    저장버튼
+                    <button type="button" class="btnScreenShot" id="btnScreenShot">커마저장</button>
                 </td>
             </tr>
         </table>
@@ -105,15 +109,15 @@
             var str = "";
             if(type == 1){
             	for(var i = 1;i<4;i++){
-            		str += "<a style='cursor:pointer;' onclick='javascript:main_option(1,"+i+")'><img src='/resources/making/체인"+i+".png' id='type'></a>";
+            		str += "<a style='cursor:pointer;' onclick='javascript:main_option(1,"+i+")'><img src='/resources/custom/체인"+i+".png' id='type'></a>";
             	}
             }else if(type == 2){
-            	for(var j = 1;j<4;j++){
-            		str += "<a style='cursor:pointer;' onclick='javascript:options(2,"+j+")'><img src='/resources/making/고리"+i+".png' id='type'></a>";
+            	for(var j = 1;j<7;j++){
+            		str += "<a style='cursor:pointer;' onclick='javascript:options(2,"+j+")'><img src='/resources/custom/고리"+j+".png' id='type'></a>";
             	}
             }else if(type == 3){
-            	for(var k = 1;k<4;k++){
-            		str += "<a style='cursor:pointer;' onclick='javascript:options(3,"+k+")'><img src='/resources/making/장식"+k+".png' id='type'></a>";
+            	for(var k = 1;k<6;k++){
+            		str += "<a style='cursor:pointer;' onclick='javascript:options(3,"+k+")'><img src='/resources/custom/장식"+k+".png' id='type'></a>";
             	}
             }
 
@@ -124,7 +128,7 @@
         function main_option(type,option){
         	
         	var str_chain = "";
-        	str_chain += "<img src='/resources/making/체인"+option+".png' class='type'>";
+        	str_chain += "<img src='/resources/custom/체인"+option+".png' class='type'>";
         	$('#maindiv').html(str_chain);
         }
         
@@ -132,9 +136,9 @@
         function options(type,option){
         	var str2 = "";
         	if(type == 3){
-        		str2 += "<div ><img src='/resources/making/장식"+option+".png' id='optionss' class='drag'><button type='button'>X</button></div>";
+        		str2 += "<div ><img src='/resources/custom/장식"+option+".png' id='optionss' class='drag'><button type='button'>X</button></div>";
         	}else{
-        		str2 += "<img src='/resources/making/고리"+option+".png' id='optionss' class='drag'>";
+        		str2 += "<img src='/resources/custom/고리"+option+".png' id='optionss' class='drag'>";
         	}
         	
         	$('#maindiv').prepend(str2);
@@ -187,5 +191,14 @@
         			}
         		}
        dragobject.initialize()
+       
+       $("#btnScreenShot").on("click",function(){
+    	   html2canvas(document.getElementById("scroll"), {
+    		    backgroundColor: "#000000"
+    		}).then(function(canvas) {
+    		    var base64image = canvas.toDataURL("image/png");
+    		    window.open(base64image , "_blank");  // Open the image in a new window
+    		});
+       });
     </script>
 </html>
