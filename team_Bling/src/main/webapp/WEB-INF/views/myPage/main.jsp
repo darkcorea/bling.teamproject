@@ -44,6 +44,9 @@
 				str += "		<td id='td5'><span id='t5'>${ro.quantitySum}</span></td>";
 				
 				//	\(backslash)를 붙이면 해당 문자로만 인식한다. -> \"는 문자열을 나타내는 큰따옴표의 역할만 할 뿐, 쿼리문을 구분짓는 역할은 하지 않는다.
+				str += "		<c:if test='${ro.deli_stat == \"N\"}'>";
+				str += "			<td id='td6'><span id='t6'>미결제</span></td>";
+				str += "		</c:if>";
 				str += "		<c:if test='${ro.deli_stat == \"Y\"}'>";
 				str += "			<td id='td6'><span id='t6'>결제완료</span></td>";
 				str += "		</c:if>";
