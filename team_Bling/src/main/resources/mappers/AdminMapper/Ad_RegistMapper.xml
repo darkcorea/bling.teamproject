@@ -18,19 +18,18 @@
 	
 	<!-- 관리자 제품 등록 -->
 	<insert id="productInsert" parameterType="ProductVO">
-	INSERT INTO BG_PRODUCT(pidx, pname, kind, price, discount, saleprice, rdate)
-	VALUES(pidx_seq.nextval, #{pname}, #{kind}, #{price}, #{discount}, #{saleprice}, sysdate)
+	INSERT INTO BG_PRODUCT(pname, kind, price, discount, saleprice)
+	VALUES( #{pname}, #{kind}, #{price}, #{discount}, #{saleprice})
+	
 	<selectKey resultType="int" keyProperty="pidx" order="AFTER">
-	
 	SELECT MAX(pidx) FROM BG_PRODUCT WHERE 1=1
-	
 	</selectKey>
 	</insert>
 	
 	<!-- 관리자 옵션 등록 -->
 	<insert id="optionInsert" parameterType="OptionVO">
-	INSERT INTO BG_OPTION(oidx, color, texture, sizes, stock, addprice, pidx, oname)
-	VALUES(oidx_seq.nextval, #{color}, #{texture}, #{sizes}, #{stock}, #{addprice}, #{pidx}, #{oname})
+	INSERT INTO BG_OPTION(color, texture, sizes, stock, addprice, pidx, oname)
+	VALUES(#{color}, #{texture}, #{sizes}, #{stock}, #{addprice}, #{pidx}, #{oname})
 	</insert>
 	
 	<!--  관리자 이미지 등록 -->
@@ -66,21 +65,13 @@
 	
 	<!-- 관리자 제품 정보 불러오기 -->
 	<select id="list" parameterType="PageMaker" resultType="CombineVO">
-	<![CDATA[
-	SELECT * FROM
-		(SELECT rownum AS rnum, A.* FROM
-			 (SELECT * FROM bg_product pr JOIN bg_image im ON im.pidx = pr.pidx WHERE 1=1 
-	]]>	
+	SELECT * FROM bg_product pr JOIN bg_image im ON im.pidx = pr.pidx WHERE 1=1 
 		<if test='kind == "R"'> AND kind='R'</if>
 		<if test='kind == "E"'> AND kind='E'</if>
 		<if test='kind == "N"'> AND kind='N'</if>
-		<if test='kind == "B"'> AND kind='B'</if>	
-		
-	<![CDATA[		  
-			  ORDER BY pr.rdate desc) A
-		WHERE rownum <= #{lastPost} ) B
-	WHERE rnum >= #{startPost}
-	]]>
+		<if test='kind == "B"'> AND kind='B'</if>
+	ORDER BY pr.pidx desc
+	Limit #{startPost},#{scri.perPageNum}
 	</select>
 	
 	<!-- 상품 옵션 불러오기 -->
@@ -97,7 +88,7 @@
 	<!-- 제품 수정하기 -->
 	<update id="updatePro" parameterType="productVO">
 		UPDATE bg_product SET pname=#{pname}, price=#{price}, discount=#{discount}, saleprice=#{saleprice}
-		, saleyn=#{saleyn}, kind=#{kind}, rdate=sysdate
+		, saleyn=#{saleyn}, kind=#{kind}, rdate=now()
 		WHERE pidx = #{pidx}
 	</update>
 	
