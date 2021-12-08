@@ -50,58 +50,6 @@
 </footer>
 </body>
 <script>
-	$(function(){
-		
-		let midx = "${sessionScope.UserVO.midx}";
-		/* $.ajax({
-			url:"/Customer/myQuestion_list.do",
-			type:"get",
-			data:"midx="+midx,
-			ContentType:"application/json",
-			success:function(data){
-				if(data.length>0){
-				var str = "";
-				str += "<table class='tab'>";
-				str += "<tr class='line1'>";
-				str += "	<th>번호</th>";
-				str += "	<th>제목</th>";
-				str += "	<th>작성자</th>";
-				str += "	<th>작성일</th>";
-				str += "</tr>";
-				for(var i=0; i<data.length;i++){
-					var item = data[i];
-					str += "<tr class='line'>";
-					str += "<td>"+item.qidx+"</td>";
-					str += "<td>"+item.title+"</td>";
-					str += "<td>"+item.content+"</td>";
-					str += "<td>"+item.rdate+"</td>";
-					str += "</tr>";
-				}
-				str += "</table>";
-				$("#list").html(str);
-				
-				}else{
-					var str="";
-					str += "<table class='tab'>";
-					str += "<tr class='line1'>";
-					str += "	<th><input type='checkbox' name='all' onclick='checkAll(this)'></th>";
-					str += "	<th>사진</th>";
-					str += "	<th>제품명</th>";
-					str += "	<th class='th1'>수량</th>";
-					str += "	<th>상품가격</th>";
-					str += "	<th>할인금액</th>";
-					str += "	<th>결제금액</th>";
-					str += "	<th>취소</th>";
-					str += "</tr>";
-					str += "</table>";
-					$("#list").html(str);
-				}
-			},
-			error:function(){
-				alert("실행오류");
-			}
-		}); */
-		
-	});
+	
 </script>
 </html>

@@ -31,65 +31,7 @@
 			WHERE midx=#{midx} AND pidx=#{pidx}
 		]]>
 	</delete>
-	<!-- 장바구니 중복 확인 -->
-	<select id="double_check" parameterType="OrderVO" resultType="int">
-		<![CDATA[
-		 	select count(*) from bg_cart where (midx = #{midx})
-			and (oidx = #{oidx})
-			]]>
-	</select>
 	
-	<!-- 장바구니 등록 -->
-	<insert id="cartinsert" parameterType="OrderVO">
-		
-		<![CDATA[
-			insert into bg_cart(cart_idx, midx, oidx, QUANTITY)
-			values (cart_seq.nextval, #{midx}, #{oidx}, #{quantity})
-		]]>
-	</insert>
-	
-	<!-- 장바구니 리스트 조회 -->
-	<select id="cartlist" parameterType="int" resultType="CartVO">
-		<![CDATA[
-		select cart_idx, d.main, b.pname, c.oname, a.quantity, c.addprice, b.price, b.saleprice, c.pidx, c.stock, c.oidx
-		from bg_cart a join bg_option c
-					on a.oidx=c.oidx
-					join bg_product b
-                    on c.pidx=b.pidx
-					join bg_image d
-                    on b.pidx=d.pidx
-                    where midx=#{midx}
-		]]>
-	</select>
-	
-	<update id="cart_update" parameterType="CartVO">
-	
-	update bg_cart set QUANTITY=#{quantity} where cart_idx=#{cart_idx}
-	 
-	 <selectKey resultType="int" keyProperty="quantity" order="AFTER">
-	
-	select QUANTITY from bg_cart WHERE	1 = 1
-		AND cart_idx=#{cart_idx}
-	
-	</selectKey>
-	 
-	</update>
-	
-	<delete id="cart_delete" parameterType="int">
-		DELETE FROM bg_cart WHERE cart_idx = #{cart_idx}
-	</delete>
-	<!-- 장바구니 주문 후 삭제 -->
-	<delete id="order_after_del" parameterType="CartVO">
-		DELETE FROM bg_cart WHERE oidx = #{oidx}
-	</delete>
-	
-	<!-- 장바구니 여러개 삭제 -->
-	<delete id="cartcheck_del" parameterType="list">
-		DELETE FROM bg_cart WHERE cart_idx IN (
-		<foreach collection="list" item="item" separator=",">
-			#{item}
-		</foreach> )
-	</delete>
 	<!-- 관심상품 삭제 interest_idx -->
 	<delete id="likeDel" parameterType="LikeVO">
 		DELETE FROM bg_like WHERE interest_idx=#{interest_idx}
@@ -102,11 +44,6 @@
 			#{item}
 		</foreach> )
 	</delete>
-	
-	<!-- midx에 따른 장바구니 상품 갯수 -->
-	<select id="cart_count" parameterType="int" resultType="int">
-		SELECT count(*) FROM bg_cart WHERE midx=#{midx}
-	</select>
 	
 	<!-- midx와 종류에 따라서 관심 상품 리스트 -->
 	<select id="like_list" parameterType="CombineVO" resultType="CombineVO">
@@ -126,4 +63,71 @@
 		ORDER BY li.pidx ASC
 	]]>
 	</select>
+	
+	<!-- 장바구니 중복 확인 -->
+	<select id="double_check" parameterType="OrderVO" resultType="int">
+		<![CDATA[
+		 	select count(*) from bg_cart where (midx = #{midx})
+			and (oidx = #{oidx})
+			]]>
+	</select>
+	
+	<!-- 장바구니 등록 -->
+	<insert id="cartinsert" parameterType="OrderVO">
+		
+		<![CDATA[
+			insert into bg_cart(midx, oidx, QUANTITY)
+			values (#{midx}, #{oidx}, #{quantity})
+		]]>
+	</insert>
+	
+	<!-- 장바구니 리스트 조회 -->
+	<select id="cartlist" parameterType="int" resultType="CartVO">
+		<![CDATA[
+		select cart_idx, d.main, b.pname, c.oname, a.quantity, c.addprice, b.price, b.saleprice, c.pidx, c.stock, c.oidx
+		from bg_cart a join bg_option c
+					on a.oidx=c.oidx
+					join bg_product b
+                    on c.pidx=b.pidx
+					join bg_image d
+                    on b.pidx=d.pidx
+                    where midx=#{midx}
+		]]>
+	</select>
+	
+	<!-- 장바구니 수량 업데이트-->
+	<update id="cart_update" parameterType="CartVO">
+	
+	update bg_cart set QUANTITY=#{quantity} where cart_idx=#{cart_idx}
+	 
+	 <selectKey resultType="int" keyProperty="quantity" order="AFTER">
+	
+	select QUANTITY from bg_cart WHERE	1 = 1
+		AND cart_idx=#{cart_idx}
+	
+	</selectKey>
+	 
+	</update>
+	<!-- 장바구니 1개 삭제 -->
+	<delete id="cart_delete" parameterType="int">
+		DELETE FROM bg_cart WHERE cart_idx = #{cart_idx}
+	</delete>
+	<!-- 장바구니 주문 후 삭제 -->
+	<delete id="order_after_del" parameterType="CartVO">
+		DELETE FROM bg_cart WHERE oidx = #{oidx}
+	</delete>
+	
+	<!-- 장바구니 여러개 삭제 -->
+	<delete id="cartcheck_del" parameterType="list">
+		DELETE FROM bg_cart WHERE cart_idx IN (
+		<foreach collection="list" item="item" separator=",">
+			#{item}
+		</foreach> )
+	</delete>
+	
+	<!-- midx에 따른 장바구니 상품 갯수 -->
+	<select id="cart_count" parameterType="int" resultType="int">
+		SELECT count(*) FROM bg_cart WHERE midx=#{midx}
+	</select>
+	
 </mapper>
