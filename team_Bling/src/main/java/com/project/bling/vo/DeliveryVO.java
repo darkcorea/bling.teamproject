@@ -6,7 +6,7 @@ public class DeliveryVO {
 	private int order_idx;
 	private String cancel;
 	private String refund;
-	private String exchanges;
+	private String exchange;
 	private String deli_com;
 	private String deli_stat;
 	private String send_day;
@@ -57,11 +57,11 @@ public class DeliveryVO {
 	public void setRefund(String refund) {
 		this.refund = refund;
 	}
-	public String getExchanges() {
-		return exchanges;
+	public String getExchange() {
+		return exchange;
 	}
-	public void setExchanges(String exchanges) {
-		this.exchanges = exchanges;
+	public void setExchange(String exchange) {
+		this.exchange = exchange;
 	}
 	public String getDeli_com() {
 		return deli_com;
