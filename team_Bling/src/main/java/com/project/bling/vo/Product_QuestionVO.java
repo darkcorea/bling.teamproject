@@ -8,11 +8,18 @@ public class Product_QuestionVO {
 	private int depth;
 	private String title;
 	private String comments;
-	private String pwd;
+	private String show_yn;
 	private String rdate;
 	private String state;
 	
 	
+	
+	public String getShow_yn() {
+		return show_yn;
+	}
+	public void setShow_yn(String show_yn) {
+		this.show_yn = show_yn;
+	}
 	public int getPqidx() {
 		return pqidx;
 	}
@@ -55,12 +62,6 @@ public class Product_QuestionVO {
 	}
 	public void setComments(String comments) {
 		this.comments = comments;
-	}
-	public String getPwd() {
-		return pwd;
-	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
 	}
 	public String getRdate() {
 		return rdate;

@@ -1,9 +1,6 @@
 package com.project.bling.dao;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.NoticeVO;
-import com.project.bling.vo.Order_detailVO;
 import com.project.bling.vo.Product_QuestionVO;
 import com.project.bling.vo.QuestionVO;
 
@@ -35,9 +31,9 @@ public class CustomerDAO {
 		return sqlSession.selectList(cm +"Product_Question", pm);
 	}
 	
-	// 비밀번호와 pqidx로 문의하기 내용 가지고 오기.
-	public Product_QuestionVO product_pqidx(Product_QuestionVO pq) throws Exception{
-		return sqlSession.selectOne(cm +"product_pqidx", pq);
+	// midx와 pqidx로 상품문의 가져오기
+	public List<Product_QuestionVO> show_check(Product_QuestionVO pq) throws Exception{
+		return sqlSession.selectList(cm +"show_check", pq);
 	}
 	
 	// 상문문의하기 등록하기
