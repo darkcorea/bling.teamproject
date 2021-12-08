@@ -64,6 +64,17 @@ public class OrderServiceImpl implements OrderService {
 		
 		return orderDAO.select_midx(midx);
 	}
+
+	@Override
+	public void delivery_insert(OrderVO vo) throws Exception {
+		orderDAO.delivery_insert(vo);
+	}
+
+	@Override
+	public void non_delivery_insert(NonorderVO vo) throws Exception {
+		
+		orderDAO.non_delivery_insert(vo);
+	}
 	
 	
 	

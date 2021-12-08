@@ -229,6 +229,7 @@
 					</td>
 				</tr>
 			</table>
+			<div id="delivery"></div>
 		<br><br>
 		</form>
 		<br><br>
@@ -377,6 +378,7 @@ function iamport(){
 								var str = "";
 								let Json = JSON.parse('${jsonData}');
 								var formData2 = "";
+								var formData3 = "";
 								for(let i =0; i<Json.length; i++){
 									str += "<form name='fm"+i+"'>";
 								    var oidx = Json[i].oidx;
@@ -388,7 +390,9 @@ function iamport(){
 									str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
 									str += "</form>";
 									$("#form2").html(str);
+									$("#delivery").html("<input type='hidden' name='nonidx' value='"+data+"'>");
 									formData2 = $("form[name=fm"+i+"]").serialize();
+									formData3 =  $("form[name=frm]").serialize();
 									 $.ajax({
 											url:"/Order/orderdetailinsert.do",
 											type:"POST",
@@ -403,6 +407,19 @@ function iamport(){
 													dataType:"json",
 													async: false,
 													success:function(data){
+														$.ajax({
+															url:"/Order/nondelivery_insert.do",
+															type:"POST",
+															data:formData3,
+															ContentType:"application/json",
+															async: false,
+															success:function(data){
+																
+															},
+															error:function(){
+																alert("실행오류");
+															}
+														});
 													},
 													error:function(){
 														alert("실행오류");
@@ -465,6 +482,7 @@ function iamport(){
 					
 					let Json = JSON.parse('${jsonData}');
 					var formData2 = "";
+					var formData3 = "";
 					for(let i =0 ; i<Json.length ; i++){
 						str += "<form name='fm"+i+"'>";
 					    var oidx = Json[i].oidx;
@@ -477,7 +495,9 @@ function iamport(){
 						str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
 						str += "</form>";
 						$("#form2").html(str);
+						$("#delivery").html("<input type='hidden' name='nonidx' value='"+data+"'>");
 						formData2 = $("form[name=fm"+i+"]").serialize();
+						formData3 =  $("form[name=frm]").serialize();
 						 $.ajax({
 								url:"/Order/orderdetailinsert.do",
 								type:"POST",
@@ -492,6 +512,18 @@ function iamport(){
 											dataType:"json",
 											async: false,
 											success:function(data){
+												$.ajax({
+													url:"/Order/nondelivery_insert.do",
+													type:"POST",
+													data:formData3,
+													ContentType:"application/json",
+													async: false,
+													success:function(data){
+													},
+													error:function(){
+														alert("실행오류");
+													}
+												});
 											},
 											error:function(){
 												alert("실행오류");
