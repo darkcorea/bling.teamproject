@@ -16,7 +16,7 @@ public interface MyPageService {
 	public void reviewWrite2(CombineVO vo) throws Exception;
 	public CombineVO reviewDetail(int ridx) throws Exception;
 	public void reviewDelete(int ridx) throws Exception;
-	public int reviewCount(int midx) throws Exception;
+	public int orderCount(int midx) throws Exception;
 	
 	//회원정보수정 첫번째 비밀번호 확인시 갖고오는 이름정보
 	public UserVO confirm(int midx)throws Exception;

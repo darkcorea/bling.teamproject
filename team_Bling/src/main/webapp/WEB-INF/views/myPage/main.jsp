@@ -29,17 +29,10 @@
 			} else{
 				str += "<c:forEach items='${recentOrder}' var='ro'>";
 				
-				str += "<c:set var='rdate1' value='${ro.rdate}' />";
-				str += "<c:set var='rdate2' value='${fn:substring(rdate1, 2, 11)}' />";
-				
-				str += "<c:set var='oname1' value='${ro.oname}' />";
-				str += "<c:set var='plus' value='+' />";
-				str += "<c:set var='oname2' value='${fn:substringBefore(oname1, plus)}' />";
-				
 				str += "	<tr>";
-				str += "		<td id='td1'><span id='t1'>${rdate2}</span></td>";
+				str += "		<td id='td1'><span id='t1'>${ro.rdate}</span></td>";
 				str += "		<td id='td2'><span id='t2'>${ro.order_idx}</span></td>";
-				str += "		<td id='td3'><span id='t3'>${ro.pname} / ${oname2}</span></td>";
+				str += "		<td id='td3'><span id='t3'>${ro.pname} / ${ro.oname}</span></td>";
 				str += "		<td id='td4'><span id='t4'><fmt:formatNumber value='${(ro.saleprice+ro.addprice)*ro.quantitySum}' pattern='#,###' />원</span></td>";
 				str += "		<td id='td5'><span id='t5'>${ro.quantitySum}</span></td>";
 				

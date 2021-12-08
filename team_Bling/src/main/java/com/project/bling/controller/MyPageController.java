@@ -94,16 +94,15 @@ public class MyPageController {
 		PageMaker pm = new PageMaker();
 		pm.setScri(sc);
 		pm.setMidx(midx);
-		int ReviewCount = myPageService.reviewCount(midx);
+		int orderCount = myPageService.orderCount(midx);
 
-		pm.setTotalCount(ReviewCount);
-
+		pm.setTotalCount(orderCount);
 
 		model.addAttribute("pm", pm);
 		model.addAttribute("recentOrder", myPageService.recentOrder(pm));
 		
 		System.out.println("Page>>>>>>>>>>>>>>>>>"+sc.getPage());
-		System.out.println("ReviewCount>>>>>>>>>>>>>>>>>"+ReviewCount);
+		System.out.println("orderCount>>>>>>>>>>>>>>>>>"+orderCount);
 		System.out.println("StartPage>>>>>>>>>>>>>>>>>"+pm.getStartPage());
 		System.out.println("EndPage>>>>>>>>>>>>>>>>>"+pm.getEndPage());
 		System.out.println("StartPost>>>>>>>>>>>>>>>>>"+pm.getStartPost());

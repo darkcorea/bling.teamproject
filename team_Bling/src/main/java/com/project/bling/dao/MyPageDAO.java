@@ -52,7 +52,7 @@ public class MyPageDAO {
 	}
 	
 	// midx에 따른 리뷰 갯수
-	public int reviewCount(int midx) throws Exception {
+	public int orderCount(int midx) throws Exception {
 		return sqlSession.selectOne(mm+"orderCount", midx);
 	}
 	
