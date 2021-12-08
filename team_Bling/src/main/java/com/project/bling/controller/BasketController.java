@@ -170,4 +170,14 @@ public class BasketController {
 	}
 	
 	
+	// midx가 선택한 관심상품 들
+	@RequestMapping(value="/checklike1.do")
+	@ResponseBody
+	public List<LikeVO> checklike1(HttpSession session) throws Exception { 
+		UserVO vo = (UserVO)session.getAttribute("UserVO");
+		int midx = vo.getMidx();
+		return basketService.checklike1(midx);
+	}
+	
+	
 }

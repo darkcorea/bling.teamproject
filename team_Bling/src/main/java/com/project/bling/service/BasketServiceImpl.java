@@ -100,5 +100,11 @@ public class BasketServiceImpl implements BasketService {
 		
 	}
 	
+	//midx가 선택한 관심 상품 pidx
+	@Override
+	public List<LikeVO> checklike1(int midx) throws Exception {
+		return basketDAO.checklike1(midx);
+	}
+	
 	
 }

@@ -161,7 +161,10 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td>직접입력&ensp;  <input type="number" id="start_price" min="0"> &ensp;-&ensp; <input type="number" id="last_price" min="0"></td>
+			<td>직접입력&ensp;
+				<input type="number" id="start_price" min="0" maxlength="8" oninput="numberMaxLength(this);" > &ensp;-&ensp;
+				<input type="number" id="last_price" min="0"  maxlength="8" oninput="numberMaxLength(this);" >
+			 </td>
 		</tr>
 	
 	</table>
@@ -214,26 +217,6 @@
 				</div>
 			</div>
 		</div>
-		<script>
-			$(document).ready(function(){
-				var pidx = ${list.pidx};
-				$.ajax({
-					url:"/Basket/checklike.do",
-					type:"POST",
-					async: false,
-					data:{"pidx":pidx},
-					ContentType:"application/json",
-					success:function(data){
-						if(data == "" || data == 0){
-						}else{
-							$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
-						}
-					},error:function(){
-						alert("관심상품존재찾기 에러!")
-						}
-				});
-			});
-		</script> 
 	</c:forEach>
 	</div>
 </div>
@@ -245,9 +228,16 @@
 
 </body>
 <script>
+
+// 입력하는 가격 제한 
+function numberMaxLength(e){
+    if(e.value.length > e.maxLength){
+        e.value = e.value.slice(0, e.maxLength);
+    }
+}
+
 //관심상품 추가
-function heart(pidx){
-	
+function heart(pidx){	
 	var uid = '${sessionScope.UserVO.id}';
 	var like = 0;
 	if(uid==""){
@@ -268,13 +258,34 @@ function heart(pidx){
 			data:{"yn":like,"pidx":pidx},
 			ContentType:"application/json",
 			success:function(data){
-				console.log(data);
 			},error:function(){
 				alert("관심상품등록 에러!")
 			}
 		});
 	}
 }
+
+//관심 상품 표시 하기
+function like_do(){
+    var uid = '${sessionScope.UserVO.id}';
+    if (uid != ""){
+		$.ajax({
+			url:"/Basket/checklike1.do",
+			type:"POST",
+			async: false,
+			data:{},
+			ContentType:"application/json",
+			success:function(data){  
+			    for(let i =0; i<data.length; i++){
+					$(".emptyHeart"+data[i].pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+data[i].pidx);
+			    }	
+			},error:function(){
+				alert("관심상품존재찾기 에러!")
+			}
+		});
+    }
+}
+like_do();
 
 // 검색버튼을 눌렀을 때
 function search_fn(){
@@ -284,8 +295,7 @@ function search_fn(){
 	let start_price =  parseInt($("#start_price").val());
 	let last_price =  parseInt($("#last_price").val());
 	
-	console.log("시작 가격: "+start_price);
-	console.log("마지막 가격: "+last_price);
+	console.log(price);
 	// 유효성 검사
 	if(kind == null && price == null && keyword == "" && start_price == "" && last_price == ""){
 		alert("검색을 할려면 최소한 한가지는 입력하셔야 합니다.");
@@ -313,7 +323,7 @@ function search_fn(){
 		    frm.appendChild(input1);
 			
 		}
-		if (price != null && start_price == "" && last_price == ""){
+		if (price != null && isNaN(start_price) && isNaN(last_price)){
 			let input2 = document.createElement("input");
 			input2.setAttribute("type","hidden");
 		    input2.setAttribute("name","price");
@@ -329,7 +339,7 @@ function search_fn(){
 		    frm.appendChild(input3);
 			
 		}
-		if(start_price != "" && start_price != null){
+		if(start_price != "" && start_price != null && !isNaN(start_price)){
 			let input4 = document.createElement("input");
 			input4.setAttribute("type","hidden");
 		    input4.setAttribute("name","start_price");
@@ -337,7 +347,7 @@ function search_fn(){
 		    frm.appendChild(input4);
 			
 		}
-		if(last_price != "" && start_price != null){
+		if(last_price != "" && last_price != null && !isNaN(last_price)){
 			 let input5 = document.createElement("input");
 			 input5.setAttribute("type","hidden");
 			 input5.setAttribute("name","last_price");

@@ -202,7 +202,7 @@
 	where 1=1
 	]]>
 	
-		<if test="scri.keyword != null ">AND pi.pname LIKE '%'||#{scri.keyword}||'%'</if>
+		<if test="scri.keyword != null ">AND pi.pname LIKE CONCAT('%',#{scri.keyword},'%')</if>
 		<if test='scri.kind == "R"'>AND pi.kind='R'</if>
 		<if test='scri.kind == "E"'>AND pi.kind='E'</if>
 		<if test='scri.kind == "N"'>AND pi.kind='N'</if>

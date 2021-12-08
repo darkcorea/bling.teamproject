@@ -81,5 +81,11 @@ public class BasketDAO {
 	public void order_after_del(CartVO vo) throws Exception {
 		sqlSession.delete(bm+"order_after_del",vo);
 	}
+
+	//midx가 선택한 관심 상품 pidx
+	public List<LikeVO> checklike1(int midx) throws Exception {
+		return sqlSession.selectList(bm+"checklike1", midx);
+	}
+	
 	
 }

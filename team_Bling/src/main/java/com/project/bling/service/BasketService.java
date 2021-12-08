@@ -37,4 +37,5 @@ public interface BasketService {
 	List<CombineVO> like_list(CombineVO cv) throws Exception;
 	void likeDel(LikeVO vo) throws Exception;
 	void like_del_ch(List<Integer> list) throws Exception ;
+	List<LikeVO> checklike1(int midx) throws Exception;
 }

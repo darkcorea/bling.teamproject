@@ -90,22 +90,24 @@
        
 	</insert>
 	
-
+	<!-- 반복되는 쿼리문 -->
+	<sql id="keyword">
+		<if test="scri.keyword != null">
+			AND subject LIKE CONCAT('%',#{scri.keyword},'%') OR contents LIKE CONCAT('%',#{scri.keyword},'%')
+			</if>
+	</sql>
+	
 	<!-- 고객센터 문의하기 총 갯수-->
 	<select id="Question_Count" parameterType="PageMaker" resultType="int">
 		SELECT count(*) FROM bg_notice WHERE type='Q'
-			<if test="scri.keyword != null">
-			AND subject LIKE '%'||#{scri.keyword}||'%' OR contents LIKE '%'||#{scri.keyword}||'%'
-			</if>
+		<include refid="keyword"></include>
 	</select>
 	
 	
 	<!-- 고객센터 페이징 -->
 	<select id="Question_page" parameterType="PageMaker" resultType="NoticeVO">
 		SELECT nidx, subject, contents, rdate FROM bg_notice WHERE type='Q'
-			 <if test="scri.keyword != null">
-		  	AND subject LIKE '%'||#{scri.keyword}||'%' OR contents LIKE '%'||#{scri.keyword}||'%'
-		 	</if>
+			 <include refid="keyword"></include>
 		Limit #{startPost},#{scri.perPageNum} 	
 	</select> 
 	

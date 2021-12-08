@@ -65,26 +65,6 @@
 		background-color: #CB7878;
 	}
 </style>
-<script>
-/*하트 표시하는 에이작스 통신*/
-function like(pidx){
-		$.ajax({
-			url:"/Basket/checklike.do",
-			type:"POST",
-			data:{"pidx":pidx},
-			async: false,
-			ContentType:"application/json",
-			success:function(data){
-				if(data == ""){
-				}else{
-					$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
-				}
-			},error:function(){
-				alert("관심상품존재찾기 에러!")
-			}
-		});
-	}
-</script>
 </head>
 
 <header>
@@ -209,7 +189,6 @@ function like(pidx){
 									<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${best.price}" pattern="#,###" />원</span>
 									</c:when>
 								</c:choose>
-								<script>like(${best.pidx});</script>
 								</div><br><br>
 							</div>
 						</div>
@@ -259,7 +238,6 @@ function like(pidx){
 									&nbsp;&nbsp;<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${newProd.price}" pattern="#,###" />원</span>
 									</c:when>
 									</c:choose>
-									<script>like(${newProd.pidx});</script>
 								</div><br><br>
 							</div>
 						</div>
@@ -308,7 +286,6 @@ function like(pidx){
 									&nbsp;&nbsp;<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${ring.price}" pattern="#,###" />원</span>
 									</c:when>
 								</c:choose>
-								<script>like(${ring.pidx});</script>
 								</div><br><br>
 							</div>
 						</div>
@@ -367,7 +344,6 @@ function like(pidx){
 									&nbsp;&nbsp;<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${neck.price}" pattern="#,###" />원</span>
 									</c:when>
 								</c:choose>
-								<script>like(${neck.pidx});</script>
 								</div><br><br>
 							</div>
 						</div>
@@ -416,7 +392,6 @@ function like(pidx){
 									&nbsp;&nbsp;<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${ear.price}" pattern="#,###" />원</span>
 									</c:when>
 									</c:choose>
-									<script>like(${ear.pidx});</script>
 								</div><br>
 							</div>
 						</div>
@@ -465,7 +440,6 @@ function like(pidx){
 									&nbsp;&nbsp;<span class="text-gray-500 fw-bold fs-3"><fmt:formatNumber value="${brac.price}" pattern="#,###" />원</span>
 									</c:when>
 								</c:choose>	
-								<script>like(${brac.pidx});</script>
 								</div><br><br>
 							</div>
 						</div>
@@ -481,7 +455,29 @@ function like(pidx){
 	</footer> 
 </body>
  <script>
-	 
+//관심 상품 표시 하기
+ function like_do(){
+     var uid = '${sessionScope.UserVO.id}';
+     if (uid != ""){
+ 		$.ajax({
+ 			url:"/Basket/checklike1.do",
+ 			type:"POST",
+ 			async: false,
+ 			data:{},
+ 			ContentType:"application/json",
+ 			success:function(data){  
+ 			    for(let i =0; i<data.length; i++){
+ 					$(".emptyHeart"+data[i].pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+data[i].pidx);
+ 			    }	
+ 			},error:function(){
+ 				alert("관심상품존재찾기 에러!")
+ 			}
+ 		});
+     }
+ }
+ like_do();	 
+ 
+ 
 	//관심상품 추가
 		function heart(pidx){
 			

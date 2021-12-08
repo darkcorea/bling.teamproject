@@ -164,8 +164,8 @@ public class PageMaker {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		
-		return keyword2;
+		String keyword3 = keyword2.trim();
+		return keyword3;
 	}
 	
 }
