@@ -41,94 +41,93 @@ public class ProductController {
 	
 	
 	//헤더에서 누르고 들어갈때 맨 처음 화면
-	@RequestMapping(value="sroll.do")
-	public String scroll(Model model,char kind,PageMaker param)throws Exception{
-		String kind1 = null;
-		int orderBy = 1;
-		model.addAttribute("page",1);
-		param.setLastPost(3);//한번 확인해보자..ㅠㅠ
-		param.setStartPost(1);//이렇게 넣어지는게 될까?
-		if(kind=='R') {
-			kind1 = "R";
-			param.setKind(kind1);
-			model.addAttribute("best", productService.scrollbest(param));
-			model.addAttribute("kind", kind1 );
-			model.addAttribute("orderBy",orderBy);
-		}else if(kind=='N'){
-			kind1 = "N";
-			param.setKind(kind1);
-			model.addAttribute("best", productService.scrollbest(param));
-			model.addAttribute("kind", kind1 );
-			model.addAttribute("orderBy",orderBy);
-		}else if(kind=='E'){
-			kind1 = "E";
-			param.setKind(kind1);
-			model.addAttribute("best", productService.scrollbest(param));
-			model.addAttribute("kind", kind1 );
-			model.addAttribute("orderBy",orderBy);
-		}else if(kind=='B'){
-			kind1 = "B";
-			param.setKind(kind1);
-			model.addAttribute("best", productService.scrollbest(param));
-			model.addAttribute("kind", kind1 );
-			model.addAttribute("orderBy",orderBy);
+		@RequestMapping(value="sroll.do")
+		public String scroll(Model model,char kind,PageMaker param)throws Exception{
+			String kind1 = null;
+			int orderBy = 1;
+			model.addAttribute("page",1);
+			param.setEnd(3);
+			param.setStart(1);
+			if(kind=='R') {
+				kind1 = "R";
+				param.setKind(kind1);
+				model.addAttribute("best", productService.scrollbest(param));
+				model.addAttribute("kind", kind1 );
+				model.addAttribute("orderBy",orderBy);
+			}else if(kind=='N'){
+				kind1 = "N";
+				param.setKind(kind1);
+				model.addAttribute("best", productService.scrollbest(param));
+				model.addAttribute("kind", kind1 );
+				model.addAttribute("orderBy",orderBy);
+			}else if(kind=='E'){
+				kind1 = "E";
+				param.setKind(kind1);
+				model.addAttribute("best", productService.scrollbest(param));
+				model.addAttribute("kind", kind1 );
+				model.addAttribute("orderBy",orderBy);
+			}else if(kind=='B'){
+				kind1 = "B";
+				param.setKind(kind1);
+				model.addAttribute("best", productService.scrollbest(param));
+				model.addAttribute("kind", kind1 );
+				model.addAttribute("orderBy",orderBy);
+			}
+			
+			return "product/list";
 		}
 		
-		return "product/list";
-	}
-	
-	//처음화면에서 스크롤 에이작스 작동
-	@RequestMapping(value="/product_scroll.do")
-	@ResponseBody   
-	public Map<String,Object> getList(int page, int orderBy, String kind) throws Exception{
-		
-		int startnum = page+(8*(page-1));
-		//제품 총개수
-		int totalCnt = 0;
-		
-		Criteria sc = new Criteria();
-		sc.setPage(page);
-		
-		if(kind.equals("best")){
-			totalCnt = 99;
-		}else if(kind.equals("new")){
-			totalCnt = 18;
-		}else {
-			totalCnt = productService.productCount(kind); 
+		//처음화면에서 스크롤 에이작스 작동
+		@RequestMapping(value="/product_scroll.do")
+		@ResponseBody   
+		public Map<String,Object> getList(int page, PageMaker param, int orderBy, String kind) throws Exception{
+		    
+			
+			param.setKind(kind);
+			
+			int startnum = page+(8*(page-1));
+			int endnum = page*9;
+			int totalCnt = 0;
+			
+			if(kind.equals("best")){
+				totalCnt = 99;
+			}else if(kind.equals("new")){
+				totalCnt = 18;
+			}else {
+				totalCnt = productService.productCount(kind); 
+			}
+			
+			if(page==1) {
+				param.setStart(1);
+				param.setEnd(9); 
+			}else {
+				param.setStart(startnum);
+				param.setEnd(endnum);
+			}
+			
+			Map<String,Object> scroll_list = new HashMap<String, Object>();
+			
+			scroll_list.put("kind", kind);
+			scroll_list.put("startnum",startnum);
+			scroll_list.put("totalCnt",totalCnt);
+			
+			
+			if(orderBy == 1) {
+				scroll_list.put("scroll", productService.scrollnew(param));
+			}else if(orderBy == 2) {
+				scroll_list.put("scroll", productService.scrollbest(param));
+			}else if(orderBy == 3) {
+				scroll_list.put("scroll", productService.scrollhigh(param));
+			}else if(orderBy == 4) {
+				scroll_list.put("scroll", productService.scrollrow(param));
+			}else if(orderBy == 5) {
+				scroll_list.put("scroll", productService.prodBest(param));
+			}else if(orderBy == 6) {
+				scroll_list.put("scroll", productService.prodNew(param));
+			}
+			
+		    return scroll_list;
 		}
-		
-		PageMaker pm = new PageMaker();
-		pm.setScri(sc);
-		pm.setTotalCount(totalCnt);
-		pm.setKind(kind);
-		
-		if(page==1) {
-			pm.setStartPost(1);
-			pm.setLastPost(9);
-		}//이게 될지 모르겠다... 
-		
-		Map<String,Object> scroll_list = new HashMap<String, Object>();
-		
-		scroll_list.put("kind", kind);
-		scroll_list.put("startnum",startnum);
-		scroll_list.put("totalCnt",totalCnt);
-		
-		if(orderBy == 1) {
-			scroll_list.put("scroll", productService.scrollnew(pm));
-		}else if(orderBy == 2) {
-			scroll_list.put("scroll", productService.scrollbest(pm));
-		}else if(orderBy == 3) {
-			scroll_list.put("scroll", productService.scrollhigh(pm));
-		}else if(orderBy == 4) {
-			scroll_list.put("scroll", productService.scrollrow(pm));
-		}else if(orderBy == 5) {
-			scroll_list.put("scroll", productService.prodBest(pm));
-		}else if(orderBy == 6) {
-			scroll_list.put("scroll", productService.prodNew(pm));
-		}
-		
-	    return scroll_list;
-	}
 	
 	/* 상세페이지 */
 	// 상세페이지

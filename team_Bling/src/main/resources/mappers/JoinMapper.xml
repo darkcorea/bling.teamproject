@@ -7,9 +7,10 @@
 	<!-- 회원가입시 넣는 데이터 -->
 	<insert id="insert" parameterType="UserVO">
 		<![CDATA[
-		INSERT INTO bg_user(id,pwd,zip_code,addr1,addr2,phone,uname,email,agree_sms,agree_email,agree_shopping)
+		INSERT INTO bg_user(midx,id,pwd,zip_code,addr1,addr2,phone,uname,email,agree_sms,agree_email,agree_shopping)
 		VALUES(
-			#{id}
+			midx_seq.nextval
+			,#{id}
 			,#{pwd}
 			,#{zip_code}
 			,#{addr1}

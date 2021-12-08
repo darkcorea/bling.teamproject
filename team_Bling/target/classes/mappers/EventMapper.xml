@@ -38,22 +38,37 @@
 	
 	<!-- 이벤트 리스트 -->
 	<select id="event_Total" resultType="EventVO" parameterType="PageMaker">
-		SELECT *
-		FROM bg_event
-		<!-- 진행중옵션 -->	
+		<!-- 전체(tot) -->
+		<![CDATA[
+			SELECT * 
+			FROM (
+				SELECT rownum as rnum, A.* 
+				FROM (
+					SELECT *
+					FROM bg_event	
+		]]>
+		
+		<!-- 진행중옵션 -->
 		<if test = 'type == "ing"'>
 			<![CDATA[
-				WHERE now() <= event_end 
+				WHERE sysdate <= event_end 
 			]]>
 		</if>
+		
 		<!-- 종료옵션 -->
 		<if test = 'type == "end"'>
 			<![CDATA[
-				WHERE now() > event_end 
+				WHERE sysdate > event_end 
 			]]>
 		</if>		
-		ORDER BY event_end desc
-		Limit #{startPost}, #{scri.perPageNum}
+					
+		<![CDATA[
+					ORDER BY event_end desc
+				) A 
+				WHERE rownum <= #{lastPost}
+			)B
+			WHERE rnum >= #{startPost}
+		]]>
 	</select>
 	
 	<!-- 이벤트 detail -->

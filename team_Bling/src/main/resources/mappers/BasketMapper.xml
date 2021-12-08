@@ -14,11 +14,14 @@
 
 <!-- 관심상품 등록 -->
 	<insert id="likeInsert" parameterType="LikeVO">
-		INSERT INTO bg_like(midx,pidx)
-		VALUES(
-			#{midx}
-			,#{pidx}
-		)		
+		<![CDATA[
+			INSERT INTO bg_like(interest_idx,midx,pidx)
+			VALUES(
+				interest_seq.nextval
+				,#{midx}
+				,#{pidx}
+			)		
+		]]>
 	</insert>
 
 <!-- 관심상품 삭제 -->
