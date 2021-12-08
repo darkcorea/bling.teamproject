@@ -46,8 +46,8 @@ public class ProductController {
 		String kind1 = null;
 		int orderBy = 1;
 		model.addAttribute("page",1);
-		param.setEnd(3);
-		param.setStart(1);
+		param.setLastPost(3);//한번 확인해보자..ㅠㅠ
+		param.setStartPost(1);//이렇게 넣어지는게 될까?
 		if(kind=='R') {
 			kind1 = "R";
 			param.setKind(kind1);
@@ -80,14 +80,17 @@ public class ProductController {
 	//처음화면에서 스크롤 에이작스 작동
 	@RequestMapping(value="/product_scroll.do")
 	@ResponseBody   
-	public Map<String,Object> getList(int page, PageMaker param, int orderBy, String kind) throws Exception{
-	    
-		
-		param.setKind(kind);
+	public Map<String,Object> getList(int page, int orderBy, String kind) throws Exception{
+	 
+  
+					  
 		
 		int startnum = page+(8*(page-1));
-		int endnum = page*9;
+		//제품 총개수
 		int totalCnt = 0;
+		
+		Criteria sc = new Criteria();
+		sc.setPage(page);
 		
 		if(kind.equals("best")){
 			totalCnt = 99;
@@ -97,13 +100,18 @@ public class ProductController {
 			totalCnt = productService.productCount(kind); 
 		}
 		
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		pm.setTotalCount(totalCnt);
+		pm.setKind(kind);
+		
 		if(page==1) {
-			param.setStart(1);
-			param.setEnd(9); 
-		}else {
-			param.setStart(startnum);
-			param.setEnd(endnum);
-		}
+			pm.setStartPost(1);
+			pm.setLastPost(9);
+		}//이게 될지 모르겠다... 
+							
+						
+   
 		
 		Map<String,Object> scroll_list = new HashMap<String, Object>();
 		
@@ -111,19 +119,19 @@ public class ProductController {
 		scroll_list.put("startnum",startnum);
 		scroll_list.put("totalCnt",totalCnt);
 		
-		
+  
 		if(orderBy == 1) {
-			scroll_list.put("scroll", productService.scrollnew(param));
+			scroll_list.put("scroll", productService.scrollnew(pm));
 		}else if(orderBy == 2) {
-			scroll_list.put("scroll", productService.scrollbest(param));
+			scroll_list.put("scroll", productService.scrollbest(pm));
 		}else if(orderBy == 3) {
-			scroll_list.put("scroll", productService.scrollhigh(param));
+			scroll_list.put("scroll", productService.scrollhigh(pm));
 		}else if(orderBy == 4) {
-			scroll_list.put("scroll", productService.scrollrow(param));
+			scroll_list.put("scroll", productService.scrollrow(pm));
 		}else if(orderBy == 5) {
-			scroll_list.put("scroll", productService.prodBest(param));
+			scroll_list.put("scroll", productService.prodBest(pm));
 		}else if(orderBy == 6) {
-			scroll_list.put("scroll", productService.prodNew(param));
+			scroll_list.put("scroll", productService.prodNew(pm));
 		}
 		
 	    return scroll_list;
@@ -144,6 +152,7 @@ public class ProductController {
 		
 		// 상품 리뷰의 이미지와 평점
 		model.addAttribute("review", reviewService.Product_review_count(pidx));
+		
 		
 		return "/product/detail";
 			
