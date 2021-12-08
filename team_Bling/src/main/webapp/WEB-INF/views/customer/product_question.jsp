@@ -85,8 +85,12 @@
 			<td><textarea id="comments" name="comments" cols="60" rows="15" class="mar20"></textarea></td>
 		</tr>
 		<tr class="tr3">
-			<td><span class="red">*</span>비밀번호</td>
-			<td><input type="text" name="pwd"  maxlength="8">			
+			<td><span class="red">*</span>공개여부</td>
+			<td>
+			<select name="show_yn">
+			<option value="Y" selected>공개</option>
+			<option value="N">비공개</option>
+			</select>		
 			<input type="hidden" name="pidx" value="${pidx}">
 			<input type="hidden" name="midx" value="${sessionScope.UserVO.midx}">			
 			</td>
@@ -119,13 +123,6 @@
 			form.comments.focus();
 			return ;
 		}
-		
-		if(form.pwd.value == ""){
-			alert("비밀 번호를 입력하세요.");
-			form.pwd.focus();
-			return;
-		}
-		
 		alert("문의 내용이 등록되었습니다.");
 		Qform.submit();
 	}

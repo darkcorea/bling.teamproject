@@ -145,7 +145,6 @@ public class ProductController {
 		// 상품 리뷰의 이미지와 평점
 		model.addAttribute("review", reviewService.Product_review_count(pidx));
 		
-		
 		return "/product/detail";
 			
 	}

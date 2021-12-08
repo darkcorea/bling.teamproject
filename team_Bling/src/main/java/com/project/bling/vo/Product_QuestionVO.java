@@ -11,8 +11,15 @@ public class Product_QuestionVO {
 	private String pwd;
 	private String rdate;
 	private String state;
+	private String show_yn;
 	
 	
+	public String getShow_yn() {
+		return show_yn;
+	}
+	public void setShow_yn(String show_yn) {
+		this.show_yn = show_yn;
+	}
 	public int getPqidx() {
 		return pqidx;
 	}
