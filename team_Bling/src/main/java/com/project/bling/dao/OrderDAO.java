@@ -44,4 +44,10 @@ public class OrderDAO {
 	public UserVO select_midx(int midx) throws Exception {
 		return sqlSession.selectOne(om+"select_midx",midx);
 	}
+	public void delivery_insert(OrderVO vo) throws Exception {
+		sqlSession.insert(om+"delivery_insert",vo);
+	}
+	public void non_delivery_insert(NonorderVO vo) throws Exception {
+		sqlSession.insert(om+"nondelivery_insert",vo);
+	}
 }

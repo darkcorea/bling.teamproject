@@ -273,6 +273,7 @@
 					</td>
 				</tr>
 			</table>
+			<div id="delivery"></div>
 		<br><br>
 		</form>
 		<br><br>
@@ -481,10 +482,20 @@ function iamport(){
 	var productname = $("#productname").val();
 	var tot_price = $("#tot_price").val();
 	var productname = $("#productname").val();
+	var zipcode = $("#zip_code").val();
+	var addr = $("#address1").val();
+	var rphone = $("#rphone").val();
+	var recipient = $("#recipient").val();
 	IMP.init('imp72441252');
 	if(agree == false){
 		alert("약관 동의에 체크해주세요");
 		 return;
+	}else if(recipient==""){
+		alert("받는 분 이름을 입력하세요");
+	}else if(zipcode==""){
+		alert("주소검색을 하세요");
+	}else if(rphone==""){
+		alert("받는 분 휴대폰번호를 입력하세요");
 	}
 	else{ if(payment=="카드"){
 		IMP.request_pay({
@@ -514,6 +525,7 @@ function iamport(){
 								var str = "";
 								let Json = JSON.parse('${jsonData}');
 								var formData2 = "";
+								var formData3 = "";
 								for(let i =0; i<Json.length; i++){
 									str += "<form name='fm"+i+"'>";
 								    var oidx = Json[i].oidx;
@@ -525,7 +537,10 @@ function iamport(){
 									str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
 									str += "</form>";
 									$("#form2").html(str);
+									$("#delivery").html("<input type='hidden' name='order_idx' value='"+data+"'>");
 									formData2 = $("form[name=fm"+i+"]").serialize();
+									formData3 =  $("form[name=frm]").serialize();
+									console.log(formData3);
 									 $.ajax({
 											url:"/Order/morderdetailinsert.do",
 											type:"POST",
@@ -547,6 +562,19 @@ function iamport(){
 																dataType:"json",
 																async: false,
 																success:function(data){
+																	$.ajax({
+																		url:"/Order/delivery_insert.do",
+																		type:"POST",
+																		data:formData3,
+																		ContentType:"application/json",
+																		async: false,
+																		success:function(data){
+																			
+																		},
+																		error:function(){
+																			alert("실행오류");
+																		}
+																	});
 																},
 																error:function(){
 																	alert("실행오류");
@@ -605,6 +633,7 @@ function iamport(){
 					var str = "";
 					let Json = JSON.parse('${jsonData}');
 					var formData2 = "";
+					var formData3 = "";
 					for(let i =0 ; i<Json.length ; i++){
 						str += "<form name='fm"+i+"'>";
 					    var oidx = Json[i].oidx;
@@ -616,8 +645,10 @@ function iamport(){
 						str += "<input type='hidden' name='quantity' value='"+quantity+"'>";
 						str += "</form>";
 						$("#form2").html(str);
+						$("#delivery").html("<input type='hidden' name='order_idx' value='"+data+"'>");
 						formData2 = $("form[name=fm"+i+"]").serialize();
-						console.log(formData2);
+						formData3 =  $("form[name=frm]").serialize();
+						console.log(formData3);
 						 $.ajax({
 								url:"/Order/morderdetailinsert.do",
 								type:"POST",
@@ -639,6 +670,18 @@ function iamport(){
 													dataType:"json",
 													async: false,
 													success:function(data){
+														$.ajax({
+															url:"/Order/delivery_insert.do",
+															type:"POST",
+															data:formData3,
+															ContentType:"application/json",
+															async: false,
+															success:function(data){
+															},
+															error:function(){
+																alert("실행오류");
+															}
+														});
 													},
 													error:function(){
 														alert("실행오류");
@@ -679,8 +722,9 @@ $(document).ready(function(){
 			grade = data.grade;
 			console.log("data : "+grade);
 			var point = data.mileage;
+			var point1 = point.toLocaleString();
 			var str = "(내 적립금 : ";
-			str += point;
+			str += point1;
 			str += "원)";
 			
 			$(".email").html(data.email);

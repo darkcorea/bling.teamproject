@@ -790,12 +790,45 @@
   		  		// 문의 내용 뿌려주기
   			  	str += "<tr>";
   			  	str += "<td class='text_align'>"+(i+1)+"</td>";
-  			  	
+  			  	str += "<td>";
+  			  	str += "<div class='accordion'>";
+  			  	str += "<div class='accordion-item' style='border:0;'>";
   			  	if (question[i].depth == 0) {
-  			  		str += "<td class='pointer' onclick='question_title("+question[i].pqidx+","+question[i].midx+")'>"+question[i].title+"</td>";
+  			  		str += "<div class='accordion-header' id='heading"+question[i].pqidx+"'>";
+		  			 	if(question[i].show_yn == 'Y'){
+		  					str += "<span onclick='coll_fn("+question[i].pqidx+")' id='coll"+question[i].pqidx+"' class='pointer'>"+question[i].title+"</span>";	
+		  					str += "</div>";
+			  			  	str += "<div id='collapse"+question[i].pqidx+"' class='accordion-collapse collapse'>";
+			  			  	str += "<div class='accordion-body'>"+question[i].comments+"</div>";
+			  			  	str += "</div>";
+		  			 	}
+		  			 	if(question[i].show_yn == 'N'){
+		  					str += "<span id='coll"+question[i].pqidx+"'><i class='bi bi-file-lock'></i>&nbsp;"+question[i].title+"</span>";
+		  					str += "</div>";
+			  			  	str += "<div id='collapse"+question[i].pqidx+"' class='accordion-collapse collapse'>";
+	          			  	str += "<div class='accordion-body' id='coll_body"+question[i].pqidx+"'></div>";
+	          			  	str += "</div>";
+				  		}
+	  			  	str += "</div>";
+  			  	
   			  	}
   			  	if (question[i].depth == 1) {
-    			  	str += "<td class='pointer' onclick='question_title("+question[i].pqidx+","+question[i].midx+")'><i class='bi bi-arrow-return-right'></i> "+question[i].title+"</td>";
+    			  	str += "<div class='accordion-header' id='heading"+question[i].pqidx+"'>";
+	    			  	if(question[i].show_yn == 'Y'){
+	      			  		str += "<span id='coll"+question[i].pqidx+"' onclick='coll_fn("+question[i].pqidx+")' class='pointer'><i class='bi bi-arrow-return-right'></i>"+question[i].title+"</span>";
+		      			  	str += "</div>";
+		      			  	str += "<div id='collapse"+question[i].pqidx+"' class='accordion-collapse collapse'>";
+		      			  	str += "<div class='accordion-body'>"+question[i].comments+"</div>";
+		      			  	str += "</div>";
+	    			  	}
+	    			  	if(question[i].show_yn == 'N'){
+	      			  		str += "<span id='coll"+question[i].pqidx+"'><i class='bi bi-arrow-return-right'></i><i class='bi bi-file-lock'></i>&nbsp;"+question[i].title+"</span>";
+	         			  	str += "</div>";
+			  			  	str += "<div id='collapse"+question[i].pqidx+"' class='accordion-collapse collapse'>";
+	          			  	str += "<div class='accordion-body' id='coll_body"+question[i].pqidx+"'></div>";
+	          			  	str += "</div>";
+	    			  	}
+      			  	str += "</div>";
     			}
   			  	let name = question[i].uname.slice(0,-2);
 			  	let name1 = name+"**";
@@ -835,10 +868,12 @@
   		  	 str += "</ul>";
   		  	 str += "</nav>";
   		  	 
-  		  	
-  		  	// 리뷰 div에 모든 내용 뿌려주기
+  		  	// 문의 div에 모든 내용 뿌려주기
   		  	$("#detail-Inquiry").html(str);
-  		  	 
+  		  	
+  		    // 문의 뿌려주면서 가입한 회원이 show_N라고 한거 자기만 보게 하기
+  		  	show_check(pidx);
+  		    
   		  	},
   		  	error:function(){
   		  	    alert("문의 뿌려주기 에러입니다.");
@@ -846,6 +881,53 @@
   	      });
   	 }
 	
+    
+  	/* 문의 제목을 클릭하면 제옥 아래로 내용이 보였다가 사라졌다 한다 */
+  	function coll_fn(nidx){
+  		let show = $("#collapse"+nidx).hasClass("show");
+  		console.log(show);
+  		if (show == false){
+  			$("#collapse"+nidx).addClass("show");
+  		}else if (show == true){
+  			$("#collapse"+nidx).removeClass("show");
+  		}
+  	}
+  	
+  	/* 문의 내역을 자기 자신만 열어 볼수 있게 하기 */
+  	function show_check(pidx){
+  		
+  		let uid = '${sessionScope.UserVO.id}';
+  		if (uid != ""){
+  			$.ajax({
+  				url:"/Customer/show_check.do",
+  				type:"POST",
+  				data:{"pidx":pidx},
+  				ContentType:"application/json",
+  				success:function(data){
+  					for(let i = 0; i<data.length; i++){
+  						if (data[i].depth == 0){
+	  						let	str = "<span onclick='coll_fn("+data[i].pqidx+")' id='coll"+data[i].pqidx+"' onclick='coll_fn("+data[i].pqidx+")' class='pointer'><i class='bi bi-file-lock'></i>&nbsp;"+data[i].title+"</span>";
+	  						let str1 = data[i].comments
+	  						$("#heading"+data[i].pqidx).html(str);
+	  						$("#coll_body"+data[i].pqidx).text(str1);
+  						}
+  						if (data[i].depth == 1){
+	  						let	str = "<span id='coll"+data[i].pqidx+"' onclick='coll_fn("+data[i].pqidx+")' class='pointer'><i class='bi bi-arrow-return-right'></i><i class='bi bi-file-lock'></i>&nbsp;"+data[i].title+"</span>";
+	  						let str1 = data[i].comments
+	  						$("#heading"+data[i].pqidx).html(str);
+	  						$("#coll_body"+data[i].pqidx).text(str1);
+  						}
+  					}  					
+  				},error:function(){
+  					alert("show_check 에러입니다.")
+  				}
+  			});
+  			
+  		}
+  		
+  	}
+  	
+    
     // 페이지 로드 하면 회원로그인 체크해서 관심상품 하트표시 하기
   	function like(){
   		let pidx = <c:out value="${detail.pidx}"/>;
@@ -1027,80 +1109,6 @@
 	      
 		}
 	}
-	
-	
-	/* 문의하기 제목을 클릭할 시 비밀번호 입력 모달창 나오게 */
-	function question_title(pqidx,midx){
-		
-		// 로그인을 안했을 경우 로그인 하라는 창 띄우기
-		let umidx= "${sessionScope.UserVO.midx}";
-		let uid= "${sessionScope.UserVO.id}";
-		if(uid == ""){
-			alert("로그인을 해주세요");
-		
-		// 로그인을 했지만 다른 사람의 문의 글을 클릭 했을 경우 
-		}else if ( umidx != midx){
-			alert("다른사람의 글입니다");
-			
-		}else {
-		
-		// 누를 때 마다 전에 입력 했던 값 없애고, 경고 문구 사라지게
-		$("#question_pwd").val("");
-		$("#pwd_chcek").text("").hide();
-		
-		// 비밀번호를 입력하라고 하는 모달창 보이게 하기
-		$("#question_motal").modal("show");
-		
-		// 확인 버튼을 눌렀을 때
-		$("#modal_button").click(function(){
-			var pwd = $("#question_pwd").val();
-			//console.log(pwd);
-			// 입력값이 업을 경우
-			if(pwd == ""){
-				$("#pwd_chcek").text("*입력해주세요").css("color","red").show();
-			}
-			// 입력 값이 있을 경우 에이작스 통신하기
-			else{
-				 $.ajax({
-					url:"/Customer/detail_question.do",
-					data:{"pqidx":pqidx, "pwd":pwd},
-					dataType:"JSON",
-					type:"POST",
-					success:function(data){
-						//console.log(data);
-						// 암호입력하는 모달창 닫기
-						$("#question_motal").modal("hide");
-						
-						// 모달창에 뿌려주는 내용 입력, 타이들과 내용
-						let str = "";
-						str +="<h5>"+data.title+"</h5>";
-						str += data.comments;
-						$("#question_contents").html(str);
-						
-						// 답변이 완료된 문의하기는 수정버튼이 없고, 답변 미완료된 문의하기만 수정버튼이 존재
-						let str1 = "";
-						if (data.state == "N"){
-							str1 += "<button type='button' class='btn btn-secondary' onclick='location.href=\"/Customer/product_modify.do?pqidx="+pqidx+"\"'>수정하기</button>";
-							str1 += "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal' id='modal_button2'>확인</button>";
-							$("#modal_requestion").html(str1);
-						}else if (data.state == "Y"){
-							str1 += "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal' id='modal_button2'>확인</button>";
-							$("#modal_requestion").html(str1);
-						}
-						
-						// 새로운 모달 창 띄우기
-						$("#question_motal1").modal("show");
-					},
-					error:function(){
-						$("#pwd_chcek").text("*비밀번호가 잘못되었습니다.").css("color","red").show();
-					}
-				 });
-			} 
-		});
-		
-		}
-	}
-
 
 	/* 장바구니 담기*/
 	function cart(){

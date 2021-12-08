@@ -88,12 +88,12 @@ public class OrderController {
 	
 	@RequestMapping(value="/mileageupdate.do",method = RequestMethod.POST)
 	@ResponseBody
-	public void mileageupdate(OrderVO vo,HttpSession session) throws Exception {
+	public void mileageupdate(OrderVO vo) throws Exception {
 		
 		System.out.println("마일리지>>>>>>>>>>"+vo.getMileage());
 		System.out.println("midx>>>>>>>>>>"+vo.getMidx());
 		orderService.mileageupdate(vo);
-		session.setAttribute("mileage", vo.getMileage());
+		
 	}
 	
 	@RequestMapping(value="/memberorder.do",method = RequestMethod.POST)
@@ -147,5 +147,16 @@ public class OrderController {
 	public UserVO select_midx(int midx)  throws Exception{
 		return orderService.select_midx(midx);
 	}
-	
+	@RequestMapping(value="/delivery_insert.do",method = RequestMethod.POST)
+	@ResponseBody 
+	public void delivery_insert(OrderVO vo) throws Exception {
+		
+		orderService.delivery_insert(vo);
+	}
+	@RequestMapping(value="/nondelivery_insert.do",method = RequestMethod.POST)
+	@ResponseBody 
+	public void non_delivery_insert(NonorderVO vo) throws Exception {
+		
+		orderService.non_delivery_insert(vo);
+	}
 }

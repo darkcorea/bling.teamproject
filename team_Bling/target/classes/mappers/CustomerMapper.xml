@@ -16,7 +16,7 @@
 		<![CDATA[
 		SELECT * FROM 
 		    ( SELECT rownum as rnum, A.* from
-		        (SELECT bq.midx, bq.pqidx, bq.depth, bq.title, bq.comments, bg.uname, bq.rdate
+		        (SELECT bq.midx, bq.pqidx, bq.depth, bq.title, bq.comments, bg.uname, bq.rdate, bq.show_yn
 				FROM bg_product_question bq
 				JOIN bg_user bg ON bq.midx = bg.midx 
 				WHERE pidx= #{pidx}
@@ -26,15 +26,15 @@
 	 	]]>
 	</select>
 	  
-	<!-- 상품 디테일에서 문의한 내용과 결과를 확인할 때 --> 
-	<select id="product_pqidx" parameterType="Product_QuestionVO" resultType="Product_QuestionVO">
-		SELECT title, comments, state FROM bg_product_question WHERE pwd=#{pwd} AND pqidx=#{pqidx}
+	<!-- 상품 디테일에서 로그인한 사람중에 문의를 N으로 한사람의 것을 자신은 볼 수 있게 바꾸기 --> 
+	<select id="show_check" parameterType="Product_QuestionVO" resultType="Product_QuestionVO">
+		SELECT title, comments, depth, pqidx FROM bg_product_question WHERE show_yn='N' AND midx=#{midx} AND pidx=#{pidx}
 	</select>  
 	 
 	 <!-- 상문 문의 하기 내용 등록 -->
 	<insert id="product_write" parameterType="Product_QuestionVO" >
-		INSERT INTO bg_product_question (pqidx, originpqidx, midx, pidx, title, comments, pwd,  rdate) 
-		VALUES (pqidx_seq.nextval, pqidx_seq.nextval, #{midx}, #{pidx}, #{title}, #{comments}, #{pwd}, sysdate)
+		INSERT INTO bg_product_question (pqidx, originpqidx, midx, pidx, title, comments, show_yn,  rdate) 
+		VALUES (pqidx_seq.nextval, pqidx_seq.nextval, #{midx}, #{pidx}, #{title}, #{comments}, #{show_yn}, sysdate)
 	</insert> 
 	
 	<!-- pqidx로 문의 내용 가져오기 -->

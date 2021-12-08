@@ -31,10 +31,10 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerDAO.Product_Question(pm);
 	}
 	
-	// 비밀번호와 pqidx로 문의하기 내용 가지고 오기.
+	// midx와 pqidx로 상품문의 가져오기
 	@Override
-	public Product_QuestionVO product_pqidx(Product_QuestionVO pq) throws Exception {
-		return customerDAO.product_pqidx(pq);
+	public List<Product_QuestionVO> show_check(Product_QuestionVO pq) throws Exception {
+		return customerDAO.show_check(pq);
 	}
 	
 	// 상품문의하기 등록하기
@@ -85,6 +85,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<NoticeVO> Question_page(PageMaker pm) throws Exception {
 		return customerDAO.Question_page(pm);
 	}
+
 	
 	
 }

@@ -42,6 +42,20 @@
 	]]>
 	</insert>
 	
+	<insert id="delivery_insert" parameterType="OrderVO">
+	<![CDATA[
+	insert into bg_delivery(DIDX,NONIDX,ORDER_YN)
+	values(didx_seq.nextval,#{order_idx},#{order_yn})
+	]]>
+	</insert>
+	
+	<insert id="nondelivery_insert" parameterType="NonorderVO">
+	<![CDATA[
+	insert into bg_nondelivery(DIDX,NONIDX,ORDER_YN)
+	values(non_didx_seq.nextval,#{nonidx},#{order_yn})
+	]]>
+	</insert>
+	
 	<update id="mileage" parameterType="OrderVO">
 	<![CDATA[
 	UPDATE bg_user set mileage=#{mileage} where midx=#{midx}
