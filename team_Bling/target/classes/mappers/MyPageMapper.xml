@@ -6,8 +6,12 @@
 <mapper namespace="com.project.bling.mapper.myPageMapper">
 
 	<!-- 회원번호(midx)에 따른 리뷰수 -->
-	<select id="reviewCount" parameterType="int" resultType="int">
-		select count(*) from bg_review where midx=#{midx}
+	<select id="orderCount" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM bg_order_detail od
+		RIGHT OUTER JOIN bg_order o
+		ON od.order_idx=o.order_idx
+		WHERE midx=#{midx}
 	</select>
 
 	<!-- 회원번호(midx)에 따른 결제완료 건수 -->

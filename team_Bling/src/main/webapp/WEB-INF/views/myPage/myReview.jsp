@@ -39,11 +39,12 @@
 				  	
 				  	let str = "";
 				  	console.log(data);
+				  	console.log(data.reviewList);
 				  	
 				    //var page = data.page;
                     //var pagenum = (page-1) * 5;
                     
-				  	if(data.reviewList == null){
+				  	if(data.reviewList.length == 0){
 				  		str += "<div id='noneReview'>기간내 등록된 리뷰가 없습니다.</div>";
 				  	}else{
 				  		for(var a = 0 ; a < data.reviewList.length ; a++){
@@ -88,10 +89,11 @@
 						
 						str += "			</div>";
 							
-						str += "			<div id='reviewContents'>";
+						str += "			<div id='reviewContents"+list.ridx+"'>";
 												/* 리뷰 contents 출력하기 / 3줄 이상 더보기 적용 */
 						str += 					list.contents;
 						str += "			</div>";
+						str += "			<div id='review_btn"+list.ridx+"'></div>";
 						str += "		</div>";
 						
 						
@@ -149,7 +151,7 @@
 					  	 str += "</li>";
 					  	 str += "</ul>";
 					  	 str += "</nav>";
-					  	
+					  	 
 					  	//날짜 화면출력
 					  	/* let date1 = data.date.rdate1;
 					  	console.log(date1);
@@ -160,6 +162,52 @@
 						str += "<br><br><br><br><br><br><br><br>";
 					}
 					document.getElementById("formDiv").innerHTML = str;
+					
+					// 리뷰가 길면 자르고 더보기 버튼을 추가하고 그렇지 않으면 그대로 둔다.
+					// .offsetHeight >90  보여지는 부분이 90px를 넘어가면, 보여지는 높이 조절하기 어려움 clientHeight
+					// .length >= 100  텍스트 길이가 100보다 크거나 같으면
+					// .split('\n').length; 줄바꿈이 되었을 때 줄바꿈 안하면 소용이 없음
+					// word-break: keep-all; 한글일 경우 띄어쓰기 기준으로 줄바꿈 해줌 스타일로 적용
+				  	for (let m=0; m<data.reviewList.length ; m++){
+				  	let ridx = data.reviewList[m].ridx;
+				  	let re = $("#reviewContents"+ridx);
+				  	let re_txt = $("#reviewContents"+ridx).text();
+				    let re_height = document.getElementById("reviewContents"+ridx).clientHeight;
+				 	
+				    console.log(re_height);
+				    let re_html = $("#reviewContents"+ridx).html();
+				    let re_txt_short = re_txt.substring(0,30)+"...";
+				  	
+				 	// 더보기 버튼 추가 void(0)는 이동을 하지 않고 그곳에서 만 움직이겠다는 뜻
+				    let btn_more = $('<a href="javascript:void(0)" class="more" style="text-decoration:none;">더보기</a>');
+				    $("#review_btn"+ridx).append(btn_more);
+				    
+				 	// 텍스트 길이가 길면 자르고 길이가 짧으면 더보기 버튼을 감춘다.
+				   		if(re_height >= 50){
+					  		re.html(re_txt_short);
+				                
+				    	}else {
+				            btn_more.hide()
+				    	}
+				 	
+				 	// 더보기 버튼 클릭할 때 작동하는 function 만들기
+			   		btn_more.click(toggle_content);
+				      
+			            function toggle_content(){
+			                if($(this).hasClass('short')){
+			                    // 접기 상태
+			                    $(this).text('더보기');
+			                    re.html(re_txt_short); // 텍스트 자르기
+			                    $(this).removeClass('short');
+			                }else{
+			                    // 더보기 상태
+			                    $(this).text('접기');
+			                    re.html(re_html); // 텍스트 크기 원상복귀
+			                    $(this).addClass('short');
+			                }
+			          	}
+			            
+				  	}
 				  	
 				  	
 				},error:function(){
@@ -346,16 +394,7 @@
 			width: 80px;
 			display: inline-block;
 		}
-		#reviewContents{
-			overflow: hidden;
-		    text-overflow: ellipsis;
-		    white-space: normal;
-		    text-align: left;
-		    word-wrap: break-word;
-		    display: -webkit-box;
-		    -webkit-line-clamp: 3;	/* 표시하고자 하는 라인 수 */
-		    -webkit-box-orient: vertical; 
-		}
+		
 		#delBtn{
 			background-color: #CB7878;
 			border: none;

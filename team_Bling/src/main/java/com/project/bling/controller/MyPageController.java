@@ -65,7 +65,11 @@ public class MyPageController {
 		
 		
 		//회원번호(midx)에 따른 배송상태(n:결제미완료,y:결제완료,a:상품준비중,b:배송중,c:배송완료)
-		String stat = "Y";
+		String stat = "N";
+		vo.setDeli_stat(stat);
+		model.addAttribute("statN", myPageService.deliveryStat(vo));
+		
+		stat = "Y";
 		vo.setDeli_stat(stat);
 		model.addAttribute("statY", myPageService.deliveryStat(vo));
 		
@@ -97,6 +101,15 @@ public class MyPageController {
 
 		model.addAttribute("pm", pm);
 		model.addAttribute("recentOrder", myPageService.recentOrder(pm));
+		
+		System.out.println("Page>>>>>>>>>>>>>>>>>"+sc.getPage());
+		System.out.println("ReviewCount>>>>>>>>>>>>>>>>>"+ReviewCount);
+		System.out.println("StartPage>>>>>>>>>>>>>>>>>"+pm.getStartPage());
+		System.out.println("EndPage>>>>>>>>>>>>>>>>>"+pm.getEndPage());
+		System.out.println("StartPost>>>>>>>>>>>>>>>>>"+pm.getStartPost());
+		System.out.println("LastPost>>>>>>>>>>>>>>>>>"+pm.getLastPost());
+
+
 				
 		
 		return "myPage/main";
