@@ -5,11 +5,10 @@
  
 <mapper namespace="com.project.bling.mapper.eventMapper">
 
-	<!-- 홈화면 이벤트슬라이드 -->
+	<!-- 홈화면 이벤트슬라이드 이 부분 손봐야 함-->
 	<select id="eventlist" resultType="EventVO">
 		<![CDATA[
 			SELECT * FROM bg_event
-			WHERE sysdate <= event_end
 			ORDER BY rdate desc
 		]]>	
 	</select>

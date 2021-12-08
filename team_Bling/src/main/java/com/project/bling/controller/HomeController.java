@@ -45,53 +45,43 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		PageMaker pm = new PageMaker();
-		
+		Criteria sc = new Criteria();
 		
 		/**제품 사진 - 판매량순**/
-		pm.setEnd(3);
-		pm.setStart(1);
+		sc.setPerPageNum(3);
+		pm.setScri(sc);
+		pm.setStartPost(1);
 		model.addAttribute("best", productService.prodBest(pm));
 		
 		/**제품 사진 - 신상품**/
-		pm.setEnd(3);
-		pm.setStart(1);
 		model.addAttribute("newProd", productService.prodNew(pm));
 		
 		/**제품 사진 - 반지**/
 		String kind = "R";
 		pm.setKind(kind);
-		pm.setEnd(3);
-		pm.setStart(1);
 		model.addAttribute("ring", productService.scrollnew(pm));
 		
 		/**제품 사진 - 목걸이**/
 		kind = "N";
 		pm.setKind(kind);
-		pm.setEnd(3);
-		pm.setStart(1);
 		model.addAttribute("neck", productService.scrollnew(pm));
 		
 		/**제품 사진 - 귀걸이**/
 		kind = "E";
 		pm.setKind(kind);
-		pm.setEnd(3);
-		pm.setStart(1);
 		model.addAttribute("ear", productService.scrollnew(pm));
 		
 		/**제품 사진 - 팔찌**/
 		kind = "B";
 		pm.setKind(kind);
-		pm.setEnd(3);
-		pm.setStart(1);
 		model.addAttribute("brac", productService.scrollnew(pm));
 		
 		
 		// 공지사항
-		Criteria sc = new Criteria();
 		int count = noticeService.listcount();
 		sc.setPerPageNum(5);
 		sc.setPage(1);
-		pm.setScri(sc);
+		pm.setScri(sc);	
 		pm.setTotalCount(count);
 		model.addAttribute("notice",noticeService.totalList(pm));
 		

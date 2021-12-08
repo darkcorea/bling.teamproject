@@ -7,49 +7,44 @@
 	
 	<!-- 반복되는  sql -->
 	<sql id="listpage">
-		SELECT * 
-			FROM (
-				SELECT rownum as rnum, A.* 
-				FROM (
-					WITH pi
-					    AS(
-					        SELECT p.pidx,
-					               p.pname,
-					               p.kind,
-					               p.discount,
-					               p.price,
-					               p.saleprice,
-				                   p.rdate,
-					               i.main
-					        FROM bg_product p
-					        LEFT OUTER JOIN bg_image i
-					        ON p.pidx=i.pidx
-					        where p.saleyn='Y'
-					    ),
-				    oro
-					    AS(
-					        SELECT op.pidx,
-					               od.quantity,
-					               r.ridx
-					        FROM bg_Order_detail od
-					        
-					        RIGHT OUTER JOIN bg_option op
-					        ON od.oidx=op.oidx
-					        
-					        LEFT OUTER JOIN bg_review r
-					        ON od.detail_idx=r.detail_idx
-					    )
-					SELECT pi.pidx,
-					       pi.pname,
-					       pi.kind,
-					       pi.discount,
-					       pi.saleprice,
-					       pi.price,
-					       pi.main,
-					       count(oro.ridx) as reviewCount,
-					       sum(oro.quantity) as quantitySum,
-				           pi.rdate
-	
+	WITH pi
+	    AS(
+	        SELECT p.pidx,
+	               p.pname,
+	               p.kind,
+	               p.discount,
+	               p.price,
+	               p.saleprice,
+                   p.rdate,
+	               i.main
+	        FROM bg_product p
+	        LEFT OUTER JOIN bg_image i
+	        ON p.pidx=i.pidx
+	        WHERE p.saleyn='Y'
+	    ),
+    oro
+	    AS(
+	        SELECT op.pidx,
+	               od.quantity,
+	               r.ridx
+	        FROM bg_Order_detail od
+	        
+	        RIGHT OUTER JOIN bg_option op
+	        ON od.oidx=op.oidx
+	        
+	        LEFT OUTER JOIN bg_review r
+	        ON od.detail_idx=r.detail_idx
+	    )
+	SELECT pi.pidx,
+	       pi.pname,
+	       pi.kind,
+	       pi.discount,
+	       pi.saleprice,
+	       pi.price,
+	       pi.main,
+	       count(oro.ridx) as reviewCount,
+	       sum(oro.quantity) as quantitySum,
+          pi.rdate
 	</sql>
 	
 	
@@ -64,107 +59,72 @@
 	<!-- 베스트 상품  판매량 순 -->
 		<select id="prodBest" parameterType="PageMaker" resultType="CombineVO" >
 		<include refid="listpage"></include>
-		<![CDATA[
-				FROM oro
-				RIGHT OUTER JOIN pi
-				ON oro.pidx=pi.pidx
-				GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
-				ORDER BY sum(oro.quantity)
-				DESC nulls last
-			) A 
-			WHERE rownum <= #{end}
-		)B
-		WHERE rnum >= #{start}
-	]]>
+			FROM oro
+			RIGHT OUTER JOIN pi
+			ON oro.pidx=pi.pidx
+			GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
+			ORDER BY sum(oro.quantity) DESC
+			Limit #{startPost},#{scri.perPageNum}
 	</select>
 	
 	<!-- 새로 올라온 상품 -->
 	<select id="prodNew" parameterType="PageMaker" resultType="CombineVO" >
 		<include refid="listpage"></include>
-		<![CDATA[
-				FROM oro
-				RIGHT OUTER JOIN pi
-				ON oro.pidx=pi.pidx
-				GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
-				ORDER BY pi.rdate
-				DESC nulls last
-			) A 
-			WHERE rownum <= #{end}
-		)B
-		WHERE rnum >= #{start}
-		]]>
+			FROM oro
+			RIGHT OUTER JOIN pi
+			ON oro.pidx=pi.pidx
+			GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
+			ORDER BY pi.rdate DESC
+			Limit #{startPost},#{scri.perPageNum}
 	</select>
 	
 	<!-- 상품에 대한 리스트 종류별 최신순 -->
 	<select id="Scroll_newList" parameterType="PageMaker" resultType="CombineVO" >
 		<include refid="listpage"></include>
-		<![CDATA[
-				FROM oro
-				RIGHT OUTER JOIN pi
-				ON oro.pidx=pi.pidx
-				WHERE pi.kind= #{kind}
-				GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
-				ORDER BY pi.rdate
-				DESC nulls last
-			) A 
-			WHERE rownum <= #{end}
-		)B
-		WHERE rnum >= #{start}
-		]]>
+			FROM oro
+			RIGHT OUTER JOIN pi
+			ON oro.pidx=pi.pidx
+			WHERE pi.kind= #{kind}
+			GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
+			ORDER BY pi.rdate DESC
+			Limit #{startPost},#{scri.perPageNum}
 	</select>
 	
 	<!-- 베스트 상품 리스트 -->
 	<select id="Scroll_bestList" parameterType="PageMaker" resultType="CombineVO" >
 		<include refid="listpage"></include>
-		<![CDATA[
-				FROM oro
-				RIGHT OUTER JOIN pi
-				ON oro.pidx=pi.pidx
-				WHERE pi.kind= #{kind}
-				GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
-				ORDER BY sum(oro.quantity)
-				DESC nulls last
-			) A 
-			WHERE rownum <= #{end}
-		)B
-		WHERE rnum >= #{start}
-		]]>
+			FROM oro
+			RIGHT OUTER JOIN pi
+			ON oro.pidx=pi.pidx
+			WHERE pi.kind= #{kind}
+			GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
+			ORDER BY sum(oro.quantity) DESC
+			Limit #{startPost},#{scri.perPageNum}
 	</select>
 	
 	<!-- 높은가격순 리스트 -->
 	<select id="Scroll_highPriceList" parameterType="PageMaker" resultType="CombineVO" >
 		<include refid="listpage"></include>
-		<![CDATA[
 				FROM oro
 				RIGHT OUTER JOIN pi
 				ON oro.pidx=pi.pidx
 				WHERE pi.kind= #{kind}
 				GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
-				ORDER BY pi.saleprice
-				DESC nulls last
-			) A 
-			WHERE rownum <= #{end}
-		)B
-		WHERE rnum >= #{start}
-		]]>
+				ORDER BY pi.saleprice DESC
+				Limit #{startPost},#{scri.perPageNum}
 	</select>
 	
 	<!-- 낮은가격순 리스트 -->
 	<select id="Scroll_rowPriceList" parameterType="PageMaker" resultType="CombineVO" >
 		<include refid="listpage"></include>
-		<![CDATA[
 				FROM oro
 				RIGHT OUTER JOIN pi
 				ON oro.pidx=pi.pidx
 				WHERE pi.kind= #{kind}
 				GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
-				ORDER BY pi.saleprice
-				ASC nulls last
-			) A 
-			WHERE rownum <= #{end}
-		)B
-		WHERE rnum >= #{start}
-		]]>
+				ORDER BY pi.saleprice ASC
+				Limit #{startPost},#{scri.perPageNum}
+
 	</select>
 	
 	
@@ -207,12 +167,10 @@
 	               p.discount,
 	               p.price,
 	               p.saleprice,
-	               i.main,
-	               p.saleyn
+	               i.main
 	        FROM bg_product p
 	        LEFT OUTER JOIN bg_image i
 	        ON p.pidx=i.pidx
-	        where p.saleyn='Y'
 	    ),
 	oro
 	    AS(
@@ -239,7 +197,7 @@
 	FROM oro
 	RIGHT OUTER JOIN pi
 	ON oro.pidx=pi.pidx
-	where 1=1
+	where 1=1 AND p.saleyn='Y'
 	]]>
 	
 		<if test="scri.keyword != null ">AND pi.pname LIKE '%'||#{scri.keyword}||'%'</if>
@@ -257,7 +215,7 @@
 
 	<![CDATA[
 	GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price
-	ORDER BY pi.pidx ASC nulls last
+	ORDER BY pi.pidx ASC
 	]]>
 	</select>
 	
