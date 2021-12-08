@@ -31,6 +31,7 @@ public class CombineVO {
 	private String title;
 	private String comments;
 	private String rdate;
+	private String show_yn;
 	// delivery
 	private String deli_stat;
 	private String cancel;
@@ -60,6 +61,12 @@ public class CombineVO {
 	
 	
 	
+	public String getShow_yn() {
+		return show_yn;
+	}
+	public void setShow_yn(String show_yn) {
+		this.show_yn = show_yn;
+	}
 	public int getDate_differ() {
 		return date_differ;
 	}

@@ -5,11 +5,12 @@ package com.project.bling.controller;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,6 +20,7 @@ import com.project.bling.service.CustomerService;
 import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.Product_QuestionVO;
 import com.project.bling.vo.QuestionVO;
+import com.project.bling.vo.UserVO;
 
 @RequestMapping(value="/Customer")
 @Controller
@@ -94,30 +96,27 @@ public class CustomerController {
 	
 	// 상품 문의하기에서 저장 버튼을 눌렀을 경우에 문의내용을 등록하고 상품 디테일 페이지로 이동
 	@RequestMapping(value="/product_write.do")
-	public String product_write(Locale locale, Model model, Product_QuestionVO pq) throws Exception {
+	public String product_write(Locale locale, Model model, Product_QuestionVO pq, HttpSession session) throws Exception {
+		
+		// 로그인이 풀렸을 떄 대비해서 넣음
+		if(session.getAttribute("UserVO") == null) {
+			return "redirect:/Login/main.do";
+		}
+				
 		customerService.product_write(pq);
 		return "redirect:/Product/detail.do?pidx="+pq.getPidx();
 	}
 	
-	// 상품 디테일에서 문의하기를 보고 문의 내용 수정하기 버튼을 눌렀을 때 수정하기 페이지로 이동
-	@RequestMapping(value="/product_modify.do",  method = RequestMethod.GET )
-	public String product_Question_modify(Locale locale, Model model, int pqidx) throws Exception {
-		model.addAttribute("question",customerService.product_question_one(pqidx));
-		return "customer/product_question_modify";
-	}
-	
-	// 상품 문의 수정페이지에서 수정하기 버튼을 눌렀을 때 수정완료하고 상품 디테일 페이지로 이동
-	@RequestMapping(value="/product_modify.do",  method = RequestMethod.POST )
-	public String product_Question_modify(Locale locale, Model model, Product_QuestionVO pq) throws Exception {
-		customerService.product_modify(pq);
-		return "redirect:/Product/detail.do?pidx="+pq.getPidx();
-	}
-	
-	// 상품 디테일 문의하기 제목을 누르고 비밀번호를 입력 했을 때 에이작스
-	@RequestMapping(value="/detail_question.do")
+	// 로그인을 한  후에 보여주기를 N한 문의들을 자신은 볼 수 있게 바꿔주기
+	@RequestMapping(value="/show_check.do")
 	@ResponseBody
-	public Product_QuestionVO product_pqidx(Locale locale, Model model,Product_QuestionVO pq) throws Exception {
-		return customerService.product_pqidx(pq);
+	public List<Product_QuestionVO> show_check(Locale locale, Model model,Product_QuestionVO pq, HttpSession session) throws Exception {
+		
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		//회원정보에서 회원번호만 선택
+		int midx = uv.getMidx();
+		pq.setMidx(midx);
+		return customerService.show_check(pq);
 	}
 	
 	// 나의 문의 내역 페이지 이동
