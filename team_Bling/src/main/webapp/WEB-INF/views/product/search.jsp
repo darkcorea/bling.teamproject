@@ -329,7 +329,7 @@ function search_fn(){
 		    frm.appendChild(input3);
 			
 		}
-		if(start_price != ""){
+		if(start_price != "" && start_price != null){
 			let input4 = document.createElement("input");
 			input4.setAttribute("type","hidden");
 		    input4.setAttribute("name","start_price");
@@ -337,7 +337,7 @@ function search_fn(){
 		    frm.appendChild(input4);
 			
 		}
-		if(last_price != ""){
+		if(last_price != "" && start_price != null){
 			 let input5 = document.createElement("input");
 			 input5.setAttribute("type","hidden");
 			 input5.setAttribute("name","last_price");
