@@ -151,6 +151,12 @@
 					<td><b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.tot_price}" />원</b></td>
 					<td>
 						<!-- 배송 상태 -->
+						<c:if test="${list.deli_stat == 'N'}">
+						<b>입금 전</b>
+						</c:if>
+						<c:if test="${list.deli_stat == 'Y'}">
+						<b>입금 완료</b>
+						</c:if>
 						<c:if test="${list.deli_stat == 'A'}">
 						<b>배송준비중</b>
 						</c:if>
@@ -202,7 +208,7 @@
 						<!-- 배송 중이면 -->
 						<c:if test="${list.deli_stat == 'B'}">
 							 <button>교환/반품하기</button>
-						 </c:if>
+						</c:if>
 						 
 						 <!-- 배송 완료가 되고-->
 						 <c:if test="${list.deli_stat == 'C'}">

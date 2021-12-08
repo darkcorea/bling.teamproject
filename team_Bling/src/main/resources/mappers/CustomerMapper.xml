@@ -81,7 +81,7 @@
 		</if>
 		<if test="detail_idx != 0">
 		INSERT INTO bg_question (qidx, originqidx, midx, category, title, content, detail_idx)
-		VALUES (#{qidx}, q#{qidx}, #{midx}, #{category}, #{title}, #{content}, #{detail_idx} )
+		VALUES (#{qidx}, #{qidx}, #{midx}, #{category}, #{title}, #{content}, #{detail_idx} )
 		</if>
 		
 		<selectKey resultType="int" keyProperty="qidx" order="BEFORE">
