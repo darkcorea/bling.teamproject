@@ -79,7 +79,7 @@
 		<tr class="tr1">
 			<td style="width:180px;"><span class="red">*</span>제목</td>
 			<td>
-			<input type="text" name="title" style="width:90%" value="${question.title}">
+			<input type="text" name="title" style="width:90%" value="${question.title}" maxlength="30">
 			</td>
 		</tr>
 		<tr class="tr2">
@@ -87,6 +87,7 @@
 			<td>
 			<textarea id="comments" name="comments" cols="60" rows="15" class="mar20"><c:out value="${question.comments}"/>
 			</textarea>
+			<div id="comments_cnt">(0 / 300)</div>
 			</td>
 		</tr>
 		<tr class="tr3">
@@ -110,6 +111,19 @@
 </footer>
 </body>
 <script>
+$(document).ready(function() {
+    
+    // 글자수 300자로 제한
+    $('#comments').on('keyup', function() {
+        $('#comments_cnt').html("("+$(this).val().length+" / 300)");
+ 
+        if($(this).val().length > 300) {
+            $(this).val($(this).val().substring(0, 300));
+            $('#comments_cnt').html("(300 / 300)");
+        }
+    });
+});
+
 	function qustionFn(form){
 		
 		let Qform = document.question;

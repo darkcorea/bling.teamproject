@@ -49,8 +49,6 @@ public class CustomerController {
 				
 		pm.setTotalCount(questionCount);
 		
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+sc.getKeyword());
-		
 		// 고객센터에서 필요한  pm과 문의페이징
 		model.addAttribute("pm", pm);
 		model.addAttribute("question", customerService.Question_page(pm));
@@ -77,7 +75,6 @@ public class CustomerController {
 	@ResponseBody
 	public List<CombineVO> detail_idx_select(Locale locale, Model model,
 			@RequestParam("list[]") List<Integer> list) throws Exception {	
-		//System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>"+list);
 		return customerService.detail_idx_select(list);
 	}
 	
@@ -112,7 +109,7 @@ public class CustomerController {
 		}
 				
 		customerService.product_write(pq);
-		return "redirect:/Product/detail.do?pidx="+pq.getPidx();
+		return "redirect:/Product/detail.do?pidx="+pq.getPidx()+"#move_question";
 	}
 	
 	// 로그인을 한  후에 보여주기를 N한 문의들을 자신은 볼 수 있게 바꿔주기

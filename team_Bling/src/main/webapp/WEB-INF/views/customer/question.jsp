@@ -172,7 +172,7 @@
 		</tr>
 		<tr class="tr2">
 			<td style="width:180px;"><span class="red">*</span>제목</td>
-			<td><input type="text" name="title" style="width:90%"></td>
+			<td><input type="text" name="title" style="width:90%" maxlength="30"></td>
 		</tr>
 		<tr class="tr3">
 			<td>상품선택</td>
@@ -188,7 +188,10 @@
 		</tr>
 		<tr class="tr4">
 			<td><span class="red">*</span>본문</td>
-			<td><textarea id="content" name="content" cols="60" rows="15" class="mar20"></textarea></td>
+			<td>
+			<textarea id="content" name="content" cols="60" rows="15" class="mar20"></textarea>
+			<div id="content_cnt">(0 / 1000)</div>	
+			</td>
 		</tr>
 	</table>
 	<div class="btn-two">
@@ -225,7 +228,18 @@
 </div>
 </body>
 <script>
-
+$(document).ready(function() {
+    
+    // 글자수 1000자로 제한
+    $('#content').on('keyup', function() {
+        $('#content_cnt').html("("+$(this).val().length+" / 1000)");
+ 
+        if($(this).val().length > 1000) {
+            $(this).val($(this).val().substring(0, 1000));
+            $('#content_cnt').html("(1000 / 1000)");
+        }
+    });
+});
 	/* 상품 선택 버튼을 클릭할 때 */
 	function product_select(){
 		

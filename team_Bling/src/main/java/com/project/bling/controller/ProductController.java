@@ -221,8 +221,6 @@ public class ProductController {
 		PageMaker pm = new PageMaker();
 		pm.setScri(sc);
 		
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>"+sc.getPrice());
-		
 		model.addAttribute("list", productService.search_Product(pm));
 		model.addAttribute("pm", pm);
 		

@@ -8,8 +8,23 @@
 	<!-- midx로 배송 정보 가져오기 뷰 만들어서 함 -->
 	<select id="deivery_list" parameterType="int" resultType="CombineVO">
 	<![CDATA[
-		select * from order_list WHERE midx=#{midx} AND send_day >= to_char(sysdate-90) and rnum =1
-		ORDER BY order_idx ASC, detail_idx ASC
+		SELECT * FROM (
+			SELECT ord.order_idx, od.detail_idx, ord.rdate, im.main, pr.pname, op.oname, od.quantity , ord.tot_price,
+			de.cancel, de.refund, de.exchange, de.deli_stat, de.order_yn, re.ridx, de.invoice_num, de.confirm_yn
+			,COUNT(*) OVER(PARTITION BY ord.order_idx) AS count
+			,SUM(od.quantity) OVER(PARTITION BY ord.order_idx) AS quantitySum
+		    ,TIMESTAMPDIFF(DAY, de.deli_com, now()) AS date_differ
+		    ,ROW_NUMBER() OVER(PARTITION BY ord.order_idx ORDER BY ord.order_idx asc )AS RNUM
+			FROM  open_a_2021.BG_ORDER_DETAIL od
+			JOIN open_a_2021.bg_order ord ON ord.order_idx = od.order_idx
+			JOIN  open_a_2021.bg_option op ON op.oidx = od.oidx
+			JOIN  open_a_2021.bg_product pr ON pr.pidx = op.pidx
+			JOIN  open_a_2021.BG_IMAGE im ON im.pidx = pr.pidx
+			JOIN  open_a_2021.bg_delivery de ON de.order_idx = ord.order_idx
+			LEFT OUTER JOIN  open_a_2021.bg_review re ON re.DETAIL_IDX = od.detail_idx
+			WHERE ord.midx=#{midx}  AND now() >= date_add(now(), interval -3 month)
+			ORDER BY ord.order_idx ASC, od.detail_idx ASC) A
+        WHERE RNUM =1;
 	]]>
 	</select>
 	  
