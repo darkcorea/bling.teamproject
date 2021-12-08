@@ -6,6 +6,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!--차트-->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css"/>
+		<script src="https://d3js.org/d3.v3.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+		<!--지워야할것-->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 		<!-- Bootstrap core CSS -->
   		<link href="/resources/css/bootstrap.css" rel="stylesheet">
   	<!-- Bootstrap core JavaScript -->
@@ -30,6 +38,12 @@
 			}
 			#line{
 				border-top:2px solid black;
+			}
+			#menubtn{
+				height: 60px;
+			}
+			#sta{
+				background-color: #d3d3d3;
 			}
 		</style>
 	</head>
@@ -115,9 +129,179 @@
 						</table>
 					</div>
 				</div>
-				
-				
+				<hr>
+				<div class="btn-group btn-group-sm d-md-flex justify-content-md-end" role="group" aria-label="Basic outlined example">
+					<button type="button" class="btn btn-outline-secondary me-md-2" id="menubtn">
+						<b>매출(7일)</b>
+						<br>
+						0원
+					</button>
+					<button type="button" class="btn btn-outline-secondary me-md-2" id="menubtn">
+						<b>주문(7일)</b>
+						<br>
+						0건
+					</button>
+					<button type="button" class="btn btn-outline-secondary me-md-2" id="menubtn">
+						<b>방문자(7일)</b>
+						<br>
+						0명
+					</button>
+					<button type="button" class="btn btn-outline-secondary me-md-2" id="menubtn">
+						<b>신규회원(7일)</b>
+						<br>
+						0명
+					</button>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col">
+						<table class="table table-bordered align-middle">
+							<thead>
+								<tr class="table-secondary">
+								  <th scope="col" id="td">날짜</th>
+								  <th scope="col" id="td">매출금액</th>
+								  <th scope="col" id="td">판매금액</th>
+								  <th scope="col" id="td">환불금액</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!--
+								<c:forEach var="list"  items="${list}"  [begin="1"] [end="6"] [step="1"] [varStatus="status"]>
+								-->	
+									<tr>
+										<td id="td">
+											12/02
+										</td>
+										<td id="dd">
+											0
+										</td>
+										<td id="dd">
+											0
+										</td>
+										<td id="dd">
+											0
+										</td>
+									</tr>
+									<tr>
+										<td id="td">
+											12/03
+										</td>
+										<td id="dd">
+											0
+										</td>
+										<td id="dd">
+											0
+										</td>
+										<td id="dd">
+											0
+										</td>
+									</tr>
+									<tr>
+										<td id="td">
+											...
+										</td>
+										<td id="dd">
+											...
+										</td>
+										<td id="dd">
+											...
+										</td>
+										<td id="dd">
+											...
+										</td>
+									</tr>
+									<tr>
+										<td id="td">
+											12/07
+										</td>
+										<td id="dd">
+											0
+										</td>
+										<td id="dd">
+											0
+										</td>
+										<td id="dd">
+											0
+										</td>
+									</tr>
+								<!--</c:forEach>-->
+								<tr class="table-light">
+									<td id="td">
+										12/08
+									</td>
+									<td id="dd">
+										0
+									</td>
+									<td id="dd">
+										0
+									</td>
+									<td id="dd">
+										0
+									</td>
+								</tr>
+								<tr id="sta">
+									<td id="td">
+										7일합계
+									</td>
+									<td id="dd">
+										0
+									</td>
+									<td id="dd">
+										0
+									</td>
+									<td id="dd">
+										0
+									</td>
+								</tr>
+								<tr id="sta">
+									<td id="td">
+										15일합계
+									</td>
+									<td id="dd">
+										0
+									</td>
+									<td id="dd">
+										0
+									</td>
+									<td id="dd">
+										0
+									</td>
+								</tr>
+								<tr id="sta">
+									<td id="td">
+										30일합계
+									</td>
+									<td id="dd">
+										0
+									</td>
+									<td id="dd">
+										0
+									</td>
+									<td id="dd">
+										0
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col">
+						<div id="linechart">
+
+						</div>
+					</div>
+				</div>
 			</div>
 		</section>
 	</body>
+	<script>
+			var chart = c3.generate({
+				bindto: "#linechart",
+				data: {
+					columns: [
+						['data1', 30, 200, 100, 400, 150, 250],
+						['data2', 50, 20, 10, 40, 15, 25]
+					]
+				}
+			});
+		</script>
 </html>

@@ -19,10 +19,19 @@
 	</select>
 	<!-- 주소록 리스트 -->
 	<select id="list" resultType="Address_listVO" parameterType="PageMaker">
-		SELECT * 
-		FROM bg_address_list 
-		WHERE midx=#{pidx} and basic_addr=0
-		Limit #{startPost}, #{scri.perPageNum}
+		<![CDATA[
+			SELECT * 
+			FROM (
+				SELECT rownum as rnum, A.* 
+				FROM (
+					SELECT * 
+					FROM bg_address_list 
+					WHERE midx=#{pidx} and basic_addr=0
+				) A 
+				WHERE rownum <= #{lastPost}
+			)B
+			WHERE rnum >= #{startPost}
+		]]>			
 	</select>
 	
 	<!-- 기본배송지있는지 확인 및 있으면 0으로 바꿔주기 -->
@@ -35,9 +44,10 @@
 	<!-- 주소 저장 -->
 	<insert id="insert" parameterType="Address_listVO">
 		INSERT INTO bg_address_list
-			(midx,addr_name,zip_code,addr1,addr2,rphone,name,basic_addr)
+			(addr_idx,midx,addr_name,zip_code,addr1,addr2,rphone,name,basic_addr)
 		VALUES(
-			#{midx}
+			addr_seq.nextval
+			,#{midx}
 			,#{addr_name}
 			,#{zip_code}
 			,#{addr1}
