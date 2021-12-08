@@ -1,128 +1,239 @@
 package com.project.bling.controller;
 
 
-
-import java.util.List;
+import java.util.HashMap;
 import java.util.Locale;
-
-import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.service.CustomerService;
-import com.project.bling.vo.CombineVO;
-import com.project.bling.vo.Product_QuestionVO;
-import com.project.bling.vo.QuestionVO;
-import com.project.bling.vo.UserVO;
+import com.project.bling.service.ProductService;
+import com.project.bling.service.ReviewService;
 
-@RequestMapping(value="/Customer")
+
+@RequestMapping(value="/Product")
 @Controller
-public class CustomerController {
-
+public class ProductController {
+	
+	
+	@Autowired
+	ProductService productService;
+	
+	@Autowired
+	ReviewService reviewService;
+	
 	@Autowired
 	CustomerService customerService;
 	
-	// 고객센터 메인페이지
-	@RequestMapping(value="/main.do")
-	public String main(Locale locale, Model model, Criteria sc) throws Exception{
+	// 베스트와 new 상품
+	@RequestMapping(value="/best_new.do")
+	public String bestNew(Model model,String kind)throws Exception{
+		model.addAttribute("kind",kind);
+		return "product/best_new_list";
+	}
+	
+	
+	//헤더에서 누르고 들어갈때 맨 처음 화면
+	@RequestMapping(value="sroll.do")
+	public String scroll(Model model,char kind,PageMaker param)throws Exception{
+		String kind1 = null;
+		int orderBy = 1;
+		model.addAttribute("page",1);
+		param.setLastPost(3);//한번 확인해보자..ㅠㅠ
+		param.setStartPost(1);//이렇게 넣어지는게 될까?
+		if(kind=='R') {
+			kind1 = "R";
+			param.setKind(kind1);
+			model.addAttribute("best", productService.scrollbest(param));
+			model.addAttribute("kind", kind1 );
+			model.addAttribute("orderBy",orderBy);
+		}else if(kind=='N'){
+			kind1 = "N";
+			param.setKind(kind1);
+			model.addAttribute("best", productService.scrollbest(param));
+			model.addAttribute("kind", kind1 );
+			model.addAttribute("orderBy",orderBy);
+		}else if(kind=='E'){
+			kind1 = "E";
+			param.setKind(kind1);
+			model.addAttribute("best", productService.scrollbest(param));
+			model.addAttribute("kind", kind1 );
+			model.addAttribute("orderBy",orderBy);
+		}else if(kind=='B'){
+			kind1 = "B";
+			param.setKind(kind1);
+			model.addAttribute("best", productService.scrollbest(param));
+			model.addAttribute("kind", kind1 );
+			model.addAttribute("orderBy",orderBy);
+		}
 		
-		// 필요한 페이지 넘버와 키워드 그리고 한 페이지당 10개의 리스트 보여주기
-		sc.setPage(sc.getPage());
-		sc.setPerPageNum(10);
-		sc.setKeyword(sc.getKeyword());
-		String type = "Q";
+		return "product/list";
+	}
+	
+	//처음화면에서 스크롤 에이작스 작동
+	@RequestMapping(value="/product_scroll.do")
+	@ResponseBody   
+	public Map<String,Object> getList(int page, int orderBy, String kind) throws Exception{
+	 
+  
+					  
+		
+		int startnum = page+(8*(page-1));
+		//제품 총개수
+		int totalCnt = 0;
+		
+		Criteria sc = new Criteria();
+		sc.setPage(page);
+		
+		if(kind.equals("best")){
+			totalCnt = 99;
+		}else if(kind.equals("new")){
+			totalCnt = 18;
+		}else {
+			totalCnt = productService.productCount(kind); 
+		}
+		
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		pm.setTotalCount(totalCnt);
+		pm.setKind(kind);
+		
+		if(page==1) {
+			pm.setStartPost(1);
+			pm.setLastPost(9);
+		}//이게 될지 모르겠다... 
+							
+						
+   
+		
+		Map<String,Object> scroll_list = new HashMap<String, Object>();
+		
+		scroll_list.put("kind", kind);
+		scroll_list.put("startnum",startnum);
+		scroll_list.put("totalCnt",totalCnt);
+		
+  
+		if(orderBy == 1) {
+			scroll_list.put("scroll", productService.scrollnew(pm));
+		}else if(orderBy == 2) {
+			scroll_list.put("scroll", productService.scrollbest(pm));
+		}else if(orderBy == 3) {
+			scroll_list.put("scroll", productService.scrollhigh(pm));
+		}else if(orderBy == 4) {
+			scroll_list.put("scroll", productService.scrollrow(pm));
+		}else if(orderBy == 5) {
+			scroll_list.put("scroll", productService.prodBest(pm));
+		}else if(orderBy == 6) {
+			scroll_list.put("scroll", productService.prodNew(pm));
+		}
+		
+	    return scroll_list;
+	}
+	
+	/* 상세페이지 */
+	// 상세페이지
+	@RequestMapping(value="/detail.do")
+	public String detail(Locale locale, Model model, int pidx) throws Exception {
+		
+		// 상품 정보
+		model.addAttribute("detail", productService.detail(pidx));
+		// 상품의 옵션 정보
+		model.addAttribute("options", productService.options(pidx));
+		
+		// 상품의 이미지들
+		model.addAttribute("image", productService.image(pidx));
+		
+		// 상품 리뷰의 이미지와 평점
+		model.addAttribute("review", reviewService.Product_review_count(pidx));
+		
+		
+		return "/product/detail";
+			
+	}
+	
+	
+	// 리뷰 뿌려주기 에이작스
+	@RequestMapping(value="/detail_review.do" )
+	@ResponseBody
+	public  Map<String, Object> detail_review(int pidx, int page, String type) throws Exception  {	
+		
+		// pidx에 대한 리뷰 갯수
+		int reviewCount = reviewService.reviewCount(pidx);
+		// 가져오는 페이지 수 3
+		int pageNum = 3;
+		Criteria sc = new Criteria();
+		sc.setPerPageNum(pageNum);
+		sc.setPage(page);
 		
 		// 페이징 하기 위해서 필요한 값들 넣음
 		PageMaker pm = new PageMaker();
 		pm.setScri(sc);
-		pm.setType(type);
+		pm.setPidx(pidx);
+		pm.setTotalCount(reviewCount);
+  
+		// 페이징 된 리뷰와 페이징에 필요한 값 넣음
+		Map<String, Object> review_1 = new HashMap<String, Object>();
+		review_1.put("pm", pm);
 		
-		// 고객센터 문의 총 갯수, 키워드(검색 기능) 넣음
-		int questionCount = customerService.Question_Count(pm);
-				
-		pm.setTotalCount(questionCount);
-		
-		// 고객센터에서 필요한  pm과 문의페이징
-		model.addAttribute("pm", pm);
-		model.addAttribute("question", customerService.Question_page(pm));
-		
-		return "customer/main";
-	}
-	
-	// 고객센터,마이페이지에서 문의하기 버튼을 눌렀을 경우 문의 페이지로 이동
-	@RequestMapping(value="/question.do")
-	public String Question(Locale locale, Model model) {
-		return "customer/question";
-	}
-	
-	
-	// 문의 페이지에서 상품선택 버튼을 클릭 했을때 AJAX
-	@RequestMapping(value="/product_select.do")
-	@ResponseBody
-	public List<CombineVO> product_select(Locale locale, Model model, int midx) throws Exception {
-		return customerService.product_select(midx);
-	}
-	
-	// 문의 페이지에서 상품 선택 버튼을 클릭하고 모달창에 나와 있는 상품들을 선택 했을 때 AJAX
-	@RequestMapping(value="/detail_idx_select.do")
-	@ResponseBody
-	public List<CombineVO> detail_idx_select(Locale locale, Model model,
-			@RequestParam("list[]") List<Integer> list) throws Exception {	
-		//System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>"+list);
-		return customerService.detail_idx_select(list);
-	}
-	
-	// 고객센터, 마이페이지에서  문의하기를 등록 할 때
-	@RequestMapping(value="/question_write.do")
-	public String question_write(Locale locale, Model model, QuestionVO qv) throws Exception {
-			customerService.question_write(qv);
-		return "redirect:/Customer/main.do?page=1";
-	}
-	
-	
-	// 상품 디테일에서 상문문의하기 버튼을 눌렀을 경우에 상품문의하기 페이지로 이동
-	@RequestMapping(value="/product.do")
-	public String product_Question(Locale locale, Model model, int pidx) {
-		model.addAttribute("pidx",pidx);
-		return "customer/product_question";
-	}
-	
-	// 상품 문의하기에서 저장 버튼을 눌렀을 경우에 문의내용을 등록하고 상품 디테일 페이지로 이동
-	@RequestMapping(value="/product_write.do")
-	public String product_write(Locale locale, Model model, Product_QuestionVO pq, HttpSession session) throws Exception {
-		
-		// 로그인이 풀렸을 떄 대비해서 넣음
-		if(session.getAttribute("UserVO") == null) {
-			return "redirect:/Login/main.do";
+		// 타입이 R이면 최신순을 보내고,  타입이 G면 평점순을 보내준다.
+		if (type.equals("R")) {
+		review_1.put("reviewProduct", reviewService.reviewProduct_1(pm));
+		}else if (type.equals("G")) {
+		review_1.put("reviewProduct", reviewService.reviewProduct_2(pm));	
 		}
-				
-		customerService.product_write(pq);
-		return "redirect:/Product/detail.do?pidx="+pq.getPidx();
-	}
-	
-	// 로그인을 한  후에 보여주기를 N한 문의들을 자신은 볼 수 있게 바꿔주기
-	@RequestMapping(value="/show_check.do")
-	@ResponseBody
-	public List<Product_QuestionVO> show_check(Locale locale, Model model,Product_QuestionVO pq, HttpSession session) throws Exception {
 		
-		UserVO uv = (UserVO)session.getAttribute("UserVO");
-		//회원정보에서 회원번호만 선택
-		int midx = uv.getMidx();
-		pq.setMidx(midx);
-		return customerService.show_check(pq);
+		return review_1;
 	}
 	
-	// 나의 문의 내역 페이지 이동
-	@RequestMapping(value="/my_qestion.do")
-	public String my_qestion(Locale locale, Model model) {
-		return "customer/my_qestion";
+	// 문의하기 뿌려주기 에이작스
+	@RequestMapping(value="/detail_question.do" )
+	@ResponseBody
+	public  Map<String, Object> detail_question(int pidx, int page) throws Exception  {	
+		
+	
+		// pidx에 대한 문의 갯수
+		int questionCount = customerService.Product_Question_Count(pidx);
+		// 가져오는 페이지 수 
+		int pageNum = 10;
+		Criteria sc = new Criteria();
+		sc.setPerPageNum(pageNum);
+		sc.setPage(page);
+		
+		// 페이징 하기 위해서 필요한 값들 넣음
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		pm.setPidx(pidx);
+		pm.setTotalCount(questionCount);
+
+		
+		// 페이징 된 리뷰와 페이징에 필요한 값 넣음
+		Map<String, Object> question = new HashMap<String, Object>();
+		question.put("pm", pm);
+		question.put("questionProduct", customerService.Product_Question(pm));
+
+		return question;
 	}
+		
+	// 헤더 검색 기능
+	@RequestMapping(value="/search.do" )
+	public String search_Product(Locale locale, Model model, Criteria sc) throws Exception{
+		
+		// 페이지 메이커에 검색에 필요한 값들을 넣어 줌
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		
+		model.addAttribute("list", productService.search_Product(pm));
+		model.addAttribute("pm", pm);
+		
+		return "product/search";
+	}
+
 	
 }
