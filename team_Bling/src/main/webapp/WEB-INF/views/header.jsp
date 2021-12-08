@@ -49,7 +49,7 @@
 							</c:when>
 							<c:otherwise>
 								<div>
-									<a id="loginName" href="/MyPage/main.do">${sessionScope.UserVO.uname}</a> 님
+									<a id="loginName" href="/MyPage/main.do?page=1">${sessionScope.UserVO.uname}</a> 님
 								</div>
 								<a href="/MyPage/main.do?page=1" id="hearderMemberJoin">마이페이지</a>
 								<span>｜</span>
