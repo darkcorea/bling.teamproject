@@ -10,5 +10,7 @@ public class Ad_MainDAO {
 	private SqlSession sqlSession;
 	
 	private String ps = "com.project.bling.mapper.adminmapper.ad_mainMapper.";
+	
+//	public List<DeliveryVO> 
 
 }
