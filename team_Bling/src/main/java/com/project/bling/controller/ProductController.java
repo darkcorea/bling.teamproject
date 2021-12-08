@@ -217,6 +217,11 @@ public class ProductController {
 	@RequestMapping(value="/search.do" )
 	public String search_Product(Locale locale, Model model, Criteria sc) throws Exception{
 		
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>"+sc.getStart_price());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>"+sc.getLast_price());
+		if (sc.getStart_price() == 0) sc.setStart_price(0);
+		if (sc.getLast_price() == 0) sc.setLast_price(0);
+		
 		// 페이지 메이커에 검색에 필요한 값들을 넣어 줌
 		PageMaker pm = new PageMaker();
 		pm.setScri(sc);

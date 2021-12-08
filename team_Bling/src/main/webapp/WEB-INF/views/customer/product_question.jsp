@@ -78,7 +78,9 @@
 	<table>
 		<tr class="tr1">
 			<td style="width:180px;"><span class="red">*</span>제목</td>
-			<td><input type="text" name="title" style="width:90%"></td>
+			<td><input type="text" name="title" style="width:86%">
+				<input type="text" style="display:none;">
+			</td>
 		</tr>
 		<tr class="tr2">
 			<td><span class="red">*</span>본문</td>

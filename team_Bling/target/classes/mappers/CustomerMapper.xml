@@ -13,17 +13,12 @@
 
 	<!-- 상품 디테일에서 pidx로 문의한 내용 가져오기 -->
 	<select id="Product_Question" parameterType="PageMaker" resultType="CombineVO">
-		<![CDATA[
-		SELECT * FROM 
-		    ( SELECT rownum as rnum, A.* from
-		        (SELECT bq.midx, bq.pqidx, bq.depth, bq.title, bq.comments, bg.uname, bq.rdate, bq.show_yn
-				FROM bg_product_question bq
-				JOIN bg_user bg ON bq.midx = bg.midx 
-				WHERE pidx= #{pidx}
-				ORDER BY bq.originpqidx desc, bq.depth asc) A 
-		     WHERE rownum <= #{lastPost} ) B
-	 	WHERE rnum >= #{startPost}
-	 	]]>
+		SELECT bq.midx, bq.pqidx, bq.depth, bq.title, bq.comments, bg.uname, bq.rdate, bq.show_yn
+		FROM bg_product_question bq
+		JOIN bg_user bg ON bq.midx = bg.midx 
+		WHERE pidx= #{pidx}
+		ORDER BY bq.originpqidx desc, bq.depth
+		Limit #{startPost},#{scri.perPageNum}
 	</select>
 	  
 	<!-- 상품 디테일에서 로그인한 사람중에 문의를 N으로 한사람의 것을 자신은 볼 수 있게 바꾸기 --> 
@@ -34,7 +29,11 @@
 	 <!-- 상문 문의 하기 내용 등록 -->
 	<insert id="product_write" parameterType="Product_QuestionVO" >
 		INSERT INTO bg_product_question (pqidx, originpqidx, midx, pidx, title, comments, show_yn,  rdate) 
-		VALUES (pqidx_seq.nextval, pqidx_seq.nextval, #{midx}, #{pidx}, #{title}, #{comments}, #{show_yn}, sysdate)
+		VALUES (#{pqidx}, #{pqidx}, #{midx}, #{pidx}, #{title}, #{comments}, #{show_yn}, now())
+		
+		<selectKey resultType="int" keyProperty="pqidx" order="BEFORE">
+          SELECT MAX(pqidx)+1 FROM bg_product_question
+       </selectKey>
 	</insert> 
 	
 	<!-- pqidx로 문의 내용 가져오기 -->
@@ -44,7 +43,7 @@
 	
 	<!-- 문의 내역 수정하기 -->
 	<update id="product_modify" parameterType="Product_QuestionVO">
-		UPDATE bg_product_question SET title=#{title}, comments=#{comments}, pwd=#{pwd}, rdate=sysdate
+		UPDATE bg_product_question SET title=#{title}, comments=#{comments}
 		WHERE pqidx = #{pqidx}
 	</update>
 	
@@ -57,7 +56,7 @@
 			JOIN bg_option op ON od.oidx = op.oidx
 			JOIN bg_product pr ON op.pidx = pr.pidx
 			JOIN bg_image im ON pr.pidx = im.pidx
-			WHERE midx=#{midx} AND bor.rdate >= to_char(sysdate-60)
+			WHERE midx=#{midx} AND bor.rdate >= date_add(now(), interval -2 month)
 		]]>
 	</select>
 	
@@ -77,46 +76,37 @@
 	<insert id="question_write" parameterType="QuestionVO">
 	
 		<if test="detail_idx == 0">
-		INSERT INTO bg_question (qidx, originqidx, midx, category, title, content, rdate)
-		VALUES (qidx_seq.nextval, qidx_seq.nextval, #{midx}, #{category}, #{title}, #{content}, sysdate)
+		INSERT INTO bg_question (qidx, originqidx, midx, category, title, content)
+		VALUES (#{qidx}, #{qidx}, #{midx}, #{category}, #{title}, #{content})
 		</if>
 		<if test="detail_idx != 0">
-		INSERT INTO bg_question (qidx, originqidx, midx, category, title, content, rdate, detail_idx)
-		VALUES (qidx_seq.nextval, qidx_seq.nextval, #{midx}, #{category}, #{title}, #{content}, sysdate, #{detail_idx} )
+		INSERT INTO bg_question (qidx, originqidx, midx, category, title, content, detail_idx)
+		VALUES (#{qidx}, q#{qidx}, #{midx}, #{category}, #{title}, #{content}, #{detail_idx} )
 		</if>
-
+		
+		<selectKey resultType="int" keyProperty="qidx" order="BEFORE">
+          SELECT MAX(qidx)+1 FROM bg_question
+       </selectKey>
+       
 	</insert>
 	
-	<!-- 퀴리문에서  반복  사용되는거  -->
-	<sql id="keyword">
-		<if test="scri.keyword != null">
-		  AND subject LIKE '%'||#{scri.keyword}||'%' OR contents LIKE '%'||#{scri.keyword}||'%'
-		 </if>
-	</sql>
-
 
 	<!-- 고객센터 문의하기 총 갯수-->
 	<select id="Question_Count" parameterType="PageMaker" resultType="int">
 		SELECT count(*) FROM bg_notice WHERE type='Q'
-		<include refid="keyword"></include>
+			<if test="scri.keyword != null">
+			AND subject LIKE '%'||#{scri.keyword}||'%' OR contents LIKE '%'||#{scri.keyword}||'%'
+			</if>
 	</select>
 	
 	
 	<!-- 고객센터 페이징 -->
 	<select id="Question_page" parameterType="PageMaker" resultType="NoticeVO">
-	<![CDATA[
-		SELECT * FROM
-			(SELECT rownum AS rnum, A.* FROM
-				(SELECT nidx, subject, contents, rdate FROM bg_notice WHERE type='Q'
-	]]>			
-		 <include refid="keyword"></include>
-		 
-	<![CDATA[			
-				) A
-			WHERE rownum <= #{lastPost} ) B
-		WHERE rnum >= #{startPost}
-	 	]]>
-	 	
+		SELECT nidx, subject, contents, rdate FROM bg_notice WHERE type='Q'
+			 <if test="scri.keyword != null">
+		  	AND subject LIKE '%'||#{scri.keyword}||'%' OR contents LIKE '%'||#{scri.keyword}||'%'
+		 	</if>
+		Limit #{startPost},#{scri.perPageNum} 	
 	</select> 
 	
 </mapper>

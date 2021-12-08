@@ -49,6 +49,8 @@ public class CustomerController {
 				
 		pm.setTotalCount(questionCount);
 		
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+sc.getKeyword());
+		
 		// 고객센터에서 필요한  pm과 문의페이징
 		model.addAttribute("pm", pm);
 		model.addAttribute("question", customerService.Question_page(pm));
@@ -89,7 +91,13 @@ public class CustomerController {
 	
 	// 상품 디테일에서 상문문의하기 버튼을 눌렀을 경우에 상품문의하기 페이지로 이동
 	@RequestMapping(value="/product.do")
-	public String product_Question(Locale locale, Model model, int pidx) {
+	public String product_Question(Locale locale, Model model, int pidx, HttpSession session) {
+		
+		// 로그인이 풀렸을 떄 대비해서 넣음
+		if(session.getAttribute("UserVO") == null) {
+			return "redirect:/Login/main.do";
+		}
+		
 		model.addAttribute("pidx",pidx);
 		return "customer/product_question";
 	}
