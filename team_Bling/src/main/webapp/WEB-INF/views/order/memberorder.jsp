@@ -172,7 +172,9 @@
 	#mypage:hover{
 		color:#000000;
 	}
-	
+	.total{
+		font-weight: bold ;
+	}
 </style>
 </head>
 <body>
@@ -229,10 +231,12 @@
 			</table>
 		<br><br>
 	<h5>결제 정보</h5>
-			<input type="hidden" name="tot_price" id="tot_price">
+			<input type="text" name="tot_price" id="tot_price">
+			<input type="text" name="tot_price1" id="tot_price1">
 			<input type="hidden" name="productname" id="productname" value="${productname}">
-			<input type="hidden" name="mileage" id="mileage">
+			<input type="text" name="mileage" id="mileage">
 			<input type="hidden" name="addmile" id="addmile">
+			<input type="text" name="mileage1" id="mileage1">
 			<table class="t1">
 				<tr class="line">
 					<td class="gray"><span class="white">총상품가격</span></td>
@@ -731,7 +735,7 @@ $(document).ready(function(){
 			$(".phone").html(data.phone);
 			$("#point1").html(str);
 			$("#mileage").val(data.mileage);
-			
+			$("#mileage1").val(data.mileage);
 			var G = parseInt(price*0.02);
 			var S = parseInt(price*0.01);
 			console.log("grade : "+grade);
@@ -762,51 +766,26 @@ $(document).ready(function(){
 		$(".shipping").text(shipping.toLocaleString()+"원");
 		$(".total").text(total.toLocaleString()+"원");
 		$("#tot_price").val(total);
+		$("#tot_price1").val(total);
 	}
 	else{
 		$(".total").text(price.toLocaleString()+"원");
 		$("#tot_price").val(price);
+		$("#tot_price1").val(price);
 	}
 	
 	
-	 $("#checkBoxId").change(function(){
-		 	var mile = $("#mileage").val();
-		 	var totalprice = $("#tot_price").val();
-		 	var result = mile-mymile;
-		 	var result2 = totalprice-mymile;
-	        if($("#checkBoxId").is(":checked")){
-	           $(".mile").val(mymile);
-	           $("#mileage").val(result);
-	           $("#tot_price").val(result2);
-	           $(".total").text(result2.toLocaleString()+"원");
-	        }else{
-	        	 $(".mile").val("");
-	        	 $("#mileage").val(mymile);
-	        	 if(price<100000){
-	        			$("#tot_price").val(total);
-	        			$(".total").text(total.toLocaleString()+"원");
-	        		}
-	        		else{
-	        			$("#tot_price").val(price);
-	        			$(".total").text(price.toLocaleString()+"원");
-	        		}
-	        }
-	    });
+	
 	 $("input[name='mile']").blur(function(){
 		 var value = $(this).val();
 		 var mile = $("#mileage").val();
 		 var totalprice = $("#tot_price").val();
 		 var result = mile-value;
-		 var result2 = totalprice-value;
+		 var result1 = totalprice-value;
+		 $("#mileage").val(result);
+		 $("#tot_price").val(result1);
+		 $(".total").text(result1.toLocaleString()+"원");
 		 
-		 if(value>mymile){
-			 alert("내 적립금보다 큽니다");
-			 $(".mile").val("");
-		 }else{
-	           $("#mileage").val(result);
-	           $("#tot_price").val(result2);
-	           $(".total").text(result2.toLocaleString());
-		 }
 	 });
 	 
 	$(".change input:radio").change(function(){
@@ -894,7 +873,27 @@ $(document).ready(function(){
 	});
 	
 });	
-
+$(document).on('change', '#checkBoxId',function(event){
+	var mile1 = $("#mileage1").val();
+ 	var mile = $("#mileage").val();
+ 	var totalprice = $("#tot_price").val();
+ 	var totalprice1 = $("#tot_price1").val();
+ 	var tot = parseInt(totalprice1);
+ 	var result = mile-mile;
+ 	var result2 = totalprice-mile;
+    if($("#checkBoxId").is(":checked")){
+       $(".mile").val(mile);
+       $("#mileage").val(result);
+       $("#tot_price").val(result2);
+       $(".total").text(result2.toLocaleString()+"원");
+    }else{
+    	
+    	 $(".mile").val("");
+    	 $("#mileage").val(mile1);
+    	 $("#tot_price").val(totalprice1);
+    	 $(".total").text(tot.toLocaleString()+"원");
+    }
+});
 
 </script>
 </body>

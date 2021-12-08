@@ -8,8 +8,8 @@
 	 <!-- 비회원 주문 등록 -->
 	<insert id="nonorderinsert" parameterType="NonorderVO">
 	<![CDATA[
-	insert into bg_nonorder(NONIDX,ORDERID,NAME,EMAIL,PHONE,ZIP_CODE,ADDR1,ADDR2,RPHONE,RECIPIENT,TOT_PRICE,DEPOSITOR,ORDER_YN,PAYMENT) 
-	values(nonidx_seq.nextval,#{orderid},#{name},#{email},#{phone},#{zip_code},#{addr1},#{addr2},#{rphone},#{recipient},#{tot_price},#{depositor},#{order_yn},#{payment})
+	insert into bg_nonorder(ORDERID,NAME,EMAIL,PHONE,ZIP_CODE,ADDR1,ADDR2,RPHONE,RECIPIENT,TOT_PRICE,DEPOSITOR,ORDER_YN,PAYMENT) 
+	values(#{orderid},#{name},#{email},#{phone},#{zip_code},#{addr1},#{addr2},#{rphone},#{recipient},#{tot_price},#{depositor},#{order_yn},#{payment})
 	]]>
 	<selectKey resultType="int" keyProperty="nonidx" order="AFTER">
 	
@@ -19,16 +19,16 @@
 	</insert>
 	<insert id="nonorderdetailinsert" parameterType="NonorderVO">
 	<![CDATA[
-	insert into bg_nonorder_detail(detail_idx,NONIDX,OIDX,QUANTITY)
-	values(detail_idx_seq.nextval,#{nonidx},#{oidx},#{quantity})
+	insert into bg_nonorder_detail(NONIDX,OIDX,QUANTITY)
+	values(#{nonidx},#{oidx},#{quantity})
 	]]>
 	
 	</insert>
 	<!-- 회원 주문 등록 -->
 	<insert id="m_orderinsert" parameterType="OrderVO">
 	<![CDATA[
-	insert into bg_order(ORDER_IDX,MIDX,ZIP_CODE,ADDR1,ADDR2,RPHONE,RECIPIENT,TOT_PRICE,DEPOSITOR,ORDER_YN,PAYMENT) 
-	values(orders_seq.nextval,#{midx},#{zip_code},#{addr1},#{addr2},#{rphone},#{recipient},#{tot_price},#{depositor},#{order_yn},#{payment})
+	insert into bg_order(MIDX,ZIP_CODE,ADDR1,ADDR2,RPHONE,RECIPIENT,TOT_PRICE,DEPOSITOR,ORDER_YN,PAYMENT) 
+	values(#{midx},#{zip_code},#{addr1},#{addr2},#{rphone},#{recipient},#{tot_price},#{depositor},#{order_yn},#{payment})
 	]]>
 	<selectKey resultType="int" keyProperty="order_idx" order="AFTER">
 	SELECT MAX(order_idx) FROM bg_order
@@ -37,22 +37,8 @@
 	
 	<insert id="m_orderdetailinsert" parameterType="OrderVO">
 	<![CDATA[
-	insert into bg_order_detail(DETAIL_IDX,ORDER_IDX,OIDX,QUANTITY) 
-	values(detail_seq.nextval,#{order_idx},#{oidx},#{quantity})
-	]]>
-	</insert>
-	
-	<insert id="delivery_insert" parameterType="OrderVO">
-	<![CDATA[
-	insert into bg_delivery(DIDX,NONIDX,ORDER_YN)
-	values(didx_seq.nextval,#{order_idx},#{order_yn})
-	]]>
-	</insert>
-	
-	<insert id="nondelivery_insert" parameterType="NonorderVO">
-	<![CDATA[
-	insert into bg_nondelivery(DIDX,NONIDX,ORDER_YN)
-	values(non_didx_seq.nextval,#{nonidx},#{order_yn})
+	insert into bg_order_detail(ORDER_IDX,OIDX,QUANTITY) 
+	values(#{order_idx},#{oidx},#{quantity})
 	]]>
 	</insert>
 	
@@ -79,4 +65,11 @@
 		SELECT email,phone,grade,mileage FROM BG_USER WHERE MIDX=#{midx}
 	]]>
 	</select>
+	
+	<insert id="delivery_insert" parameterType="OrderVO">
+	<![CDATA[
+	insert into bg_delivery(ORDER_IDX,ORDER_YN)
+	values(#{order_idx},#{order_yn})
+	]]>
+	</insert>
 </mapper>

@@ -91,6 +91,18 @@
 		.discount{
 			color:red;
 		}
+		.tot_order{
+			width: 18px;
+			height: 18px;
+			cursor: pointer;
+			position: relative;
+ 			top: 4px;
+		}
+		.cart_idx{
+			width: 18px;
+			height: 18px;
+			cursor: pointer;
+		}
 	</style>	
 
 </head>
@@ -162,21 +174,25 @@
 					str += "<tr class='line'>";
 					str += "	<td class='pre'><input class='cart_idx' type='checkbox' name='cart_idx' value='"+item.cart_idx+"'>";
 					str += "	<input type='hidden' name='oidx' value='"+item.oidx+"'>";
-					str += "	<input type='hidden' name='quantity' value='"+item.quantity+"'>";
+					str += "	<input type='hidden' name='quantity' value='"+item.quantity+"' id='qun_"+item.cart_idx+"'>";
 					str += "	<input type='hidden' name='pname' value='"+item.pname+"'>";
+					str += "	<input type='hidden' name='stock1' value='"+item.stock+"'>";
 					str += "	</td>";
 					str += "	<td><img class='img-fluid' src='/resources/image/"+item.main+"'></td>";
 					str += "	<td><a class='deco' href='javascript:view("+item.pidx+")'>"+item.pname+"</a>";
 					str += "		<p>옵션명 : "+item.oname+"</p>";
 					str += "	<input type='hidden' name='stock' value='"+item.stock+"' id='s_"+item.cart_idx+"'>";
 					str += "	</td><td>";
+					str += "	<input type='hidden' id='price_"+item.cart_idx+"' value='"+item.price+"'>";
+					str += "	<input type='hidden' id='add_"+item.cart_idx+"' value='"+item.addprice+"'>";
+					str += "	<input type='hidden' id='sale_"+item.cart_idx+"' value='"+item.saleprice+"'>";
 					str += "	<input type='button' class='btn btn-light p-0 size27 align-middle' onclick='minus("+item.cart_idx+")' value='-'/>";
 					str += "	<span class='quantity' id='q_"+item.cart_idx+"'>"+item.quantity+"</span>"
 					str += "	<input type='button' class='btn btn-light p-0 size27 align-middle' onclick='plus("+item.cart_idx+")' value='+'/>";
 					str += "	<br><button class='btn1' onclick='updateFn("+item.cart_idx+")'>수정</button></td>";
-					str += "	<td class='price1'><span>"+price+"</span><span>원</span></td>";
-					str += "	<td class='discount1'>"+discount+"<span>원</span></td>";
-					str += "	<td class='tot_price1'>"+tot_price+"<span>원</span></td>";
+					str += "	<td class='price1'><span id='pr_"+item.cart_idx+"'>"+price+"</span><span>원</span></td>";
+					str += "	<td class='discount1'><span id='dis_"+item.cart_idx+"'>"+discount+"</span><span>원</span></td>";
+					str += "	<td class='tot_price1'><span id='tot_"+item.cart_idx+"'>"+tot_price+"</span><span>원</span></td>";
 					str += "	<td><button class='btn2' onclick='deleteFn("+item.cart_idx+")'>삭제</button></td>";
 					str += "</tr>";
 				}
@@ -225,18 +241,15 @@
             	
             		$("#shipping1").val("");
             		$(".shipping").text("+0원");
-            		 $(".price").text(price_sum.toLocaleString()+"원");
+            		$(".price").text(price_sum.toLocaleString()+"원");
             		$("#price").val(price_sum);
                     $(".price").text(price_sum.toLocaleString()+"원");
                     $("#discount").val(discount_sum);
                     $(".discount").text("-"+discount_sum.toLocaleString()+"원");
             		$("#total").val(total_sum);
             		$(".total").text("="+total_sum.toLocaleString()+"원");
-            		
-            	
             }
             else{
-            	
         		 $(".price").text(price_sum.toLocaleString()+"원");
         		$("#price").val(price_sum);
                 $(".price").text(price_sum.toLocaleString()+"원");
@@ -244,11 +257,8 @@
                 $(".discount").text("-"+discount_sum.toLocaleString()+"원");
         		$("#total").val(total_sum);
         		$(".total").text("="+total_sum.toLocaleString()+"원");
-        		
             }
         });
-        
-        
 	});
 	
 	
@@ -304,28 +314,61 @@
 	         checkbox.checked = checkAll.checked;
 	     
 	      });
-	   }
-
-	
-	
+	   }	
 	
 	function plus(cart_idx){
 		var stock =  $("#s_"+cart_idx).val();
 		var qt = $("#q_"+cart_idx).text();
-		console.log(cart_idx);
+		var price = $("#price_"+cart_idx).val();
+		var add = $("#add_"+cart_idx).val();
+		var sale = $("#sale_"+cart_idx).val();
 		
 		var quantity = parseInt(qt);
+		var price1=parseInt(price);
+		var add1 = parseInt(add);
+		var sale1 = parseInt(sale);
+		
 		var plus1 = quantity+1;
+		
 		if(quantity<stock){
 		$("#q_"+cart_idx).text(plus1);
+		var t = $("#q_"+cart_idx).text();
+		var pr = (price1+add1)*t;
+		var dis = (price-sale)*t;
+		var tot = pr-dis;
+		
+		$("#pr_"+cart_idx).text(pr);
+		$("#dis_"+cart_idx).text(dis);
+		$("#tot_"+cart_idx).text(tot);
+		$("#qun_"+cart_idx).val(plus1);
+		}else{
+			alert("재고가 부족합니다");
 		}
 	}
 	function minus(cart_idx){
 		var qt = $("#q_"+cart_idx).text();
+		var price = $("#price_"+cart_idx).val();
+		var add = $("#add_"+cart_idx).val();
+		var sale = $("#sale_"+cart_idx).val();
+		
 		var quantity = parseInt(qt);
+		var price1=parseInt(price);
+		var add1 = parseInt(add);
+		var sale1 = parseInt(sale);
+		
 		var minus1 = quantity-1;
+		
 		if(quantity > 1){
 			$("#q_"+cart_idx).text(minus1);
+			var t = $("#q_"+cart_idx).text();
+			var pr = (price1+add1)*t;
+			var dis = (price-sale)*t;
+			var tot = pr-dis;
+			
+			$("#qun_"+cart_idx).val(minus1);
+			$("#pr_"+cart_idx).text(pr);
+			$("#dis_"+cart_idx).text(dis);
+			$("#tot_"+cart_idx).text(tot);
 			}
 	}
 	
@@ -418,12 +461,16 @@
 	      }else{
 	         
 	          $(".cart_idx:checked").each(function(e){      
-	              let oidx =  $(this).siblings(':eq(0)').val();
-	              let quantity =  $(this).siblings(':eq(1)').val();
-	              let pname =  $(this).siblings(':eq(2)').val();
+	              let oidx = $(this).siblings(':eq(0)').val();
+	              let quantity = $(this).siblings(':eq(1)').val();
+	              let pname = $(this).siblings(':eq(2)').val();
+	              let stock = $(this).siblings(':eq(3)').val();
+	              
+	              console.log(stock);
 	              var data = new Object();
 	              data.oidx = oidx;
 	 	         data.quntity = quantity;
+	 	         data.stock = stock;
 	 	         List.push(data);
 	             pnameList.push(pname);
 	          });
