@@ -14,14 +14,11 @@
 
 <!-- 관심상품 등록 -->
 	<insert id="likeInsert" parameterType="LikeVO">
-		<![CDATA[
-			INSERT INTO bg_like(interest_idx,midx,pidx)
-			VALUES(
-				interest_seq.nextval
-				,#{midx}
-				,#{pidx}
-			)		
-		]]>
+		INSERT INTO bg_like(midx,pidx)
+		VALUES(
+			#{midx}
+			,#{pidx}
+		)		
 	</insert>
 
 <!-- 관심상품 삭제 -->
@@ -115,7 +112,7 @@
 		FROM bg_like li
 		JOIN bg_product pr ON pr.pidx = li.pidx
 		JOIN bg_image im ON im.pidx = li.pidx 
-		WHERE midx=#{midx} AND li.rdate >= to_char(sysdate-365)
+		WHERE midx=#{midx} AND li.rdate >= to_char(sysdate()-365)
 	]]>	
 		<if test='kind == "R"'>AND pr.kind='R'</if>
 		<if test='kind == "E"'>AND pr.kind='E'</if>

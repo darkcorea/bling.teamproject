@@ -42,8 +42,8 @@
 	       pi.saleprice,
 	       pi.price,
 	       pi.main,
-	       count(oro.ridx) as reviewCount,
-	       sum(oro.quantity) as quantitySum,
+	       count(oro.ridx) as 'reviewCount',
+	       sum(oro.quantity) as 'quantitySum',
           pi.rdate
 	</sql>
 	
@@ -64,7 +64,7 @@
 			ON oro.pidx=pi.pidx
 			GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
 			ORDER BY sum(oro.quantity) DESC
-			Limit #{startPost},#{scri.perPageNum}
+			Limit #{start},9
 	</select>
 	
 	<!-- 새로 올라온 상품 -->
@@ -75,7 +75,7 @@
 			ON oro.pidx=pi.pidx
 			GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
 			ORDER BY pi.rdate DESC
-			Limit #{startPost},#{scri.perPageNum}
+			Limit #{start},9
 	</select>
 	
 	<!-- 상품에 대한 리스트 종류별 최신순 -->
@@ -87,7 +87,7 @@
 			WHERE pi.kind= #{kind}
 			GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
 			ORDER BY pi.rdate DESC
-			Limit #{startPost},#{scri.perPageNum}
+			Limit #{start},9
 	</select>
 	
 	<!-- 베스트 상품 리스트 -->
@@ -99,7 +99,7 @@
 			WHERE pi.kind= #{kind}
 			GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
 			ORDER BY sum(oro.quantity) DESC
-			Limit #{startPost},#{scri.perPageNum}
+			Limit #{start},9
 	</select>
 	
 	<!-- 높은가격순 리스트 -->
@@ -111,7 +111,7 @@
 				WHERE pi.kind= #{kind}
 				GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
 				ORDER BY pi.saleprice DESC
-				Limit #{startPost},#{scri.perPageNum}
+				Limit #{start},9
 	</select>
 	
 	<!-- 낮은가격순 리스트 -->
@@ -123,7 +123,7 @@
 				WHERE pi.kind= #{kind}
 				GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
 				ORDER BY pi.saleprice ASC
-				Limit #{startPost},#{scri.perPageNum}
+				Limit #{start},9
 
 	</select>
 	

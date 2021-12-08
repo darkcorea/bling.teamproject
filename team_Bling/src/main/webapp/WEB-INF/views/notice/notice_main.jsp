@@ -155,7 +155,7 @@
 				  		for(let i=0;i<data.totalList.length;i++){
 				  			console.log(page);
 							str +="<tr>";
-							str +="<th class='text-center'>"+(pagenum + i+1)+"</th>";
+							str +="<th class='text-center'>"+(pagenum + i-2)+"</th>";
 							str +="<td><a href='/Notice/detail.do?nidx="+data.totalList[i].nidx+"' class='link-dark' style='text-decoration:none'>"+data.totalList[i].subject+"</a>";
 									
 							//파일 있을시 파일아이콘 제목옆에 붙음

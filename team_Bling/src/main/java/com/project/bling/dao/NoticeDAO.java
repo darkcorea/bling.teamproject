@@ -34,6 +34,8 @@ public class NoticeDAO {
 	
 	//공지사항 총 페이징
 	public List<NoticeVO> totalList(PageMaker pm)throws Exception{
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+pm.getStart());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+pm.getStartPost());
 		return sqlSession.selectList(ps+"totalList",pm);
 	}
 	
