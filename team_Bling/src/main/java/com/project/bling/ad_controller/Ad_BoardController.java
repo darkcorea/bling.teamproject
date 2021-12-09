@@ -44,7 +44,7 @@ public class Ad_BoardController {
 	/////////////////////////////////////공지사항///////////////////////////////////////
 	
 	//공지사항 파일, 이미지 저장 경로
-	private static final String FILE_SERVER_PATH = "D:\\팀프로젝트\\팀 깃\\4\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice\\";
+	private static final String FILE_SERVER_PATH = "D:\\팀프로젝트\\팀 깃\\5\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice\\";
 	private static final String FILE_SERVER_PATH2 = "D:\\팀프로젝트\\팀 깃\\4\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\event\\";
 	
 	//공지사항 게시글리스트메인

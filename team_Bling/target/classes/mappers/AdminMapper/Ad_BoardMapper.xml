@@ -22,7 +22,7 @@
 	<select id="searchcount" resultType="int" parameterType="String">
 		SELECT count(nidx) 
 		FROM bg_notice
-		WHERE subject LIKE '%'||#{keyword}||'%'
+		WHERE subject LIKE CONCAT('%',#{scri.keyword},'%')
 	</select>
 	
 	<!-- 공지사항 전체 리스트 -->
@@ -31,7 +31,7 @@
 		FROM bg_notice				   
 	   
 		<if test="scri.keyword != null">
-			WHERE subject LIKE '%'||#{scri.keyword}||'%'
+			WHERE subject LIKE CONCAT('%',#{scri.keyword},'%')
 		</if>
 		ORDER BY RDATE DESC
 		Limit #{startPost}, #{scri.perPageNum}
@@ -87,9 +87,8 @@
 	
 	<!-- 이벤트 데이터 저장 -->
 	<insert id="event_regist" parameterType="EventVO">
-		INSERT INTO bg_event(eidx,subject,contents,event_start,event_end)
+		INSERT INTO bg_event(subject,contents,event_start,event_end)
 		values(
-			eidx_seq.nextval
 			,#{subject}
 			,#{contents}
 			,#{image, jdbcType=VARCHAR}
