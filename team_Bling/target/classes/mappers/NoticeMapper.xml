@@ -47,7 +47,7 @@
 		FROM bg_notice	
 		WHERE TYPE NOT IN('Q')
 		ORDER BY RDATE DESC
-		Limit 1,7
+		Limit #{startPost}, #{scri.perPageNum}
 	</select>
 	
 	<!-- 공지사항 detail -->
