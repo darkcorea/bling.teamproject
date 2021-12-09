@@ -254,7 +254,7 @@
 					<td class="gray"><span class="white">총결제금액</span></td>
 					<td class="fill">
 						<span class="total"></span>
-						<span id="s1"><input type="text" name="payed_mileage" placeholder="사용할 적립금 입력" class="mile"></span>
+						<span id="s1"><input type="text" name="payed_mileage" id="payed_mileage" placeholder="사용할 적립금 입력" class="mile"></span>
 						<span><input type="checkbox" id="checkBoxId">적립금 전액 사용</span>
 						<span class="addInfo" id="point1"></span>
 					</td>
@@ -500,6 +500,8 @@ function iamport(){
 		alert("주소검색을 하세요");
 	}else if(rphone==""){
 		alert("받는 분 휴대폰번호를 입력하세요");
+	}else if( $("#payed_mileage").val() == "" ){
+		$("#payed_mileage").val(0);
 	}
 	else{ if(payment=="카드"){
 		IMP.request_pay({

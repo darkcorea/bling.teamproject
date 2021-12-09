@@ -120,6 +120,7 @@ public class OrderController {
 	@ResponseBody
 	public int memberorderinsert(OrderVO vo) throws Exception {
 		
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>"+vo.getPayed_mileage());
 		orderService.memberinsert(vo);
 		
 		return vo.getOrder_idx();
