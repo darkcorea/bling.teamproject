@@ -148,8 +148,8 @@
   </div>
 
 <div class="top">
-	<a id="topBtn" href="#"><i class="bi bi-chevron-up" style="font-size:2rem;"></i></a>
-	<div><a id="topBtn" href="#">TOP</a></div>
+	<a id="topBtn" href="javascript:window.scrollTo(0,0);"><i class="bi bi-chevron-up" style="font-size:2rem;"></i></a>
+	<div><a id="topBtn" href="javascript:window.scrollTo(0,0);">TOP</a></div>
  </div>
 
 <!-- 로그아웃 모달창 -->
