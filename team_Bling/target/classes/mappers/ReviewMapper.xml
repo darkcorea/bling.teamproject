@@ -122,13 +122,13 @@
 		SELECT * from rv_Paging
 		WHERE midx=#{midx}
 		
-			<if test='kind == "A"'><![CDATA[AND rdate >= to_char(sysdate)]]></if>
-			<if test='kind == "B"'><![CDATA[AND rdate >= to_char(add_months(sysdate,-1))]]></if>
-			<if test='kind == "C"'><![CDATA[AND rdate >= to_char(add_months(sysdate,-3))]]></if>
-			<if test='kind == "D"'><![CDATA[AND rdate >= to_char(add_months(sysdate,-6))]]></if>
-			<if test='kind == "E"'><![CDATA[AND rdate >= to_char(sysdate-365)]]></if>
-			<if test='kind == "F"'><![CDATA[AND rdate >= to_char(sysdate-(365*3))]]></if>
-			<if test='kind == "G"'>AND rdate BETWEEN TO_DATE(#{scri.rdate1},'YYYY-MM-DD') AND TO_DATE(#{scri.rdate2},'YYYY-MM-DD')</if>
+			<if test='kind == "A"'><![CDATA[AND rdate >= sysdate()]]></if>
+			<if test='kind == "B"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -1 MONTH)]]></if>
+			<if test='kind == "C"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -3 MONTH)]]></if>
+			<if test='kind == "D"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -6 MONTH)]]></if>
+			<if test='kind == "E"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -1 YEAR)]]></if>
+			<if test='kind == "F"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -3 YEAR)]]></if>
+			<if test='kind == "G"'>AND rdate BETWEEN DATE_FORMAT(#{scri.rdate1},'%Y-%m-%d') AND DATE_FORMAT(#{scri.rdate2},'%Y-%m-%d')</if>
 		
 		Limit #{startPost},#{scri.perPageNum}
 	</select>

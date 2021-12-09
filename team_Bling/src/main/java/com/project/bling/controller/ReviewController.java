@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
@@ -227,7 +226,7 @@ public class ReviewController {
 		}
 		
 		
-		System.out.println(cri.getRdate1());
+		System.out.println("cri.getRdate1() : "+cri.getRdate1());
 		
 		return map;
 		

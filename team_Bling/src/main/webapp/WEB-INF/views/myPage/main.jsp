@@ -359,7 +359,7 @@
 					}).then((result) => {
 						  /* Read more about isConfirmed, isDenied below */
 						  if (result.isConfirmed) {
-							   window.location.replace("/MyPage/main.do");
+							   window.location.replace("/MyPage/main.do?page=1");
 						  } else if (result.isDenied) {
 					   }
 					});
