@@ -41,6 +41,7 @@
 	     AS(
 	        SELECT p.pname,
 	               p.saleprice,
+	               p.pidx,
 	               op.oname,
 	               op.addprice,
 	               op.oidx
@@ -77,6 +78,7 @@
 	       DATEDIFF(now(),oOdDr.deli_com) AS 'date_differ',
 	       oOdDr.order_idx,
 	       oOdDr.detail_idx,
+	       po.pidx,
 	       po.pname,
 	       substring_index(po.oname,'+',1) AS 'oname',
 	       po.saleprice,
@@ -90,7 +92,7 @@
 	INNER JOIN po
 	ON oOdDr.oidx=po.oidx
 	WHERE oOdDr.midx=#{midx} AND NOT oOdDr.deli_stat='(null)'
-	GROUP BY oOdDr.rdate, oOdDr.deli_com, oOdDr.order_idx,oOdDr.detail_idx,po.pname,po.oname,po.saleprice,po.addprice,oOdDr.deli_stat,oOdDr.ridx,oOdDr.contents
+	GROUP BY oOdDr.rdate, oOdDr.deli_com, oOdDr.order_idx,oOdDr.detail_idx,po.pidx,po.pname,po.oname,po.saleprice,po.addprice,oOdDr.deli_stat,oOdDr.ridx,oOdDr.contents
 	ORDER BY oOdDr.rdate
 	DESC
 	LIMIT #{startPost},#{scri.perPageNum}

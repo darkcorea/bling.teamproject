@@ -32,7 +32,7 @@
 				str += "	<tr>";
 				str += "		<td id='td1'><span id='t1'>${ro.rdate}</span></td>";
 				str += "		<td id='td2'><span id='t2'>${ro.order_idx}</span></td>";
-				str += "		<td id='td3'><span id='t3'>${ro.pname} / ${ro.oname}</span></td>";
+				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/Product/detail.do?pidx=${ro.pidx}'>${ro.pname} / ${ro.oname}</a></span></td>";
 				str += "		<td id='td4'><span id='t4'><fmt:formatNumber value='${(ro.saleprice+ro.addprice)*ro.quantitySum}' pattern='#,###' />원</span></td>";
 				str += "		<td id='td5'><span id='t5'>${ro.quantitySum}</span></td>";
 				
@@ -53,7 +53,7 @@
 				str += "			<td id='td6'><span id='t6'>배송완료</span></td>";
 				str += "		</c:if>";
 				
-				str += "		<c:if test='${ro.date_differ <= 30}'>";
+				str += "		<c:if test='${ro.date_differ <= 7}'>";
 				str += "			<c:if test='${ro.contents != null}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite2' data-bs-toggle='modal' data-bs-target='#staticBackdrop2' onclick='reviewDetail(${ro.ridx})' value='리뷰 확인' readonly></span></td>";
 				str += "			</c:if>";
@@ -61,8 +61,8 @@
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite1' data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${ro.detail_idx})' value='리뷰 작성' readonly></span></td>";
 				str += "			</c:if>";
 				str += "		</c:if>";
-				str += "		<c:if test='${ro.date_differ > 31}'>";
-				str += "				<td id='td7'><span id='t7'><input id='reviewWrite3' onclick='purchaseCom()' value='구매 확정' readonly></span></td>";
+				str += "		<c:if test='${ro.date_differ > 7}'>";
+				str += "				<td id='td7'><span id='t7'><input id='reviewWrite3' value='구매 확정' readonly></span></td>";
 				str += "		</c:if>";
 				str += "	</tr>";
 				str += "</c:forEach>";
@@ -88,15 +88,6 @@
 				error: function(){
 					alert("detai_idx 넘기기 에러");
 				}
-			});
-		}
-		
-		
-		function purchaseCom(){
-			Swal.fire({
-				icon: 'warning',
-				title: '리뷰 작성기간 초과',
-				text: '배송완료일 기준 30일이 지나면 리뷰를 작성하실 수 없습니다.',
 			});
 		}
 		
@@ -661,6 +652,10 @@
 		#td7{
 			width: 80px;
 			text-align: center;
+		}
+		#prodLink{
+			text-decoration: none;
+			color: #000000;
 		}
 	/* --------------------onload로 화면 출력-------------------- */	
 	
