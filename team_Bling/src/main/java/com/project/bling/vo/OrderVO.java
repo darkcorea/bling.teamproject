@@ -24,6 +24,23 @@ public class OrderVO {
 	private String name;
 	private int cart_idx;
 	private String oname;
+	private int addmileage;
+	private int payed_mileage;
+	
+	
+	
+	public int getAddmileage() {
+		return addmileage;
+	}
+	public void setAddmileage(int addmileage) {
+		this.addmileage = addmileage;
+	}
+	public int getPayed_mileage() {
+		return payed_mileage;
+	}
+	public void setPayed_mileage(int payed_mileage) {
+		this.payed_mileage = payed_mileage;
+	}
 	public String getOname() {
 		return oname;
 	}
