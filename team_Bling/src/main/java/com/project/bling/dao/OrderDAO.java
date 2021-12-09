@@ -23,6 +23,7 @@ public class OrderDAO {
 		sqlSession.insert(om+"nonorderinsert",vo);
 	}
 	public void detailInsert(NonorderVO vo) throws Exception{
+		
 		sqlSession.insert(om+"nonorderdetailinsert",vo);
 	}
 	public void memberinsert(OrderVO vo) throws Exception{
@@ -48,6 +49,7 @@ public class OrderDAO {
 		sqlSession.insert(om+"delivery_insert",vo);
 	}
 	public void non_delivery_insert(NonorderVO vo) throws Exception {
+		
 		sqlSession.insert(om+"nondelivery_insert",vo);
 	}
 }
