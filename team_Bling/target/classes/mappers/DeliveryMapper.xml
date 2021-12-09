@@ -24,7 +24,7 @@
 			LEFT OUTER JOIN  open_a_2021.bg_review re ON re.DETAIL_IDX = od.detail_idx
 			WHERE ord.midx=#{midx}  AND now() >= date_add(now(), interval -3 month)
 			ORDER BY ord.order_idx ASC, od.detail_idx ASC) A
-        WHERE RNUM =1;
+        WHERE RNUM =1
 	]]>
 	</select>
 	  
