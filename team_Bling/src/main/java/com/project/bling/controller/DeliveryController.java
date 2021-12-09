@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.service.DeliveryService;
 import com.project.bling.vo.CombineVO;
-import com.project.bling.vo.OrderVO;
 import com.project.bling.vo.UserVO;
 
 @RequestMapping(value="/Delivery")

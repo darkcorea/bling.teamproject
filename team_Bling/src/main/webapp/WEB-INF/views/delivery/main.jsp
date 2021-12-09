@@ -11,6 +11,8 @@
 <title>주문확인 배송조회</title>
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script src="/js/bootstrap.bundle.js"></script>
+<!-- SweetAlert2(alert,modal창) -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style>
@@ -126,6 +128,188 @@
 		font-size:25px;
 		font-weight:700;
 	}
+	
+	/* modal */
+		.modal {
+	        text-align: center;
+		}
+		/* 모달창 배경색 */
+		.modal-backdrop {
+			background-color: #000000 !important;
+			opacity: 0.3 !important;
+		}
+		.modal-dialog {
+		        display: inline-block;
+		        text-align: left;
+		        vertical-align: middle;
+		}
+		.modal-header{
+			background-color: #CB7878;
+		}
+		.modal-title{
+			color: #ffffff;
+			font-size: 30px;
+			position: relative;
+			left: 175px;
+		}
+		#modalText1{
+			text-align: center;
+			font-weight: bold;
+			font-size: 20px;
+		}
+		#textArea1,#textArea2{
+			width: 465px;
+			height: 200px;
+			resize: none;
+			background-color: #C4C4C4;
+			opacity: 0.5;
+		}
+		#textArea::placeholder{
+			color: #000000;
+		}
+		#closeBtn{
+			width: 80px;
+			color: #000000;
+			background-color: #ffffff;
+			border: 2px solid #C4C4C4;
+			position: relative;
+			right: 150px;
+		}
+		#saveBtn{
+			width: 80px;
+			color: #ffffff;
+			background-color: #CB7878;
+			border: 2px solid #CB7878;
+			position: relative;
+			right: 150px;
+		}
+		#saveBtn:hover{
+			color: #CB7878;
+			background-color: #ffffff;
+			border: 2px solid #CB7878;
+		}
+		#delBtn{
+			width: 80px;
+			color: #ffffff;
+			background-color: #CB7878;
+			border: 2px solid #CB7878;
+			position: relative;
+			right: 150px;
+		}
+		#delBtn:hover{
+			color: #CB7878;
+			background-color: #ffffff;
+			border: 2px solid #CB7878;
+		}
+		#uploadDiv{
+			width: 465px;
+			height: 40px;
+			background-color: #CB7878;
+		}
+		#uploadBtn{
+			display: none;
+		}
+		.fileBtn{
+			width: 465px;
+			height: 40px;
+		}
+		#fileBtnText{
+			font-size: 18px;
+			color: #ffffff;
+		}
+		.bi-camera::before{
+			margin: 0px 10px 0px 0px;
+			font-size: 23px;
+		}
+		
+		/* modal 2 */
+		#rvPicDiv{
+			width: 465px;
+			height: 100px;
+		}
+		#rvPic1,#rvPic2{
+			width: 100px;
+			height: 100px;
+			display: inline-block;
+		}
+		img{
+			vertical-align: baseline !important;
+		}
+		.rvImg{
+			width: 100%;
+			height: 100%;
+		}
+		#prodData{
+			width: 465px;
+			height: 80px;
+			display: inline-block;
+		}
+		#prodPic{
+			width: 100px;
+			height: 100px;
+			display: inline-block;
+		}
+		#prodImg{
+			width: 100%;
+			height: 100%;
+		}
+		#prodDetail{
+			width: 170px;
+			height: 100px;
+			display: inline-block;
+		}
+		#prodName{
+			font-weight: bold;
+		}
+		#prodOption{
+			color: #CB7878;
+		}
+		#prodQty{
+			color: #CB7878;
+		}
+		#starRating{
+			display: inline-block;
+		}
+		.bi-star{
+			font-size: 20px;
+		}
+		.bi-star-fill{
+			color: #FF3A00;
+			font-size: 20px;
+		}
+	
+	/* modal - star rating */
+		.rating {
+		    display: flex;
+		    flex-direction: row-reverse;
+		    justify-content: center
+		}
+		.rating>input {
+		    display: none
+		}
+		.rating>label {
+		    position: relative;
+		    width: 1em;
+		    font-size: 2vw;
+		    color: #FF3A00;
+		    cursor: pointer
+		}
+		.rating>label::before {
+		    content: "\2605";
+		    position: absolute;
+		    opacity: 0
+		}
+		.rating>label:hover:before,
+		.rating>label:hover~label:before {
+		    opacity: 1 !important
+		}
+		.rating>input:checked~label:before {
+		    opacity: 1
+		}
+		.rating:hover>input:checked~label:before {
+		    opacity: 0.4
+		}
+		
 </style>
 </head>
 <body>
@@ -289,8 +473,8 @@
 							 			<br><button id="btn_25" class="btn btn-outline-secondary">교환/반품하기</button>
 							 		</c:if>
 							 		<!-- 리뷰를 쓰지 않았다면 -->
-							 		<c:if test="${list.pidx != null}">
-							 			<br><button id="btn_25" class="btn btn-outline-secondary">리뷰쓰기</button>
+							 		<c:if test="${list.ridx == null}">
+							 			<br><button id="btn_25" class="btn btn-outline-secondary" data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${list.detail_idx})'>리뷰쓰기</button>
 							 		</c:if>
 							 	</c:if>
 							 	
@@ -298,7 +482,7 @@
 							 	<c:if test="${list.confirm_yn == 'Y'}">
 							 	<span>구매완료</span>
 							 		<!-- 리뷰를 쓰지 않았다면 -->
-							 		<c:if test="${list.pidx != null}">
+							 		<c:if test="${list.ridx == null}">
 							 			<br><button id="btn_25" class="btn btn-outline-secondary">리뷰쓰기</button>
 							 		</c:if>
 							 	</c:if>
@@ -340,6 +524,59 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- 리뷰 작성 Modal -->
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+		
+			<div class="modal-header">
+				<h5 class="modal-title" id="staticBackdropLabel">리뷰 작성</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="modalReset()"></button>
+		</div>
+		
+		<div class="modal-body">
+			<div id="modalText1">상품은 만족하셨나요?</div>
+			<form id="modalForm">				
+				<!-- star_rating -->
+				<div class="rating">
+					<input type="radio" name="rating" value="5" id="5" class="star">
+						<label for="5">☆</label> 
+					<input type="radio" name="rating" value="4" id="4" class="star">
+						<label for="4">☆</label> 
+					<input type="radio" name="rating" value="3" id="3" class="star">
+						<label for="3">☆</label> 
+					<input type="radio" name="rating" value="2" id="2" class="star">
+						<label for="2">☆</label> 
+					<input type="radio" name="rating" value="1" id="1" class="star">
+						<label for="1">☆</label>
+				</div>
+				<br>
+				<textarea id="textArea1" placeholder="상품에 대한 후기를 남겨 주세요.&#13;&#10;사진은 2장까지 첨부 가능합니다."></textarea>
+				<br>
+			</form>
+			<form id="pictureForm">
+				<div id="uploadDiv">
+				<!-- 파일을 업로드할 영역 -->
+					<input type="file" id="uploadBtn" name="uploadBtn" multiple accept=".jpg, .jpeg, .png" onchange="uploadFile()">
+					<label for="uploadBtn" class="fileBtn btn">
+						<span id="fileBtnText">
+							<i class="bi bi-camera"></i>사진 첨부하기
+						</span>
+					</label>
+					<span id="fileName"></span>
+				</div>
+			</form>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal" onclick="modalReset()">닫기</button>
+			<button type="button" class="btn btn-primary" id="saveBtn" data-bs-dismiss="modal" onclick="javascript:reviewWrite(); modalReset();">저장</button>
+				</div>
+				
+			</div>
+		</div>
 </div>
 </body>
 <script>
@@ -437,7 +674,143 @@
 		});
 	}
 	
+	// 리뷰 쓰기 전에 detail_idx값을 넘겨준다
+	function detailIdx(detail_idx){
+		
+		$.ajax({
+			url: "/MyPage/detailIdx.do",
+			type: "post",
+			data: "detail_idx="+detail_idx,
+			ContentType: "json",
+			success: function(data){
+				
+			},
+			error: function(){
+				alert("detai_idx 넘기기 에러");
+			}
+		});
+	}
 	
+	// 모달 쓰기 
+	function reviewWrite(){
+
+		let starRating = document.querySelector("input[name='rating']:checked");
+		let grade = "";
+		let contents = "";
+		
+		if(starRating != null){
+			grade = starRating.value;
+			contents = contentsCheck();
+		}
+		else if(starRating == null){
+			Swal.fire({
+				icon: 'error',
+				title: '별점을 선택해주세요!',
+				text: '별점은 1점부터 5점까지 선택 가능합니다.',
+			});
+			modalReset();
+		}
+		
+		
+		$.ajax({
+			url: "/MyPage/reviewWrite.do",
+			type: "post",
+			data: "contents="+contents+"&grade="+grade,
+			ContentType: "json",
+			success: function(data){
+				console.log("리뷰작성 성공");
+				console.log(grade);
+				window.location.replace("/MyPage/main.do?page=1");
+			},
+			error: function(){
+				console.log("!!!!!리뷰작성 에러!!!!!");
+			}
+		});
+	}
+	
+	// 모달 새로 키면 내용 리셋
+	function modalReset(){
+		document.querySelector("form[id='modalForm']").reset();
+		document.querySelector("form[id='pictureForm']").reset();
+	}
+	
+	// 리뷰 창 새로 키면 사진 업로드 리셋 
+	function pictureReset(){
+		document.querySelector("form[id='pictureForm']").reset();
+	}
+	
+	// 파일 업르도 
+	function uploadFile(){
+		let files = document.querySelector("input[name='uploadBtn']").files;
+		
+		let image1 = files[0];
+		let image2 = files[1];
+
+		let formData = new FormData();
+		formData.append("image1", image1);
+		formData.append("image2", image2);
+		
+		$.ajax({
+			url: "/MyPage/upload.do",
+			type: "post",
+			data: formData,
+            dataType: "text",
+            processData: false,
+            ContentType: false,
+            success: function(data){
+            	if(data == "true"){
+            		console.log("파일 업로드 성공");
+            	}
+            	else if(data == "false"){
+            		Swal.fire({
+						icon: 'error',
+						title: '지정된 이미지 파일이 아닙니다!',
+						text: 'jpg, jpeg, png 파일만 선택 가능합니다.',
+					});
+            		pictureReset();
+            	}
+            }
+		});
+	}
+	
+	// 리뷰 내용 체크 
+	function contentsCheck(){
+		let textArea1 = document.querySelector("textarea").value;
+		let contents = "";
+		
+		if(textArea1 != null){
+			contents = textArea1;
+			if(contents.length<10){
+				contents = "";
+				Swal.fire({
+					icon: 'error',
+					title: '내용을 입력해주세요!',
+					text: '최소 10자부터 최대 500자까지 입력 가능합니다.',
+				});
+			}
+			else if(contents.length>500){
+				contents = "";
+				Swal.fire({
+					icon: 'error',
+					title: '내용을 입력해주세요!',
+					text: '최소 10자부터 최대 500자까지 입력 가능합니다.',
+				});
+			}
+			else if(contents.length>=10 && contents.length<=500){
+				
+			}
+		}
+		else if(textArea1 == null){
+			Swal.fire({
+				icon: 'error',
+				title: '내용을 입력해주세요!',
+				text: '최소 10자부터 최대 500자까지 입력 가능합니다.',
+			});
+			console.log("내용을 입력해주세요.");
+			modalReset();
+		}	
+		return contents;
+	}
 	
 	
 </script>
