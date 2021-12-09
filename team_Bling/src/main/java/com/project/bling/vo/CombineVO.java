@@ -44,8 +44,11 @@ public class CombineVO {
 	private int order_idx;
 	private int midx;
 	private int tot_price;
+	private String delivery_yn;
 	// like
 	private int interest_idx;
+	// admin
+	private String payment;
 	// 임의로 정한 
 	private int reviewCount;
 	private int quantitySum;
@@ -330,6 +333,18 @@ public class CombineVO {
 	}
 	public void setPath(String path) {
 		this.path = path;
+	}
+	public String getPayment() {
+		return payment;
+	}
+	public void setPayment(String payment) {
+		this.payment = payment;
+	}
+	public String getDelivery_yn() {
+		return delivery_yn;
+	}
+	public void setDelivery_yn(String delivery_yn) {
+		this.delivery_yn = delivery_yn;
 	}
 	
 	
