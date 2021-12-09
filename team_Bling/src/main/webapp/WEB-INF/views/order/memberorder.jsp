@@ -235,7 +235,7 @@
 			<input type="hidden" name="tot_price1" id="tot_price1">
 			<input type="hidden" name="productname" id="productname" value="${productname}">
 			<input type="hidden" name="mileage" id="mileage">
-			<input type="hidden" name="addmile" id="addmile">
+			<input type="hidden" name="addmileage" id="addmile">
 			<input type="hidden" name="mileage1" id="mileage1">
 			<table class="t1">
 				<tr class="line">
@@ -254,7 +254,7 @@
 					<td class="gray"><span class="white">총결제금액</span></td>
 					<td class="fill">
 						<span class="total"></span>
-						<span id="s1"><input type="text" name="mile" placeholder="사용할 적립금 입력" class="mile"></span>
+						<span id="s1"><input type="text" name="payed_mileage" placeholder="사용할 적립금 입력" class="mile"></span>
 						<span><input type="checkbox" id="checkBoxId">적립금 전액 사용</span>
 						<span class="addInfo" id="point1"></span>
 					</td>
@@ -595,7 +595,7 @@ function iamport(){
 										alert("실행오류");
 									}
 								});
-								$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/MyPage/main.do'>주문내역 가기</a></div>");
+								$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/MyPage/main.do?page=1'>주문내역 가기</a></div>");
 								},
 								error:function(){
 									alert("실행오류");
@@ -702,7 +702,7 @@ function iamport(){
 							alert("실행오류");
 						}
 					});
-					$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/MyPage/main.do'>주문내역 가기</a></div>");
+					$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/MyPage/main.do?page=1'>주문내역 가기</a></div>");
 					},
 					error:function(){
 						alert("실행오류");
@@ -776,12 +776,17 @@ $(document).ready(function(){
 	
 	
 	
-	 $("input[name='mile']").blur(function(){
+	 $("input[name='payed_mileage']").blur(function(){
 		 var value = $(this).val();
 		 var mile = $("#mileage").val();
-		 var totalprice = $("#tot_price").val();
+		 var total = $("#tot_price").val();
+		 var totalprice = parseInt(total);
 		 var result = mile-value;
 		 var result1 = totalprice-value;
+		 
+		 console.log(value);
+		 console.log(mile);
+		 console.log(totalprice);
 		 if(value > mile){
 			 alert("내 적립금보다 큽니다");
 			$(".mile").val("");
