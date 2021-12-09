@@ -11,7 +11,7 @@
 		FROM BG_NOTICE 
 		WHERE TYPE='S'
 		ORDER BY RDATE DESC
-		Limit 1,3
+		Limit 0,3
 	</select>
 	
 	
@@ -21,7 +21,7 @@
 		FROM BG_NOTICE 
 		WHERE TYPE NOT IN('Q')
 		ORDER BY RDATE DESC
-		Limit 1,7
+		Limit 0,7
 	</select>
 	
 	<!-- 2번째 페이지부터 S,N섞은 시간순 리스트 10개씩(전체리스트에서 8번부터 시작하면 된다) -->
@@ -41,7 +41,7 @@
 		WHERE subject LIKE '%'||#{keyword}||'%' AND TYPE NOT IN('Q')
 	</select>
 	
-	<!-- 공지사항 전체 리스트  이부분 손봐야 합니다-->
+	<!-- 공지사항 전체 리스트 -->
 	<select id="totalList" resultType="NoticeVO" parameterType="PageMaker">
 		SELECT nidx,subject,rdate,type,imgfile,imges
 		FROM bg_notice	
