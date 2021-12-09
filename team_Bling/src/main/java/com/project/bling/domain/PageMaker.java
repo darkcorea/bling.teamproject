@@ -133,7 +133,7 @@ public class PageMaker {
 		// 현재 페이지의 시작 페이지 = (현재의 마지막 페이지 - 화면아래에 표현될 게시판 보드의 갯수) + 1 : 무조건 1페이지는 있어야 하므로
 		startPage = (endPage - displayPageNum)+1;
 	
-		startPost = (int)((scri.getPage()-1)*scri.getPerPageNum());	// 가져오는 페이지 중에 시작하는 페이지 번호
+		startPost = (int)(((scri.getPage()-1)*scri.getPerPageNum())+start);	// 가져오는 페이지 중에 시작하는 페이지 번호
 		lastPost = (int)(scri.getPage()*scri.getPerPageNum());		// 가져오는 페이지 중에서 마지막 페이지 번호
 		
 
