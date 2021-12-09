@@ -47,6 +47,9 @@ public class NoticeController {
 		
 		PageMaker pm = new PageMaker();
 		pm.setScri(sc);
+		if(page>1) {
+			pm.setStart(7);
+		}
 		pm.setTotalCount(count);
 		
 		Map<String, Object> noticelist = new HashMap<String, Object>();
