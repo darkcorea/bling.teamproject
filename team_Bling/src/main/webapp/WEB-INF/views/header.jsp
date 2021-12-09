@@ -246,6 +246,18 @@ function search_Fn() {
 
 }
 
+//top버튼
+$(document).ready(function () {
+	$('.top').hide();
+   // 1. 특정 위치에서 부터 버튼 나타고, 사라지게..효과는 fade로
+    $(window).scroll(function () {
+		if ($(this).scrollTop() > 150) {
+			$('.top').fadeIn(200);
+		} else {
+			$('.top').fadeOut(200);
+		}
+	});
 
+});
 </script>
 </html>
