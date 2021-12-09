@@ -28,11 +28,37 @@
 	]]>
 	</select>
 	  
+	 <!-- order_idx로  추가 마일리지가 있는지 계산 --> 
+	<select id="addmileage_check" parameterType="int" resultType="int">
+		SELECT addmileage FROM bg_order WHERE order_idx=#{order_idx}
+	</select>
+	  
 	 <!-- order_idx로 구매확정 하기 -->
 	 <update id="confirm_fn" parameterType="int">
 	 	UPDATE bg_delivery SET confirm_yn='Y' WHERE order_idx=#{order_idx}
 	 </update>
+	 
+	 <!-- order_idx로 적립금 0원으로 만들기 -->
+	 <update id="addmileage_zero" parameterType="int">
+	 	UPDATE bg_order SET addmileage=0 WHERE order_idx=#{order_idx}
+	 </update>
 	  
+	  <!-- addmileage값을 가져와서 회원 마일리지에 더하기ㅡㅑ -->
+	  <update id="addmileage_user" parameterType="UserVO">
+	  	UPDATE bg_user SET mileage=mileage+#{mileage} where midx=#{midx}
+	  </update>
+	  
+	  <!-- order_idx로 구매한 상품들 정보 가져 오기 -->
+	  <select id="order_list" parameterType="int" resultType="CombineVO">
+	  	SELECT bp.pidx, bo.recipient, bo.rphone, bo.addr1, bo.addr2, bp.pname, bi.main, bop.oname, 
+	  			bod.quantity, bo.payment, bo.tot_price,bo.zip_code
+		FROM bg_order bo
+		JOIN bg_order_detail bod ON bo.order_idx = bod.order_idx
+		JOIN bg_option bop ON bod.oidx = bop.oidx
+		JOIn bg_product bp ON bp.pidx = bop.pidx
+		JOIN bg_image bi oN bi.pidx = bp.pidx
+		WHERE bo.order_idx=#{order_idx}
+	  </select>
 	  
 	  
 </mapper>
