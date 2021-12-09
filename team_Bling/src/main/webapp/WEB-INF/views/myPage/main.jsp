@@ -62,7 +62,12 @@
 				str += "			</c:if>";
 				str += "		</c:if>";
 				str += "		<c:if test='${ro.date_differ > 7}'>";
+				str += "			<c:if test='${ro.contents == null}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite3' value='구매 확정' readonly></span></td>";
+				str += "			</c:if>";
+				str += "			<c:if test='${ro.contents != null}'>";
+				str += "				<td id='td7'><span id='t7'><input id='reviewWrite2' data-bs-toggle='modal' data-bs-target='#staticBackdrop2' onclick='reviewDetail(${ro.ridx})' value='리뷰 확인' readonly></span></td>";
+				str += "			</c:if>";
 				str += "		</c:if>";
 				str += "	</tr>";
 				str += "</c:forEach>";
@@ -735,7 +740,6 @@
 			color: #C1B2B2;
 			background-color: #ffffff;
 			border: none;
-			cursor: pointer;
 			width: 70px;
 		}
 		.page-item{
