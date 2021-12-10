@@ -46,13 +46,12 @@ public class OrderController {
 	public String nonorder(Model model,HttpServletRequest request) throws Exception {
 		
 		String jsonData = request.getParameter("jsonData");
-		System.out.println(jsonData);
+		
 
 
 		int tot_price = Integer.parseInt(request.getParameter("tot_price"));
 		String productname = request.getParameter("productname");
-		System.out.println(tot_price);
-		System.out.println(productname);
+		
 		model.addAttribute("jsonData", jsonData);
 		model.addAttribute("tot_price", tot_price);
 		model.addAttribute("productname",productname);
@@ -73,7 +72,7 @@ public class OrderController {
 	@ResponseBody
 	public int orderinsert(Model model,NonorderVO vo,HttpServletRequest request) throws Exception {
 		String orderid = request.getParameter("orderid");
-		System.out.println(orderid);
+		
 		model.addAttribute("orderid",orderid);
 		orderService.insert(vo);
 		return vo.getNonidx();
@@ -91,8 +90,6 @@ public class OrderController {
 	@ResponseBody
 	public void mileageupdate(OrderVO vo) throws Exception {
 		
-		System.out.println("마일리지>>>>>>>>>>"+vo.getMileage());
-		System.out.println("midx>>>>>>>>>>"+vo.getMidx());
 		orderService.mileageupdate(vo);
 		
 	}
@@ -101,17 +98,12 @@ public class OrderController {
 	public String memberorder(Model model,HttpServletRequest request) throws Exception {
 		String productname = request.getParameter("productname");
 		String jsonData = request.getParameter("jsonData");
-		System.out.println(jsonData);
 		
 		int tot_price = Integer.parseInt(request.getParameter("tot_price"));
-		
-		System.out.println(tot_price);
-		
 		
 		model.addAttribute("productname",productname);
 		model.addAttribute("jsonData", jsonData);
 		model.addAttribute("tot_price", tot_price);
-		
 		
 		return "order/memberorder";
 		
@@ -120,7 +112,6 @@ public class OrderController {
 	@ResponseBody
 	public int memberorderinsert(OrderVO vo) throws Exception {
 		
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>"+vo.getPayed_mileage());
 		orderService.memberinsert(vo);
 		
 		return vo.getOrder_idx();
@@ -135,7 +126,6 @@ public class OrderController {
 	@ResponseBody
 	public List<OrderVO> addr_select(int midx) throws Exception {
 		
-		System.out.println("midx>>>>>>>>>"+midx);
 		return orderService.addr_select(midx);
 	}
 	@RequestMapping(value="/stock_update.do")
@@ -160,7 +150,6 @@ public class OrderController {
 	public int non_delivery_insert(NonorderVO vo) throws Exception {
 		
 		orderService.non_delivery_insert(vo);
-		
 		
 		return vo.getNonidx();
 	}

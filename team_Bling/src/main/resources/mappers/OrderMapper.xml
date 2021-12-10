@@ -27,10 +27,8 @@
 	</insert>
 	<!-- 회원 주문 등록 -->
 	<insert id="m_orderinsert" parameterType="OrderVO">
-	<![CDATA[
 	insert into bg_order(MIDX,ZIP_CODE,ADDR1,ADDR2,RPHONE,RECIPIENT,TOT_PRICE,DEPOSITOR,ORDER_YN,PAYMENT,addmileage,payed_mileage) 
 	values(#{midx},#{zip_code},#{addr1},#{addr2},#{rphone},#{recipient},#{tot_price},#{depositor},#{order_yn},#{payment},#{addmileage},#{payed_mileage})
-	]]>
 	<selectKey resultType="int" keyProperty="order_idx" order="AFTER">
 	SELECT MAX(order_idx) FROM bg_order
 	</selectKey>
