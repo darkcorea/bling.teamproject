@@ -7,8 +7,9 @@
 	
 	<!-- 공지사항 전체 개수 -->
 	<select id="listCount" resultType="int">
-		SELECT count(nidx) 
+		SELECT count(nidx)
 		FROM bg_notice
+		WHERE nidx
 	</select>
 	
 	<!-- 공지사항 옵션 선택 전체 개수 -->

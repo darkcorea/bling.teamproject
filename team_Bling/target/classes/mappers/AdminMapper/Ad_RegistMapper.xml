@@ -8,7 +8,7 @@
 
 	<!-- 제품 총 갯수 -->
 	<select id="product_count" parameterType="String" resultType="int">
-		SELECT count(*) FROM bg_product WHERE 1=1
+		SELECT count(*) FROM bg_product WHERE pidx
 		<if test=' _parameter == "R"'> AND kind='R'</if>
 		<if test=' _parameter == "E"'> AND kind='E'</if>
 		<if test=' _parameter == "N"'> AND kind='N'</if>
