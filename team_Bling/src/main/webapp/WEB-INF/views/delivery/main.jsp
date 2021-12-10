@@ -473,18 +473,32 @@
 							 			<br><button id="btn_25" class="btn btn-outline-secondary">교환/반품하기</button>
 							 		</c:if>
 							 		<!-- 리뷰를 쓰지 않았다면 -->
-							 		<c:if test="${list.ridx == null}">
-							 			<br><button id="btn_25" class="btn btn-outline-secondary" data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${list.detail_idx})'>리뷰쓰기</button>
-							 		</c:if>
+							 		<c:if test="${list.ridx == null || list.ridx == 0}">
+							 			<!-- 구매한 옵션의 갯수가 1개라면 리뷰 1개 -->
+								 		<c:if test="${list.count == 1}">
+								 			<br><button id="btn_25" class="btn btn-outline-secondary" data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${list.detail_idx})'>리뷰쓰기</button>
+								 		</c:if>
+								 		<!-- 주문할 떄 옵션이 1개아 아니라 여러개 라면  리뷰 여러개 -->
+								 		<c:if test="${list.count != 1}">
+								 			<br><button id="btn_25" class="btn btn-outline-secondary" onclick="review_write(${list.order_idx})">리뷰쓰기</button>
+								 		</c:if>
+								 	</c:if>
 							 	</c:if>
 							 	
 							 	<!-- 구매 확정 버튼을 눌렀다면 -->
 							 	<c:if test="${list.confirm_yn == 'Y'}">
 							 	<span>구매완료</span>
 							 		<!-- 리뷰를 쓰지 않았다면 -->
-							 		<c:if test="${list.ridx == null}">
-							 			<br><button id="btn_25" class="btn btn-outline-secondary">리뷰쓰기</button>
-							 		</c:if>
+							 		<c:if test="${list.ridx == null || list.ridx == 0}">
+							 			<!-- 구매한 옵션의 갯수가 1개라면 리뷰1개를 달 수 있다 -->
+								 		<c:if test="${list.count == 1}">
+								 			<br><button id="btn_25" class="btn btn-outline-secondary" data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${list.detail_idx})'>리뷰쓰기</button>
+								 		</c:if>
+								 		<!-- 주문할 떄 옵션이 1개가 아니라 여러개 라면  리뷰 여러개를 달 수 있다.-->
+								 		<c:if test="${list.count != 1}">
+								 			<br><button id="btn_25" class="btn btn-outline-secondary" onclick="review_write(${list.order_idx})" >리뷰쓰기</button>
+								 		</c:if>
+								 	</c:if>
 							 	</c:if>
 							 </c:if>
 						 </c:if>	
