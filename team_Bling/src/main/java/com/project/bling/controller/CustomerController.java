@@ -58,7 +58,9 @@ public class CustomerController {
 	
 	// 고객센터,마이페이지에서 문의하기 버튼을 눌렀을 경우 문의 페이지로 이동
 	@RequestMapping(value="/question.do")
-	public String Question(Locale locale, Model model) {
+	public String Question(Locale locale, Model model, HttpSession session) {
+		// 로그인이 풀렸을 떄 대비해서 넣음
+		if ( session.getAttribute("UserVO") == null) {return "redirect:/Login/main.do";}
 		return "customer/question";
 	}
 	
@@ -126,8 +128,17 @@ public class CustomerController {
 	
 	// 나의 문의 내역 페이지 이동
 	@RequestMapping(value="/my_qestion.do")
-	public String my_qestion(Locale locale, Model model) {
+	public String my_qestion(Locale locale, Model model, HttpSession session) throws Exception {
+		
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		int midx = uv.getMidx();
+		model.addAttribute("list", customerService.question_list(midx));
 		return "customer/my_qestion";
 	}
-	
+	@RequestMapping(value="/myquestion_detail.do")
+	@ResponseBody
+	public QuestionVO myquestion_detail(int qidx) throws Exception {
+		
+		return customerService.myquestion_detail(qidx);
+	}
 }

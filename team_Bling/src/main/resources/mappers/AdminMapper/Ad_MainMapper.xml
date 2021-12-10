@@ -4,7 +4,140 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.project.bling.mapper.adminmapper.ad_mainMapper">
+	<!-- ad_delivery 뷰테이블 사용 -->
+	<!-- 주문관리 -->
 	<select id="order" resultType="DeliveryVO">
-		select * from ad_delivery
+		select 
+		count(if(deli_stat='N',deli_stat,null)) as deli_stat_n,
+		count(if(deli_stat='Y',deli_stat,null)) as deli_stat_y,
+		count(if(deli_stat='A',deli_stat,null)) as deli_stat_a,
+		count(if(deli_stat='b',deli_stat,null)) as deli_stat_b,
+		count(if(deli_stat='C',deli_stat,null)) as deli_stat_c,
+		count(if(confirm_yn='N',confirm_yn,null)) as confirm_yn,
+		count(if(refund='N',refund,null)) as refund,
+		count(if(exchange='N',exchange,null)) as exchange
+		from ad_delivery
 	</select>
+	
+	<!-- 문의답변 -->
+	<!-- 상품문의 -->
+	<select id="productq" resultType="int">
+		select count(pqidx) from bg_product_question where state='N' and depth=0
+	</select>
+	
+	<!-- 1:1문의 -->
+	<select id="privateq" resultType="int">
+		select count(qidx) from bg_question where state='N' and depth = 0
+	</select>
+	
+	
+	<!-- type 1 -->
+	<!-- 기간별 매출현황 -->
+	<!-- 오늘 기준 7일간 데이터, 7,15,30 -->
+	<select id="recenttot" resultType="CombineVO">
+		select ifnull(sum(tot_price),0) as tot_price from bg_order where date(rdate) = curdate() union all
+		select ifnull(sum(tot_price),0) as tot_price from bg_order where date(rdate) = curdate() -1 union all
+		select ifnull(sum(tot_price),0) as tot_price from bg_order where date(rdate) = curdate() -2 union all
+		select ifnull(sum(tot_price),0) as tot_price from bg_order where date(rdate) = curdate() -3 union all
+		select ifnull(sum(tot_price),0) as tot_price from bg_order where date(rdate) = curdate() -4 union all
+		select ifnull(sum(tot_price),0) as tot_price from bg_order where date(rdate) = curdate() -5 union all
+		select ifnull(sum(tot_price),0) as tot_price from bg_order where date(rdate) = curdate() -6 union all
+        select ifnull(sum(tot_price),0) as tot_price from bg_order where rdate between date_add(now(),interval -1 week) and now() union all
+		select ifnull(sum(tot_price),0) as tot_price from bg_order where rdate between date_add(now(),interval -15 day) and now() union all
+		select ifnull(sum(tot_price),0) as tot_price from bg_order where rdate between date_add(now(),interval -30 day) and now()
+	</select>
+	
+	<!-- 환불 -->
+	<!-- 오늘 기준 7일간 데이터, 7,15,30 -->
+	<select id="recentref" resultType="CombineVO">
+		select ifnull(sum(tot_price),0) as saleprice from refund where refund = 'Y' and date(rdate) = curdate() union all
+		select ifnull(sum(tot_price),0) as saleprice from refund where refund = 'Y' and date(rdate) = curdate() - 1 union all
+		select ifnull(sum(tot_price),0) as saleprice from refund where refund = 'Y' and date(rdate) = curdate() - 2 union all
+		select ifnull(sum(tot_price),0) as saleprice from refund where refund = 'Y' and date(rdate) = curdate() - 3 union all
+		select ifnull(sum(tot_price),0) as saleprice from refund where refund = 'Y' and date(rdate) = curdate() - 4 union all
+		select ifnull(sum(tot_price),0) as saleprice from refund where refund = 'Y' and date(rdate) = curdate() - 5 union all
+		select ifnull(sum(tot_price),0) as saleprice from refund where refund = 'Y' and date(rdate) = curdate() - 6 union all
+		select ifnull(sum(tot_price),0) as saleprice from refund where refund = 'Y' and rdate between date_add(now(),interval -1 week) and now() union all
+		select ifnull(sum(tot_price),0) as saleprice from refund where refund = 'Y' and rdate between date_add(now(),interval -15 day) and now() union all
+		select ifnull(sum(tot_price),0) as saleprice from refund where refund = 'Y' and rdate between date_add(now(),interval -30 day) and now()
+	</select>
+	
+	<!-- type 2 -->
+	<!-- 구매건수 -->
+	<!-- 오늘 기준 7일간 데이터, 7,15,30 -->
+	<select id="ordertot" resultType="CombineVO">
+		select count(*) as ridx from bg_order where date(rdate) = curdate() union all
+		select count(*) as ridx from bg_order where date(rdate) = curdate() -1 union all
+		select count(*) as ridx from bg_order where date(rdate) = curdate() -2 union all
+		select count(*) as ridx from bg_order where date(rdate) = curdate() -3 union all
+		select count(*) as ridx from bg_order where date(rdate) = curdate() -4 union all
+		select count(*) as ridx from bg_order where date(rdate) = curdate() -5 union all
+		select count(*) as ridx from bg_order where date(rdate) = curdate() -6 union all
+		select count(*) as ridx from bg_order where rdate between date_add(now(),interval -1 week) and now() union all
+		select count(*) as ridx from bg_order where rdate between date_add(now(),interval -15 day) and now() union all
+		select count(*) as ridx from bg_order where rdate between date_add(now(),interval -30 day) and now()
+	</select>
+	<!-- 구매개수 -->
+	<select id="ordercount" resultType="CombineVO">
+		select ifnull(sum(quantity),0) as depth from ad_main_order where date(rdate) = curdate() union all
+		select ifnull(sum(quantity),0) as depth from ad_main_order where date(rdate) = curdate() - 1 union all
+		select ifnull(sum(quantity),0) as depth from ad_main_order where date(rdate) = curdate() - 2 union all
+		select ifnull(sum(quantity),0) as depth from ad_main_order where date(rdate) = curdate() - 3 union all
+		select ifnull(sum(quantity),0) as depth from ad_main_order where date(rdate) = curdate() - 4 union all
+		select ifnull(sum(quantity),0) as depth from ad_main_order where date(rdate) = curdate() - 5 union all
+		select ifnull(sum(quantity),0) as depth from ad_main_order where date(rdate) = curdate() - 6 union all
+		select ifnull(sum(quantity),0) as depth from ad_main_order where rdate between date_add(now(),interval -1 week) and now() union all
+		select ifnull(sum(quantity),0) as depth from ad_main_order where rdate between date_add(now(),interval -15 day) and  now() union all
+		select ifnull(sum(quantity),0) as depth from ad_main_order where rdate between date_add(now(),interval -30 day) and  now()
+	</select>
+	
+	
+	<!-- type 4 -->
+	<!-- 전체회원 -->
+	<!-- 오늘 기준 7일간 데이터 -->
+	<select id="recentmem" resultType="CombineVO">
+		<![CDATA[
+			select count(midx) as midx from bg_user where date(rdate) <= curdate() union all
+			select count(midx) as midx from bg_user where date(rdate) <= curdate() -1 union all
+			select count(midx) as midx from bg_user where date(rdate) <= curdate() -2 union all
+			select count(midx) as midx from bg_user where date(rdate) <= curdate() -3 union all
+			select count(midx) as midx from bg_user where date(rdate) <= curdate() -4 union all
+			select count(midx) as midx from bg_user where date(rdate) <= curdate() -5 union all
+			select count(midx) as midx from bg_user where date(rdate) <= curdate() -6
+		]]>	
+	</select>
+	<!-- 신규회원 -->
+	<!-- 오늘 기준 7일간 데이터, 7,15,30 -->
+	<select id="newmem" resultType="CombineVO">
+		select count(midx) as pidx from bg_user where date(rdate) = curdate() union all
+		select count(midx) as pidx from bg_user where date(rdate) = curdate() -1 union all
+		select count(midx) as pidx from bg_user where date(rdate) = curdate() -2 union all
+		select count(midx) as pidx from bg_user where date(rdate) = curdate() -3 union all
+		select count(midx) as pidx from bg_user where date(rdate) = curdate() -4 union all
+		select count(midx) as pidx from bg_user where date(rdate) = curdate() -5 union all
+		select count(midx) as pidx from bg_user where date(rdate) = curdate() -6 union all
+		select count(midx) as pidx from bg_user where rdate between date_add(now(),interval -1 week) and now() union all
+		select count(midx) as pidx from bg_user where rdate between date_add(now(),interval -15 day) and now() union all
+		select count(midx) as pidx from bg_user where rdate between date_add(now(),interval -30 day) and now()
+	</select>
+	<!-- 탈퇴회원 -->
+	<!-- 오늘 기준 7일간 데이터 -->
+	<!-- 최근 7, 15, 30일 데이터 -->
+	<select id="delmem" resultType="CombineVO">
+		select count(midx) as oidx from bg_user where date(rdate) = curdate() and delyn = 0 union all
+		select count(midx) as oidx from bg_user where date(rdate) = curdate() -1 and delyn = 0 union all
+		select count(midx) as oidx from bg_user where date(rdate) = curdate() -2 and delyn = 0 union all
+		select count(midx) as oidx from bg_user where date(rdate) = curdate() -3 and delyn = 0 union all
+		select count(midx) as oidx from bg_user where date(rdate) = curdate() -4 and delyn = 0 union all
+		select count(midx) as oidx from bg_user where date(rdate) = curdate() -5 and delyn = 0 union all
+		select count(midx) as oidx from bg_user where date(rdate) = curdate() -6 and delyn = 0 union all
+		select count(midx) as oidx from bg_user where rdate between date_add(now(),interval -1 week) and now() and delyn = 0 union all
+		select count(midx) as oidx from bg_user where rdate between date_add(now(),interval -15 day) and now() and delyn = 0 union all
+		select count(midx) as oidx from bg_user where rdate between date_add(now(),interval -30 day) and now() and delyn = 0
+	</select>
+	
+	
+	
+	
+	
 </mapper>	

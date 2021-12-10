@@ -119,6 +119,11 @@
 	#modal_button1{
 		width:120px;
 	}
+		
+	/* 모달 버튼 크기*/
+	#modal_button2{
+		width:120px;
+	}
 	/* 모달창에 나오는 상품 이미지 크기  */
 	.image_main{
 		width:80px;
@@ -429,27 +434,27 @@
 						<!-- 구매 취소 교환 반품 버튼   -->
 						<!--취소가 되면  -->
 						<c:if test="${list.cancel == 'Y'}">
-							<button id="btn_25" class="btn btn-outline-secondary">취소완료</button>
+							<span>취소완료</span>
 						</c:if>
 						<!-- 환불이 되면 -->
 						<c:if test="${list.refund == 'Y'}">
-							<button id="btn_25" class="btn btn-outline-secondary">환불완료</button>
+							<span>환불완료</span>
 						</c:if>
 						<!-- 입금이 완료 전이면-->
 						<c:if test="${list.deli_stat == 'N'}">
-							<button id="btn_25" class="btn btn-outline-secondary">취소</button>
+							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx})">취소</button>
 						</c:if>
 						<!-- 입금을 완료 하면-->
 						<c:if test="${list.deli_stat == 'Y'}">
-							<button id="btn_25" class="btn btn-outline-secondary">취소</button>
+							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx})">취소</button>
 						</c:if>
 						<!-- 배송 준비중이면 -->
 						<c:if test="${list.deli_stat == 'A'}">
-							<button id="btn_25" class="btn btn-outline-secondary">취소</button>
+							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx})">취소</button>
 						</c:if>
 						<!-- 배송 중이면 -->
 						<c:if test="${list.deli_stat == 'B'}">
-							 <button id="btn_25" class="btn btn-outline-secondary">교환/반품하기</button>
+							 <button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx})">교환/반품하기</button>
 						</c:if>
 						 
 						 <!-- 배송 완료가 되고-->
@@ -466,25 +471,39 @@
 							 	<button id="btn_25" class="btn btn-outline-secondary" onclick="confirm_fn(${list.order_idx})">구매확정</button>
 							 		<!-- 교환이 완료가 되었으면 -->
 							 		<c:if test="${list.exchange == 'Y'}">
-							 			<br><button id="btn_25" class="btn btn-outline-secondary">교환완료</button>
+							 			<br><span>교환완료</span>
 							 		</c:if>
 							 		<!-- 교환에 아무것도 없으면 -->
 							 		<c:if test="${list.exchange == null}">
-							 			<br><button id="btn_25" class="btn btn-outline-secondary">교환/반품하기</button>
+							 			<br><button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx})">교환/반품하기</button>
 							 		</c:if>
 							 		<!-- 리뷰를 쓰지 않았다면 -->
-							 		<c:if test="${list.ridx == null}">
-							 			<br><button id="btn_25" class="btn btn-outline-secondary" data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${list.detail_idx})'>리뷰쓰기</button>
-							 		</c:if>
+							 		<c:if test="${list.ridx == null || list.ridx == 0}">
+							 			<!-- 구매한 옵션의 갯수가 1개라면 리뷰 1개 -->
+								 		<c:if test="${list.count == 1}">
+								 			<br><button id="btn_25" class="btn btn-outline-secondary" data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${list.detail_idx})'>리뷰쓰기</button>
+								 		</c:if>
+								 		<!-- 주문할 떄 옵션이 1개아 아니라 여러개 라면  리뷰 여러개 -->
+								 		<c:if test="${list.count != 1}">
+								 			<br><button id="btn_25" class="btn btn-outline-secondary" onclick="review_writed(${list.order_idx})">리뷰쓰기</button>
+								 		</c:if>
+								 	</c:if>
 							 	</c:if>
 							 	
 							 	<!-- 구매 확정 버튼을 눌렀다면 -->
 							 	<c:if test="${list.confirm_yn == 'Y'}">
 							 	<span>구매완료</span>
 							 		<!-- 리뷰를 쓰지 않았다면 -->
-							 		<c:if test="${list.ridx == null}">
-							 			<br><button id="btn_25" class="btn btn-outline-secondary">리뷰쓰기</button>
-							 		</c:if>
+							 		<c:if test="${list.ridx == null || list.ridx == 0}">
+							 			<!-- 구매한 옵션의 갯수가 1개라면 리뷰1개를 달 수 있다 -->
+								 		<c:if test="${list.count == 1}">
+								 			<br><button id="btn_25" class="btn btn-outline-secondary" data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${list.detail_idx})'>리뷰쓰기</button>
+								 		</c:if>
+								 		<!-- 주문할 떄 옵션이 1개가 아니라 여러개 라면  리뷰 여러개를 달 수 있다.-->
+								 		<c:if test="${list.count != 1}">
+								 			<br><button id="btn_25" class="btn btn-outline-secondary" onclick="review_writed(${list.order_idx})" >리뷰쓰기</button>
+								 		</c:if>
+								 	</c:if>
 							 	</c:if>
 							 </c:if>
 						 </c:if>	
@@ -578,8 +597,81 @@
 			</div>
 		</div>
 </div>
+<!-- 리뷰 여려개 달기 모달창  -->
+<div class="modal fade" id="review_write" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bling_color">
+        <h5 class="modal-title">리뷰를 달 수 있는 상품</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      	<div id="review_write1" style="margin-left:135px;">
+      	</div>
+      </div>
+      <div class="modal-footer" id="delivery_select2">
+        <button type="button" class="btn btn-secondary" id="modal_button1" data-bs-dismiss="modal" data-bs-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 구메교환 반품하기  -->
+<div class="modal fade" id="Return" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bling_color">
+        <h5 class="modal-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;교환/반품/취소</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      	<table>
+      		<tr style="height:60px;">
+      			<td style="width:140px;">교환/반품/취소</td>
+      			<td>
+      				<select style="width:140px;" name="type" id="re_selected">
+	      				<option value="교환">교환</option>
+	      				<option value="반품">반품</option>
+	      				<option value="취소">취소</option>
+					</select>
+      			</td>
+      		</tr>
+      		<tr>
+      			<td>직접입력</td>
+      			<td><textarea id="comments" rows="10" cols="60" name="comments"></textarea>
+      			<div id="comments_cnt">(0 / 500)</div>	
+      			</td>
+      		</tr>
+      	</table>
+      	<!-- 취소,교환,반품을 고르면 자세한 설명 나오는 곳 -->
+      	<div id="re_select">
+      	<hr>
+      	
+      	</div>
+      </div>
+      <div class="modal-footer" id="delivery_select2">
+        <button type="button" class="btn btn-secondary" id="modal_button1" >확인</button>&nbsp;
+        <button type="button" class="btn btn-outline-secondary" id="modal_button2" data-bs-dismiss="modal" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 <script>
+$(document).ready(function() {
+    
+    // 글자수 500자로 제한
+    $('#comments').on('keyup', function() {
+        $('#comments_cnt').html("("+$(this).val().length+" / 500)");
+ 
+        if($(this).val().length > 500) {
+            $(this).val($(this).val().substring(0, 500));
+            $('#comments_cnt').html("(500 / 500)");
+        }
+    });
+});
+
+
 	// 구매 확정 버튼을 눌렀을 떄
 	function confirm_fn(order_idx){
 
@@ -591,6 +683,7 @@
 	 			data:{"order_idx":order_idx},
 	 			success:function(data){
 	 				if(data != 0){
+	 					// 가격단위 콤마 찍기
 	 					let milege = Number(data).toLocaleString();
 	 					alert(milege+"원이 적립되었습니다.");	
 	 				}
@@ -658,7 +751,8 @@
 					str += " <span>"+oname+"</span>(수량: <span>"+data[i].quantity+"</span>)";	
 					str += "</td>";	
 					str += "</tr>";	
-					str += "</table>";	
+					str += "</table>";
+					str += "</div>";
 				}
 				str += "<div style='margin-top:30px;'>";
 				let price = data[0].tot_price.toLocaleString();
@@ -806,12 +900,58 @@
 				title: '내용을 입력해주세요!',
 				text: '최소 10자부터 최대 500자까지 입력 가능합니다.',
 			});
-			console.log("내용을 입력해주세요.");
 			modalReset();
 		}	
 		return contents;
 	}
 	
+	// 구매한 옵션이 여러개 라면
+	function review_writed(order_idx){
+		
+		$.ajax({
+			url: "/Delivery/order_list.do",
+			type: "post",
+			data: {"order_idx":order_idx},
+            success: function(data){
+            	
+            	let str = "";
+            	// 상품에 대한 정보 뿌려 주기
+				for(let i=0; i<data.length; i++){	
+					str += "<div style='margin-top:30px;'>";	
+					str += "<table>";	
+					str += "</tr>";	
+					str += "<td style='width:150px;'>";	
+					str += "<img class='image_main' src='/resources/image/"+data[i].main+"'>";	
+					str += "</td>";	
+					str += "<td style='width:300px;'>";	
+					str += "<span style='color:#CB7878;'><b>"+data[i].pname+"</b></span><br>";	
+					var oname = data[i].oname.split("+")[0]
+					str += " <span>"+oname+"</span>(수량: <span>"+data[i].quantity+"</span>)";	
+					str += "</td>";	
+					if(data[i].ridx == null || data[i].ridx == 0){
+						str += "<td>";
+						str += "<button id='btn_25' class='btn btn-outline-secondary' data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx("+data[i].detail_idx+")'>리뷰쓰기</button>";
+						str += "<td>";
+					}
+					str += "</tr>";
+					str += "</table>";
+					str += "</div>";
+				}
+            	
+				$("#review_write1").html(str);
+            	$("#review_write").modal("show");
+            },
+			error: function(){
+				alert("리뷰 여러개 작성 오류");
+			}
+		});
+	}
+	
+	// 상품  교환, 반품, 취소  하기
+	function Return(order_idx){
+		
+		$("#Return").modal("show");
+	}
 	
 </script>
 </html>
