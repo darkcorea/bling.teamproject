@@ -13,8 +13,55 @@ public class DeliveryVO {
 	private String order_yn;
 	private String confirm_yn;
 	
+	//어드민 메인에 뿌려줄때 사용할 그릇
+	private int deli_stat_n;
+	private int deli_stat_y;
+	private int deli_stat_a;
+	private int deli_stat_b;
+	private int deli_stat_c;
 	
 	
+	
+	public int getDeli_stat_n() {
+		return deli_stat_n;
+	}
+
+	public void setDeli_stat_n(int deli_stat_n) {
+		this.deli_stat_n = deli_stat_n;
+	}
+
+	public int getDeli_stat_y() {
+		return deli_stat_y;
+	}
+
+	public void setDeli_stat_y(int deli_stat_y) {
+		this.deli_stat_y = deli_stat_y;
+	}
+
+	public int getDeli_stat_a() {
+		return deli_stat_a;
+	}
+
+	public void setDeli_stat_a(int deli_stat_a) {
+		this.deli_stat_a = deli_stat_a;
+	}
+
+	public int getDeli_stat_b() {
+		return deli_stat_b;
+	}
+
+	public void setDeli_stat_b(int deli_stat_b) {
+		this.deli_stat_b = deli_stat_b;
+	}
+
+	public int getDeli_stat_c() {
+		return deli_stat_c;
+	}
+
+	public void setDeli_stat_c(int deli_stat_c) {
+		this.deli_stat_c = deli_stat_c;
+	}
+
 	public String getConfirm_yn() {
 		return confirm_yn;
 	}

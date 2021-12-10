@@ -44,8 +44,7 @@ public class Ad_BoardController {
 	/////////////////////////////////////공지사항///////////////////////////////////////
 	
 	//공지사항 파일, 이미지 저장 경로
-	private static final String FILE_SERVER_PATH = "D:\\팀프로젝트\\팀 깃\\5\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice\\";
-	private static final String FILE_SERVER_PATH2 = "D:\\팀프로젝트\\팀 깃\\4\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\event\\";
+	private static final String FILE_SERVER_PATH = "C:\\image\\uploadFile\\";
 	
 	//공지사항 게시글리스트메인
 	@RequestMapping(value = "/board.do")
@@ -338,7 +337,7 @@ public class Ad_BoardController {
 			images = sdf.format(System.currentTimeMillis()) + "_" + rand + ext;
 			
 			// 파일 저장
-			file1.transferTo(new File(FILE_SERVER_PATH2 + images));
+			file1.transferTo(new File(FILE_SERVER_PATH + images));
 		}
 		if(banner != null) {
 			// 기존 파일 이름을 받고 확장자 저장
@@ -352,7 +351,7 @@ public class Ad_BoardController {
 			banners = sdf.format(System.currentTimeMillis()) + "_" + rand + ext;
 			
 			// 파일 저장
-			file2.transferTo(new File(FILE_SERVER_PATH2 + banners));
+			file2.transferTo(new File(FILE_SERVER_PATH + banners));
 		}
 		System.out.println(vo.getEvent_start());
 		System.out.println(vo.getEvent_end());
