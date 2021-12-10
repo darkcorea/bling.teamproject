@@ -18,4 +18,8 @@ public class Ad_Order_deliveryDAO {
 	public List<CombineVO> orderList() throws Exception {
 		return sqlSession.selectList(ps+"orderList");
 	}
+	
+	public void deliveryYN(CombineVO vo) throws Exception {
+		sqlSession.update(ps+"deliveryYN", vo);
+	}
 }
