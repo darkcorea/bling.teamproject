@@ -112,19 +112,38 @@
 	</select> 
 	
 	<select id="question_list" parameterType="int" resultType="QuestionVO">
-	<![CDATA[	SELECT rownum,title,rdate,qidx from(select @rownum:=@rownum + 1 as rownum,
+	<![CDATA[	SELECT rownum,title,rdate,qidx,depth from(select @rownum:=@rownum + 1 as rownum,
 			    t1.*
 				FROM bg_question t1,
 			    (SELECT @rownum:=0) tmp
-			    where midx = #{midx} order by rdate desc)sub
-			    order by sub.rownum desc
+			    where midx =#{midx} order by originqidx asc)sub
     ]]>
 	</select>
 	
 	<select id="myquestion_detail" parameterType="int" resultType="QuestionVO">
-	<![CDATA[	SELECT * FROM bg_question where qidx = #{qidx}
+	<![CDATA[	select a.qidx,a.title,a.content, a.rdate,b.oname,d.pname
+    from bg_question a left join bg_order_detail c
+                    on a.detail_idx=c.detail_idx 
+                  left join bg_option b
+                    on c.oidx=b.oidx
+                  left join bg_product d
+                    on b.pidx=d.pidx 
+                    where qidx=#{qidx}
     ]]>
 	</select>
 	
-	
+	<delete id="myquestion_delete" parameterType="int">
+		
+		<![CDATA[
+		DELETE FROM bg_question WHERE qidx = #{qidx}
+		  ]]>
+	</delete>
+	<select id="pruduct_question_list" parameterType="int" resultType="QuestionVO">
+	<![CDATA[	SELECT rownum,title,rdate,pqidx,depth from(select @rownum:=@rownum + 1 as rownum,
+			    t1.*
+				FROM bg_product_question t1,
+			    (SELECT @rownum:=0) tmp
+			    where midx =#{midx} order by originpqidx asc)sub;
+    ]]>
+	</select>
 </mapper>

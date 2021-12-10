@@ -111,8 +111,8 @@
 			<div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
 			<div class="title text_center1">나의 문의 내역</div><br>
 				<div class="title1">
-					<div class="sub border1"><span class="title3">1:1 문의</span></div>
-					<div class="sub"><a href="/Customer/myquestion_pruduct.do" class="title2"><span>제품 문의</span></a></div>
+					<div class="sub"><a href="/Customer/my_qestion.do" class="title2">1:1 문의</a></div>
+					<div class="sub border1"><span class="title3">제품 문의</span></div>
 				</div>
 				<br><br><br>
 				<div id="content">
@@ -129,7 +129,7 @@
 						<c:forEach items="${list}" var="list">
 						<tr style="vertical-align:middle;">
 							<td class="text_center"><c:out value="${list.rownum}"/></td>
-							<td class="text_center"><a class="pointer" onclick="detail(${list.qidx})">
+							<td class="text_center"><a class="pointer" onclick="detail(${list.pqidx})">
 							
 							<c:if  test="${list.depth == 1}">
 							<span>
@@ -161,7 +161,7 @@
 <script>
 	function detail(qidx){
 		$.ajax({
-			url:"/Customer/myquestion_detail.do",
+			url:"/Customer/pruduct_myquestion_detail.do",
 			type:"POST",
 			data:{"qidx":qidx},
 			dataType:"json",
@@ -204,11 +204,11 @@
 	
 	function linkFn(){
 		
-		location.href="/Customer/my_qestion.do";
+		location.href="/Customer/myquestion_pruduct.do";
 	}
 	function delFn(qidx){
 		$.ajax({
-			url:"/Customer/myquestion_delete.do",
+			url:"/Customer/pruduct_myquestion_delete.do",
 			type:"POST",
 			data:{"qidx":qidx},
 			dataType:"json",
