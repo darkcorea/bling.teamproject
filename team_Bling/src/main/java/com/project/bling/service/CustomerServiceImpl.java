@@ -86,18 +86,6 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerDAO.Question_page(pm);
 	}
 
-	@Override
-	public List<QuestionVO> question_list(int midx) throws Exception {
-		
-		return customerDAO.question_list(midx);
-	}
-
-	@Override
-	public QuestionVO myquestion_detail(int qidx) throws Exception {
-		
-		return customerDAO.myquestion_detail(qidx);
-	}
-
 	
 	
 }

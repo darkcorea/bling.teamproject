@@ -45,10 +45,14 @@ public class CombineVO {
 	private int midx;
 	private int tot_price;
 	private String delivery_yn;
+	private String addr1;
+	private String addr2;
+	private String recipient;
+	private String payment;
+	private String zip_code;
+	private String rphone;
 	// like
 	private int interest_idx;
-	// admin
-	private String payment;
 	// 임의로 정한 
 	private int reviewCount;
 	private int quantitySum;
@@ -64,6 +68,36 @@ public class CombineVO {
 	
 	
 	
+	public String getAddr1() {
+		return addr1;
+	}
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
+	}
+	public String getAddr2() {
+		return addr2;
+	}
+	public void setAddr2(String addr2) {
+		this.addr2 = addr2;
+	}
+	public String getRecipient() {
+		return recipient;
+	}
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
+	}
+	public String getZip_code() {
+		return zip_code;
+	}
+	public void setZip_code(String zip_code) {
+		this.zip_code = zip_code;
+	}
+	public String getRphone() {
+		return rphone;
+	}
+	public void setRphone(String rphone) {
+		this.rphone = rphone;
+	}
 	public String getShow_yn() {
 		return show_yn;
 	}

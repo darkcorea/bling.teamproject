@@ -134,6 +134,9 @@ public class ProductController {
 	@RequestMapping(value="/detail.do")
 	public String detail(Locale locale, Model model, int pidx) throws Exception {
 		
+		if(productService.detail(pidx) == null) {
+			return "/product/null";	
+		}
 		// 상품 정보
 		model.addAttribute("detail", productService.detail(pidx));
 		// 상품의 옵션 정보

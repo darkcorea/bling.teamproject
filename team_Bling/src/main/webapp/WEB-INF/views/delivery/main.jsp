@@ -472,19 +472,34 @@
 							 		<c:if test="${list.exchange == null}">
 							 			<br><button id="btn_25" class="btn btn-outline-secondary">교환/반품하기</button>
 							 		</c:if>
+							 		
 							 		<!-- 리뷰를 쓰지 않았다면 -->
-							 		<c:if test="${list.ridx == null}">
-							 			<br><button id="btn_25" class="btn btn-outline-secondary" data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${list.detail_idx})'>리뷰쓰기</button>
-							 		</c:if>
+							 		<c:if test="${list.ridx == null || list.ridx == 0}">
+							 			<!-- 구매한 옵션의 갯수가 1개라면 리뷰 1개 -->
+								 		<c:if test="${list.count == 1}">
+								 			<br><button id="btn_25" class="btn btn-outline-secondary" data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${list.detail_idx})'>리뷰쓰기</button>
+								 		</c:if>
+								 		<!-- 주문할 떄 옵션이 1개아 아니라 여러개 라면  리뷰 여러개 -->
+								 		<c:if test="${list.count != 1}">
+								 			<br><button id="btn_25" class="btn btn-outline-secondary" onclick="review_write(${list.order_idx})">리뷰쓰기</button>
+								 		</c:if>
+								 	</c:if>
 							 	</c:if>
 							 	
 							 	<!-- 구매 확정 버튼을 눌렀다면 -->
 							 	<c:if test="${list.confirm_yn == 'Y'}">
 							 	<span>구매완료</span>
-							 		<!-- 리뷰를 쓰지 않았다면 -->
-							 		<c:if test="${list.ridx == null}">
-							 			<br><button id="btn_25" class="btn btn-outline-secondary">리뷰쓰기</button>
-							 		</c:if>
+							 		<!-- 리뷰를 쓰지 않았는 데 -->
+							 		<c:if test="${list.ridx == null || list.ridx == 0}">
+							 			<!-- 구매한 옵션의 갯수가 1개라면 리뷰1개를 달 수 있다 -->
+								 		<c:if test="${list.count == 1}">
+								 			<br><button id="btn_25" class="btn btn-outline-secondary" data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${list.detail_idx})'>리뷰쓰기</button>
+								 		</c:if>
+								 		<!-- 주문할 떄 옵션이 1개가 아니라 여러개 라면  리뷰 여러개를 달 수 있다.-->
+								 		<c:if test="${list.count != 1}">
+								 			<br><button id="btn_25" class="btn btn-outline-secondary" onclick="review_write(${list.order_idx})" >리뷰쓰기</button>
+								 		</c:if>
+								 	</c:if>
 							 	</c:if>
 							 </c:if>
 						 </c:if>	
@@ -514,9 +529,6 @@
       <div class="modal-body">
       	<!-- 구매한 상품 내역 나오게 하기 -->
       	<div id="delivery_select1" style="margin-left:135px;">
-	      	<div style="margin-top:30px;">
-	      	<span class="title">결제금액 : </span><span class="title">300,000 원</span>
-	      	</div>
       	</div>
       </div>
       <div class="modal-footer" id="delivery_select2">
@@ -577,6 +589,26 @@
 				
 			</div>
 		</div>
+</div>
+
+<!-- 리뷰 여려개 달기 모달창  -->
+<div class="modal fade" id="" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bling_color">
+        <h5 class="modal-title">리뷰를 달 수 있는 상품</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      	<!-- 구매한 상품 내역 나오게 하기 -->
+      	<div id="review_write1" style="margin-left:135px;">
+      	</div>
+      </div>
+      <div class="modal-footer" id="delivery_select2">
+        <button type="button" class="btn btn-secondary" id="modal_button1" data-bs-dismiss="modal" data-bs-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
 </div>
 </body>
 <script>
@@ -806,12 +838,13 @@
 				title: '내용을 입력해주세요!',
 				text: '최소 10자부터 최대 500자까지 입력 가능합니다.',
 			});
-			console.log("내용을 입력해주세요.");
 			modalReset();
 		}	
 		return contents;
 	}
 	
+	// 구매한 옵션이 여러개 라면
+	function review_write(${list.order_idx})
 	
 </script>
 </html>

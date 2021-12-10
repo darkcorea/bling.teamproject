@@ -28,7 +28,9 @@ public class BasketController {
 	BasketService basketService;
 	
 	@RequestMapping(value="/cart.do")
-	public String cart(Locale locale, Model model) {
+	public String cart(Locale locale, Model model, HttpSession session) {
+		// 로그인이 풀렸을 떄 대비해서 넣음
+		if ( session.getAttribute("UserVO") == null) {return "redirect:/Login/main.do";}
 		return "basket/cart";
 	}
 	
