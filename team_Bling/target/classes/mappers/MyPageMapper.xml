@@ -5,7 +5,7 @@
  
 <mapper namespace="com.project.bling.mapper.myPageMapper">
 
-	<!-- 회원번호(midx)에 따른 리뷰수 -->
+	<!-- 회원번호(midx)에 따른 주문수 -->
 	<select id="orderCount" parameterType="int" resultType="int">
 		SELECT count(*)
 		FROM bg_order_detail od
@@ -41,6 +41,7 @@
 	     AS(
 	        SELECT p.pname,
 	               p.saleprice,
+	               p.pidx,
 	               op.oname,
 	               op.addprice,
 	               op.oidx
@@ -77,6 +78,7 @@
 	       DATEDIFF(now(),oOdDr.deli_com) AS 'date_differ',
 	       oOdDr.order_idx,
 	       oOdDr.detail_idx,
+	       po.pidx,
 	       po.pname,
 	       substring_index(po.oname,'+',1) AS 'oname',
 	       po.saleprice,
@@ -90,10 +92,10 @@
 	INNER JOIN po
 	ON oOdDr.oidx=po.oidx
 	WHERE oOdDr.midx=#{midx} AND NOT oOdDr.deli_stat='(null)'
-	GROUP BY oOdDr.rdate, oOdDr.deli_com, oOdDr.order_idx,oOdDr.detail_idx,po.pname,po.oname,po.saleprice,po.addprice,oOdDr.deli_stat,oOdDr.ridx,oOdDr.contents
+	GROUP BY oOdDr.rdate, oOdDr.deli_com, oOdDr.order_idx,oOdDr.detail_idx,po.pidx,po.pname,po.oname,po.saleprice,po.addprice,oOdDr.deli_stat,oOdDr.ridx,oOdDr.contents
 	ORDER BY oOdDr.rdate
 	DESC
-	LIMIT #{startPost},10
+	LIMIT #{startPost},#{scri.perPageNum}
 	]]>
 	</select>
 	
@@ -115,7 +117,7 @@
     	VALUES(
     		#{ridx}
     		,#{contents}	
-    		,sysdate
+    		,sysdate()
     		,#{image1}
     		,#{image2}
     		,#{midx}
@@ -126,9 +128,16 @@
     	<!--
     		selectKey의 결과를 keyProperty에 담는다 
     		order : selectKey를 쿼리문 전에 실행할지 후에 실행할지 정한다.
+    		
+    		처음 들어가는 값의 경우 MAX값이 NULL이 나오기 때문에 IFNULL을 사용하여 NULL일 경우 1을 넣어주도록 했다.
+			* 뒤의 tb_ball에 b를 붙이는 이유는 You can't specify target table '테이블명' for update in FROM clause 에러가
+			발생하기 때문. 이 에러는 insert, update, delete에서 서브쿼리로 동일한 테이블의 조건을 사용할 경우 발생한다.
+			따라서 서브쿼리 내부의 테이블에 별칭을 부여하면 해결된다.
+
+			출처: https://sdevstudy.tistory.com/22
     	-->
     	<selectKey resultType="int" keyProperty="ridx" order="BEFORE">
-    		SELECT MAX(ridx)+1 FROM bg_review
+    			SELECT IFNULL(MAX(ridx)+1,1) FROM bg_review b
     	</selectKey>
     		
 	</insert>
@@ -150,7 +159,7 @@
     	VALUES(
     		#{ridx}
     		,#{contents}	
-    		,sysdate
+    		,sysdate()
     		,#{image1}
     		,#{midx}
     		,#{detail_idx}
@@ -160,9 +169,16 @@
     	<!--
     		selectKey의 결과를 keyProperty에 담는다 
     		order : selectKey를 쿼리문 전에 실행할지 후에 실행할지 정한다.
+    		
+    		처음 들어가는 값의 경우 MAX값이 NULL이 나오기 때문에 IFNULL을 사용하여 NULL일 경우 1을 넣어주도록 했다.
+			* 뒤의 tb_ball에 b를 붙이는 이유는 You can't specify target table '테이블명' for update in FROM clause 에러가
+			발생하기 때문. 이 에러는 insert, update, delete에서 서브쿼리로 동일한 테이블의 조건을 사용할 경우 발생한다.
+			따라서 서브쿼리 내부의 테이블에 별칭을 부여하면 해결된다.
+
+			출처: https://sdevstudy.tistory.com/22
     	-->
     	<selectKey resultType="int" keyProperty="ridx" order="BEFORE">
-    		SELECT MAX(ridx)+1 FROM bg_review
+    			SELECT IFNULL(MAX(ridx)+1,1) FROM bg_review b
     	</selectKey>
     		
 	</insert>
@@ -183,7 +199,7 @@
     	VALUES(
     		#{ridx}
     		,#{contents}	
-    		,sysdate
+    		,sysdate()
     		,#{midx}
     		,#{detail_idx}
     		,#{grade}
@@ -192,9 +208,16 @@
     	<!--
     		selectKey의 결과를 keyProperty에 담는다 
     		order : selectKey를 쿼리문 전에 실행할지 후에 실행할지 정한다.
+    		
+    		처음 들어가는 값의 경우 MAX값이 NULL이 나오기 때문에 IFNULL을 사용하여 NULL일 경우 1을 넣어주도록 했다.
+			* 뒤의 tb_ball에 b를 붙이는 이유는 You can't specify target table '테이블명' for update in FROM clause 에러가
+			발생하기 때문. 이 에러는 insert, update, delete에서 서브쿼리로 동일한 테이블의 조건을 사용할 경우 발생한다.
+			따라서 서브쿼리 내부의 테이블에 별칭을 부여하면 해결된다.
+
+			출처: https://sdevstudy.tistory.com/22
     	-->
     	<selectKey resultType="int" keyProperty="ridx" order="BEFORE">
-    		SELECT MAX(ridx)+1 FROM bg_review
+    			SELECT IFNULL(MAX(ridx)+1,1) FROM bg_review b
     	</selectKey>
     		
 	</insert>

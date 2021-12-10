@@ -148,8 +148,8 @@
   </div>
 
 <div class="top">
-	<a id="topBtn" href="#"><i class="bi bi-chevron-up" style="font-size:2rem;"></i></a>
-	<div><a id="topBtn" href="#">TOP</a></div>
+	<a id="topBtn" href="javascript:window.scrollTo(0,0);"><i class="bi bi-chevron-up" style="font-size:2rem;"></i></a>
+	<div><a id="topBtn" href="javascript:window.scrollTo(0,0);">TOP</a></div>
  </div>
 
 <!-- 로그아웃 모달창 -->
@@ -246,6 +246,18 @@ function search_Fn() {
 
 }
 
+//top버튼
+$(document).ready(function () {
+	$('.top').hide();
+   // 1. 특정 위치에서 부터 버튼 나타고, 사라지게..효과는 fade로
+    $(window).scroll(function () {
+		if ($(this).scrollTop() > 150) {
+			$('.top').fadeIn(200);
+		} else {
+			$('.top').fadeOut(200);
+		}
+	});
 
+});
 </script>
 </html>

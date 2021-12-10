@@ -231,12 +231,12 @@
 			</table>
 		<br><br>
 	<h5>결제 정보</h5>
-			<input type="text" name="tot_price" id="tot_price">
-			<input type="text" name="tot_price1" id="tot_price1">
+			<input type="hidden" name="tot_price" id="tot_price">
+			<input type="hidden" name="tot_price1" id="tot_price1">
 			<input type="hidden" name="productname" id="productname" value="${productname}">
-			<input type="text" name="mileage" id="mileage">
-			<input type="hidden" name="addmile" id="addmile">
-			<input type="text" name="mileage1" id="mileage1">
+			<input type="hidden" name="mileage" id="mileage">
+			<input type="hidden" name="addmileage" id="addmile">
+			<input type="hidden" name="mileage1" id="mileage1">
 			<table class="t1">
 				<tr class="line">
 					<td class="gray"><span class="white">총상품가격</span></td>
@@ -254,7 +254,7 @@
 					<td class="gray"><span class="white">총결제금액</span></td>
 					<td class="fill">
 						<span class="total"></span>
-						<span id="s1"><input type="text" name="mile" placeholder="사용할 적립금 입력" class="mile"></span>
+						<span id="s1"><input type="text" name="payed_mileage" id="payed_mileage" placeholder="사용할 적립금 입력" class="mile"></span>
 						<span><input type="checkbox" id="checkBoxId">적립금 전액 사용</span>
 						<span class="addInfo" id="point1"></span>
 					</td>
@@ -500,6 +500,8 @@ function iamport(){
 		alert("주소검색을 하세요");
 	}else if(rphone==""){
 		alert("받는 분 휴대폰번호를 입력하세요");
+	}else if( $("#payed_mileage").val() == "" ){
+		$("#payed_mileage").val(0);
 	}
 	else{ if(payment=="카드"){
 		IMP.request_pay({
@@ -566,19 +568,6 @@ function iamport(){
 																dataType:"json",
 																async: false,
 																success:function(data){
-																	$.ajax({
-																		url:"/Order/delivery_insert.do",
-																		type:"POST",
-																		data:formData3,
-																		ContentType:"application/json",
-																		async: false,
-																		success:function(data){
-																			
-																		},
-																		error:function(){
-																			alert("실행오류");
-																		}
-																	});
 																},
 																error:function(){
 																	alert("실행오류");
@@ -595,7 +584,20 @@ function iamport(){
 											}
 										});
 									}
-								$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/MyPage/main.do'>주문내역 가기</a></div>");
+								$.ajax({
+									url:"/Order/delivery_insert.do",
+									type:"POST",
+									data:formData3,
+									ContentType:"application/json",
+									async: false,
+									success:function(data){
+										
+									},
+									error:function(){
+										alert("실행오류");
+									}
+								});
+								$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/MyPage/main.do?page=1'>주문내역 가기</a></div>");
 								},
 								error:function(){
 									alert("실행오류");
@@ -674,18 +676,6 @@ function iamport(){
 													dataType:"json",
 													async: false,
 													success:function(data){
-														$.ajax({
-															url:"/Order/delivery_insert.do",
-															type:"POST",
-															data:formData3,
-															ContentType:"application/json",
-															async: false,
-															success:function(data){
-															},
-															error:function(){
-																alert("실행오류");
-															}
-														});
 													},
 													error:function(){
 														alert("실행오류");
@@ -702,7 +692,19 @@ function iamport(){
 								}
 							});
 						}
-					$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/MyPage/main.do'>주문내역 가기</a></div>");
+					$.ajax({
+						url:"/Order/delivery_insert.do",
+						type:"POST",
+						data:formData3,
+						ContentType:"application/json",
+						async: false,
+						success:function(data){
+						},
+						error:function(){
+							alert("실행오류");
+						}
+					});
+					$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/MyPage/main.do?page=1'>주문내역 가기</a></div>");
 					},
 					error:function(){
 						alert("실행오류");
@@ -776,16 +778,29 @@ $(document).ready(function(){
 	
 	
 	
-	 $("input[name='mile']").blur(function(){
+	 $("input[name='payed_mileage']").blur(function(){
 		 var value = $(this).val();
 		 var mile = $("#mileage").val();
-		 var totalprice = $("#tot_price").val();
+		 var total = $("#tot_price").val();
+		 var totalprice = parseInt(total);
 		 var result = mile-value;
 		 var result1 = totalprice-value;
+		 
+		 console.log(value);
+		 console.log(mile);
+		 console.log(totalprice);
+		 if(value > mile){
+			 alert("내 적립금보다 큽니다");
+			$(".mile").val("");
+		 }else if(value > totalprice){
+			 alert("총 결제 금액보다 큽니다");
+				$(".mile").val("");
+		 }
+		 else{
 		 $("#mileage").val(result);
 		 $("#tot_price").val(result1);
 		 $(".total").text(result1.toLocaleString()+"원");
-		 
+		 }
 	 });
 	 
 	$(".change input:radio").change(function(){
@@ -882,10 +897,15 @@ $(document).on('change', '#checkBoxId',function(event){
  	var result = mile-mile;
  	var result2 = totalprice-mile;
     if($("#checkBoxId").is(":checked")){
+    	if(mile1 < totalprice1){
+    		alert("총결제금액보다 내 적립금이 큽니다");
+    	}
+    	else{
        $(".mile").val(mile);
        $("#mileage").val(result);
        $("#tot_price").val(result2);
        $(".total").text(result2.toLocaleString()+"원");
+    	}
     }else{
     	
     	 $(".mile").val("");

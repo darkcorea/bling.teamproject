@@ -179,7 +179,7 @@
 					str += "	<input type='hidden' name='stock1' value='"+item.stock+"'>";
 					str += "	</td>";
 					str += "	<td><img class='img-fluid' src='/resources/image/"+item.main+"'></td>";
-					str += "	<td><a class='deco' href='javascript:view("+item.pidx+")'>"+item.pname+"</a>";
+					str += "	<td><a class='deco' href='/Product/detail.do?pidx="+item.pidx+"'>"+item.pname+"</a>";
 					str += "		<p>옵션명 : "+item.oname+"</p>";
 					str += "	<input type='hidden' name='stock' value='"+item.stock+"' id='s_"+item.cart_idx+"'>";
 					str += "	</td><td>";

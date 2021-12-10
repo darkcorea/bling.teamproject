@@ -11,6 +11,7 @@ public class QuestionVO {
 	private int originqidx;
 	private int depth;
 	private int detail_idx;
+	private int rownum;
 	
 	
 	
@@ -83,5 +84,13 @@ public class QuestionVO {
 	}
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public int getRownum() {
+		return rownum;
+	}
+
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
 	}
 }

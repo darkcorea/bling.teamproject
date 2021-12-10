@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,8 +27,8 @@
 		
 		.content {position:relative;min-height:1000px;}
 		
-		#thSpan{
-			margin: 0px 20px;
+		#th1{
+			text-align: center;
 		}
 	</style>
 </head>
@@ -52,17 +54,31 @@
 		<span>주문리스트</span>
 		<table>
 			<tr>
-				<th><span id="thSpan">주문번호</span></th>
-				<th><span id="thSpan">주문일</span></th>
-				<th><span id="thSpan">주문자</span></th>
-				<th><span id="thSpan">주문상품</span></th>
-				<th><span id="thSpan">수량</span></th>
-				<th><span id="thSpan">주문금액</span></th>
-				<th><span id="thSpan">결제방법</span></th>
-				<th><span id="thSpan">결제상태</span></th>
-				<th><span id="thSpan">배송상태</span></th>
-				<th><span id="thSpan">출고버튼</span></th>
+				<th id="th1">주문번호</th>
+				<th id="th2"><span id="thSpan2">주문일</span></th>
+				<th id="th3"><span id="thSpan3">주문자</span></th>
+				<th id="th4"><span id="thSpan4">주문상품</span></th>
+				<th id="th5"><span id="thSpan5">수량</span></th>
+				<th id="th6"><span id="thSpan6">주문금액</span></th>
+				<th id="th7"><span id="thSpan7">결제방법</span></th>
+				<th id="th8"><span id="thSpan8">결제상태</span></th>
+				<th id="th9"><span id="thSpan9">배송상태</span></th>
+				<th id="th10"><span id="thSpan10">출고버튼</span></th>
 			</tr>
+			<c:forEach items="${orderList}" var="ol">
+			<tr>
+				<td>${ol.order_idx}</td>
+				<td>${ol.rdate}</td>
+				<td>${ol.uname}</td>
+				<td>${ol.pname} /<br>${ol.oname}</td>
+				<td>${ol.quantity}</td>
+				<td><fmt:formatNumber value="${ol.tot_price}" pattern="#,###" />원</td>
+				<td>${ol.payment}</td>
+				<td>${ol.order_yn}</td>
+				<td>${ol.delivery_yn}</td>
+				<td></td>
+			</tr>
+			</c:forEach>
 		</table>
 	</div>
 	

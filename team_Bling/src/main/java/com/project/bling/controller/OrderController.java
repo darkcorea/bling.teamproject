@@ -82,6 +82,7 @@ public class OrderController {
 	@RequestMapping(value="/orderdetailinsert.do",method = RequestMethod.POST)
 	@ResponseBody
 	public int orderdetailinsert(NonorderVO vo) throws Exception {
+		
 		orderService.detailInsert(vo);
 		return 1;
 	}
@@ -119,6 +120,7 @@ public class OrderController {
 	@ResponseBody
 	public int memberorderinsert(OrderVO vo) throws Exception {
 		
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>"+vo.getPayed_mileage());
 		orderService.memberinsert(vo);
 		
 		return vo.getOrder_idx();
@@ -155,8 +157,11 @@ public class OrderController {
 	}
 	@RequestMapping(value="/nondelivery_insert.do",method = RequestMethod.POST)
 	@ResponseBody 
-	public void non_delivery_insert(NonorderVO vo) throws Exception {
+	public int non_delivery_insert(NonorderVO vo) throws Exception {
 		
 		orderService.non_delivery_insert(vo);
+		
+		
+		return vo.getNonidx();
 	}
 }
