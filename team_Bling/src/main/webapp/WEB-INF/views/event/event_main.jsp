@@ -42,6 +42,18 @@
 			.link-dark{
 				text-decoration-line:none;
 			}
+			.text-center{
+				width:100%;
+				position:relative;
+				z-index:1;
+				height:100%;
+			}
+			.spinner-border{
+				display:block;
+				position:fixed;
+				top:calc(50%-(58px/2));
+				right:calc(50%-(58px/2));
+			}
 		</style>
 	</head>
 	<body>
@@ -57,7 +69,11 @@
 				<br>
 				<!-- 이벤트 표 -->	
 				<div id="event_table">
-					
+					<div class="text-center loading">
+						<div class="spinner-border text-danger" role="status">
+						  <span class="visually-hidden">Loading...</span>
+						</div>
+					</div>
 				</div>
 			
 			</div>
@@ -85,6 +101,7 @@
 					type:"POST",
 					data:{"page":page, "types":types},
 					dataType: 'json',
+					async:false,
 					success:function(data){
 						
 						//let notice_list = data.totalList;
