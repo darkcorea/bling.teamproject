@@ -30,7 +30,7 @@ public class Ad_MainController {
 		model.addAttribute("proq",ad_mainService.productq());
 		model.addAttribute("priq",ad_mainService.privateq());
 		//버튼4개
-		model.addAttribute("price",ad_mainService.seventot());
+		model.addAttribute("price",ad_mainService.recenttot());
 		
 		return "admin/Main/main";
 	}
@@ -38,32 +38,34 @@ public class Ad_MainController {
 	//매출
 	@RequestMapping(value="/price.do")
 	@ResponseBody
-	public Map<String,Object> price() throws Exception{
-		
+	public Map<String,Object> price(int type) throws Exception{
 		
 		Map<String, Object> price = new HashMap<String, Object>();
 		
-		List<Integer> totP = new ArrayList<Integer>();
-		List<Integer> refP = new ArrayList<Integer>();
-		
-		int pri=0;
-		int ref=0;
-		
-		for(int a = 0 ; a < 7 ; a++) {
-			pri = ad_mainService.recenttot(a);
-			totP.add(a, pri);
-			ref = ad_mainService.recentref(a);
-			refP.add(a, ref);
+		//매출
+		if(type == 1) {
+			price.put("recent", ad_mainService.recenttot());
+			price.put("recentref",ad_mainService.recentref());
 		}
-		price.put("recent", totP);
-		price.put("sev",ad_mainService.seventot());
-		price.put("fif",ad_mainService.fifteentot());
-		price.put("thi",ad_mainService.thirtytot());
+		//주문
+		else if(type == 2) {
+			price.put("recent", ad_mainService.recenttot());
+			price.put("ordertot", ad_mainService.ordertot());
+			price.put("ordercount",ad_mainService.ordercount());
+		}
+		//방문자
+		else if(type == 3) {
+			
+		}
+		//신규회원
+		else if(type == 4) {
+			price.put("recentmem", ad_mainService.recentmem());
+			price.put("newmem", ad_mainService.newmem());
+			price.put("delmem", ad_mainService.delmem());
+		}
 		
-		price.put("recentref", refP);
-		price.put("sevref",ad_mainService.sevenref());
-		price.put("fifref",ad_mainService.fifteenref());
-		price.put("thiref",ad_mainService.thirtyref());
+		price.put("type", type);
+		
 		
 		return price;
 	}

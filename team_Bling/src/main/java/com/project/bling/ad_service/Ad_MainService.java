@@ -16,23 +16,16 @@ public interface Ad_MainService {
 	//1:1문의
 	int privateq() throws Exception;
 	
-	//기간별 매출현황
-	//최근 일주일
-	int seventot() throws Exception;
-	//최근 15일
-	int fifteentot() throws Exception;
-	//최근 30일
-	int thirtytot() throws Exception;
-	//오늘 기준 7일간 데이터
-	int recenttot(int day) throws Exception;
+	//버튼1번
+	List<CombineVO> recenttot() throws Exception;
+	List<CombineVO> recentref() throws Exception;
 	
-	//환불
-	//최근 일주일
-	int sevenref() throws Exception;
-	//최근 15일
-	int fifteenref() throws Exception;
-	//최근 30일
-	int thirtyref() throws Exception;
-	//오늘 기준 7일간 데이터
-	int recentref(int day) throws Exception;
+	//버튼2번
+	List<CombineVO> ordertot() throws Exception;
+	List<CombineVO> ordercount() throws Exception;
+
+	//버튼4번
+	List<CombineVO> recentmem() throws Exception;
+	List<CombineVO> newmem() throws Exception;
+	List<CombineVO> delmem() throws Exception;
 }

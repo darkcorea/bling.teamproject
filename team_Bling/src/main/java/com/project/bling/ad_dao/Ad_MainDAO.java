@@ -21,6 +21,7 @@ public class Ad_MainDAO {
 		return sqlSession.selectOne(ps+"order");
 	}
 	
+	//메인화면
 	//문의답변
 	//상품문의
 	public int productq() throws Exception{
@@ -31,39 +32,30 @@ public class Ad_MainDAO {
 		return sqlSession.selectOne(ps+"privateq");
 	}
 	
-	//기간별 매출현황
-	//최근 일주일
-	public int seventot() throws Exception{
-		return sqlSession.selectOne(ps+"7tot");
+	//버튼1번
+	public List<CombineVO> recenttot() throws Exception{
+		return sqlSession.selectList(ps+"recenttot");
 	}
-	//최근 15일
-	public int fifteentot() throws Exception{
-		return sqlSession.selectOne(ps+"15tot");
-	}
-	//최근 30일
-	public int thirtytot() throws Exception{
-		return sqlSession.selectOne(ps+"30tot");
-	}
-	//오늘 기준 7일간 데이터
-	public int recenttot(int day) throws Exception{
-		return sqlSession.selectOne(ps+"recenttot",day);
+	public List<CombineVO> recentref() throws Exception{
+		return sqlSession.selectList(ps+"recentref");
 	}
 	
-	//환불
-	//최근 일주일
-	public int sevenref() throws Exception{
-		return sqlSession.selectOne(ps+"7ref");
+	//버튼2번
+	public List<CombineVO> ordertot() throws Exception{
+		return sqlSession.selectList(ps+"ordertot");
 	}
-	//최근 15일
-	public int fifteenref() throws Exception{
-		return sqlSession.selectOne(ps+"15ref");
+	public List<CombineVO> ordercount() throws Exception{
+		return sqlSession.selectList(ps+"ordercount");
 	}
-	//최근 30일
-	public int thirtyref() throws Exception{
-		return sqlSession.selectOne(ps+"30ref");
+	
+	//버튼4번
+	public List<CombineVO> recentmem() throws Exception{
+		return sqlSession.selectList(ps+"recentmem");
 	}
-	//오늘 기준 7일간 데이터
-	public int recentref(int day) throws Exception{
-		return sqlSession.selectOne(ps+"recentref",day);
+	public List<CombineVO> newmem() throws Exception{
+		return sqlSession.selectList(ps+"newmem");
+	}
+	public List<CombineVO> delmem() throws Exception{
+		return sqlSession.selectList(ps+"delmem");
 	}
 }

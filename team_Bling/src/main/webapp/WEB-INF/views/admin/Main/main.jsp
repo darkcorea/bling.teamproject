@@ -122,22 +122,22 @@
 				<hr>
 				<br>
 				<div class="btn-group btn-group-sm d-md-flex justify-content-md-end" role="group" aria-label="Basic outlined example" id="groupbtn">
-					<button type="button" class="btn btn-outline-secondary me-md-2" id="menubtn">
+					<button type="button" class="btn btn-outline-secondary me-md-2" id="menubtn" onclick='price(1);'>
 						<b>매출(7일)</b>
 						<br>
-						<fmt:formatNumber value="${price}"  pattern="#,###" />원
+						<fmt:formatNumber value="${price[7].tot_price}"  pattern="#,###" />원
 					</button>
-					<button type="button" class="btn btn-outline-secondary me-md-2" id="menubtn">
+					<button type="button" class="btn btn-outline-secondary me-md-2" id="menubtn" onclick='price(2);'>
 						<b>주문(7일)</b>
 						<br>
 						0건
 					</button>
-					<button type="button" class="btn btn-outline-secondary me-md-2" id="menubtn">
+					<button type="button" class="btn btn-outline-secondary me-md-2" id="menubtn" onclick='price(3);'>
 						<b>방문자(7일)</b>
 						<br>
 						0명
 					</button>
-					<button type="button" class="btn btn-outline-secondary me-md-2" id="menubtn">
+					<button type="button" class="btn btn-outline-secondary me-md-2" id="menubtn" onclick='price(4);'>
 						<b>신규회원(7일)</b>
 						<br>
 						0명
@@ -146,21 +146,6 @@
 				<br>
 				<div class="row">
 					<div class="col" id="price_table">
-						
-								<!-- <tr class="table-light">
-									<td id="td">
-										12/08
-									</td>
-									<td id="dd">
-										0
-									</td>
-									<td id="dd">
-										0
-									</td>
-									<td id="dd">
-										0
-									</td>
-								</tr> -->
 						
 					</div>
 					<div class="col">
@@ -175,112 +160,143 @@
 	<script>
 	
 		$(function(){
-			price();
+			price(1);
 		});
 		
-		function price(){
+		function price(type){
 			$.ajax({
 				url:"/Ad_Main/price.do",
 				type:"POST",
+				data:{"type":type},
 				dataType:'json',
 				success:function(data){
 					
-					let str = "";
+					var first,second,third,recent,dayfirst,daysecond,daythird;
+					let type = data.type;
 					
+					let str = "";
 					str+="<table class='table table-bordered align-middle'>";
 					str+="	<thead>";
 					str+="		<tr class='table-secondary'>";
 					str+="		  <th scope='col' id='td'>날짜</th>";
-					str+="		  <th scope='col' id='td'>매출금액</th>";
-					str+="		  <th scope='col' id='td'>판매금액</th>";
-					str+="		  <th scope='col' id='td'>환불금액</th>";
+					if(type == 1){
+						str+="		  <th scope='col' id='td'>매출금액</th>";
+						str+="		  <th scope='col' id='td'>판매금액</th>";
+						str+="		  <th scope='col' id='td'>환불금액</th>";
+					}else if(type == 2){
+						str+="		  <th scope='col' id='td'>판매금액</th>";
+						str+="		  <th scope='col' id='td'>구매건수</th>";
+						str+="		  <th scope='col' id='td'>구매개수</th>";
+					}else if(type == 3){
+						str+="		  <th scope='col' id='td'>방문자수</th>";
+						str+="		  <th scope='col' id='td'>페이지뷰</th>";
+						str+="		  <th scope='col' id='td'>관심상품</th>";
+					}else if(type == 4){
+						str+="		  <th scope='col' id='td'>전체회원</th>";
+						str+="		  <th scope='col' id='td'>신규회원</th>";
+						str+="		  <th scope='col' id='td'>탈퇴회원</th>";
+					}
 					str+="		</tr>";
 					str+="	</thead>";
 					str+="	<tbody>";
+					
+					//최근 7일
 					for(var a = 0; a < 7 ; a++){
 						var now = new Date();
 						var date = new Date(now.setDate(now.getDate()-a));
 						var day = date.getDate();
 						var month = date.getMonth();
 						
-						var price = data.recent[a].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-						var one = Math.floor(data.recent[a]*0.3).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-						var refund = data.recentref[a].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-						
-						var sthprice = Math.floor((data.sev)*0.3).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-						var sthone = data.sev.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-						var sthrefund = data.sevref.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-						
-						var fthprice = Math.floor((data.fif)*0.3).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-						var fthone = data.fif.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-						var fthrefund = data.fifref.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-						
-						var tthprice = Math.floor((data.thi)*0.3).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-						var tthone = data.thi.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-						var tthrefund = data.thiref.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+						//1번째 버튼
+						if(type == 1){
+							recent = data.recent[a].tot_price; //판매금액 값(가공전)
+							first = cal(Math.floor(recent*0.3)); //매출금액
+							second = cal(recent); //판매금액
+							third = cal(data.recentref[a].saleprice); //환불금액
+						}
+						//2번째 버튼
+						else if(type == 2){
+							recent = data.recent[a].tot_price; //판매금액 값(가공전)
+							first = data.ordertot[a].ridx;
+							second = cal(recent); //판매금액
+							third = data.ordercount[a].depth;
+						}
+						//3번째 버튼
+						else if(type == 3){
+							
+						}
+						//4번째 버튼
+						else if(type == 4){
+							first = data.recentmem[a].midx;
+							second = data.newmem[a].pidx;
+							third = data.delmem[a].oidx;
+						}
 						
 						str+="			<tr>";
 						str+="				<td id='td'>";
 						str+=				month+"/"+day;
 						str+="				</td>";
-						str+="				<td id='dd one"+a+"'>";
-						str+=one;
+						str+="				<td id='dd'>";
+						str+=first;
 						str+="				</td>";
-						str+="				<td id='dd price"+a+"'>";
-						str+=price;
+						str+="				<td id='dd'>";
+						str+=second;
 						str+="				</td>";
-						str+="				<td id='dd refund"+a+"'>";
-						str+=refund;
+						str+="				<td id='dd'>";
+						str+=third;
 						str+="				</td>";
 						str+="			</tr>";
 					}
-					str+="			<tr id='sta'>";
-					str+="				<td id='td'>";
-					str+="					7일합계";
-					str+="				</td>";
-					str+="				<td id='dd'>";
-					str+=sthprice;
-					str+="				</td>";
-					str+="				<td id='dd'>";
-					str+=sthone;
-					str+="				</td>";
-					str+="				<td id='dd'>";
-					str+=sthrefund;
-					str+="				</td>";
-					str+="			</tr>";
-					str+="			<tr id='sta'>";
-					str+="				<td id='td'>";
-					str+="					15일합계";
-					str+="				</td>";
-					str+="				<td id='dd'>";
-					str+=fthprice;
-					str+="				</td>";
-					str+="				<td id='dd'>";
-					str+=fthone;
-					str+="				</td>";
-					str+="				<td id='dd'>";
-					str+=fthrefund;
-					str+="				</td>";
-					str+="			</tr>";
-					str+="			<tr id='sta'>";
-					str+="				<td id='td'>";
-					str+="					30일합계";
-					str+="				</td>";
-					str+="				<td id='dd'>";
-					str+=tthprice;
-					str+="				</td>";
-					str+="				<td id='dd'>";
-					str+=tthone;
-					str+="				</td>";
-					str+="				<td id='dd'>";
-					str+=tthrefund;
-					str+="				</td>";
-					str+="			</tr>";
-					str+="	</tbody>";
-					str+="</table>";
+					//7,15,30일
+					for(var z = 7; z <10 ;z++){
+						var days;
+						if(type == 1){
+							dayrecent = data.recent[z].tot_price //판매금액 값(가공전)
+							dayfirst = cal(Math.floor(dayrecent*0.3)); //매출금액
+							daysecond = cal(dayrecent); //판매금액
+							daythird= cal(data.recentref[z].saleprice); //환불금액
+						}else if(type == 2){
+							dayrecent = data.recent[z].tot_price; //판매금액 값(가공전)
+							dayfirst = data.ordertot[z].ridx;
+							daysecond = cal(recent); //판매금액
+							daythird = data.ordercount[z].depth;
+						}else if(type == 3){
+							
+						}else if(type == 4){
+							daysecond = data.newmem[z].pidx;
+							daythird = data.delmem[z].oidx;
+						}
+						
+
+						str+="			<tr id='sta'>";
+						
+						if(z == 7){days = 7;}
+						else if(z == 8){days = 15;}
+						else if(z == 9){days = 30;}
+						
+						//버튼 4 누를시 colspan
+						if(type == 4){
+							str+="				<td id='td' colspan='2'>";
+							str+=days+"일합계";
+							str+="				</td>";
+						}else{
+							str+="				<td id='td'>";
+							str+=days+"일합계";;
+							str+="				</td>";
+							str+="				<td id='dd'>";
+							str+=dayfirst;
+							str+="				</td>";
+						}
+						str+="				<td id='dd'>";
+						str+=daysecond;
+						str+="				</td>";
+						str+="				<td id='dd'>";
+						str+=daythird;
+						str+="				</td>";
+						str+="			</tr>";
+					}
 					$("#price_table").html(str);
 				
-					
 				}
 			});
 		}
@@ -311,13 +327,17 @@
 			bindto: "#linechart",
 			data: {
 				columns: [
-					['매출', one0, one1, 0, 0, 0, 290502,1750400],
+					['매출', 0, 0, 0, 0, 0, 290502,1750400],
 					['판매', 0, 0, 0, 0, 0, 968340,5834667],
 					['환불', 0, 0, 0, 0, 0, 0,0]
 				]
 			}
 		}); 
 		
+		function cal(num){
+			let nums = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			return nums;
+		}
 		
 		
 		
