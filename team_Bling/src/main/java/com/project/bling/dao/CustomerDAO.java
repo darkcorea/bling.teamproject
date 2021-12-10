@@ -21,6 +21,7 @@ public class CustomerDAO {
 	private String cm = "com.project.bling.mapper.customerMapper.";
 	
 	
+	
 	// 상품 pidx로 상품에 대한 문의 갯수 가져오기
 	public int Product_Question_Count(int pidx) throws Exception{
 		return sqlSession.selectOne(cm +"Prduct_Question_Count", pidx);

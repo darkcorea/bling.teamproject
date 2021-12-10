@@ -155,4 +155,6 @@ public class CustomerController {
 		model.addAttribute("list", customerService.pruduct_question_list(midx));
 		return "customer/my_qestion_product";
 	}
+	
+	
 }

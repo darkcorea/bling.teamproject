@@ -5,6 +5,7 @@
  
 <mapper namespace="com.project.bling.mapper.customerMapper">
 
+
 	<!-- 상품 pidx의 문의 총 갯수 -->
 	<select id="Prduct_Question_Count" parameterType="int" resultType="int">
 		SELECT count(*)  AS questionCount FROM bg_product_question 

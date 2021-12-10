@@ -19,6 +19,7 @@ public class QuestionVO {
 	private String comments;
 	
 	
+	
 	public String getComments() {
 		return comments;
 	}
