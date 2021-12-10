@@ -126,8 +126,17 @@ public class CustomerController {
 	
 	// 나의 문의 내역 페이지 이동
 	@RequestMapping(value="/my_qestion.do")
-	public String my_qestion(Locale locale, Model model) {
+	public String my_qestion(Locale locale, Model model, HttpSession session) throws Exception {
+		
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		int midx = uv.getMidx();
+		model.addAttribute("list", customerService.question_list(midx));
 		return "customer/my_qestion";
 	}
-	
+	@RequestMapping(value="/myquestion_detail.do")
+	@ResponseBody
+	public QuestionVO myquestion_detail(int qidx) throws Exception {
+		
+		return customerService.myquestion_detail(qidx);
+	}
 }

@@ -75,4 +75,14 @@ public class CustomerDAO {
 	public List<NoticeVO> Question_page(PageMaker pm) throws Exception {
 		return sqlSession.selectList(cm +"Question_page", pm);
 	}
+	
+	public List<QuestionVO> question_list(int midx) throws Exception {
+		return sqlSession.selectList(cm+"question_list",midx);
+	}
+	
+	public QuestionVO myquestion_detail(int qidx) throws Exception {
+		
+		return sqlSession.selectOne(cm+"myquestion_detail",qidx);
+	}
+	
 }

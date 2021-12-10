@@ -111,4 +111,20 @@
 		Limit #{startPost},#{scri.perPageNum} 	
 	</select> 
 	
+	<select id="question_list" parameterType="int" resultType="QuestionVO">
+	<![CDATA[	SELECT rownum,title,rdate,qidx from(select @rownum:=@rownum + 1 as rownum,
+			    t1.*
+				FROM bg_question t1,
+			    (SELECT @rownum:=0) tmp
+			    where midx = #{midx} order by rdate desc)sub
+			    order by sub.rownum desc
+    ]]>
+	</select>
+	
+	<select id="myquestion_detail" parameterType="int" resultType="QuestionVO">
+	<![CDATA[	SELECT * FROM bg_question where qidx = #{qidx}
+    ]]>
+	</select>
+	
+	
 </mapper>
