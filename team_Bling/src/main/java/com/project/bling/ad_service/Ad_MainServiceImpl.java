@@ -33,50 +33,41 @@ public class Ad_MainServiceImpl implements Ad_MainService{
 		return ad_mainDAO.privateq();
 	}
 
-	//기간별 매출현황
-	//최근 일주일
+	//버튼1번
 	@Override
-	public int seventot() throws Exception {
-		return ad_mainDAO.seventot();
+	public List<CombineVO> recenttot() throws Exception {
+		return ad_mainDAO.recenttot();
 	}
-	//최근 15일
 	@Override
-	public int fifteentot() throws Exception {
-		return ad_mainDAO.fifteentot();
+	public List<CombineVO> recentref() throws Exception {
+		return ad_mainDAO.recentref();
 	}
-	//최근 30일
+
+	//버튼2번
 	@Override
-	public int thirtytot() throws Exception {
-		return ad_mainDAO.thirtytot();
+	public List<CombineVO> ordertot() throws Exception {
+		return ad_mainDAO.ordertot();
 	}
-	//오늘 기준 7일간 데이터
 	@Override
-	public int recenttot(int day) throws Exception {
-		return ad_mainDAO.recenttot(day);
-	}
-	
-	
-	//환불
-	//최근 일주일
-	@Override
-	public int sevenref() throws Exception {
-		return ad_mainDAO.sevenref();
-	}
-	//최근 15일
-	@Override
-	public int fifteenref() throws Exception {
-		return ad_mainDAO.fifteenref();
-	}
-	//최근 30일
-	@Override
-	public int thirtyref() throws Exception {
-		return ad_mainDAO.thirtyref();
-	}
-	//오늘 기준 7일간 데이터
-	@Override
-	public int recentref(int day) throws Exception {
-		return ad_mainDAO.recentref(day);
+	public List<CombineVO> ordercount() throws Exception {
+		return ad_mainDAO.ordercount();
 	}	
+	
+	//버튼4번
+	@Override
+	public List<CombineVO> recentmem() throws Exception {
+		return ad_mainDAO.recentmem();
+	}
+	@Override
+	public List<CombineVO> newmem() throws Exception {
+		return ad_mainDAO.newmem();
+	}
+	@Override
+	public List<CombineVO> delmem() throws Exception {
+		return ad_mainDAO.delmem();
+	}
+
+	
 	
 	
 	
