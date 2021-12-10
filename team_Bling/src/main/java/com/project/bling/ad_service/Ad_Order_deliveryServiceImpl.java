@@ -17,6 +17,11 @@ public class Ad_Order_deliveryServiceImpl implements Ad_Order_deliveryService{
 	public List<CombineVO> orderList() throws Exception {
 		return ad_order_deliveryDAO.orderList();
 	}
+
+	@Override
+	public void deliveryYN(CombineVO vo) throws Exception {
+		ad_order_deliveryDAO.deliveryYN(vo);
+	}
 	
 	
 }

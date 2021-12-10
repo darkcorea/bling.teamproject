@@ -27,8 +27,90 @@
 		
 		.content {position:relative;min-height:1000px;}
 		
+		#subTitle{
+			font-size: 30px;
+		}
+		#prodLink{
+			text-decoration: none;
+			color: #000000;
+		}
+		.tableRow{
+			border-bottom: 1px solid black;
+		}
 		#th1{
 			text-align: center;
+		}
+		#th2{
+			text-align: center;
+			width: 120px;
+		}
+		#th3{
+			text-align: center;
+			width: 90px;
+		}
+		#th4{
+			text-align: center;
+			width: 240px;
+		}
+		#th5{
+			text-align: center;
+			width: 40px;
+		}
+		#th6{
+			text-align: center;
+			width: 110px;
+		}
+		#th7,#th8,#th9{
+			text-align: center;
+			width: 80px;
+		}
+		#th10{
+			text-align: center;
+			width: 100px;
+		}
+		.td{
+			text-align: center;
+		}
+		.td1{
+			text-align: center;
+			width: 66px;
+		}
+		.td2{
+			text-align: center;
+			width: 120px;
+		}
+		.td3{
+			width: 90px;
+			padding-left: 15px;
+		}
+		.td4{
+			width: 250px;
+		}
+		.td5{
+			text-align: center;
+			width: 40px;
+		}
+		.td6{
+			text-align: center;
+			width: 110px;
+		}
+		.td7,.td8,.td9{
+			text-align: center;
+			width: 80px;
+		}
+		.td10{
+			text-align: center;
+			width: 100px;
+		}
+		#deliBtn{
+			width: 64px;
+		}
+		#pname{
+			font-weight: bold;
+			color: #1a7ed5;
+		}
+		#orderCnt{
+			color: red;
 		}
 	</style>
 </head>
@@ -51,37 +133,159 @@
 	
 	<!-- 본문 -->
 	<div>
-		<span>주문리스트</span>
+		<span id="subTitle">주문리스트</span>
+		<br><br>
 		<table>
 			<tr>
 				<th id="th1">주문번호</th>
-				<th id="th2"><span id="thSpan2">주문일</span></th>
-				<th id="th3"><span id="thSpan3">주문자</span></th>
-				<th id="th4"><span id="thSpan4">주문상품</span></th>
-				<th id="th5"><span id="thSpan5">수량</span></th>
-				<th id="th6"><span id="thSpan6">주문금액</span></th>
-				<th id="th7"><span id="thSpan7">결제방법</span></th>
-				<th id="th8"><span id="thSpan8">결제상태</span></th>
-				<th id="th9"><span id="thSpan9">배송상태</span></th>
-				<th id="th10"><span id="thSpan10">출고버튼</span></th>
+				<th id="th2">주문일</th>
+				<th id="th3">주문자</th>
+				<th id="th4">주문상품</th>
+				<th id="th5">수량</th>
+				<th id="th6">주문금액</th>
+				<th id="th7">결제방법</th>
+				<th id="th8">결제상태</th>
+				<th id="th9">배송상태</th>
+				<th id="th10">출고버튼</th>
 			</tr>
-			<c:forEach items="${orderList}" var="ol">
-			<tr>
-				<td>${ol.order_idx}</td>
-				<td>${ol.rdate}</td>
-				<td>${ol.uname}</td>
-				<td>${ol.pname} /<br>${ol.oname}</td>
-				<td>${ol.quantity}</td>
-				<td><fmt:formatNumber value="${ol.tot_price}" pattern="#,###" />원</td>
-				<td>${ol.payment}</td>
-				<td>${ol.order_yn}</td>
-				<td>${ol.delivery_yn}</td>
-				<td></td>
-			</tr>
-			</c:forEach>
 		</table>
+		<table id="ajaxTable">
+			
+		</table>	
+		<br><br><br><br><br><br>
 	</div>
 	
-	
 </body>
+<script>
+	$(function(){
+		let str = "";
+		
+		const option = {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(),
+		}
+		
+		fetch("/Ad_order_delivery/orderList.do", option)
+		.then((response) => {
+			if(!response.ok){
+				throw new Error('400 아니면 500 에러 발생');
+			}
+			
+			return response.json();
+		})
+		.then((data) => {
+			console.log('화면출력 성공');
+			console.log(data[0].order_idx);
+			for(let i=0; data.length > i; i++){
+				str += "<tr class='tableRow'>";
+				str += "	<td class='td td1'>"+data[i].order_idx+"</td>";
+				str += "	<td class='td td2'>"+data[i].rdate+"</td>";
+				str += "	<td class='td3'>"+data[i].uname+"</td>";
+				str += "	<td class='td4'><a id='prodLink' href='/Product/detail.do?pidx="+data[i].pidx+"'> 상품 : <span id='pname'>"+data[i].pname+"</span> <br> 옵션 : "+data[i].oname+" 등 <span id='orderCnt'>"+data[i].orderCompCnt+"건</span></a></td>";
+				str += "	<td class='td td5'>"+data[i].quantity+"</td>";
+				str += "	<td class='td td6'>"+data[i].tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원</td>";
+				str += "	<td class='td td7'>"+data[i].payment+"</td>";
+				str += "	<td class='td td8'>"+data[i].order_yn+"</td>";
+				str += "	<td class='td td9'>"+data[i].delivery_yn+"</td>";
+				str += "	<td class='td td10'>";
+								if(data[i].delivery_yn == "N"){
+									str += "<button id='deliBtn' onclick='deli("+data[i].order_idx+",\""+data[i].delivery_yn+"\")'>미출고</button>";
+								}
+								else if(data[i].delivery_yn == "Y"){
+									str += "<button id='deliBtn' onclick='deli("+data[i].order_idx+",\""+data[i].delivery_yn+"\")'>출고중</button>";
+								}
+				str += "	</td>";
+				str += "</tr>";
+			}
+			$("#ajaxTable").html(str);
+			
+		})
+		.catch(() => {
+			console.log('ajax 화면출력 에러');
+		})
+		
+	});
+
+	
+	
+	function orderList(){
+		let str = "";
+		
+		const option = {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(),
+		}
+		
+		fetch("/Ad_order_delivery/orderList.do", option)
+		.then((response) => {
+			if(!response.ok){
+				throw new Error('400 아니면 500 에러 발생');
+			}
+			
+			return response.json();
+		})
+		.then((data) => {
+			console.log('화면출력 성공');
+			console.log(data[0].order_idx);
+			for(let i=0; data.length > i; i++){
+				str += "<tr class='tableRow'>";
+				str += "	<td class='td td1'>"+data[i].order_idx+"</td>";
+				str += "	<td class='td td2'>"+data[i].rdate+"</td>";
+				str += "	<td class='td3'>"+data[i].uname+"</td>";
+				str += "	<td class='td4'><a id='prodLink' href='/Product/detail.do?pidx="+data[i].pidx+"'> 상품 : <span id='pname'>"+data[i].pname+"</span> <br> 옵션 : "+data[i].oname+" 등 <span id='orderCnt'>"+data[i].orderCompCnt+"건</span></a></td>";
+				str += "	<td class='td td5'>"+data[i].quantity+"</td>";
+				str += "	<td class='td td6'>"+data[i].tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원</td>";
+				str += "	<td class='td td7'>"+data[i].payment+"</td>";
+				str += "	<td class='td td8'>"+data[i].order_yn+"</td>";
+				str += "	<td class='td td9'>"+data[i].delivery_yn+"</td>";
+				str += "	<td class='td td10'>";
+								if(data[i].delivery_yn == "N"){
+									str += "<button id='deliBtn' onclick='deli("+data[i].order_idx+",\""+data[i].delivery_yn+"\")'>미출고</button>";
+								}
+								else if(data[i].delivery_yn == "Y"){
+									str += "<button id='deliBtn' onclick='deli("+data[i].order_idx+",\""+data[i].delivery_yn+"\")'>출고중</button>";
+								}
+				str += "	</td>";
+				str += "</tr>";
+			}
+			$("#ajaxTable").html(str);
+			
+		})
+		.catch(() => {
+			console.log('ajax 화면출력 에러');
+		})
+	}
+	
+	
+		
+	function deli(order_idx,delivery_yn){
+		console.log("deli() 실행");
+		console.log("order_idx : "+order_idx);
+		console.log("delivery_yn : "+delivery_yn);
+				
+		let deliveryData = {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({order_idx:order_idx, delivery_yn:delivery_yn})
+			}
+		
+		fetch('/Ad_order_delivery/deliveryYN.do', deliveryData)
+			.then((data) => {
+				console.log(data);
+				orderList();
+			})
+			.catch(() => {
+				console.log('출고버튼 에러');
+			})
+	}
+	
+</script>
 </html>
