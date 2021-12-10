@@ -50,13 +50,14 @@
 	  
 	  <!-- order_idx로 구매한 상품들 정보 가져 오기 -->
 	  <select id="order_list" parameterType="int" resultType="CombineVO">
-	  	SELECT bp.pidx, bo.recipient, bo.rphone, bo.addr1, bo.addr2, bp.pname, bi.main, bop.oname, 
-	  			bod.quantity, bo.payment, bo.tot_price,bo.zip_code
+	 	SELECT bp.pidx, bo.recipient, bo.rphone, bo.addr1, bo.addr2, bp.pname, bi.main, bop.oname, 
+	  			bod.quantity, bo.payment, bo.tot_price,bo.zip_code,bo.order_idx, re.ridx
 		FROM bg_order bo
 		JOIN bg_order_detail bod ON bo.order_idx = bod.order_idx
 		JOIN bg_option bop ON bod.oidx = bop.oidx
 		JOIn bg_product bp ON bp.pidx = bop.pidx
 		JOIN bg_image bi oN bi.pidx = bp.pidx
+        LEFT OUTER JOIN  bg_review re ON re.DETAIL_IDX = bod.detail_idx
 		WHERE bo.order_idx=#{order_idx}
 	  </select>
 	  
