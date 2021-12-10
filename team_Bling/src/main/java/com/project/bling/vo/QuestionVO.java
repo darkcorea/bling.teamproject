@@ -12,9 +12,54 @@ public class QuestionVO {
 	private int depth;
 	private int detail_idx;
 	private int rownum;
+	private String oname;
+	private String pname;
+	private int pqidx;
+	private int originpqidx;
+	private String comments;
 	
 	
 	
+	public String getOname() {
+		return oname;
+	}
+
+	public void setOname(String oname) {
+		this.oname = oname;
+	}
+
+	public String getPname() {
+		return pname;
+	}
+
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+
+	public int getPqidx() {
+		return pqidx;
+	}
+
+	public void setPqidx(int pqidx) {
+		this.pqidx = pqidx;
+	}
+
+	public int getOriginpqidx() {
+		return originpqidx;
+	}
+
+	public void setOriginpqidx(int originpqidx) {
+		this.originpqidx = originpqidx;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
 	public int getOriginqidx() {
 		return originqidx;
 	}

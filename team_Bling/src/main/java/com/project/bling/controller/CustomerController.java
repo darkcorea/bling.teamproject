@@ -135,10 +135,28 @@ public class CustomerController {
 		model.addAttribute("list", customerService.question_list(midx));
 		return "customer/my_qestion";
 	}
+	
 	@RequestMapping(value="/myquestion_detail.do")
 	@ResponseBody
 	public QuestionVO myquestion_detail(int qidx) throws Exception {
 		
 		return customerService.myquestion_detail(qidx);
 	}
+	
+	@RequestMapping(value="/myquestion_delete.do")
+	@ResponseBody
+	public int myquestion_delete(int qidx) throws Exception {
+		
+		customerService.myquestion_delete(qidx);
+		return 1;
+	}
+	@RequestMapping(value="/myquestion_pruduct.do")
+	public String myquestion_pruduct(Locale locale, Model model, HttpSession session) throws Exception {
+		
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		int midx = uv.getMidx();
+		model.addAttribute("list", customerService.pruduct_question_list(midx));
+		return "customer/my_qestion_product";
+	}
+	
 }

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.project.bling.ad_service.Ad_BoardService;
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.service.NoticeService;
