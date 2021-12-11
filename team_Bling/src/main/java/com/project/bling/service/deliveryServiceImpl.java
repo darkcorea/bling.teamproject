@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.project.bling.dao.DeliveryDAO;
 import com.project.bling.vo.CombineVO;
-import com.project.bling.vo.UserVO;
 
 @Service("DeliveryService")
 public class deliveryServiceImpl implements DeliveryService {
@@ -41,8 +40,8 @@ public class deliveryServiceImpl implements DeliveryService {
 
 	// 회원 마일이지에 적립금 추가
 	@Override
-	public void addmileage_user(UserVO uv) throws Exception {
-		deliveryDAO.addmileage_user(uv);
+	public void addmileage_user(CombineVO cv) throws Exception {
+		deliveryDAO.addmileage_user(cv);
 	}
 	
 	// 적립금 0원으로 만들기

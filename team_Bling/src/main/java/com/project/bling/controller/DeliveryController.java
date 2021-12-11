@@ -41,23 +41,31 @@ public class DeliveryController {
 	@ResponseBody
 	public int confirm_fn(int order_idx, HttpSession session) throws Exception {
 		
-		// 회원정보 불러와서 midx 가져오기
+		// 회원정보 불러오기, 회원정보 담을 VO물러오기
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		CombineVO cv = new CombineVO();
 		
 		// 구매확정하기
 		deliveryService.confirm_fn(order_idx);
 		
+		// 적립금 불러오기
+		int ad_mile = deliveryService.addmileage_check(order_idx);
+		
 		// aaddmileage가 0 이 아니라면 
-		if (deliveryService.addmileage_check(order_idx) != 0) {
+		if (ad_mile != 0) {
 			
-			// 회원 정보에 Addmileag값을 담아서 기존 마일리지에  적립금 추가
-			uv.setMileage(deliveryService.addmileage_check(order_idx));
-			deliveryService.addmileage_user(uv);
+			// 유저 마일리지에 적립금 추가
+			cv.setMileage(ad_mile);
+			cv.setMidx(uv.getMidx());
+			deliveryService.addmileage_user(cv);
+			
+			// 로그인 세션에 마일리지 추가
+			uv.setMileage(uv.getMileage()+ad_mile);
 			
 			// order_idx로 적립금 0원으로 만들기
 			deliveryService.addmileage_zero(order_idx);
 			
-			return deliveryService.addmileage_check(order_idx);
+			return ad_mile;
 		}
 		return 0;
 	}

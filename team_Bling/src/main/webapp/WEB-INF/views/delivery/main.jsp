@@ -452,15 +452,15 @@
 							<span>환불완료</span>
 						</c:if>
 						<!-- 입금이 완료 전이면-->
-						<c:if test="${list.deli_stat == 'N'}">
+						<c:if test="${list.deli_stat == 'N' && list.cancel == null}">
 							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx})">취소</button>
 						</c:if>
 						<!-- 입금을 완료 하면-->
-						<c:if test="${list.deli_stat == 'Y'}">
+						<c:if test="${list.deli_stat == 'Y' && list.cancel == null}">
 							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx})">취소</button>
 						</c:if>
 						<!-- 배송 준비중이면 -->
-						<c:if test="${list.deli_stat == 'A'}">
+						<c:if test="${list.deli_stat == 'A' && list.cancel == null}">
 							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx})">취소</button>
 						</c:if>
 						<!-- 배송 중이면 -->
@@ -584,6 +584,7 @@
 				</div>
 				<br>
 				<textarea id="textArea1" placeholder="상품에 대한 후기를 남겨 주세요.&#13;&#10;사진은 2장까지 첨부 가능합니다."></textarea>
+				<div id="textArea1_cnt">0/500</div>
 				<br>
 			</form>
 			<form id="pictureForm">
@@ -636,32 +637,36 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      	<table>
+     	 <form name="return_delivery" method="POSt">
+     	 <table>
       		<tr style="height:60px;">
       			<td style="width:140px;">교환/반품/취소</td>
       			<td>
       				<select style="width:140px;" name="type" id="re_selected">
-	      				<option value="교환">교환</option>
-	      				<option value="반품">반품</option>
-	      				<option value="취소">취소</option>
+	      				<option value="D">교환</option>
+	      				<option value="E">반품</option>
+	      				<option value="F">취소</option>
 					</select>
       			</td>
       		</tr>
       		<tr>
       			<td>직접입력</td>
-      			<td><textarea id="comments" rows="10" cols="60" name="comments"></textarea>
-      			<div id="comments_cnt">(0 / 500)</div>	
+      			<td><textarea id="comments" rows="10" cols="60" name="comments" placeholder="최소 10자를 입력해 주세요"></textarea>
+      			<div id="comments_cnt">(0 / 500)</div>
+      			<input type="hidden" id="re_order_idx" style="display:none;">
       			</td>
       		</tr>
       	</table>
+      	</form>
       	<!-- 취소,교환,반품을 고르면 자세한 설명 나오는 곳 -->
-      	<div id="re_select">
+      	<div id="re_select" class="text_center">
       	<hr>
-      	
+      	<b>교환 / 반품 / 취소는 관리자 확인 후 진행됨을 알려드립니다. <br>
+      	빠른 시일 내로 처리해 드리곘습니다.</b>
       	</div>
       </div>
       <div class="modal-footer" id="delivery_select2">
-        <button type="button" class="btn btn-secondary" id="modal_button1" >확인</button>&nbsp;
+        <button type="button" class="btn btn-secondary" id="modal_button1" onclick="return_delivery()">확인</button>&nbsp;
         <button type="button" class="btn btn-outline-secondary" id="modal_button2" data-bs-dismiss="modal" data-bs-dismiss="modal">취소</button>
       </div>
     </div>
@@ -680,7 +685,21 @@ $(document).ready(function() {
             $('#comments_cnt').html("(500 / 500)");
         }
     });
+    
+	 // 글자수 500자로 제한
+    $('#textArea1').on('keyup', function() {
+        $('#textArea1_cnt').html("("+$(this).val().length+" / 500)");
+
+        if($(this).val().length > 500) {
+            $(this).val($(this).val().substring(0, 500));
+            $('#textArea1_cnt').html("(500 / 500)");
+        }
+    });
+ 
+ 
 });
+
+
 
 
 	// 구매 확정 버튼을 눌렀을 떄
@@ -782,7 +801,7 @@ $(document).ready(function() {
 	
 	// 리뷰 쓰기 전에 detail_idx값을 넘겨준다
 	function detailIdx(detail_idx){
-		
+	    $('#textArea1_cnt').html("(0 / 500)");
 		$.ajax({
 			url: "/MyPage/detailIdx.do",
 			type: "post",
@@ -812,7 +831,8 @@ $(document).ready(function() {
 				alert("detai_idx 넘기기 에러");
 			}
 		});
-		$("#review_write").modal("hide");   
+		$("#review_write").modal("hide");
+	    $('#textArea1_cnt').html("(0 / 500)");
 		$("#staticBackdrop1").modal("show");
 	}
 	
@@ -826,6 +846,9 @@ $(document).ready(function() {
 		if(starRating != null){
 			grade = starRating.value;
 			contents = contentsCheck();
+			if(contents == ""){
+				return ;
+			}
 		}
 		else if(starRating == null){
 			Swal.fire({
@@ -919,9 +942,6 @@ $(document).ready(function() {
 					text: '최소 10자부터 최대 500자까지 입력 가능합니다.',
 				});
 			}
-			else if(contents.length>=10 && contents.length<=500){
-				
-			}
 		}
 		else if(textArea1 == null){
 			Swal.fire({
@@ -983,13 +1003,20 @@ $(document).ready(function() {
 		});
 	}
 	
-	// 상품  교환, 반품, 취소  하기
+	// 상품  교환, 반품, 취소  하기 버튼을 누르면
 	function Return(order_idx){
 		$("#comments").val("");
-		$('#comments_cnt').html("(0 / 500)");
-	    
+		$("#comments_cnt").html("(0 / 500)");
+		
+		// order_idx값 숨기고 모달창 열기 
+		$("#re_order_idx").val(order_idx);
 		$("#Return").modal("show");
 	}
 	
+	
+	function return_delivery(){
+	    
+	    
+	}
 </script>
 </html>

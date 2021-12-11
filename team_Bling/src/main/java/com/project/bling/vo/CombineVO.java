@@ -25,6 +25,7 @@ public class CombineVO {
 	private String main;
 	//user
 	private String uname;
+	private int mileage;
 	// product_question
 	private int pqidx;
 	private int depth;
@@ -68,6 +69,12 @@ public class CombineVO {
 	
 	
 	
+	public int getMileage() {
+		return mileage;
+	}
+	public void setMileage(int mileage) {
+		this.mileage = mileage;
+	}
 	public String getAddr1() {
 		return addr1;
 	}
