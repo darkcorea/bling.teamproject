@@ -15,12 +15,12 @@
 			,SUM(od.quantity) OVER(PARTITION BY ord.order_idx) AS quantitySum
 		    ,TIMESTAMPDIFF(DAY, de.deli_com, now()) AS date_differ
 		    ,ROW_NUMBER() OVER(PARTITION BY ord.order_idx ORDER BY ord.order_idx asc )AS RNUM
-			FROM  open_a_2021.BG_ORDER_DETAIL od
-			JOIN open_a_2021.bg_order ord ON ord.order_idx = od.order_idx
-			JOIN  open_a_2021.bg_option op ON op.oidx = od.oidx
-			JOIN  open_a_2021.bg_product pr ON pr.pidx = op.pidx
-			JOIN  open_a_2021.BG_IMAGE im ON im.pidx = pr.pidx
-			JOIN  open_a_2021.bg_delivery de ON de.order_idx = ord.order_idx
+			FROM bg_order_detail od
+			JOIN bg_order ord ON ord.order_idx = od.order_idx
+			JOIN bg_option op ON op.oidx = od.oidx
+			JOIN bg_product pr ON pr.pidx = op.pidx
+			JOIN BG_IMAGE im ON im.pidx = pr.pidx
+			JOIN bg_delivery de ON de.order_idx = ord.order_idx
 			LEFT OUTER JOIN  open_a_2021.bg_review re ON re.DETAIL_IDX = od.detail_idx
 			WHERE ord.midx=#{midx}  AND now() >= date_add(now(), interval -3 month)
 			ORDER BY ord.order_idx ASC, od.detail_idx ASC) A
@@ -51,7 +51,7 @@
 	  <!-- order_idx로 구매한 상품들 정보 가져 오기 -->
 	  <select id="order_list" parameterType="int" resultType="CombineVO">
 	 	SELECT bp.pidx, bo.recipient, bo.rphone, bo.addr1, bo.addr2, bp.pname, bi.main, bop.oname, 
-	  			bod.quantity, bo.payment, bo.tot_price,bo.zip_code,bo.order_idx, re.ridx
+	  			bod.quantity, bo.payment, bo.tot_price,bo.zip_code,bo.order_idx, re.ridx, bod.detail_idx
 		FROM bg_order bo
 		JOIN bg_order_detail bod ON bo.order_idx = bod.order_idx
 		JOIN bg_option bop ON bod.oidx = bop.oidx

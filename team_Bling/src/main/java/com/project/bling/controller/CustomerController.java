@@ -119,6 +119,11 @@ public class CustomerController {
 	@ResponseBody
 	public List<Product_QuestionVO> show_check(Locale locale, Model model,Product_QuestionVO pq, HttpSession session) throws Exception {
 		
+		// 로그인이 풀렸을 떄 대비해서 넣음
+		if(session.getAttribute("UserVO") == null) {
+			return null;
+		}
+		
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		//회원정보에서 회원번호만 선택
 		int midx = uv.getMidx();

@@ -212,7 +212,6 @@ function cart_count_fn(){
 			type:"POST",
 			data:{"midx":midx},
 			success:function(data){
-				console.log(data);
 				if (data != 0){
 				$("#cart_count").text(data);
 				$("#cart_count").show();

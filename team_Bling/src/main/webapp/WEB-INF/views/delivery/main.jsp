@@ -46,6 +46,14 @@
 	.title3:hover{
 		color: #CB7878;
 	}
+	
+	.title4{
+		text-decoration: none;
+		color: #CB7878;	
+	}	
+	.title4:hover{
+		color:#C4C4C4;
+	}
 	/* 달력 크기 조절 */
 	.calender{
 		height:38px;
@@ -370,15 +378,18 @@
 				<c:set value="0" var="order_idx"/>
 				<c:forEach items="${list}" var="list">
 				<tr style="vertical-align:middle;">
+					<!-- 주문일자 -->
 					<td>
 					<c:set value="${list.rdate}" var="rdate"/>
-					<b>${fn:substring(rdate,0,10)}<br>[<c:out value="${list.order_idx}"/>]</b>
+					<span  onclick="order_list(${list.order_idx})" class="pointer deli"><b>${fn:substring(rdate,0,10)}<br>[<c:out value="${list.order_idx}"/>]</b></span>
 					</td>
+					<!-- 이미지 -->
 					<td>
 					<img src="/resources/image/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
 					</td>
+					<!-- 상품명 -->
 					<td>
-						<b  onclick="order_list(${list.order_idx})" class="pointer"><c:out value="${list.pname}"/></b><br>
+						<b  onclick="order_list(${list.order_idx})" class="pointer deli"><c:out value="${list.pname}"/></b><br>
 						<c:set value="${list.oname}"  var="oname"/>
 						<c:set var = "oname1" value = "${fn:split(oname, '+')[0]}" />
 						<span class="font14 pointer"  onclick="order_list(${list.order_idx})"><c:out value="${oname1}"/> </span>
@@ -703,7 +714,6 @@ $(document).ready(function() {
 			data:{"order_idx":order_idx},
 			async: false,
 			success:function(data){
-				console.log(data);
 				let str = "";
 				let phone1 = "";
 				let phone2 = "";
@@ -742,11 +752,13 @@ $(document).ready(function() {
 					str += "<div style='margin-top:30px;'>";	
 					str += "<table>";	
 					str += "</tr>";	
-					str += " <td style='width:150px;'>";	
-					str += " <img class='image_main' src='/resources/image/"+data[i].main+"'>";	
+					str += " <td style='width:150px;'>";
+					str += "<a href='/Product/detail.do?pidx="+data[0].pidx+"'>"
+					str += " <img class='image_main' src='/resources/image/"+data[i].main+"'></a>";	
 					str += "</td>";	
-					str += "<td style='width:300px;'>";	
-					str += "<span style='color:#CB7878;'><b>"+data[i].pname+"</b></span><br>";	
+					str += "<td style='width:300px;'>";
+					str += "<a href='/Product/detail.do?pidx="+data[0].pidx+"' class='title4'>"
+					str += "<span><b>"+data[i].pname+"</b></span></a><br>";	
 					var oname = data[i].oname.split("+")[0]
 					str += " <span>"+oname+"</span>(수량: <span>"+data[i].quantity+"</span>)";	
 					str += "</td>";	
@@ -785,6 +797,25 @@ $(document).ready(function() {
 		});
 	}
 	
+	// 리뷰 쓰기 전에 detail_idx값을 넘겨준다. 모달창 닫기 오류 때문에
+	function detailIdx1(detail_idx){
+		
+		$.ajax({
+			url: "/MyPage/detailIdx.do",
+			type: "post",
+			data: "detail_idx="+detail_idx,
+			ContentType: "json",
+			success: function(data){
+				
+			},
+			error: function(){
+				alert("detai_idx 넘기기 에러");
+			}
+		});
+		$("#review_write").modal("hide");   
+		$("#staticBackdrop1").modal("show");
+	}
+	
 	// 모달 쓰기 
 	function reviewWrite(){
 
@@ -805,16 +836,13 @@ $(document).ready(function() {
 			modalReset();
 		}
 		
-		
 		$.ajax({
 			url: "/MyPage/reviewWrite.do",
 			type: "post",
 			data: "contents="+contents+"&grade="+grade,
 			ContentType: "json",
 			success: function(data){
-				console.log("리뷰작성 성공");
-				console.log(grade);
-				window.location.replace("/MyPage/main.do?page=1");
+				alert("리뷰가 작성되었습니다.");
 			},
 			error: function(){
 				console.log("!!!!!리뷰작성 에러!!!!!");
@@ -833,13 +861,12 @@ $(document).ready(function() {
 		document.querySelector("form[id='pictureForm']").reset();
 	}
 	
-	// 파일 업르도 
 	function uploadFile(){
 		let files = document.querySelector("input[name='uploadBtn']").files;
 		
 		let image1 = files[0];
 		let image2 = files[1];
-
+		
 		let formData = new FormData();
 		formData.append("image1", image1);
 		formData.append("image2", image2);
@@ -848,22 +875,24 @@ $(document).ready(function() {
 			url: "/MyPage/upload.do",
 			type: "post",
 			data: formData,
-            dataType: "text",
-            processData: false,
-            ContentType: false,
-            success: function(data){
-            	if(data == "true"){
-            		console.log("파일 업로드 성공");
-            	}
-            	else if(data == "false"){
-            		Swal.fire({
-						icon: 'error',
-						title: '지정된 이미지 파일이 아닙니다!',
-						text: 'jpg, jpeg, png 파일만 선택 가능합니다.',
-					});
-            		pictureReset();
-            	}
-            }
+		    dataType: "text",
+		    processData: false,
+		    contentType: false,
+		    success: function(data){
+		    	if(data == "true"){
+		    		console.log("파일 업로드 성공");
+		    	}
+		    	else if(data == "false"){
+		    		console.log("지정된 이미지 파일이 아닙니다.");
+		    		console.log("파일 업로드 실패");
+		    		Swal.fire({
+							icon: 'error',
+							title: '지정된 이미지 파일이 아닙니다!',
+							text: 'jpg, jpeg, png 파일만 선택 가능합니다.',
+						});
+		    		pictureReset();
+		    	}
+		    }
 		});
 	}
 	
@@ -919,18 +948,25 @@ $(document).ready(function() {
 				for(let i=0; i<data.length; i++){	
 					str += "<div style='margin-top:30px;'>";	
 					str += "<table>";	
-					str += "</tr>";	
-					str += "<td style='width:150px;'>";	
-					str += "<img class='image_main' src='/resources/image/"+data[i].main+"'>";	
+					str += "</tr>";
+					str += "<td style='width:150px;'>";
+					str += "<a href='/Product/detail.do?pidx="+data[i].pidx+"'>"
+					str += "<img class='image_main' src='/resources/image/"+data[i].main+"'></a>";	
 					str += "</td>";	
 					str += "<td style='width:300px;'>";	
-					str += "<span style='color:#CB7878;'><b>"+data[i].pname+"</b></span><br>";	
+					str += "<a href='/Product/detail.do?pidx="+data[i].pidx+"' class='title4'>"
+					str += "<span><b>"+data[i].pname+"</b></span></a><br>";	
 					var oname = data[i].oname.split("+")[0]
 					str += " <span>"+oname+"</span>(수량: <span>"+data[i].quantity+"</span>)";	
 					str += "</td>";	
 					if(data[i].ridx == null || data[i].ridx == 0){
 						str += "<td>";
-						str += "<button id='btn_25' class='btn btn-outline-secondary' data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx("+data[i].detail_idx+")'>리뷰쓰기</button>";
+						str += "<button id='btn_25' class='btn btn-outline-secondary' onclick='detailIdx1("+data[i].detail_idx+")'>리뷰쓰기</button>";
+						str += "<td>";
+					}
+					if(data[i].ridx != null && data[i].ridx != 0){
+					    str += "<td>";
+						str += "<span>리뷰작성완료</span>";
 						str += "<td>";
 					}
 					str += "</tr>";
@@ -949,7 +985,9 @@ $(document).ready(function() {
 	
 	// 상품  교환, 반품, 취소  하기
 	function Return(order_idx){
-		
+		$("#comments").val("");
+		$('#comments_cnt').html("(0 / 500)");
+	    
 		$("#Return").modal("show");
 	}
 	
