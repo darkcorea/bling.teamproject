@@ -40,7 +40,7 @@ public class MyPageController {
 	@Autowired
 	LoginService  loginService;
 	
-    String uploadPath = "D:\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
+    String uploadPath = "C:\\Users\\dark\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
     
     //커스터마이징
     @RequestMapping(value="/ssss.do")
@@ -116,7 +116,7 @@ public class MyPageController {
 	
 	//리뷰작성 버튼 클릭하면 해당 주문정보에서 detail_idx 데이터 받아오기
 	@ResponseBody
-	@RequestMapping(value="/detailIdx.do")
+	@RequestMapping(value="/detailIdx.do", method=RequestMethod.POST)
 	public void detailIdx(CombineVO vo, HttpSession session) throws Exception {
 		System.out.println("마이페이지 컨트롤러>>>>>detail_idx : "+vo.getDetail_idx());
 		//CombineVO로 받아온 detail_idx를 아래의 reviewWrite 메소드에서 사용하기 위해 session에 담는다.

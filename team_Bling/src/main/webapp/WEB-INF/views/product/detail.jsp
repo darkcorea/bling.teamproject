@@ -82,7 +82,7 @@
 						<div class="select-text fw-bold w-25 m-1">옵션</div>
 						<div>
 							<select class="form-select" aria-label="Default select example">
-								<option value="first" selected disabled>[필수] 옵션을 선택하세요.</option>
+								<option value="first" selected>[필수] 옵션을 선택하세요.</option>
 
 								<!-- 재고가  1~9개라면 재고 표시 -->
 								<c:forEach items="${options}" var="options">
@@ -274,44 +274,6 @@
 		<%@ include file="/WEB-INF/views/footer.jsp"%>
 	</footer>
 	
-	
-<!-- 문의하기 제목을 누르면 나오는 비밀번호 입력 모달창 -->
-<div class="modal fade" id="question_motal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bling_color">
-        <h5 class="modal-title">비밀번호를 입력하세요</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <input type="text" id="question_pwd">
-        <span id="pwd_chcek"></span>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-secondary" id="modal_button">확인</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 문의하기에서 비밀번호를 입력하면 내용이 나오는 모달창 -->
-<div class="modal fade" id="question_motal1" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bling_color">
-        <h5 class="modal-title">문의 내용</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="question_contents">
-      </div>
-      <div class="modal-footer" id="modal_requestion">
-        <button type="button" class="btn btn-secondary" id="modal_button1">수정하기</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="modal_button2">확인</button>
-      </div>
-    </div>
-  </div>
-</div>
 </body>
 <script type="text/javascript">
 	
@@ -885,7 +847,7 @@
   	/* 문의 제목을 클릭하면 제옥 아래로 내용이 보였다가 사라졌다 한다 */
   	function coll_fn(nidx){
   		let show = $("#collapse"+nidx).hasClass("show");
-  		console.log(show);
+  		//console.log(show);
   		if (show == false){
   			$("#collapse"+nidx).addClass("show");
   		}else if (show == true){
@@ -904,20 +866,22 @@
   				data:{"pidx":pidx},
   				ContentType:"application/json",
   				success:function(data){
-  					for(let i = 0; i<data.length; i++){
-  						if (data[i].depth == 0){
-	  						let	str = "<span onclick='coll_fn("+data[i].pqidx+")' id='coll"+data[i].pqidx+"' onclick='coll_fn("+data[i].pqidx+")' class='pointer'><i class='bi bi-file-lock'></i>&nbsp;"+data[i].title+"</span>";
-	  						let str1 = data[i].comments
-	  						$("#heading"+data[i].pqidx).html(str);
-	  						$("#coll_body"+data[i].pqidx).text(str1);
-  						}
-  						if (data[i].depth == 1){
-	  						let	str = "<span id='coll"+data[i].pqidx+"' onclick='coll_fn("+data[i].pqidx+")' class='pointer'><i class='bi bi-arrow-return-right'></i><i class='bi bi-file-lock'></i>&nbsp;"+data[i].title+"</span>";
-	  						let str1 = data[i].comments
-	  						$("#heading"+data[i].pqidx).html(str);
-	  						$("#coll_body"+data[i].pqidx).text(str1);
-  						}
-  					}  					
+  				    if(data != null){
+	  					for(let i = 0; i<data.length; i++){
+	  						if (data[i].depth == 0){
+		  						let	str = "<span onclick='coll_fn("+data[i].pqidx+")' id='coll"+data[i].pqidx+"' onclick='coll_fn("+data[i].pqidx+")' class='pointer'><i class='bi bi-file-lock'></i>&nbsp;"+data[i].title+"</span>";
+		  						let str1 = data[i].comments
+		  						$("#heading"+data[i].pqidx).html(str);
+		  						$("#coll_body"+data[i].pqidx).text(str1);
+	  						}
+	  						if (data[i].depth == 1){
+		  						let	str = "<span id='coll"+data[i].pqidx+"' onclick='coll_fn("+data[i].pqidx+")' class='pointer'><i class='bi bi-arrow-return-right'></i><i class='bi bi-file-lock'></i>&nbsp;"+data[i].title+"</span>";
+		  						let str1 = data[i].comments
+		  						$("#heading"+data[i].pqidx).html(str);
+		  						$("#coll_body"+data[i].pqidx).text(str1);
+	  						}
+	  					}  	
+  				    }
   				},error:function(){
   					alert("show_check 에러입니다.")
   				}
@@ -1012,7 +976,7 @@
 	      }
 	      </c:forEach>
 	      let jsonData = JSON.stringify(List);
-	      console.log(jsonData);
+	     // console.log(jsonData);
 		
 																	 
 	      var frm = document.createElement("form");
