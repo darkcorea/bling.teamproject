@@ -66,6 +66,9 @@ public class CombineVO {
 	private int deliStatCnt;
 	private String rdate1;
 	private String rdate2;
+	// 임의(관리자 주문)
+	private String O_order_yn;
+	private String D_order_yn;
 	
 	
 	
@@ -386,6 +389,18 @@ public class CombineVO {
 	}
 	public void setDelivery_yn(String delivery_yn) {
 		this.delivery_yn = delivery_yn;
+	}
+	public String getO_order_yn() {
+		return O_order_yn;
+	}
+	public void setO_order_yn(String o_order_yn) {
+		O_order_yn = o_order_yn;
+	}
+	public String getD_order_yn() {
+		return D_order_yn;
+	}
+	public void setD_order_yn(String d_order_yn) {
+		D_order_yn = d_order_yn;
 	}
 	
 	

@@ -8,16 +8,18 @@
 	<select id="orderList" resultType="CombineVO">
 		SELECT o.order_idx,
 			   count(o.order_idx) AS 'orderCompCnt',
-		       DATE_FORMAT(o.rdate,'%Y-%m-%d') AS 'rdate',
-		       u.uname,
-		       p.pidx,
-		       p.pname,
-		       substring_index(op.oname,'+',1) AS 'oname',
-		       od.quantity,
-		       o.tot_price,
-		       o.payment,
-		       o.order_yn,
-		       o.delivery_yn
+			   DATE_FORMAT(o.rdate,'%Y-%m-%d') AS 'rdate',
+			   u.uname,
+			   p.pidx,
+			   p.pname,
+			   substring_index(op.oname,'+',1) AS 'oname',
+			   od.quantity,
+			   o.tot_price,
+			   o.payment,
+			   o.order_yn AS 'O_order_yn',
+		       d.order_yn AS 'D_order_yn',
+			   o.delivery_yn,
+		       d.deli_stat
 		FROM bg_product p
 		LEFT JOIN bg_option op
 		ON p.pidx=op.pidx
@@ -31,16 +33,35 @@
 		JOIN bg_user u
 		ON o.midx=u.midx
 		
+		LEFT JOIN bg_delivery d
+		ON o.order_idx=d.order_idx
+		
 		GROUP BY o.order_idx
 		ORDER BY o.order_idx
 		DESC
 	</select>
 
 	<!-- 출고버튼(관리자 주문리스트에서 order 테이블의 delivery_yn 컬럼을 Y로 바꾸기 -->
-	<update id="deliveryYN" parameterType="CombineVO">
-		UPDATE bg_order
-		<if test='delivery_yn == "N"'>SET delivery_yn='Y'</if>
-		<if test='delivery_yn == "Y"'>SET delivery_yn='N'</if>
-		WHERE order_idx=#{order_idx}
+	<update id="prodStat" parameterType="CombineVO">
+		UPDATE bg_order o
+		LEFT OUTER JOIN bg_delivery d
+		ON o.order_idx=d.order_idx
+		SET 
+		<if test='kind == "N"'>
+		 o.order_yn='N',d.order_yn='N',o.delivery_yn='N',d.deli_stat='N',d.send_day = null,d.deli_com = null
+		</if>
+		<if test='kind == "Y"'>
+		 o.order_yn='Y',d.order_yn='Y',o.delivery_yn='N',d.deli_stat='Y',d.send_day = null,d.deli_com = null
+		</if>
+		<if test='kind == "A"'>
+		 o.order_yn='Y',d.order_yn='Y',o.delivery_yn='N',d.deli_stat='A',d.send_day = null,d.deli_com = null
+		</if>
+		<if test='kind == "B"'>
+		 o.order_yn='Y',d.order_yn='Y',o.delivery_yn='Y',d.deli_stat='B',d.send_day = sysdate(),d.deli_com = null
+		</if>
+		<if test='kind == "C"'>
+		 o.order_yn='Y',d.order_yn='Y',o.delivery_yn='Y',d.deli_stat='C',d.send_day = sysdate(),d.deli_com = sysdate()
+		</if>
+		WHERE o.order_idx=#{order_idx}
 	</update>
 </mapper>

@@ -57,7 +57,7 @@
 				str += "			<c:if test='${ro.contents != null}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite2' data-bs-toggle='modal' data-bs-target='#staticBackdrop2' onclick='reviewDetail(${ro.ridx})' value='리뷰 확인' readonly></span></td>";
 				str += "			</c:if>";
-				str += "			<c:if test='${ro.contents == null}'>";
+				str += "			<c:if test='${ro.contents == null && ro.deli_stat == \"C\"}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite1' data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${ro.detail_idx})' value='리뷰 작성' readonly></span></td>";
 				str += "			</c:if>";
 				str += "		</c:if>";
