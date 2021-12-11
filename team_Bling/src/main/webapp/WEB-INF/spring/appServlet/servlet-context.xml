@@ -63,11 +63,8 @@
 		<!-- 관리자 세션체크 매핑-->
 		<interceptor>
 			<mapping path="/Ad_Main/main.do"/>
-			<mapping path="/Ad_regist/list.do"/>
-			<mapping path="/Ad_regist/regist.do"/>
-			<mapping path="/Ad_regist/registPro.do"/>
-			<mapping path="/Ad_regist/insertOpt.do"/>
-			<mapping path="/Ad_regist/insertImg.do"/>
+			<mapping path="/Ad_regist/*"/>
+			<mapping path="/Ad_order_delivery/*"/>
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
 		<!-- 사용자 세션체크 매핑 -->
@@ -83,9 +80,7 @@
 			<mapping path="/Addr/main.do"/>
 			
 			<!-- 고객센터 또는 디테일,마이페이지에서  상품,일반문의, 문의수정하기 -->
-			<mapping path="/Customer/product.do"/>
-			<mapping path="/Customer/question.do"/>
-			<mapping path="/Customer/product_modify.do"/>
+			<mapping path="/Customer/*"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 	</interceptors>

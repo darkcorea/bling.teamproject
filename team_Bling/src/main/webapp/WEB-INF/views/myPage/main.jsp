@@ -280,6 +280,10 @@
 				
 				contents = contentsCheck();
 				console.log("reviewWrite()에서 contentsCheck() 호출 후 return값 : "+contentsCheck());
+				if(contents == ""){
+					console.log("reviewWrite()에서 contents가 없음");
+					return ;
+				}
 			}
 			else if(starRating == null){
 				Swal.fire({
