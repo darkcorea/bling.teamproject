@@ -91,7 +91,7 @@
 					
 				},
 				error: function(){
-					alert("detai_idx 넘기기 에러");
+					alert("detail_idx 넘기기 에러");
 				}
 			});
 		}
