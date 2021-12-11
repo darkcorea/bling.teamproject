@@ -7,10 +7,10 @@
 
 	 <!-- 비회원 주문 등록 -->
 	<insert id="nonorderinsert" parameterType="NonorderVO">
-	<![CDATA[
-	insert into bg_nonorder(ORDERID,NAME,EMAIL,PHONE,ZIP_CODE,ADDR1,ADDR2,RPHONE,RECIPIENT,TOT_PRICE,DEPOSITOR,ORDER_YN,PAYMENT) 
-	values(#{orderid},#{name},#{email},#{phone},#{zip_code},#{addr1},#{addr2},#{rphone},#{recipient},#{tot_price},#{depositor},#{order_yn},#{payment})
-	]]>
+	insert into bg_nonorder(ORDERID,NAME,EMAIL,PHONE,ZIP_CODE,ADDR1,ADDR2,RPHONE,RECIPIENT,TOT_PRICE,DEPOSITOR,ORDER_YN,PAYMENT
+	<if test='order_yn == "Y"'>,deli_stat</if>) 
+	values(#{orderid},#{name},#{email},#{phone},#{zip_code},#{addr1},#{addr2},#{rphone},#{recipient},#{tot_price},#{depositor},#{order_yn},#{payment}
+	<if test='order_yn == "Y"'>,'Y'</if>)
 	<selectKey resultType="int" keyProperty="nonidx" order="AFTER">
 	
 	SELECT MAX(nonidx) FROM bg_nonorder
@@ -27,10 +27,10 @@
 	</insert>
 	<!-- 회원 주문 등록 -->
 	<insert id="m_orderinsert" parameterType="OrderVO">
-	<![CDATA[
-	insert into bg_order(MIDX,ZIP_CODE,ADDR1,ADDR2,RPHONE,RECIPIENT,TOT_PRICE,DEPOSITOR,ORDER_YN,PAYMENT,addmileage,payed_mileage) 
-	values(#{midx},#{zip_code},#{addr1},#{addr2},#{rphone},#{recipient},#{tot_price},#{depositor},#{order_yn},#{payment},#{addmileage},#{payed_mileage})
-	]]>
+	insert into bg_order(MIDX,ZIP_CODE,ADDR1,ADDR2,RPHONE,RECIPIENT,TOT_PRICE,DEPOSITOR,ORDER_YN,PAYMENT,addmileage,payed_mileage
+	<if test='order_yn == "Y"'>,deli_stat</if>) 
+	values(#{midx},#{zip_code},#{addr1},#{addr2},#{rphone},#{recipient},#{tot_price},#{depositor},#{order_yn},#{payment},#{addmileage},#{payed_mileage}
+	<if test='order_yn == "Y"'>,'Y'</if>)
 	<selectKey resultType="int" keyProperty="order_idx" order="AFTER">
 	SELECT MAX(order_idx) FROM bg_order
 	</selectKey>
