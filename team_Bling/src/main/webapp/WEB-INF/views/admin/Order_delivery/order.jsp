@@ -62,13 +62,13 @@
 			text-align: center;
 			width: 110px;
 		}
-		#th7,#th8{
+		#th7{
 			text-align: center;
 			width: 80px;
 		}
-		#th9{
+		#th8{
 			text-align: center;
-			width: 100px;
+			width: 150px;
 		}
 		.td{
 			text-align: center;
@@ -96,13 +96,13 @@
 			text-align: center;
 			width: 110px;
 		}
-		.td7,.td8{
+		.td7{
 			text-align: center;
 			width: 80px;
 		}
-		.td9{
+		.td8{
 			text-align: center;
-			width: 100px;
+			width: 150px;
 		}
 		#deliN{
 			width: 64px;
@@ -125,6 +125,30 @@
 		#orderCnt{
 			color: red;
 		}
+		
+		/* dropdown 메뉴 */
+		.prodBtn{
+			width: 140px;
+		}
+		.btn-warning{
+			color: #ffffff;
+		}
+		.btn-warning:hover{
+			color: #ffffff;
+		}
+		.btn-warning:focus-within{
+			color: #ffffff;
+		}
+		.dropdown-menu{
+			width: 120px;
+			min-width: unset;
+		}
+		.prodStat{
+			width: 10px;
+			margin-left: 10px;
+			display: inline;
+		}
+		/* dropdown 메뉴 */
 	</style>
 </head>
 <body>
@@ -157,8 +181,7 @@
 				<th id="th5">수량</th>
 				<th id="th6">주문금액</th>
 				<th id="th7">결제방법</th>
-				<th id="th8">결제상태</th>
-				<th id="th9">배송상태</th>
+				<th id="th8">주문상태</th>
 			</tr>
 		</table>
 		<table id="ajaxTable">
@@ -201,18 +224,54 @@
 				str += "	<td class='td td1'>"+data[i].order_idx+"</td>";
 				str += "	<td class='td td2'>"+data[i].rdate+"</td>";
 				str += "	<td class='td3'>"+data[i].uname+"</td>";
-				str += "	<td class='td4'><a id='prodLink' href='/Product/detail.do?pidx="+data[i].pidx+"'> 상품 : <span id='pname'>"+data[i].pname+"</span> <br> 옵션 : "+data[i].oname+" 등 <span id='orderCnt'>"+data[i].orderCompCnt+"건</span></a></td>";
+				if(data[i].orderCompCnt == 1){
+					str += "	<td class='td4'><a id='prodLink' href='/Product/detail.do?pidx="+data[i].pidx+"'> 상품 : <span id='pname'>"+data[i].pname+"</span> <br> 옵션 : "+data[i].oname+"</a></td>";
+				}
+				else if(data[i].orderCompCnt != 1){
+					str += "	<td class='td4'><a id='prodLink' href='/Product/detail.do?pidx="+data[i].pidx+"'> 상품 : <span id='pname'>"+data[i].pname+"</span> <br> 옵션 : "+data[i].oname+" 등 <span id='orderCnt'>"+data[i].orderCompCnt+"건</span></a></td>";
+				}
+				
 				str += "	<td class='td td5'>"+data[i].quantity+"</td>";
 				str += "	<td class='td td6'>"+data[i].tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원</td>";
 				str += "	<td class='td td7'>"+data[i].payment+"</td>";
-				str += "	<td class='td td8'>"+data[i].order_yn+"</td>";
-				str += "	<td class='td td9'>";
-					if(data[i].delivery_yn == "N"){
-						str += "<input id='deliN' value='미출고' readonly onclick='deli("+data[i].order_idx+",\""+data[i].delivery_yn+"\")'>";
-					}
-					else if(data[i].delivery_yn == "Y"){
-						str += "<input id='deliY' value='출고중' readonly onclick='deli("+data[i].order_idx+",\""+data[i].delivery_yn+"\")'>";
-					}
+				str += "	<td class='td td8'>";
+					
+				str += "<div class='btn-group dropend'>";
+				
+				
+				if(data[i].deli_stat == "N"){
+					str += "	<button type='button' class='btn btn-secondary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+					str += "		결제대기(N)";
+				}else if(data[i].deli_stat == "Y"){
+					str += "	<button type='button' class='btn btn-success dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+					str += "		결제완료(Y)";
+				}else if(data[i].deli_stat == "A"){
+					str += "	<button type='button' class='btn btn-primary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+					str += "		상품준비중(A)";
+				}else if(data[i].deli_stat == "B"){
+					str += "	<button type='button' class='btn btn-warning dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+					str += "		배송중(B)";
+				}else if(data[i].deli_stat == "C"){
+					str += "	<button type='button' class='btn btn-danger dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+					str += "		배송완료(C)";
+				}
+			
+				str += "	</button>";
+				str += "	<ul class='dropdown-menu'>";
+				str += "		<li><input type='radio' name='prodStat' id='prodStatN"+data[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"N\","+data[i].order_idx+")'></li>";
+				str += "			<label for='prodStatN"+data[i].order_idx+"'>결제대기</label><br>";
+				str += "		<li><input type='radio' name='prodStat' id='prodStatY"+data[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"Y\","+data[i].order_idx+")'></li>";
+				str += "			<label for='prodStatY"+data[i].order_idx+"'>결제완료</label><br>";
+				str += "		<li><input type='radio' name='prodStat' id='prodStatA"+data[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"A\","+data[i].order_idx+")'></li>";
+				str += "			<label for='prodStatA"+data[i].order_idx+"'>상품준비중</label><br>";
+				str += "		<li><input type='radio' name='prodStat' id='prodStatB"+data[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"B\","+data[i].order_idx+")'></li>";
+				str += "			<label for='prodStatB"+data[i].order_idx+"'>배송중</label><br>";
+				str += "		<li><input type='radio' name='prodStat' id='prodStatC"+data[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"C\","+data[i].order_idx+")'></li>";
+				str += "			<label for='prodStatC"+data[i].order_idx+"'>배송완료</label><br>";
+				str += "	</ul>";
+				str += "</div>";
+						
+						
 				str += "	</td>";
 				str += "</tr>";
 			}
@@ -226,26 +285,39 @@
 	
 	
 		
-	function deli(order_idx,delivery_yn){
+	function deli(kind,order_idx){
 		console.log("deli() 실행");
+		console.log("kind : "+kind);
 		console.log("order_idx : "+order_idx);
-		console.log("delivery_yn : "+delivery_yn);
+		
+		let kind2 = "";
+		if(kind=="N"){
+			kind2="결제대기(N)";
+		}else if(kind=="Y"){
+			kind2="결제완료(Y)";
+		}else if(kind=="A"){
+			kind2="상품준비중(A)";
+		}else if(kind=="B"){
+			kind2="배송중(B)";
+		}else if(kind=="C"){
+			kind2="배송완료(C)";
+		}
 		
 		Swal.fire({
 			icon: 'question',
-			text: '출고상태를  변경하시겠습니까?',
+			text: '주문번호 '+order_idx+'의 주문상태를 '+kind2+'로 변경하시겠습니까?',
 			showCancelButton: true
 		}).then((result) => {
 			if (result.isConfirmed) {
-				let deliveryData = {
+				let prodData = {
 						method: "post",
 						headers: {
 							"Content-Type": "application/json",
 						},
-						body: JSON.stringify({order_idx:order_idx, delivery_yn:delivery_yn})
+						body: JSON.stringify({kind:kind, order_idx:order_idx})
 					}
 				
-				fetch('/Ad_order_delivery/deliveryYN.do', deliveryData)
+				fetch('/Ad_order_delivery/prodStat.do', prodData)
 					.then((data) => {
 						console.log(data);
 						orderList();

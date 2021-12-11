@@ -7,5 +7,5 @@ import com.project.bling.vo.CombineVO;
 public interface Ad_Order_deliveryService {
 
 	public List<CombineVO> orderList() throws Exception;
-	public void deliveryYN(CombineVO vo) throws Exception;
+	public void prodStat(CombineVO vo) throws Exception;
 }

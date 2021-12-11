@@ -31,20 +31,23 @@ public class Ad_Order_deliveryController {
 	@RequestMapping(value="/orderList.do")
 	public List<CombineVO> orderList(Model model) throws Exception {
 		System.out.println("관리자 주문리스트 컨트롤러 : orderlist 실행");
+		
+		//ajax로 화면 로딩시 출력할 데이터들을 return
 		return ad_order_deliveryService.orderList();
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/deliveryYN.do", produces = "text/html; charset=utf-8")
-	public String deliveryYN(@RequestBody CombineVO vo) throws Exception {
-		System.out.println("관리자 주문리스트 컨트롤러 : deliveryYN 실행");
-		System.out.println("출고버튼으로 받은 order_idx : "+vo.getOrder_idx());
-		System.out.println("출고버튼으로 받은 delivery_yn : "+vo.getDelivery_yn());
-				
+	@RequestMapping(value="/prodStat.do")
+	public String prodStat(@RequestBody CombineVO vo) throws Exception {
+		System.out.println("관리자 주문리스트 컨트롤러 : prodStat 실행");
+		System.out.println("주문상태 버튼으로 받은 kind : "+vo.getKind());
+		System.out.println("주문상태 버튼으로 받은 order_idx : "+vo.getOrder_idx());
 		
-		ad_order_deliveryService.deliveryYN(vo);
 		
-		return "출고상태 변경";
+		//주문상태 변경
+		ad_order_deliveryService.prodStat(vo);
+		
+		return "주문상태 변경";
 	}
 
 }

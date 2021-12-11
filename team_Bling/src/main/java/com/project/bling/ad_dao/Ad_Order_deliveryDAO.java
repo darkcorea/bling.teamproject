@@ -19,7 +19,7 @@ public class Ad_Order_deliveryDAO {
 		return sqlSession.selectList(ps+"orderList");
 	}
 	
-	public void deliveryYN(CombineVO vo) throws Exception {
-		sqlSession.update(ps+"deliveryYN", vo);
+	public void prodStat(CombineVO vo) throws Exception {
+		sqlSession.update(ps+"prodStat", vo);
 	}
 }

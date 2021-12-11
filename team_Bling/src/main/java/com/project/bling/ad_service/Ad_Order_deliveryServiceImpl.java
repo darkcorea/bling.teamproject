@@ -19,8 +19,8 @@ public class Ad_Order_deliveryServiceImpl implements Ad_Order_deliveryService{
 	}
 
 	@Override
-	public void deliveryYN(CombineVO vo) throws Exception {
-		ad_order_deliveryDAO.deliveryYN(vo);
+	public void prodStat(CombineVO vo) throws Exception {
+		ad_order_deliveryDAO.prodStat(vo);
 	}
 	
 	
