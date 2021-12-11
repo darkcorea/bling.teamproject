@@ -86,6 +86,9 @@
 			<mapping path="/Customer/product.do"/>
 			<mapping path="/Customer/question.do"/>
 			<mapping path="/Customer/product_modify.do"/>
+			
+			<!-- 주문하기 -->
+			<mapping path="/Order/memberorder.do"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 	</interceptors>

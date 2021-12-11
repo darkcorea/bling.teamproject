@@ -98,7 +98,13 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value="/memberorder.do",method = RequestMethod.POST)
-	public String memberorder(Model model,HttpServletRequest request) throws Exception {
+	public String memberorder(Model model,HttpServletRequest request,HttpSession session) throws Exception {
+		
+		// 로그인이 풀렸을 떄 대비해서 넣음
+		if(session.getAttribute("UserVO") == null) {
+			return "redirect:/Login/main.do";
+		}
+		
 		String productname = request.getParameter("productname");
 		String jsonData = request.getParameter("jsonData");
 		System.out.println(jsonData);
