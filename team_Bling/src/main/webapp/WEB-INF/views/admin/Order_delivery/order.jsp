@@ -13,6 +13,8 @@
 <script src="/js/bootstrap.bundle.js"></script>
 <link rel="stylesheet" href="/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	<!-- SweetAlert2(alert,modal창) -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<style>
 		div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
@@ -50,7 +52,7 @@
 		}
 		#th4{
 			text-align: center;
-			width: 240px;
+			width: 270px;
 		}
 		#th5{
 			text-align: center;
@@ -60,11 +62,11 @@
 			text-align: center;
 			width: 110px;
 		}
-		#th7,#th8,#th9{
+		#th7,#th8{
 			text-align: center;
 			width: 80px;
 		}
-		#th10{
+		#th9{
 			text-align: center;
 			width: 100px;
 		}
@@ -84,7 +86,7 @@
 			padding-left: 15px;
 		}
 		.td4{
-			width: 250px;
+			width: 270px;
 		}
 		.td5{
 			text-align: center;
@@ -94,16 +96,27 @@
 			text-align: center;
 			width: 110px;
 		}
-		.td7,.td8,.td9{
+		.td7,.td8{
 			text-align: center;
 			width: 80px;
 		}
-		.td10{
+		.td9{
 			text-align: center;
 			width: 100px;
 		}
-		#deliBtn{
+		#deliN{
 			width: 64px;
+			cursor: pointer;
+			text-align: center;
+		}
+		#deliY{
+			width: 64px;
+			cursor: pointer;
+			text-align: center;
+			border: none;
+			border-radius: 5px;
+			background-color: red;
+			color: #ffffff;
 		}
 		#pname{
 			font-weight: bold;
@@ -146,7 +159,6 @@
 				<th id="th7">결제방법</th>
 				<th id="th8">결제상태</th>
 				<th id="th9">배송상태</th>
-				<th id="th10">출고버튼</th>
 			</tr>
 		</table>
 		<table id="ajaxTable">
@@ -158,58 +170,9 @@
 </body>
 <script>
 	$(function(){
-		let str = "";
-		
-		const option = {
-			method: "post",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(),
-		}
-		
-		fetch("/Ad_order_delivery/orderList.do", option)
-		.then((response) => {
-			if(!response.ok){
-				throw new Error('400 아니면 500 에러 발생');
-			}
-			
-			return response.json();
-		})
-		.then((data) => {
-			console.log('화면출력 성공');
-			console.log(data[0].order_idx);
-			for(let i=0; data.length > i; i++){
-				str += "<tr class='tableRow'>";
-				str += "	<td class='td td1'>"+data[i].order_idx+"</td>";
-				str += "	<td class='td td2'>"+data[i].rdate+"</td>";
-				str += "	<td class='td3'>"+data[i].uname+"</td>";
-				str += "	<td class='td4'><a id='prodLink' href='/Product/detail.do?pidx="+data[i].pidx+"'> 상품 : <span id='pname'>"+data[i].pname+"</span> <br> 옵션 : "+data[i].oname+" 등 <span id='orderCnt'>"+data[i].orderCompCnt+"건</span></a></td>";
-				str += "	<td class='td td5'>"+data[i].quantity+"</td>";
-				str += "	<td class='td td6'>"+data[i].tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원</td>";
-				str += "	<td class='td td7'>"+data[i].payment+"</td>";
-				str += "	<td class='td td8'>"+data[i].order_yn+"</td>";
-				str += "	<td class='td td9'>"+data[i].delivery_yn+"</td>";
-				str += "	<td class='td td10'>";
-								if(data[i].delivery_yn == "N"){
-									str += "<button id='deliBtn' onclick='deli("+data[i].order_idx+",\""+data[i].delivery_yn+"\")'>미출고</button>";
-								}
-								else if(data[i].delivery_yn == "Y"){
-									str += "<button id='deliBtn' onclick='deli("+data[i].order_idx+",\""+data[i].delivery_yn+"\")'>출고중</button>";
-								}
-				str += "	</td>";
-				str += "</tr>";
-			}
-			$("#ajaxTable").html(str);
-			
-		})
-		.catch(() => {
-			console.log('ajax 화면출력 에러');
-		})
-		
+		orderList();
 	});
 
-	
 	
 	function orderList(){
 		let str = "";
@@ -243,14 +206,13 @@
 				str += "	<td class='td td6'>"+data[i].tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원</td>";
 				str += "	<td class='td td7'>"+data[i].payment+"</td>";
 				str += "	<td class='td td8'>"+data[i].order_yn+"</td>";
-				str += "	<td class='td td9'>"+data[i].delivery_yn+"</td>";
-				str += "	<td class='td td10'>";
-								if(data[i].delivery_yn == "N"){
-									str += "<button id='deliBtn' onclick='deli("+data[i].order_idx+",\""+data[i].delivery_yn+"\")'>미출고</button>";
-								}
-								else if(data[i].delivery_yn == "Y"){
-									str += "<button id='deliBtn' onclick='deli("+data[i].order_idx+",\""+data[i].delivery_yn+"\")'>출고중</button>";
-								}
+				str += "	<td class='td td9'>";
+					if(data[i].delivery_yn == "N"){
+						str += "<input id='deliN' value='미출고' readonly onclick='deli("+data[i].order_idx+",\""+data[i].delivery_yn+"\")'>";
+					}
+					else if(data[i].delivery_yn == "Y"){
+						str += "<input id='deliY' value='출고중' readonly onclick='deli("+data[i].order_idx+",\""+data[i].delivery_yn+"\")'>";
+					}
 				str += "	</td>";
 				str += "</tr>";
 			}
@@ -268,23 +230,31 @@
 		console.log("deli() 실행");
 		console.log("order_idx : "+order_idx);
 		console.log("delivery_yn : "+delivery_yn);
-				
-		let deliveryData = {
-				method: "post",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({order_idx:order_idx, delivery_yn:delivery_yn})
-			}
 		
-		fetch('/Ad_order_delivery/deliveryYN.do', deliveryData)
-			.then((data) => {
-				console.log(data);
-				orderList();
-			})
-			.catch(() => {
-				console.log('출고버튼 에러');
-			})
+		Swal.fire({
+			icon: 'question',
+			text: '출고상태를  변경하시겠습니까?',
+			showCancelButton: true
+		}).then((result) => {
+			if (result.isConfirmed) {
+				let deliveryData = {
+						method: "post",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({order_idx:order_idx, delivery_yn:delivery_yn})
+					}
+				
+				fetch('/Ad_order_delivery/deliveryYN.do', deliveryData)
+					.then((data) => {
+						console.log(data);
+						orderList();
+					})
+					.catch(() => {
+						console.log('출고버튼 에러');
+					})
+			}
+		});
 	}
 	
 </script>
