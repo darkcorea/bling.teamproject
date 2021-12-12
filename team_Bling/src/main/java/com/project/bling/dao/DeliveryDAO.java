@@ -6,7 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.QuestionVO;
 
 @Repository
 public class DeliveryDAO {
@@ -16,9 +18,14 @@ public class DeliveryDAO {
 	
 	private String dm = "com.project.bling.mapper.deliveryMapper.";
 	
+	// midx와 pageMaker로 주문 총 갯수 가져 오기
+	public int delivery_count(PageMaker pm) throws Exception {
+		return sqlSession.selectOne(dm +"delivery_count", pm);
+	}
+
 	// midx로 배송주문 상태 가져오기 
-	public List<CombineVO> deivery_list(int midx) throws Exception {	
-		return sqlSession.selectList(dm + "deivery_list", midx);
+	public List<CombineVO> deivery_list(PageMaker pm) throws Exception {	
+		return sqlSession.selectList(dm + "deivery_list", pm);
 	}
 	
 	// order_idx로 적립금이 있는지 없는지 확인
@@ -41,12 +48,19 @@ public class DeliveryDAO {
 		sqlSession.update(dm +"addmileage_user", cv);
 	}
 	
-		
 	// order_idx로 구매한 상품 정보 뿌려주기
 	public List<CombineVO> order_list(int order_idx) throws Exception{
 		return sqlSession.selectList(dm + "order_list", order_idx);
 	}
 	
+	// 구매한 제품 취소, 환불, 교환 하기
+	public void return_delivery_question(QuestionVO qv) throws Exception {
+		sqlSession.insert(dm +"return_delivery_question", qv);
+	}
 	
+	// 구매한 제품 취소, 환불, 교환에 대한 배송정보 변경
+	public void return_delivery(CombineVO cv) throws Exception {
+		sqlSession.update(dm +"return_delivery", cv);
+	}
 
 }

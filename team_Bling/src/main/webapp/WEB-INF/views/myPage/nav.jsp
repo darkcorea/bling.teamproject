@@ -87,7 +87,7 @@
 	<div id="navMenu">
 		<div id="menuHead">쇼핑정보</div>
 		<div id="navSub">
-			<div class="pa_top"><a class="navA" href="/Delivery/main.do">주문확인/배송조회</a></div>
+			<div class="pa_top"><a class="navA" href="/Delivery/main.do?page=1&kind=E">주문확인/배송조회</a></div>
 			<div class="pa_top"><a class="navA" href="/Basket/like1.do?kind=A">관심상품</a></div>
 			<div class="pa_top"><a class="navA" href="/Basket/cart.do">장바구니</a></div>
 		</div>

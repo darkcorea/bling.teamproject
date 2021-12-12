@@ -6,18 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.bling.dao.DeliveryDAO;
+import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.QuestionVO;
 
 @Service("DeliveryService")
 public class deliveryServiceImpl implements DeliveryService {
 
 	@Autowired
 	DeliveryDAO deliveryDAO;
-
+	
+	// midx와 PageMaker로 주문 총갯수 가져오기
+	@Override
+	public int delivery_count(PageMaker pm) throws Exception {
+		return deliveryDAO.delivery_count(pm);
+	}
+	
 	// midx로 배송주문 상태 가져오기 
 	@Override
-	public List<CombineVO> deivery_list(int midx) throws Exception {
-		return deliveryDAO.deivery_list(midx);
+	public List<CombineVO> deivery_list(PageMaker pm) throws Exception {
+		return deliveryDAO.deivery_list(pm);
 	}
 
 	// order_idx로 구매확정 하기
@@ -50,6 +58,19 @@ public class deliveryServiceImpl implements DeliveryService {
 		deliveryDAO.addmileage_zero(order_idx);	
 	}
 	
+	// 구매한 체품 취소,환불,교환 하기
+	@Override
+	public void return_delivery_question(QuestionVO qv) throws Exception {
+		deliveryDAO.return_delivery_question(qv);
+	}
 	
+	// 구매한 체품 취소,환불,교환에 따른 배송 정보 변경
+	@Override
+	public void return_delivery(CombineVO cv) throws Exception {
+		deliveryDAO.return_delivery(cv);
+		
+	}
+
+
 	
 }
