@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
 
 @Repository
@@ -15,8 +16,12 @@ public class Ad_Order_deliveryDAO {
 	
 	private String ps = "com.project.bling.mapper.adminmapper.ad_order_deliveryMapper.";
 
-	public List<CombineVO> orderList() throws Exception {
-		return sqlSession.selectList(ps+"orderList");
+	public int orderCnt() throws Exception {
+		return sqlSession.selectOne(ps+"orderCnt");
+	}
+	
+	public List<CombineVO> orderList(PageMaker pm) throws Exception {
+		return sqlSession.selectList(ps+"orderList", pm);
 	}
 	
 	public void prodStat(CombineVO vo) throws Exception {
