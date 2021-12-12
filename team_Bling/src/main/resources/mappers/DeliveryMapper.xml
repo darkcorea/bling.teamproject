@@ -5,9 +5,22 @@
  
 <mapper namespace="com.project.bling.mapper.deliveryMapper">
 
+	<!-- 페이징에 필요한 배송정보 총 갯수 -->
+	<select id="delivery_count" parameterType="PageMaker" resultType="int">
+
+		SELECT count(*) FROM bg_order WHERE midx=#{midx}
+		
+		<if test='scri.kind == "B"'><![CDATA[AND rdate >= sysdate()]]></if>
+		<if test='scri.kind == "C"'><![CDATA[AND rdate >= DATE_ADD(sysdate(), INTERVAL -1 WEEK )]]></if>
+		<if test='scri.kind == "D"'><![CDATA[AND rdate >= DATE_ADD(sysdate(), INTERVAL -1 MONTH )]]></if>
+		<if test='scri.kind == "E"'><![CDATA[AND rdate >= DATE_ADD(sysdate(), INTERVAL -3 MONTH )]]></if>
+		<if test='scri.kind == "F"'><![CDATA[AND rdate >= DATE_ADD(sysdate(), INTERVAL -6 MONTH )]]></if>
+		<if test='scri.kind == "G"'>AND rdate BETWEEN DATE_FORMAT(#{scri.rdate1},'%Y-%m-%d') AND DATE_FORMAT(#{scri.rdate2},'%Y-%m-%d')</if>
+
+	</select>
+
 	<!-- midx로 배송 정보 가져오기 뷰 만들어서 함 -->
-	<select id="deivery_list" parameterType="int" resultType="CombineVO">
-	<![CDATA[
+	<select id="deivery_list" parameterType="PageMaker" resultType="CombineVO">
 		SELECT * FROM (
 			SELECT ord.order_idx, od.detail_idx, ord.rdate, im.main, pr.pname, op.oname, od.quantity , ord.tot_price,
 			de.cancel, de.refund, de.exchange, de.deli_stat, de.order_yn, re.ridx, de.invoice_num, de.confirm_yn
@@ -22,10 +35,19 @@
 			JOIN BG_IMAGE im ON im.pidx = pr.pidx
 			JOIN bg_delivery de ON de.order_idx = ord.order_idx
 			LEFT OUTER JOIN  open_a_2021.bg_review re ON re.DETAIL_IDX = od.detail_idx
-			WHERE ord.midx=#{midx}  AND now() >= date_add(now(), interval -3 month)
+			WHERE ord.midx=#{midx}
+			
+			<if test='scri.kind == "B"'><![CDATA[AND ord.rdate >= sysdate()]]></if>
+			<if test='scri.kind == "C"'><![CDATA[AND ord.rdate >= DATE_ADD(sysdate(), INTERVAL -1 WEEK )]]></if>
+			<if test='scri.kind == "D"'><![CDATA[AND ord.rdate >= DATE_ADD(sysdate(), INTERVAL -1 MONTH )]]></if>
+			<if test='scri.kind == "E"'><![CDATA[AND ord.rdate >= DATE_ADD(sysdate(), INTERVAL -3 MONTH )]]></if>
+			<if test='scri.kind == "F"'><![CDATA[AND ord.rdate >= DATE_ADD(sysdate(), INTERVAL -6 MONTH )]]></if>
+			<if test='scri.kind == "G"'>AND ord.rdate BETWEEN DATE_FORMAT(#{scri.rdate1},'%Y-%m-%d') AND DATE_FORMAT(#{scri.rdate2},'%Y-%m-%d')</if>
+			
+			AND now() >= date_add(now(), interval -3 month)
 			ORDER BY ord.order_idx desc, od.detail_idx desc) A
         WHERE RNUM =1
-	]]>
+        Limit #{startPost},#{scri.perPageNum}
 	</select>
 	  
 	 <!-- order_idx로  추가 마일리지가 있는지 계산 --> 
@@ -61,5 +83,21 @@
 		WHERE bo.order_idx=#{order_idx}
 	  </select>
 	  
+	  <!-- 구매한 물품에 대한 교환/취소/반품 등록 -->
+	  <insert id="return_delivery_question" parameterType="QuestionVO">
+	  	INSERT INTO bg_question (qidx, originqidx, midx, category, title, content, order_idx)
+		VALUES (#{qidx}, #{qidx}, #{midx}, #{category}, #{title}, #{content}, #{order_idx} )
+		<selectKey resultType="int" keyProperty="qidx" order="BEFORE">
+          SELECT MAX(qidx)+1 FROM bg_question
+       </selectKey>
+	  </insert>
 	  
+	  <!-- 구매한 물품에 대한 교환,취소,환불 배송정보 변경 -->
+	  <update id="return_delivery" parameterType="CombineVO">
+	  	UPDATE bg_delivery SET
+	  	  	<if test='kind == "D"'>exchange = 'N'</if>
+	  	   	<if test='kind == "E"'>refund = 'N'</if>
+	  		<if test='kind == "F"'>cancel = 'N'</if>
+	  	WHERE order_idx=#{order_idx}
+	  </update>
 </mapper>

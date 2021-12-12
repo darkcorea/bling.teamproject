@@ -11,8 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.bling.domain.Criteria;
+import com.project.bling.domain.PageMaker;
 import com.project.bling.service.DeliveryService;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.QuestionVO;
 import com.project.bling.vo.UserVO;
 
 @RequestMapping(value="/Delivery")
@@ -23,15 +26,25 @@ public class DeliveryController {
 	DeliveryService deliveryService;
 	
 	@RequestMapping(value="/main.do")
-	public String cart(Locale locale, Model model, HttpSession session) throws Exception {
+	public String cart(Locale locale, Model model, HttpSession session, Criteria cs) throws Exception {
 		
 		// 로그인이 풀렸을 떄 대비해서 넣음
 		if ( session.getAttribute("UserVO") == null) {return "redirect:/Login/main.do";}
-		
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		int midx = uv.getMidx();
 		
-		model.addAttribute("list", deliveryService.deivery_list(midx));
+		cs.setPerPageNum(10);
+		
+		PageMaker pm = new PageMaker();
+		pm.setMidx(midx);
+		pm.setScri(cs);
+		
+		//midx와 pm에 따른 오더 총 갯수
+		int setTotalCount = deliveryService.delivery_count(pm);
+		pm.setTotalCount(setTotalCount);
+
+		model.addAttribute("pm",pm);
+		model.addAttribute("list", deliveryService.deivery_list(pm));
 		return "delivery/main";
 	}
 	
@@ -70,12 +83,47 @@ public class DeliveryController {
 		return 0;
 	}
 
-	
 	// order_idx로 구매한 상품 정보 불러와서 뿌려 주기
 	@RequestMapping(value="/order_list.do")
 	@ResponseBody
 	public List<CombineVO> order_list(int order_idx) throws Exception {
 		return deliveryService.order_list(order_idx);
+	}
+	
+	
+	// 상품에 대한 구매,취소,반품 등록
+	@RequestMapping(value="/return_delivery.do")
+	@ResponseBody
+	public int return_delivery(QuestionVO qv, HttpSession session) throws Exception {
+		
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		// 회원 midx에 대한 값 넣기
+		qv.setMidx(uv.getMidx());
+		
+		// 배송 정보에 대한 정보 변경
+		CombineVO cv = new CombineVO();
+		cv.setOrder_idx(qv.getOrder_idx());
+		
+		// 제품에 대한 교환,환불,취소 문의등록, 배송 정보 변경
+		if(qv.getCategory().equals("D")) {
+			qv.setTitle("교환 신청 합니디");
+			cv.setKind("D");
+		}
+		if(qv.getCategory().equals("E")) {
+			qv.setTitle("환불 신청 합니디");
+			cv.setKind("E");
+		}
+		if(qv.getCategory().equals("F")) {
+			qv.setTitle("취소 신청 합니디"); 
+			cv.setKind("F");
+		}
+		
+		// 제품에 대한 교환,환불,취소 문의에 등록
+		deliveryService.return_delivery_question(qv);
+		// 배송 정보에 대한 정보 변경
+		deliveryService.return_delivery(cv);
+		
+		return 1;
 	}
 	
 	

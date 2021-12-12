@@ -11,6 +11,7 @@ public class QuestionVO {
 	private int originqidx;
 	private int depth;
 	private int detail_idx;
+	private int order_idx;
 	private int rownum;
 	private String oname;
 	private String pname;
@@ -20,6 +21,14 @@ public class QuestionVO {
 	
 	
 	
+	public int getOrder_idx() {
+		return order_idx;
+	}
+
+	public void setOrder_idx(int order_idx) {
+		this.order_idx = order_idx;
+	}
+
 	public String getOname() {
 		return oname;
 	}

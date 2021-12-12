@@ -346,9 +346,9 @@
 			<button type="button" class="btn btn-outline-secondary" id="dateBtn1" onclick="day_fn('E')">3개월</button>
 			<button type="button" class="btn btn-outline-secondary" id="dateBtn1" onclick="day_fn('F')">6개월</button>
 			&ensp;
-			<input type="date" id="date1" class="calender" value="">
+			<input type="date" id="rdate1" class="calender" value="">
 			~
-			<input type="date" id="date2" class="calender" value="">&ensp;
+			<input type="date" id="rdate2" class="calender" value="">&ensp;
 			<button class="btn btn-dark" id="dateBtn1" onclick="day_fn('G')">조회</button>
 		</div>
 	</div><br><br>
@@ -357,6 +357,12 @@
 	주문번호를 클릭하면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.<br>
 	취소/교환/반품 신청은 배송완료일 기준 7일까지 가능합니다.
 	</div><br>
+	<c:if test="${fn:length(list) == 0 }">
+	<div class="title text_center">
+		주문 목록이 없습니다.
+	</div><br><br>
+	</c:if>
+	<c:if test="${fn:length(list) != 0 }">
 	<div class="title">
 		주문목록
 	</div>
@@ -401,20 +407,31 @@
 					<td><b><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.tot_price}" />원</b></td>
 					<td>
 						<!-- 배송 상태 -->
-						<c:if test="${list.deli_stat == 'N'}">
-						<b>입금 전</b>
+						<c:if test="${list.cancel != 'Y' || list.refund == 'Y' || list.exchange == 'Y'}">
+							<c:if test="${list.deli_stat == 'N'}">
+							<b>입금 전</b>
+							</c:if>
+							<c:if test="${list.deli_stat == 'Y'}">
+							<b>입금 완료</b>
+							</c:if>
+							<c:if test="${list.deli_stat == 'A'}">
+							<b>배송 준비중</b>
+							</c:if>
+							<c:if test="${list.deli_stat == 'B'}">
+							<b><a class="deli" href="http://nplus.doortodoor.co.kr/web/detail.jsp?slipno=${list.invoice_num}" target="_blank">배송중</a></b>
+							</c:if>
+							<c:if test="${list.deli_stat == 'C'}">
+							<b><a class="deli" href="http://nplus.doortodoor.co.kr/web/detail.jsp?slipno=${list.invoice_num}" target="_blank">배송완료</a></b>
+							</c:if>
 						</c:if>
-						<c:if test="${list.deli_stat == 'Y'}">
-						<b>입금 완료</b>
+						<c:if test="${list.cancel == 'Y'}">
+						<b>취소완료</b>
 						</c:if>
-						<c:if test="${list.deli_stat == 'A'}">
-						<b>배송준비중</b>
+						<c:if test="${list.refund == 'Y'}">
+						<b>환불완료</b>
 						</c:if>
-						<c:if test="${list.deli_stat == 'B'}">
-						<b><a class="deli" href="http://nplus.doortodoor.co.kr/web/detail.jsp?slipno=${list.invoice_num}" target="_blank">배송중</a></b>
-						</c:if>
-						<c:if test="${list.deli_stat == 'C'}">
-						<b><a class="deli" href="http://nplus.doortodoor.co.kr/web/detail.jsp?slipno=${list.invoice_num}" target="_blank">배송완료</a></b>
+						<c:if test="${list.exchange == 'Y'}">
+						<b>교환완료</b>
 						</c:if>
 					</td>
 					<td>
@@ -453,19 +470,19 @@
 						</c:if>
 						<!-- 입금이 완료 전이면-->
 						<c:if test="${list.deli_stat == 'N' && list.cancel == null}">
-							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx})">취소</button>
+							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'F')">취소</button>
 						</c:if>
 						<!-- 입금을 완료 하면-->
 						<c:if test="${list.deli_stat == 'Y' && list.cancel == null}">
-							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx})">취소</button>
+							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'F')">취소</button>
 						</c:if>
 						<!-- 배송 준비중이면 -->
 						<c:if test="${list.deli_stat == 'A' && list.cancel == null}">
-							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx})">취소</button>
+							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'F')">취소</button>
 						</c:if>
 						<!-- 배송 중이면 -->
 						<c:if test="${list.deli_stat == 'B'}">
-							 <button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx})">교환/반품하기</button>
+							 <button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'D')">교환/반품하기</button>
 						</c:if>
 						 
 						 <!-- 배송 완료가 되고-->
@@ -486,7 +503,7 @@
 							 		</c:if>
 							 		<!-- 교환에 아무것도 없으면 -->
 							 		<c:if test="${list.exchange == null}">
-							 			<br><button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx})">교환/반품하기</button>
+							 			<br><button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'D')">교환/반품하기</button>
 							 		</c:if>
 							 		<!-- 리뷰를 쓰지 않았다면 -->
 							 		<c:if test="${list.ridx == null || list.ridx == 0}">
@@ -524,9 +541,50 @@
 			</tbody>
 		</table>
 	</div>
-	<div>
-	
-	</div>
+	<!-- 페이징 바 뿌려주기 -->
+	<nav aria-label="Page navigation">
+		<ul class="pagination justify-content-center">
+			<!-- 앞으로  가기 버튼 , 키워드 유지하면서 이동하기 -->
+			<c:if test="${pm.prev == true}">
+			<li class='page-item'>
+			<c:set var="prev" value="${pm.startPage -1}"/>
+				<a class='page-link' aria-label='Previous' href="/Customer/main.do?page=${prev}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
+					<span aria-hidden='true' class='pointer' >&laquo;</span>
+				</a>
+			</li>
+			</c:if>
+			
+			<!-- 페이징 번호, 키워드 유지하면서 이동 하기  -->
+			<c:set var="page" value="${pm.scri.page}"/>
+			<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
+				<c:if test = "${pageNum == page}">
+				<li class="page-item active">	
+					<a class="page-link pointer" href="/Customer/main.do?page=${pageNum}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
+						<c:out value="${pageNum}"/>
+					</a>
+				</li>
+				</c:if>
+				<c:if test = "${pageNum != page}">
+				<li class="page-item">	
+					<a class="page-link pointer" href="/Customer/main.do?page=${pageNum}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
+						<c:out value="${pageNum}"/>
+					</a>
+				</li>
+				</c:if>
+			</c:forEach>
+			
+			<!-- 뒤로 가기 버튼 , 키워드 유지하면서 이동하기 -->
+			<c:if test="${pm.next && pm.endPage > 0}">
+			<li class='page-item'>
+				<a class='page-link' aria-label='Next' href="/Customer/main.do?page=${pm.endPage + 1}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
+					<span aria-hidden='true' class='pointer'>&raquo;</span>
+				</a>
+			</li>
+			</c:if>
+		</ul>
+	</nav>
+	</c:if>
+
 </section>
 
 <footer>
@@ -637,27 +695,26 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-     	 <form name="return_delivery" method="POSt">
      	 <table>
       		<tr style="height:60px;">
-      			<td style="width:140px;">교환/반품/취소</td>
+      			<td style="width:140px;" class="text_center"><b>교환/반품/취소</b></td>
       			<td>
       				<select style="width:140px;" name="type" id="re_selected">
 	      				<option value="D">교환</option>
 	      				<option value="E">반품</option>
 	      				<option value="F">취소</option>
 					</select>
+					<span id="content_10" style="color:red;displayn:nonn;">10자이상을 입력해주세요</span>
       			</td>
       		</tr>
       		<tr>
-      			<td>직접입력</td>
-      			<td><textarea id="comments" rows="10" cols="60" name="comments" placeholder="최소 10자를 입력해 주세요"></textarea>
-      			<div id="comments_cnt">(0 / 500)</div>
+      			<td class="text_center"><b>사&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;유</b></td>
+      			<td><textarea id="content" rows="10" cols="60" name="content" placeholder="최소 10자를 입력해 주세요"></textarea>
+      			<div id="content_cnt">(0 / 500)</div>
       			<input type="hidden" id="re_order_idx" style="display:none;">
       			</td>
       		</tr>
       	</table>
-      	</form>
       	<!-- 취소,교환,반품을 고르면 자세한 설명 나오는 곳 -->
       	<div id="re_select" class="text_center">
       	<hr>
@@ -666,7 +723,7 @@
       	</div>
       </div>
       <div class="modal-footer" id="delivery_select2">
-        <button type="button" class="btn btn-secondary" id="modal_button1" onclick="return_delivery()">확인</button>&nbsp;
+        <button type="button" class="btn btn-secondary" id="modal_button1" onclick="return_delivery1()">확인</button>&nbsp;
         <button type="button" class="btn btn-outline-secondary" id="modal_button2" data-bs-dismiss="modal" data-bs-dismiss="modal">취소</button>
       </div>
     </div>
@@ -677,29 +734,27 @@
 $(document).ready(function() {
     
     // 글자수 500자로 제한
-    $('#comments').on('keyup', function() {
-        $('#comments_cnt').html("("+$(this).val().length+" / 500)");
+    $('#content').on('keyup', function() {
+        $('#content_cnt').html("(<b>"+$(this).val().length+"</b> / 500)");
  
         if($(this).val().length > 500) {
             $(this).val($(this).val().substring(0, 500));
-            $('#comments_cnt').html("(500 / 500)");
+            $('#content_cnt').html("(<b>500</b> / 500)");
         }
     });
     
 	 // 글자수 500자로 제한
     $('#textArea1').on('keyup', function() {
-        $('#textArea1_cnt').html("("+$(this).val().length+" / 500)");
+        $('#textArea1_cnt').html("(<b>"+$(this).val().length+"</b> / 500)");
 
         if($(this).val().length > 500) {
             $(this).val($(this).val().substring(0, 500));
-            $('#textArea1_cnt').html("(500 / 500)");
+            $('#textArea1_cnt').html("(<b>500</b> / 500)");
         }
     });
  
  
 });
-
-
 
 
 	// 구매 확정 버튼을 눌렀을 떄
@@ -1004,19 +1059,124 @@ $(document).ready(function() {
 	}
 	
 	// 상품  교환, 반품, 취소  하기 버튼을 누르면
-	function Return(order_idx){
-		$("#comments").val("");
-		$("#comments_cnt").html("(0 / 500)");
+	function Return(order_idx,type){
+		$("#content").val("");
+		$("#content_cnt").html("(0 / 500)");
+		$("#content_10").hide();
 		
+		//들어오는 타입이 F이면 취소, D이면 교환 셀렉트 선택
+		if(type == 'F'){
+		    $("#re_selected").val("F").prop("selected", true);
+		}
+		if(type == 'D'){
+		    $("#re_selected").val("D").prop("selected", true);
+		}
 		// order_idx값 숨기고 모달창 열기 
 		$("#re_order_idx").val(order_idx);
 		$("#Return").modal("show");
 	}
 	
-	
-	function return_delivery(){
+	// 교환/반품/취소 모달창에서 내용을 입력하고 확인을 눌렀을 떄
+	function return_delivery1(){
 	    
-	    
+	   let order_idx = $("#re_order_idx").val();
+	   let category = $("#re_selected").val();
+	   let content = $("#content").val();
+	   
+	   // 글자수가 10글자보다 작으면 경고문자 나오고 강조하기
+	   if (content.length < 10){
+	       $("#content_10").show();
+	       $("#content").focus();
+	   }else {
+	       
+	       $.ajax({
+			url: "/Delivery/return_delivery.do",
+			type: "post",
+			data: {"order_idx":order_idx, "category":category,"content":content},
+			ContentType: "json",
+			success: function(data){
+			
+				$("#Return").modal("hide");
+				
+				if(category == "D"){
+				    alert("상품 교환이 접수되었습니다.");
+				}
+				if(category == "E"){
+				    alert("상품 반품이 접수되었습니다.");
+				}
+				if(category == "F"){
+				    alert("상품 취소가 접수되었습니다.");
+				}
+				location.reload();
+			    
+			},
+			error: function(){
+			    alert("상품 취소/교환/반품 오류");
+			}
+			});
+	   }
 	}
+	
+	// 버튼을 클릭하면 원하는 날짜에 맞는 배송정보 가져오기
+	function day_fn(kind){
+	 
+	    let rdate1 = $("#rdate1").val();	
+	    let rdate2 = $("#rdate2").val();
+
+	    let frm = document.createElement("form");
+		
+		frm.name = "frm";
+		frm.method = "post";
+		frm. action = "/Delivery/main.do";
+		
+	    let input1 = document.createElement("input");
+		    input1.setAttribute("type","hidden");
+		    input1.setAttribute("name","kind");
+		    input1.setAttribute("value",kind);
+	    let input2 = document.createElement("input");
+		    input2.setAttribute("type","hidden");
+		    input2.setAttribute("name","rdate1");
+		    input2.setAttribute("value",rdate1);
+	    let input3 = document.createElement("input");
+		    input3.setAttribute("type","hidden");
+		    input3.setAttribute("name","rdate2");
+		    input3.setAttribute("value",rdate2);
+	    let input4 = document.createElement("input");
+		    input4.setAttribute("type","hidden");
+		    input4.setAttribute("name","page");
+		    input4.setAttribute("value",1);
+		
+		if(rdate1 == "" && rdate2 != "" && kind == "G"){
+			alert("날짜를 입력해 주세요");
+	    }else if(rdate1 != "" && rdate2 == ""  && kind == "G"){
+			alert("날짜를 입력해 주세요");
+	    }else if( kind != "G"){
+			frm.appendChild(input1);
+		    frm.appendChild(input4);
+		    document.body.appendChild(frm);
+			frm.submit();
+		
+	    }else{
+			frm.appendChild(input1);
+		    frm.appendChild(input2);
+		    frm.appendChild(input3);
+		    frm.appendChild(input4);
+			document.body.appendChild(frm);
+			frm.submit();
+	    }
+	}
+	
+	// 달력에 값 입력하기
+	function rdate(){
+	    let rdate1 = "<c:out value='${pm.scri.rdate1}'/>";
+	    let rdate2 = "<c:out value='${pm.scri.rdate2}'/>";
+
+	    if(rdate1 != ""){
+			$("#rdate1").val(rdate1);
+			$("#rdate2").val(rdate2);
+	    }
+	}
+	rdate();
+	
 </script>
 </html>
