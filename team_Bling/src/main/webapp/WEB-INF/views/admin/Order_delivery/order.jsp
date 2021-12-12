@@ -104,6 +104,13 @@
 			text-align: center;
 			width: 150px;
 		}
+		select{
+			width: 20px;
+		}
+		option:active{
+			position: relative;
+			right: 50px;
+		}
 		#deliN{
 			width: 64px;
 			cursor: pointer;
@@ -149,12 +156,175 @@
 			display: inline;
 		}
 		/* dropdown 메뉴 */
+		/* 마우스 커서 */
+		.pointer{
+			cursor: pointer;
+		}
+		/* 마우스 커서 */
+		
+		
+/* ---------------modal--------------- */
+		.title4{
+		text-decoration: none;
+		color: #CB7878;	
+		}	
+		.title4:hover{
+			color:#C4C4C4;
+		}
+		/* 클래스 붙이면 백그라운드 색상이 블링 색으로 */
+		.bling_color {
+			background-color: #CB7878;
+		}
+		/* 모달 버튼 가운데로 오기*/
+		#delivery_select2 {
+			justify-content: center;
+		}		
+		/* 모달 버튼 */
+		#modal_button1{
+		background-color: #CB7878;
+		}
+			
+		/* 모달 버튼 크기*/
+		#modal_button1{
+			width:120px;
+		}
+			
+		/* 모달 버튼 크기*/
+		#modal_button2{
+			width:120px;
+		}
+		/* 모달창에 나오는 상품 이미지 크기  */
+		.image_main{
+			width:80px;
+			height:80px;
+		}
+		.title {
+			font-size:25px;
+			font-weight:700;
+		}
+	
+	/* modal */
+		.modal {
+	        text-align: center;
+		}
+		/* 모달창 배경색 */
+		.modal-backdrop {
+			background-color: #000000 !important;
+			opacity: 0.3 !important;
+		}
+		.modal-dialog {
+	        text-align: left;
+	        vertical-align: middle;
+		}
+		.modal-header{
+			background-color: #CB7878;
+		}
+		.modal-title{
+			color: #ffffff;
+			font-size: 30px;
+			position: relative;
+			left: 175px;
+		}
+		#modalText1{
+			text-align: center;
+			font-weight: bold;
+			font-size: 20px;
+		}
+		#textArea1,#textArea2{
+			width: 465px;
+			height: 200px;
+			resize: none;
+			background-color: #C4C4C4;
+			opacity: 0.5;
+		}
+		#textArea::placeholder{
+			color: #000000;
+		}
+		#closeBtn{
+			width: 80px;
+			color: #000000;
+			background-color: #ffffff;
+			border: 2px solid #C4C4C4;
+			position: relative;
+			right: 150px;
+		}
+		#saveBtn{
+			width: 80px;
+			color: #ffffff;
+			background-color: #CB7878;
+			border: 2px solid #CB7878;
+			position: relative;
+			right: 150px;
+		}
+		#saveBtn:hover{
+			color: #CB7878;
+			background-color: #ffffff;
+			border: 2px solid #CB7878;
+		}
+		#delBtn{
+			width: 80px;
+			color: #ffffff;
+			background-color: #CB7878;
+			border: 2px solid #CB7878;
+			position: relative;
+			right: 150px;
+		}
+		#delBtn:hover{
+			color: #CB7878;
+			background-color: #ffffff;
+			border: 2px solid #CB7878;
+		}
+		#uploadDiv{
+			width: 465px;
+			height: 40px;
+			background-color: #CB7878;
+		}
+		#uploadBtn{
+			display: none;
+		}
+		.fileBtn{
+			width: 465px;
+			height: 40px;
+		}
+		#fileBtnText{
+			font-size: 18px;
+			color: #ffffff;
+		}
+		.bi-camera::before{
+			margin: 0px 10px 0px 0px;
+			font-size: 23px;
+		}
+/* ---------------modal--------------- */
 	</style>
 </head>
 <body>
 	<header>
 		<%@ include file="/WEB-INF/views/admin/ad_header.jsp" %><BR>
 	</header>
+	
+	<!-- 상품선택을 하면 나오는 모달창 -->
+	<div class="modal fade" id="delivery_select" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header bling_color">
+	        <h5 class="modal-title">구매한 상품 내역</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	      	<!-- 구매한 상품 내역 나오게 하기 -->
+	      	<div id="delivery_select1" style="margin-left:135px;">
+		      	<div style="margin-top:30px;">
+		      	<span class="title">결제금액 : </span><span class="title">300,000 원</span>
+		      	</div>
+	      	</div>
+	      </div>
+	      <div class="modal-footer" id="delivery_select2">
+	        <button type="button" class="btn btn-secondary" id="modal_button1" data-bs-dismiss="modal" data-bs-dismiss="modal">확인</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
 	
 	<!-- 옆 nav 바 -->
 	<div class="d1">
@@ -181,31 +351,43 @@
 				<th id="th5">수량</th>
 				<th id="th6">주문금액</th>
 				<th id="th7">결제방법</th>
-				<th id="th8">주문상태</th>
+				<th id="th8">주문상태
+					<select id="deliStat" onchange="orderList(1,this.value)">
+						<option value="all">전체선택</option>
+						<option value="N">결제대기(N)</option>
+						<option value="Y">결제완료(Y)</option>
+						<option value="A">상품준비중(A)</option>
+						<option value="B">배송중(B)</option>
+						<option value="C">배송완료(C)</option>
+					</select>
+				</th>
 			</tr>
 		</table>
-		<table id="ajaxTable">
+		<div id="ajaxTable">
 			
-		</table>	
+		</div>	
 		<br><br><br><br><br><br>
 	</div>
 	
 </body>
 <script>
-	$(function(){
-		orderList();
-	});
+	var page = 1;
+	if(page == null) {page=1};
 
+	$(function(){
+		orderList(1,"all");
+     });
 	
-	function orderList(){
+	function orderList(pageN,kind){
 		let str = "";
+		let page = ""+pageN+"";
 		
 		const option = {
 			method: "post",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(),
+			body: JSON.stringify({page:page,kind:kind}),
 		}
 		
 		fetch("/Ad_order_delivery/orderList.do", option)
@@ -218,56 +400,65 @@
 		})
 		.then((data) => {
 			console.log('화면출력 성공');
-			console.log(data[0].order_idx);
-			for(let i=0; data.length > i; i++){
+			
+			let ol = data.orderList;
+			console.log("index0 order_idx : "+ol[0].order_idx);
+			
+			let pm = data.pm;
+			let prev = parseInt(pm.startPage - 1) ;
+		  	let next = parseInt(pm.endPage + 1) ;
+			
+		  	
+			str += "<table>";
+			for(let i=0; ol.length > i; i++){
 				str += "<tr class='tableRow'>";
-				str += "	<td class='td td1'>"+data[i].order_idx+"</td>";
-				str += "	<td class='td td2'>"+data[i].rdate+"</td>";
-				str += "	<td class='td3'>"+data[i].uname+"</td>";
-				if(data[i].orderCompCnt == 1){
-					str += "	<td class='td4'><a id='prodLink' href='/Product/detail.do?pidx="+data[i].pidx+"'> 상품 : <span id='pname'>"+data[i].pname+"</span> <br> 옵션 : "+data[i].oname+"</a></td>";
+				str += "	<td class='td td1'>"+ol[i].order_idx+"</td>";
+				str += "	<td class='td td2'>"+ol[i].rdate+"</td>";
+				str += "	<td class='td3'>"+ol[i].uname+"</td>";
+				if(ol[i].orderCompCnt == 1){
+					str += "	<td class='td4'><a id='prodLink' class='pointer' onclick='order_list("+ol[i].order_idx+")'> 상품 : <span id='pname'>"+ol[i].pname+"</span> <br> 옵션 : "+ol[i].oname+"</a></td>";
 				}
-				else if(data[i].orderCompCnt != 1){
-					str += "	<td class='td4'><a id='prodLink' href='/Product/detail.do?pidx="+data[i].pidx+"'> 상품 : <span id='pname'>"+data[i].pname+"</span> <br> 옵션 : "+data[i].oname+" 등 <span id='orderCnt'>"+data[i].orderCompCnt+"건</span></a></td>";
+				else if(ol[i].orderCompCnt != 1){
+					str += "	<td class='td4'><a id='prodLink' class='pointer' onclick='order_list("+ol[i].order_idx+")'> 상품 : <span id='pname'>"+ol[i].pname+"</span> <br> 옵션 : "+ol[i].oname+" 등 <span id='orderCnt'>"+ol[i].orderCompCnt+"건</span></a></td>";
 				}
 				
-				str += "	<td class='td td5'>"+data[i].quantity+"</td>";
-				str += "	<td class='td td6'>"+data[i].tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원</td>";
-				str += "	<td class='td td7'>"+data[i].payment+"</td>";
+				str += "	<td class='td td5'>"+ol[i].quantity+"</td>";
+				str += "	<td class='td td6'>"+ol[i].tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원</td>";
+				str += "	<td class='td td7'>"+ol[i].payment+"</td>";
 				str += "	<td class='td td8'>";
 					
 				str += "<div class='btn-group dropend'>";
 				
 				
-				if(data[i].deli_stat == "N"){
+				if(ol[i].deli_stat == "N"){
 					str += "	<button type='button' class='btn btn-secondary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
 					str += "		결제대기(N)";
-				}else if(data[i].deli_stat == "Y"){
+				}else if(ol[i].deli_stat == "Y"){
 					str += "	<button type='button' class='btn btn-success dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
 					str += "		결제완료(Y)";
-				}else if(data[i].deli_stat == "A"){
+				}else if(ol[i].deli_stat == "A"){
 					str += "	<button type='button' class='btn btn-primary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
 					str += "		상품준비중(A)";
-				}else if(data[i].deli_stat == "B"){
+				}else if(ol[i].deli_stat == "B"){
 					str += "	<button type='button' class='btn btn-warning dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
 					str += "		배송중(B)";
-				}else if(data[i].deli_stat == "C"){
+				}else if(ol[i].deli_stat == "C"){
 					str += "	<button type='button' class='btn btn-danger dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
 					str += "		배송완료(C)";
 				}
 			
 				str += "	</button>";
 				str += "	<ul class='dropdown-menu'>";
-				str += "		<li><input type='radio' name='prodStat' id='prodStatN"+data[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"N\","+data[i].order_idx+")'></li>";
-				str += "			<label for='prodStatN"+data[i].order_idx+"'>결제대기</label><br>";
-				str += "		<li><input type='radio' name='prodStat' id='prodStatY"+data[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"Y\","+data[i].order_idx+")'></li>";
-				str += "			<label for='prodStatY"+data[i].order_idx+"'>결제완료</label><br>";
-				str += "		<li><input type='radio' name='prodStat' id='prodStatA"+data[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"A\","+data[i].order_idx+")'></li>";
-				str += "			<label for='prodStatA"+data[i].order_idx+"'>상품준비중</label><br>";
-				str += "		<li><input type='radio' name='prodStat' id='prodStatB"+data[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"B\","+data[i].order_idx+")'></li>";
-				str += "			<label for='prodStatB"+data[i].order_idx+"'>배송중</label><br>";
-				str += "		<li><input type='radio' name='prodStat' id='prodStatC"+data[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"C\","+data[i].order_idx+")'></li>";
-				str += "			<label for='prodStatC"+data[i].order_idx+"'>배송완료</label><br>";
+				str += "		<li><input type='radio' name='prodStat' id='prodStatN"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"N\","+ol[i].order_idx+")'></li>";
+				str += "			<label for='prodStatN"+ol[i].order_idx+"'>결제대기</label><br>";
+				str += "		<li><input type='radio' name='prodStat' id='prodStatY"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"Y\","+ol[i].order_idx+")'></li>";
+				str += "			<label for='prodStatY"+ol[i].order_idx+"'>결제완료</label><br>";
+				str += "		<li><input type='radio' name='prodStat' id='prodStatA"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"A\","+ol[i].order_idx+")'></li>";
+				str += "			<label for='prodStatA"+ol[i].order_idx+"'>상품준비중</label><br>";
+				str += "		<li><input type='radio' name='prodStat' id='prodStatB"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"B\","+ol[i].order_idx+")'></li>";
+				str += "			<label for='prodStatB"+ol[i].order_idx+"'>배송중</label><br>";
+				str += "		<li><input type='radio' name='prodStat' id='prodStatC"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"C\","+ol[i].order_idx+")'></li>";
+				str += "			<label for='prodStatC"+ol[i].order_idx+"'>배송완료</label><br>";
 				str += "	</ul>";
 				str += "</div>";
 						
@@ -275,6 +466,45 @@
 				str += "	</td>";
 				str += "</tr>";
 			}
+			str += "</table>";
+			
+			
+			str += "<br><br><br>";
+	  		
+			
+			// 페이징 할 수 있는 번호 나오는 곳 뿌려 주기
+		  	str += "	<nav aria-label='Page navigation'>";
+		  	str += "	<ul class='pagination justify-content-center'>";
+		  	str += "	<li class='page-item'>";
+		  	
+		  	//console.log(prev);
+		  	if(pm.prev == true){
+		  	    str += "<a class='page-link' aria-label='Previous' onclick='orderList("+prev+")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
+		  	}
+		  	
+		  	str += "	</li>";
+		  	let startPage = parseInt(pm.startPage);
+		  	let endPage = parseInt(pm.endPage);
+		  	
+		  	for (let k = pm.startPage; k<=pm.endPage; k++ ){
+		  		 if(page == k){
+		  			str += "<li class='page-item active'><a class='page-link pointer' onclick='orderList("+k+")'>"+k+"</a></li>";    
+		  		 }else{
+		  			str += "<li class='page-item'><a class='page-link pointer' onclick='orderList("+k+")'>"+k+"</a></li>";    
+		  		 }
+		  	 }
+		  	 
+		  	 str += "	<li class='page-item'>";
+		  	
+		  	 if(pm.next && pm.endPage > 0){
+		  	     str += "<a class='page-link' aria-label='Next' onclick='orderList("+next+")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
+		  	 }
+		  	 
+		  	 str += "	</li>";
+		  	 str += "	</ul>";
+		  	 str += "	</nav>";
+			
+			
 			$("#ajaxTable").html(str);
 			
 		})
@@ -325,6 +555,81 @@
 					.catch(() => {
 						console.log('출고버튼 에러');
 					})
+			}
+		});
+	}
+	
+	
+	// 구매한 오더의 이미지나 상품명(옵션을 눌렀을 떄)
+	function order_list(order_idx){	
+		$.ajax({
+			url:"/Delivery/order_list.do",
+			type:"POST",
+			data:{"order_idx":order_idx},
+			async: false,
+			success:function(data){
+				let str = "";
+				let phone1 = "";
+				let phone2 = "";
+				let phone3 = "";
+				
+				// 받는 사람 뿌려 주기
+				str += "<div>";
+				str += "<p><span class='title'>배송정보</span></p>";
+				str += " <table>";
+				str += " <tr>";
+				str += " <td style='width:80px;''><b>받는사람</b></td>";
+				str += "<td>"+data[0].recipient+"</td>";
+				str += "</tr>";
+				str += "<tr>";
+				str += "<td><b>연 락 처</b></td>";
+				if(data[0].rphone.length == 11){
+					phone1 = data[0].rphone.substring(0,3);
+					phone2 = data[0].rphone.substring(3,7);
+					phone3 = data[0].rphone.substring(7);
+				}
+				if(data[0].rphone.length == 10){
+					phone1 = data[0].rphone.substring(0,3);
+					phone2 = data[0].rphone.substring(3,6);
+					phone3 = data[0].rphone.substring(6);
+				}
+				str += "<td>"+phone1+"-"+phone2+"-"+phone3+"</td>";
+				str += "</tr>";
+				str += "<tr>";
+				str += " <td><b>받는주소</b></td>";
+				str += "<td>("+data[0].zip_code+")"+data[0].addr1+data[0].addr2+"</td>";
+				str += "</tr>";
+				str += "</table>";
+				str += "</div>";
+				// 상품에 대한 정보 뿌려 주기
+				for(let i=0; i<data.length; i++){	
+					str += "<div style='margin-top:30px;'>";	
+					str += "<table>";	
+					str += "</tr>";	
+					str += " <td style='width:150px;'>";
+					str += "<a href='/Product/detail.do?pidx="+data[0].pidx+"'>"
+					str += " <img class='image_main' src='/resources/image/"+data[i].main+"'></a>";	
+					str += "</td>";	
+					str += "<td style='width:300px;'>";
+					str += "<a href='/Product/detail.do?pidx="+data[0].pidx+"' class='title4'>"
+					str += "<span><b>"+data[i].pname+"</b></span></a><br>";	
+					var oname = data[i].oname.split("+")[0]
+					str += " <span>"+oname+"</span>(수량: <span>"+data[i].quantity+"</span>)";	
+					str += "</td>";	
+					str += "</tr>";	
+					str += "</table>";
+					str += "</div>";
+				}
+				str += "<div style='margin-top:30px;'>";
+				let price = data[0].tot_price.toLocaleString();
+				str += "<span class='title'>결제금액 : </span><span class='title'>"+price+"원</span>";
+				str += "</div>";
+
+				$("#delivery_select1").html(str);
+				$("#delivery_select").modal("show");
+			},
+			error:function(){
+				alert("구매 상품 불러오기 실행 오류");
 			}
 		});
 	}

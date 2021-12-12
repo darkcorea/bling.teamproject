@@ -45,13 +45,15 @@
                     //var pagenum = (page-1) * 5;
                     
 				  	if(data.reviewList.length == 0){
-				  		str += "<div id='noneReview'>기간내 등록된 리뷰가 없습니다.</div>";
+				  		str += "<br>";
+				  		str += "<tr id='noneReview'><td id='noneTd' colspan='5'>기간내 등록된 리뷰가 없습니다.</td></tr>";
 				  	}else{
+				  		str += "<table id='reviewTable'>"
 				  		for(var a = 0 ; a < data.reviewList.length ; a++){
 				  			var list = data.reviewList[a];
 				  			var oname = list.oname.split("+")[0];
 				  		
-						str += "	<div id='reviewDiv'>";
+						str += "	<tr id='reviewTr'>";
 						/*
 						1번부터 오름차순 번호기입
 						str += a+1+pagenum;
@@ -60,19 +62,21 @@
 						//사진 옆에 ridx
 						//str += list.ridx;
 						
-										/* <div> inline-block 적용하기 */
-						str += "		<div id='prodImgDiv'>";
+						str += "		<td id='prodImgTr'>";
 						str += "			<img id='rvImg' src='/resources/image/"+list.main+"' alt='제품 대표 사진'>";
-						str += "		</div>";
-						str += "		<div id='prodData'>";
-						str += list.pname+"<br>";
-						str += "			<span id='textColor'>[옵션] "+oname+"</span><br>";
-						str += "			<span id='textColor'>[수량] "+list.quantity+"개</span>";
-						str += "		</div>";
+						str += "		</td>";
+						str += "		<td id='prodDataTr'>";
+						str += "			<div id='prodData'>";
+						str += 					list.pname+"<br>";
+						str += "				<span id='textColor'>[옵션] "+oname+"</span><br>";
+						str += "				<span id='textColor'>[수량] "+list.quantity+"개</span>";
+						str += "			</div>";
+						str += "		</td>";
 						
-						str += "		<div id='reviewData'>";
-											/* star_rating */
-						str += "			<div class='rating'>";
+						str += "		<td id='reviewDataTr'>";
+						str += "			<div id='reviewData'>";
+												/* star_rating */
+						str += "				<div class='rating'>";
 						
 						
 						// grade에 따른 별점 출력
@@ -87,50 +91,56 @@
 							}
 						}
 						
-						str += "			</div>";
+						str += "				</div>";
 							
-						str += "			<div id='reviewContents"+list.ridx+"'>";
-												/* 리뷰 contents 출력하기 / 3줄 이상 더보기 적용 */
-						str += 					list.contents;
+						str += "				<div id='reviewContents"+list.ridx+"'>";
+													/* 리뷰 contents 출력하기 / 3줄 이상 더보기 적용 */
+						str += 						list.contents;
+						str += "				</div>";
+						str += "				<div id='review_btn"+list.ridx+"'></div>";
 						str += "			</div>";
-						str += "			<div id='review_btn"+list.ridx+"'></div>";
-						str += "		</div>";
+						str += "		</td>";
 						
 						
 						//리뷰사진 개수에 따라 화면출력 조정
 						if(list.image1 != null && list.image2 != null){
-							str += "			<div id='rvImgDiv'>";
+							str += "			<td id='rvImgTr'>";
 							str += "				<img id='rvImg' src='/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
-							str += "				<img id='rvImg' src='/resources/review_img/"+list.image2+"' alt='리뷰사진 2번'>";
-							str += "			</div>";
+							str += "				<img id='rvImg2' src='/resources/review_img/"+list.image2+"' alt='리뷰사진 2번'>";
+							str += "			</td>";
 						}
 						else if(list.image1 != null && list.image2 == null){
-							str += "			<div id='rvImgDiv'>";
+							str += "			<td id='rvImgTr'>";
 							str += "				<img id='rvImg' src='/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
-							str += "			</div>";
+							str += "			</td>";
 						}
 						else if(list.image1 == null && list.image2 == null){
-							str += "			<div id='rvImgDiv'></div>";
+							str += "			<td id='rvImgTr'></td>";
 						}	
 						
 						
-						str += "		<div id='deleteBtn'>";
+						str += "		<td id='deleteBtn'>";
 						str += "			<button class='btn' id='delBtn' onclick='delQ("+list.ridx+")'>삭제하기</button>";
-						str += "		</div>";
-						str += "	</div>";
+						str += "		</td>";
+						str += "	</tr>";
 				  		}
+				  		
+				  		str += "</table>";
+				  		
 				  		str += "<br><br><br>";
+				  		
+				  		
 						// 페이징 할 수 있는 번호 나오는 곳 뿌려 주기
-					  	str += "<nav aria-label='Page navigation'>";
-					  	str += "<ul class='pagination justify-content-center'>";
-					  	str += "<li class='page-item'>";
+					  	str += "	<nav aria-label='Page navigation'>";
+					  	str += "	<ul class='pagination justify-content-center'>";
+					  	str += "	<li class='page-item'>";
 					  	
 					  	//console.log(prev);
 					  	if(pm.prev == true){
 					  	    str += "<a class='page-link' aria-label='Previous' onclick='reviewList("+prev+")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
 					  	}
 					  	
-					  	str += "</li>";
+					  	str += "	</li>";
 					  	let startPage = parseInt(pm.startPage);
 					  	let endPage = parseInt(pm.endPage);
 					  	
@@ -142,15 +152,15 @@
 					  		 }
 					  	 }
 					  	 
-					  	 str += "<li class='page-item'>";
+					  	 str += "	<li class='page-item'>";
 					  	
 					  	 if(pm.next && pm.endPage > 0){
 					  	     str += "<a class='page-link' aria-label='Next' onclick='reviewList("+next+")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
 					  	 }
 					  	 
-					  	 str += "</li>";
-					  	 str += "</ul>";
-					  	 str += "</nav>";
+					  	 str += "	</li>";
+					  	 str += "	</ul>";
+					  	 str += "	</nav>";
 					  	 
 					  	//날짜 화면출력
 					  	/* let date1 = data.date.rdate1;
@@ -159,9 +169,9 @@
 					  	document.querySelector("input[id='date1']").value = date1;
 					  	document.querySelector("input[id='date2']").value = date2; */
 					  	
-						str += "<br><br><br><br><br><br><br><br>";
+						
 					}
-					document.getElementById("formDiv").innerHTML = str;
+					document.getElementById("formTable").innerHTML = str;
 					
 					// 리뷰가 길면 자르고 더보기 버튼을 추가하고 그렇지 않으면 그대로 둔다.
 					// .offsetHeight >90  보여지는 부분이 90px를 넘어가면, 보여지는 높이 조절하기 어려움 clientHeight
@@ -220,12 +230,6 @@
 				${reviewList}는 배열이기 때문에 ${reviewList == null}로 조건은 설정하면 적용되지 않는다.
 				if(${reviewList == []})와 같이 빈 배열로 조건을 설정하면 적용된다.
 			*/
-			
-		
-		
-
-		/* 텍스트 접기/더보기 */
-		
 		
 		
 		function delQ(ridx){
@@ -334,7 +338,6 @@
 		    width: 1em;
 		    font-size: 1.1vw;
 		    color: #FF3A00;
-		    cursor: pointer
 		}
 		.rating>label::before {
 		    content: "\2605";
@@ -350,49 +353,59 @@
       }
 	
 /* -------------------------- article css -------------------------- */
-	/* --------------------onload로 화면 출력-------------------- */	
+	/* --------------------onload로 화면 출력-------------------- */
 		#noneReview{
 			text-align: center;
-			position: relative;
-			top: 30px;
 		}
-		#reviewDiv{
+		#noneTd{
+			width: 756px;
+		}
+		#reviewTr{
 			width: 100%;
+			height: 120px;
+			position: relative;
 		}
-		#prodImgDiv{
-			width: 70px;
+		#prodImgTr{
+			width: 80px;
 			height: 70px;
-			display: inline-block;
+			position: relative;
 		}
-		#rvImgDiv{
-			width: 150px;
+		#rvImgTr{
+			width: 160px;
 			height: 70px;
-			display: inline-block;
+			position: relative;
 		}
 		#rvImg{
 			width: 70px;
 			height: 70px;
-			display: inline-block;
+			position: absolute;
+			top: 20px;
+		}
+		#rvImg2{
+			width: 70px;
+			height: 70px;
+			position: absolute;
+			top: 20px;
+			left: 80px;
+		}
+		#prodDataTr{
+			width: 140px;
+			position: relative;
 		}
 		#prodData{
-			width: 130px;
-			display: inline-block;
-			position: relative;
-			top: 25px;
+			position: absolute;
+			top: 20px;
 		}
 		#textColor{
 			color: #CB7878;
 			font-size: 12px;	
 		}
-		#reviewData{
+		#reviewDataTr{
 			width: 270px;
-			display: inline-block;
-			position: relative;
-			top: 10px;
 		}
 		#deleteBtn{
 			width: 80px;
-			display: inline-block;
+			position: relative;
 		}
 		
 		#delBtn{
@@ -402,6 +415,8 @@
 			padding: 0px 6px;
 			width: 80px;
 			height: 30px;
+			position: absolute;
+			top: 50px;
 		}
 		#delBtn:hover{
 			color: #CB7878;
@@ -410,6 +425,8 @@
 			padding: 0px 6px;
 			width: calc(81px - 1px);
 			height: calc(31px - 1px);
+			position: absolute;
+			top: 50px;
 		}
 		
 		
@@ -558,13 +575,12 @@
 							</div>
 						</div>
 						
-						<div id="formDiv">
+						<div id="formTable">
 							
 						</div>
 						
-						<div>
-							<!-- 페이징 : 처음 이전 1~10 다음 끝  -->
-						</div>
+						<br><br><br><br><br><br><br><br>
+						
 					</div>
 					
 				</div>

@@ -124,10 +124,10 @@ public class ReviewController {
 			review_list.put("pm", pm);
 			review_list.put("page",page);
 			
-			System.out.println(">>>>page+"+page);
-			System.out.println("pagenum"+sc.getPerPageNum());
-			System.out.println(">>>>+pm.startpage++"+pm.getLastPost());
-			System.out.println(">>>>+pm.endpage++"+pm.getStartPost());
+			System.out.println(">>>>page : "+page);
+			System.out.println(">>>>pagenum : "+sc.getPerPageNum());
+			System.out.println(">>>>+pm.startPost : "+pm.getStartPost());
+			System.out.println(">>>>+pm.lastPost : "+pm.getLastPost());
 			
 			return review_list;
 	}
