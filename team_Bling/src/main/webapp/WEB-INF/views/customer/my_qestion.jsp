@@ -28,6 +28,7 @@
 		text-decoration-line: none;
 		color: #854040;
 		font-weight: bold ;
+		padding-left:15px;
 	}
 	.title{
 		font-size:25px;
@@ -44,6 +45,9 @@
 	/* 클래스 붙이면 문자 가운데 */
 	.text_center{
 		text-align:center;
+	}
+	.text_left{
+		text-align:left;
 	}
 	.text_center1{
 		text-align:right;
@@ -123,8 +127,9 @@
 					<thead>
 						<tr class="text_center">
 							<th>번호</th>
+							<th style='width:160px;'>유형</th>
 							<th>제목</th>
-							<th>작성일</th>
+							<th style='width:150px;'>작성일</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -132,14 +137,39 @@
 						<c:forEach items="${list}" var="list">
 						<tr style="vertical-align:middle;">
 							<td class="text_center"><c:out value="${list.rownum}"/></td>
-							<td class="text_center"><a class="pointer" onclick="detail(${list.qidx})">
-							
-							<c:if  test="${list.depth == 1}">
-							<span>
-								<i class='bi bi-arrow-return-right'></i>
-							</span>
-							</c:if>
-							<c:out value="${list.title}"/></a></td>
+							<c:set var="category" value="${list.category}" />
+								<td class="text_center">
+								<c:choose>
+								    <c:when test="${category eq 'A'}">
+								       배송문의
+								    </c:when>
+								    <c:when test="${category eq 'B'}">
+								        교환환불취소문의
+								    </c:when>
+								    <c:when test="${category eq 'D'}">
+								        교환신청
+								    </c:when>
+								    <c:when test="${category eq 'E'}">
+								        환불신청
+								    </c:when>
+								    <c:when test="${category eq 'F'}">
+								        취소신청
+								    </c:when>
+								    <c:otherwise>
+								        기타
+								    </c:otherwise>
+								</c:choose>
+								</td>
+							<td class="text_left">
+								<a class="pointer" onclick="detail(${list.qidx})">
+									<c:if  test="${list.depth == 1}">
+									<span>
+										<i class='bi bi-arrow-return-right'></i>
+									</span>
+									</c:if>
+									<c:out value="${list.title}"/>
+								</a>
+							</td>
 							<td class="text_center">
 								<c:set var="rdate" value="${list.rdate}"/>
 								<c:set var="date" value="${fn:substring(rdate,0,10)}"/>

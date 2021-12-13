@@ -96,6 +96,9 @@
 	.t{
 		margin:5px;
 	}
+	.text_left{
+		text-align:left;
+	}
 </style>
 </head>
 <body>
@@ -121,9 +124,10 @@
 				<table class="table">
 					<thead>
 						<tr class="text_center">
-							<th>번호</th>
+							<th style='width:100px;'>번호</th>
+							<th style='width:160px;'>제품명</th>
 							<th>제목</th>
-							<th>작성일</th>
+							<th style='width:150px;'>작성일</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -131,12 +135,17 @@
 						<c:forEach items="${list}" var="list">
 						<tr style="vertical-align:middle;">
 							<td class="text_center"><c:out value="${list.rownum}"/></td>
-							<td class="text_center"><a class="pointer" onclick="detail(${list.pqidx})">
-							
+							<td class="text_center"><c:out value="${list.pname}"/></td>
+							<td class="text_left"><a class="pointer" onclick="detail(${list.pqidx})">
 							<c:if  test="${list.depth == 1}">
-							<span>
-								<i class='bi bi-arrow-return-right'></i>
-							</span>
+								<span>
+									<i class='bi bi-arrow-return-right'></i>
+								</span>
+							</c:if>
+							<c:if  test="${list.show_yn == 'Y'}">
+								<span>
+									<i class='bi bi-file-lock'></i>
+								</span>
 							</c:if>
 							<c:out value="${list.title}"/></a></td>
 							<td class="text_center">
@@ -161,17 +170,13 @@
 </footer>
 </body>
 <script>
-	function detail(qidx){
+	function detail(pqidx){
 		$.ajax({
 			url:"/Customer/pruduct_myquestion_detail.do",
 			type:"POST",
-			data:{"qidx":qidx},
+			data:{"pqidx":pqidx},
 			dataType:"json",
 			success:function(data){
-				if(data.oname==null){
-					data.oname = "";
-					data.pname = "";
-				}
 				var str = "";
 				str += "<table>";
 				str += "<tr class='tr1'>";
@@ -184,11 +189,11 @@
 				str += "</tr>";
 				str += "<tr class='tr2'>";
 				str += "<th>문의 상품명</th>";
-				str += "<td>"+data.pname+"<br>"+data.oname+"</td>";
+				str += "<td>"+data.pname+"</td>";
 				str += "</tr>";
 				str += "<tr class='tr4'>";
 				str += "<th>본문</th>";
-				str += "<td style='height:300px;'>"+data.content+"</td>";
+				str += "<td style='height:300px;'>"+data.comments+"</td>";
 				str += "</tr>";
 				str += "</table><br><br>";
 				str += "<div id='btndiv'>";

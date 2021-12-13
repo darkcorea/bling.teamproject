@@ -18,6 +18,7 @@ public class QuestionVO {
 	private int pqidx;
 	private int originpqidx;
 	private String comments;
+	private String show_yn;
 	
 	
 	
@@ -146,5 +147,13 @@ public class QuestionVO {
 
 	public void setRownum(int rownum) {
 		this.rownum = rownum;
+	}
+
+	public String getShow_yn() {
+		return show_yn;
+	}
+
+	public void setShow_yn(String show_yn) {
+		this.show_yn = show_yn;
 	}
 }
