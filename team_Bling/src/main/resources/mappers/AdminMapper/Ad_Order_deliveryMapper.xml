@@ -5,10 +5,13 @@
  
 <mapper namespace="com.project.bling.mapper.adminmapper.ad_order_deliveryMapper">
 	<!-- 전체 주문 개수 -->
-	<select id="orderCnt" resultType="int">
-		SELECT count(order_idx)
-		FROM bg_order
-		WHERE order_idx
+	<select id="orderCnt" resultType="int" parameterType="PageMaker">
+		SELECT count(o.order_idx)
+		FROM bg_order o
+		LEFT OUTER JOIN bg_delivery d
+		ON o.order_idx=d.order_idx
+		<if test='kind=="all"'></if>
+		<if test='kind!="all"'>WHERE d.deli_stat=#{kind}</if> 
 	</select>
 
 	<!-- 전체 주문 리스트(order_idx 내림차순) -->
@@ -26,7 +29,9 @@
 			   o.order_yn AS 'O_order_yn',
 		       d.order_yn AS 'D_order_yn',
 			   o.delivery_yn,
-		       d.deli_stat
+		       d.deli_stat,
+		       r.ridx,
+		       DATEDIFF(sysdate(),d.deli_com) AS 'date_differ'
 		FROM bg_product p
 		LEFT JOIN bg_option op
 		ON p.pidx=op.pidx
@@ -43,6 +48,8 @@
 		LEFT JOIN bg_delivery d
 		ON o.order_idx=d.order_idx
 		
+		LEFT JOIN bg_review r
+        ON od.detail_idx=r.detail_idx
 		<if test='kind=="all"'></if>
 		<if test='kind=="N"'>WHERE d.deli_stat='N'</if>
 		<if test='kind=="Y"'>WHERE d.deli_stat='Y'</if>
