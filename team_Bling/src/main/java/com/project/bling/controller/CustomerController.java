@@ -138,6 +138,9 @@ public class CustomerController {
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		int midx = uv.getMidx();
 		model.addAttribute("list", customerService.question_list(midx));
+		
+		
+		
 		return "customer/my_qestion";
 	}
 	//나의 문의내역 상세보기
