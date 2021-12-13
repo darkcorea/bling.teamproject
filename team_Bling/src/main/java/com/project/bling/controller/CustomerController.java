@@ -140,14 +140,14 @@ public class CustomerController {
 		model.addAttribute("list", customerService.question_list(midx));
 		return "customer/my_qestion";
 	}
-	
+	//나의 문의내역 상세보기
 	@RequestMapping(value="/myquestion_detail.do")
 	@ResponseBody
 	public QuestionVO myquestion_detail(int qidx) throws Exception {
 		
 		return customerService.myquestion_detail(qidx);
 	}
-	
+	//나의문의내역 삭제
 	@RequestMapping(value="/myquestion_delete.do")
 	@ResponseBody
 	public int myquestion_delete(int qidx) throws Exception {
@@ -155,13 +155,28 @@ public class CustomerController {
 		customerService.myquestion_delete(qidx);
 		return 1;
 	}
-	@RequestMapping(value="/myquestion_pruduct.do")
-	public String myquestion_pruduct(Locale locale, Model model, HttpSession session) throws Exception {
+	//나의 제품문의 리스트 가기
+	@RequestMapping(value="/myquestion_product.do")
+	public String myquestion_product(Locale locale, Model model, HttpSession session) throws Exception {
 		
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		int midx = uv.getMidx();
-		model.addAttribute("list", customerService.pruduct_question_list(midx));
+		model.addAttribute("list", customerService.product_question_list(midx));
 		return "customer/my_qestion_product";
 	}
-	
+	//나의 제품문의 상세보기
+	@RequestMapping(value="/product_myquestion_detail.do")
+	@ResponseBody
+	public QuestionVO product_myquestion_detail(int pqidx) throws Exception {
+		
+		return customerService.product_myquestion_detail(pqidx);
+	}
+	//나의 상품문의내역 삭제
+		@RequestMapping(value="/product_myquestion_delete.do")
+		@ResponseBody
+		public int product_myquestion_delete(int pqidx) throws Exception {
+			
+			customerService.product_myquestion_delete(pqidx);
+			return 1;
+		}
 }

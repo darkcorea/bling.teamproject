@@ -103,8 +103,21 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<QuestionVO> pruduct_question_list(int midx) throws Exception {
-		return customerDAO.pruduct_question_list(midx);
+	public List<QuestionVO> product_question_list(int midx) throws Exception {
+		return customerDAO.product_question_list(midx);
+	}
+
+	@Override
+	public QuestionVO product_myquestion_detail(int pqidx) throws Exception {
+		
+		return customerDAO.product_myquestion_detail(pqidx);
+	}
+
+	@Override
+	public void product_myquestion_delete(int pqidx) throws Exception {
+		
+		customerDAO.product_myquestion_delete(pqidx);
+		
 	}
 	
 }
