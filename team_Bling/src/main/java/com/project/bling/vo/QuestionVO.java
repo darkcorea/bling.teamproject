@@ -19,6 +19,7 @@ public class QuestionVO {
 	private int originpqidx;
 	private String comments;
 	private String show_yn;
+	private int count;
 	
 	
 	
@@ -155,5 +156,13 @@ public class QuestionVO {
 
 	public void setShow_yn(String show_yn) {
 		this.show_yn = show_yn;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 }

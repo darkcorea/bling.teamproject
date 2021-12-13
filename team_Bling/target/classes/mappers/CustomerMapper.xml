@@ -124,11 +124,16 @@
 	
 	<!-- 나의 1:1문의내역 상세보기-->
 	<select id="myquestion_detail" parameterType="int" resultType="QuestionVO">
-	<![CDATA[	SELECT a.qidx,a.title,a.content, a.rdate,b.oname,d.pname
-   				FROM bg_question a LEFT JOIN bg_order_detail c ON a.detail_idx=c.detail_idx 
-                LEFT JOIN bg_option b ON c.oidx=b.oidx
-                LEFT JOIN bg_product d ON b.pidx=d.pidx 
-                WHERE qidx=#{qidx}
+	<![CDATA[SELECT * FROM (
+			   select a.qidx,a.rdate, d.pname, c.oname, a.content, a.title
+			   ,ROW_NUMBER() OVER(PARTITION BY a.qidx ORDER BY a.qidx asc )AS RNUM
+			   ,COUNT(*) OVER(PARTITION BY a.qidx) AS count
+			    from bg_question a
+			   join bg_order_detail b on a.order_idx = b.order_idx
+			   join bg_option c on b.oidx = c.oidx
+			   join bg_product d on d.pidx = c.pidx
+			   where qidx=#{qidx}) A
+				WHERE RNUM =1; 
     ]]>
 	</select>
 	

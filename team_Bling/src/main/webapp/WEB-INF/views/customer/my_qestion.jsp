@@ -215,7 +215,7 @@
 				str += "</tr>";
 				str += "<tr class='tr2'>";
 				str += "<th>문의 상품명</th>";
-				str += "<td>"+data.pname+"<br>"+data.oname+"</td>";
+				str += "<td>"+data.pname+"<br>"+data.oname+"<span id='etc'></span></td>";
 				str += "</tr>";
 				str += "<tr class='tr4'>";
 				str += "<th>본문</th>";
@@ -227,6 +227,9 @@
 				str += "<button class='btn btn-secondary' onclick='delFn("+data.qidx+")'>삭제 하기</button>";
 				str += "</div>";
 				$("#content").html(str);
+				if(data.count>1){
+					$("#etc").html(" 등 "+data.count+"개");
+				}
 			},
 			error:function(){
 				alert("실행오류");
