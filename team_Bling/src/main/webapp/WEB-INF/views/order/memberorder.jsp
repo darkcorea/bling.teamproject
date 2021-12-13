@@ -779,42 +779,39 @@ $(document).ready(function(){
 	
 	$("input[name='payed_mileage']").on("change keyup paste", function(){
 		var value = $(this).val();
-		var mile1 = $("#mileage1").val();
-	 	var totalprice1 = $("#tot_price1").val();
-	 	var tot = parseInt(totalprice1);
+		 var mile = $("#mileage").val();
+		 var m = parseInt(mile);
+		 var mile1 = $("#mileage1").val();
+		 var totalprice1 = $("#tot_price1").val();
+		 var tot = parseInt(totalprice1);
+		 var total = $("#tot_price").val();
+		 var totalprice = parseInt(total);
+		 var result = mile-value;
+		 var result1 = totalprice-value;
 		if(value == ""){
 			$(".mile").val("");
 	    	 $("#mileage").val(mile1);
 	    	 $("#tot_price").val(totalprice1);
 	    	 $(".total").text(tot.toLocaleString()+"원");
+		}else if(value > m){
+			 alert("내 적립금보다 큽니다");
+				$(".mile").val("");
+				$("#mileage").val(mile1);
+		    	 $("#tot_price").val(totalprice1);
+		    	 $(".total").text(tot.toLocaleString()+"원");
+		}else if(value > totalprice){
+			 alert("총 결제 금액보다 큽니다");
+				$(".mile").val("");
+				$("#mileage").val(mile1);
+		    	 $("#tot_price").val(totalprice1);
+		    	 $(".total").text(tot.toLocaleString()+"원");
+		 }else{
+			 $("#mileage").val(result);
+			 $("#tot_price").val(result1);
+			 $(".total").text(result1.toLocaleString()+"원");
 		}
 	});
 	
-	 $("input[name='payed_mileage']").blur(function(){
-		 var value = $(this).val();
-		 var mile = $("#mileage").val();
-		 var total = $("#tot_price").val();
-		 var totalprice = parseInt(total);
-		 var result = mile-value;
-		 var result1 = totalprice-value;
-		 
-		 console.log(value);
-		 console.log(mile);
-		 console.log(totalprice);
-		 if(value > mile){
-			 alert("내 적립금보다 큽니다");
-			$(".mile").val("");
-		 }else if(value > totalprice){
-			 alert("총 결제 금액보다 큽니다");
-				$(".mile").val("");
-		 }
-		 else{
-		 $("#mileage").val(result);
-		 $("#tot_price").val(result1);
-		 $(".total").text(result1.toLocaleString()+"원");
-		 }
-	 });
-	 
 	$(".change input:radio").change(function(){
 		var value = $(this).val();
 		var name = $(".name").text();
@@ -909,7 +906,7 @@ $(document).on('change', '#checkBoxId',function(event){
  	var result = mile-mile;
  	var result2 = totalprice-mile;
     if($("#checkBoxId").is(":checked")){
-    	if(mile1 < totalprice1){
+    	if(mile1 > totalprice1){
     		alert("총결제금액보다 내 적립금이 큽니다");
     		$(this).prop("checked",false);
     	}
