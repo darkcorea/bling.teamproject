@@ -136,4 +136,9 @@
         WHERE RNUM =1
         Limit #{startPost},#{scri.perPageNum}
 	  </select>
+	  
+	  <!-- 이름과 주문번호로  비회원 주문이 있는지 검색 -->
+	  <select id="nonDel_check" parameterType="NonorderVO" resultType="String">
+	 	 SELECT orderid FROM bg_nonorder WHERE name=#{name} AND orderid=#{orderid}
+	  </select>
 </mapper>
