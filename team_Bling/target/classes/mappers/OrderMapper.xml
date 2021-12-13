@@ -8,9 +8,9 @@
 	 <!-- 비회원 주문 등록 -->
 	<insert id="nonorderinsert" parameterType="NonorderVO">
 	insert into bg_nonorder(ORDERID,NAME,EMAIL,PHONE,ZIP_CODE,ADDR1,ADDR2,RPHONE,RECIPIENT,TOT_PRICE,DEPOSITOR,ORDER_YN,PAYMENT
-	<if test='order_yn == "Y"'>,deli_stat</if>) 
+	) 
 	values(#{orderid},#{name},#{email},#{phone},#{zip_code},#{addr1},#{addr2},#{rphone},#{recipient},#{tot_price},#{depositor},#{order_yn},#{payment}
-	<if test='order_yn == "Y"'>,'Y'</if>)
+	)
 	<selectKey resultType="int" keyProperty="nonidx" order="AFTER">
 	
 	SELECT MAX(nonidx) FROM bg_nonorder
@@ -68,17 +68,21 @@
 	</select>
 	
 	<insert id="delivery_insert" parameterType="OrderVO">
-	<![CDATA[
-	insert into bg_delivery(ORDER_IDX,ORDER_YN)
-	values(#{order_idx},#{order_yn})
-	]]>
+	
+	insert into bg_delivery(ORDER_IDX,ORDER_YN
+	<if test='order_yn == "Y"'>,deli_stat</if>)
+	values(#{order_idx},#{order_yn}
+	<if test='order_yn == "Y"'>,'Y'</if>)
+	
 	</insert>
 	
 	<insert id="nondelivery_insert" parameterType="NonorderVO">
-	<![CDATA[
-	insert into bg_nondelivery(NONIDX,ORDER_YN)
-	values(#{nonidx},#{order_yn})
-	]]>
+
+	insert into bg_nondelivery(NONIDX,ORDER_YN
+	<if test='order_yn == "Y"'>,deli_stat</if>)
+	values(#{nonidx},#{order_yn}
+	<if test='order_yn == "Y"'>,'Y'</if>)
+	
 	<selectKey resultType="int" keyProperty="nonidx" order="AFTER">
 	
 	SELECT MAX(nonidx) FROM bg_nonorder
