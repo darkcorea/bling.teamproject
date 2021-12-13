@@ -161,6 +161,7 @@
 		var arr1=[];
 		var arr2=[];
 		var arr3=[];
+		var dayarr=[];
 		var totalarr = [];
 	
 		$(function(){
@@ -211,7 +212,7 @@
 						var now = new Date();
 						var date = new Date(now.setDate(now.getDate()-a));
 						var day = date.getDate();
-						var month = date.getMonth();
+						var month = date.getMonth()+1;
 						
 						//1번째 버튼
 						if(type == 1){
@@ -271,9 +272,12 @@
 						arr1[a+1] = ffirst;
 						arr2[a+1] = ssecond;
 						arr3[a+1] = tthird;
+						dayarr[a] = month+"/"+day;
+						
 					}
-					//3개 값 한배열로 넣음.
-					totalarr = arr1.concat(arr2,arr3);
+					//4개 값 한배열로 넣음.
+					totalarr = arr1.concat(arr2,arr3,dayarr);
+					console.log(totalarr);
 					
 					//7,15,30일
 					for(var z = 7; z <10 ;z++){
@@ -294,7 +298,6 @@
 							daysecond = data.newmem[z].pidx;
 							daythird = data.delmem[z].oidx;
 						}
-						
 
 						str+="			<tr id='sta'>";
 						
@@ -340,6 +343,12 @@
 						[totalarr[8], totalarr[15], totalarr[14], totalarr[13], totalarr[12],totalarr[11],totalarr[10],totalarr[9]],
 						[totalarr[16], totalarr[23], totalarr[22], totalarr[21],totalarr[20],totalarr[19],totalarr[18],totalarr[17]]
 					]
+				},
+				axis:{
+					x:{
+						type:'category',
+						categories:[totalarr[30],totalarr[29],totalarr[28],totalarr[27],totalarr[26],totalarr[25],totalarr[24]]
+					}
 				}
 			}); 
 		}
