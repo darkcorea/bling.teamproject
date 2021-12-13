@@ -7,6 +7,9 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.project.bling.service.VisitCountService;
 import com.project.bling.vo.UserVO;
 
 
@@ -64,10 +67,19 @@ public class SessionListener implements HttpSessionListener {
 	 * sessions.remove(userId); } }
 	 */
 
+	@Autowired
+    VisitCountService visitcountService;
+	
+	 //방문자수 카운트 포함
     @Override
     public void sessionCreated(HttpSessionEvent hse) {
         System.out.println(hse);
         sessions.put(hse.getSession().getId(), hse.getSession());
+        try {
+			visitcountService.visiter();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     @Override
@@ -77,4 +89,6 @@ public class SessionListener implements HttpSessionListener {
             sessions.remove(hse.getSession().getId());	
         }
     }
+    
+    
 }
