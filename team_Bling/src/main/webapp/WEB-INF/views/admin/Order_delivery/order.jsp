@@ -550,7 +550,7 @@
 				fetch('/Ad_order_delivery/prodStat.do', prodData)
 					.then((data) => {
 						console.log(data);
-						orderList();
+						orderList("1","all");
 					})
 					.catch(() => {
 						console.log('출고버튼 에러');
