@@ -31,6 +31,9 @@ public class Ad_MainController {
 		model.addAttribute("priq",ad_mainService.privateq());
 		//버튼4개
 		model.addAttribute("price",ad_mainService.recenttot());
+		model.addAttribute("order",ad_mainService.ordertot());
+		
+		model.addAttribute("newmem",ad_mainService.newmem());
 		
 		return "admin/Main/main";
 	}
