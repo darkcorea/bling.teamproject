@@ -52,7 +52,7 @@
 		}
 		#th4{
 			text-align: center;
-			width: 270px;
+			width: 300px;
 		}
 		#th5{
 			text-align: center;
@@ -86,7 +86,7 @@
 			padding-left: 15px;
 		}
 		.td4{
-			width: 270px;
+			width: 300px;
 		}
 		.td5{
 			text-align: center;
@@ -131,6 +131,14 @@
 		}
 		#orderCnt{
 			color: red;
+		}
+		#noneList{
+			width: 1008px;
+			text-align: center;
+		}
+		#noneDiv{
+			position: relative;
+			top: 20px;
 		}
 		
 		/* dropdown 메뉴 */
@@ -378,9 +386,13 @@
 		orderList(1,"all");
      });
 	
-	function orderList(pageN,kind){
+	function orderList(pageN,kindN){
 		let str = "";
 		let page = ""+pageN+"";
+		let kind = kindN;
+		console.log("orderList-page : "+page);
+		console.log("orderList-kindN : "+kindN);
+		console.log("orderList-kind : "+kind);
 		
 		const option = {
 			method: "post",
@@ -402,70 +414,89 @@
 			console.log('화면출력 성공');
 			
 			let ol = data.orderList;
-			console.log("index0 order_idx : "+ol[0].order_idx);
+			
+			let cnt = data.totalCnt;
 			
 			let pm = data.pm;
 			let prev = parseInt(pm.startPage - 1) ;
 		  	let next = parseInt(pm.endPage + 1) ;
 			
 		  	
-			str += "<table>";
-			for(let i=0; ol.length > i; i++){
-				str += "<tr class='tableRow'>";
-				str += "	<td class='td td1'>"+ol[i].order_idx+"</td>";
-				str += "	<td class='td td2'>"+ol[i].rdate+"</td>";
-				str += "	<td class='td3'>"+ol[i].uname+"</td>";
-				if(ol[i].orderCompCnt == 1){
-					str += "	<td class='td4'><a id='prodLink' class='pointer' onclick='order_list("+ol[i].order_idx+")'> 상품 : <span id='pname'>"+ol[i].pname+"</span> <br> 옵션 : "+ol[i].oname+"</a></td>";
-				}
-				else if(ol[i].orderCompCnt != 1){
-					str += "	<td class='td4'><a id='prodLink' class='pointer' onclick='order_list("+ol[i].order_idx+")'> 상품 : <span id='pname'>"+ol[i].pname+"</span> <br> 옵션 : "+ol[i].oname+" 등 <span id='orderCnt'>"+ol[i].orderCompCnt+"건</span></a></td>";
-				}
-				
-				str += "	<td class='td td5'>"+ol[i].quantity+"</td>";
-				str += "	<td class='td td6'>"+ol[i].tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원</td>";
-				str += "	<td class='td td7'>"+ol[i].payment+"</td>";
-				str += "	<td class='td td8'>";
-					
-				str += "<div class='btn-group dropend'>";
-				
-				
-				if(ol[i].deli_stat == "N"){
-					str += "	<button type='button' class='btn btn-secondary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
-					str += "		결제대기(N)";
-				}else if(ol[i].deli_stat == "Y"){
-					str += "	<button type='button' class='btn btn-success dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
-					str += "		결제완료(Y)";
-				}else if(ol[i].deli_stat == "A"){
-					str += "	<button type='button' class='btn btn-primary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
-					str += "		상품준비중(A)";
-				}else if(ol[i].deli_stat == "B"){
-					str += "	<button type='button' class='btn btn-warning dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
-					str += "		배송중(B)";
-				}else if(ol[i].deli_stat == "C"){
-					str += "	<button type='button' class='btn btn-danger dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
-					str += "		배송완료(C)";
-				}
+		  	str += "<table>";
+		  	
+		  	console.log(data.orderList.length);
+		  	if(data.orderList.length == 0){
+		  		str += "<tr><td colspan='8' id='noneList'><div id='noneDiv'>해당 조건의 주문이 존재하지 않습니다.</div></td></tr>";
+		  	}
+		  	else if(data.orderList.length != 0){
 			
-				str += "	</button>";
-				str += "	<ul class='dropdown-menu'>";
-				str += "		<li><input type='radio' name='prodStat' id='prodStatN"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"N\","+ol[i].order_idx+")'></li>";
-				str += "			<label for='prodStatN"+ol[i].order_idx+"'>결제대기</label><br>";
-				str += "		<li><input type='radio' name='prodStat' id='prodStatY"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"Y\","+ol[i].order_idx+")'></li>";
-				str += "			<label for='prodStatY"+ol[i].order_idx+"'>결제완료</label><br>";
-				str += "		<li><input type='radio' name='prodStat' id='prodStatA"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"A\","+ol[i].order_idx+")'></li>";
-				str += "			<label for='prodStatA"+ol[i].order_idx+"'>상품준비중</label><br>";
-				str += "		<li><input type='radio' name='prodStat' id='prodStatB"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"B\","+ol[i].order_idx+")'></li>";
-				str += "			<label for='prodStatB"+ol[i].order_idx+"'>배송중</label><br>";
-				str += "		<li><input type='radio' name='prodStat' id='prodStatC"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"C\","+ol[i].order_idx+")'></li>";
-				str += "			<label for='prodStatC"+ol[i].order_idx+"'>배송완료</label><br>";
-				str += "	</ul>";
-				str += "</div>";
+				for(let i=0; ol.length > i; i++){
+					str += "<tr class='tableRow'>";
+					str += "	<td class='td td1'>"+ol[i].order_idx+"</td>";
+					str += "	<td class='td td2'>"+ol[i].rdate+"</td>";
+					str += "	<td class='td3'>"+ol[i].uname+"</td>";
+					if(ol[i].orderCompCnt == 1){
+						str += "	<td class='td4'><a id='prodLink' class='pointer' onclick='order_list("+ol[i].order_idx+")'> 상품 : <span id='pname'>"+ol[i].pname+"</span> <br> 옵션 : "+ol[i].oname+"</a></td>";
+					}
+					else if(ol[i].orderCompCnt != 1){
+						str += "	<td class='td4'><a id='prodLink' class='pointer' onclick='order_list("+ol[i].order_idx+")'> 상품 : <span id='pname'>"+ol[i].pname+"</span> <br> 옵션 : "+ol[i].oname+" 등 <span id='orderCnt'>"+ol[i].orderCompCnt+"건</span></a></td>";
+					}
+					
+					str += "	<td class='td td5'>"+ol[i].quantity+"</td>";
+					str += "	<td class='td td6'>"+ol[i].tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원</td>";
+					str += "	<td class='td td7'>"+ol[i].payment+"</td>";
+					str += "	<td class='td td8'>";
 						
-						
-				str += "	</td>";
-				str += "</tr>";
-			}
+					str += "<div class='btn-group dropend'>";
+					
+					
+					if(ol[i].deli_stat == "N"){
+						str += "	<button type='button' class='btn btn-secondary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+						str += "		결제대기(N)";
+					}else if(ol[i].deli_stat == "Y"){
+						str += "	<button type='button' class='btn btn-success dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+						str += "		결제완료(Y)";
+					}else if(ol[i].deli_stat == "A"){
+						str += "	<button type='button' class='btn btn-primary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+						str += "		상품준비중(A)";
+					}else if(ol[i].deli_stat == "B"){
+						str += "	<button type='button' class='btn btn-warning dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+						str += "		배송중(B)";
+					}else if(ol[i].deli_stat == "C"){
+						if(ol[i].date_differ<=7){
+							if(ol[i].ridx == 0){
+								str += "	<button type='button' class='btn btn-danger dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+								str += "		배송완료(C)";
+							}else if(ol[i].ridx != 0){
+								str += "	<button type='button' class='btn btn-danger prodBtn' onclick='caution1()'>";
+								str += "		배송완료(C)";
+							}
+						}else if(ol[i].date_differ>7){
+							str += "	<button type='button' class='btn btn-danger prodBtn' onclick='caution2()'>";
+							str += "		배송완료(C)";
+						}
+					}
+				
+					str += "	</button>";
+					str += "	<ul class='dropdown-menu'>";
+					str += "		<li><input type='radio' name='prodStat' id='prodStatN"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"N\",\""+kind+"\","+ol[i].order_idx+")'></li>";
+					str += "			<label for='prodStatN"+ol[i].order_idx+"'>결제대기</label><br>";
+					str += "		<li><input type='radio' name='prodStat' id='prodStatY"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"Y\",\""+kind+"\","+ol[i].order_idx+")'></li>";
+					str += "			<label for='prodStatY"+ol[i].order_idx+"'>결제완료</label><br>";
+					str += "		<li><input type='radio' name='prodStat' id='prodStatA"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"A\",\""+kind+"\","+ol[i].order_idx+")'></li>";
+					str += "			<label for='prodStatA"+ol[i].order_idx+"'>상품준비중</label><br>";
+					str += "		<li><input type='radio' name='prodStat' id='prodStatB"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"B\",\""+kind+"\","+ol[i].order_idx+")'></li>";
+					str += "			<label for='prodStatB"+ol[i].order_idx+"'>배송중</label><br>";
+					str += "		<li><input type='radio' name='prodStat' id='prodStatC"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"C\",\""+kind+"\","+ol[i].order_idx+")'></li>";
+					str += "			<label for='prodStatC"+ol[i].order_idx+"'>배송완료</label><br>";
+					str += "	</ul>";
+					str += "</div>";
+							
+							
+					str += "	</td>";
+					str += "</tr>";
+				}
+		  	}
 			str += "</table>";
 			
 			
@@ -479,7 +510,7 @@
 		  	
 		  	//console.log(prev);
 		  	if(pm.prev == true){
-		  	    str += "<a class='page-link' aria-label='Previous' onclick='orderList("+prev+")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
+		  	    str += "<a class='page-link' aria-label='Previous' onclick='orderList("+prev+",\""+kind+"\")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
 		  	}
 		  	
 		  	str += "	</li>";
@@ -488,16 +519,16 @@
 		  	
 		  	for (let k = pm.startPage; k<=pm.endPage; k++ ){
 		  		 if(page == k){
-		  			str += "<li class='page-item active'><a class='page-link pointer' onclick='orderList("+k+")'>"+k+"</a></li>";    
+		  			str += "<li class='page-item active'><a class='page-link pointer' onclick='orderList("+k+",\""+kind+"\")'>"+k+"</a></li>";    
 		  		 }else{
-		  			str += "<li class='page-item'><a class='page-link pointer' onclick='orderList("+k+")'>"+k+"</a></li>";    
+		  			str += "<li class='page-item'><a class='page-link pointer' onclick='orderList("+k+",\""+kind+"\")'>"+k+"</a></li>";    
 		  		 }
 		  	 }
 		  	 
 		  	 str += "	<li class='page-item'>";
 		  	
 		  	 if(pm.next && pm.endPage > 0){
-		  	     str += "<a class='page-link' aria-label='Next' onclick='orderList("+next+")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
+		  	     str += "<a class='page-link' aria-label='Next' onclick='orderList("+next+",\""+kind+"\")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
 		  	 }
 		  	 
 		  	 str += "	</li>";
@@ -515,10 +546,13 @@
 	
 	
 		
-	function deli(kind,order_idx){
+	function deli(kind,statN,order_idx){
 		console.log("deli() 실행");
 		console.log("kind : "+kind);
 		console.log("order_idx : "+order_idx);
+		
+		let stat = statN;
+		console.log("stat : "+stat);
 		
 		let kind2 = "";
 		if(kind=="N"){
@@ -548,13 +582,25 @@
 					}
 				
 				fetch('/Ad_order_delivery/prodStat.do', prodData)
-					.then((data) => {
-						console.log(data);
-						orderList("1","all");
-					})
-					.catch(() => {
-						console.log('출고버튼 에러');
-					})
+				.then((response) => {
+					if(!response.ok){
+						throw new Error('400 아니면 500 에러 발생');
+					}
+					
+					return response;
+				})
+				/* 
+					해당 fetch()의 response가 그냥 String이므로 	return response.json();가 아닌 그냥 response를 return함.
+					return response;가 아래의 .then((data)=>{})의 data에 들어간다.
+				*/
+				.then((data) => {
+					console.log("response=data : "+data);
+					console.log("deli()-stat : "+stat);
+					orderList("1",stat);
+				})
+				.catch(() => {
+					console.log('출고버튼 에러');
+				})
 			}
 		});
 	}
@@ -631,6 +677,25 @@
 			error:function(){
 				alert("구매 상품 불러오기 실행 오류");
 			}
+		});
+	}
+	
+	
+	//리뷰가 존재할 때 경고창
+	function caution1(){
+		
+		Swal.fire({
+			icon: 'warning',
+			text: '리뷰가 존재합니다!',
+		});
+	}
+	
+	//배송완료일로부터 7일 초과시 경고창
+	function caution2(){
+		
+		Swal.fire({
+			icon: 'warning',
+			html: '구매확정된 상품입니다! <br> (배송완료일로부터 7일 초과)',
 		});
 	}
 	

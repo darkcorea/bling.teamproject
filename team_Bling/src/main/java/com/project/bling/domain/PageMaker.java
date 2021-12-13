@@ -19,7 +19,7 @@ public class PageMaker {
 	private int pidx;
 	private int midx;
 	private String kind;
-	private int start;
+	private int start;	// 주희전용 
 	private int end;
 	private String type;
 	
