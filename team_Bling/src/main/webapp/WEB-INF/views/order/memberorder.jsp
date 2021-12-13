@@ -777,6 +777,18 @@ $(document).ready(function(){
 	}
 	
 	
+	$("input[name='payed_mileage']").on("change keyup paste", function(){
+		var value = $(this).val();
+		var mile1 = $("#mileage1").val();
+	 	var totalprice1 = $("#tot_price1").val();
+	 	var tot = parseInt(totalprice1);
+		if(value == ""){
+			$(".mile").val("");
+	    	 $("#mileage").val(mile1);
+	    	 $("#tot_price").val(totalprice1);
+	    	 $(".total").text(tot.toLocaleString()+"원");
+		}
+	});
 	
 	 $("input[name='payed_mileage']").blur(function(){
 		 var value = $(this).val();
@@ -899,6 +911,7 @@ $(document).on('change', '#checkBoxId',function(event){
     if($("#checkBoxId").is(":checked")){
     	if(mile1 < totalprice1){
     		alert("총결제금액보다 내 적립금이 큽니다");
+    		$(this).prop("checked",false);
     	}
     	else{
        $(".mile").val(mile);
