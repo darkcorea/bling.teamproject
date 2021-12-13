@@ -25,8 +25,9 @@ public class DeliveryController {
 	@Autowired
 	DeliveryService deliveryService;
 	
+	// 마이페이지 주문내역 조회  메인 페이지
 	@RequestMapping(value="/main.do")
-	public String cart(Locale locale, Model model, HttpSession session, Criteria cs) throws Exception {
+	public String delivery(Locale locale, Model model, HttpSession session, Criteria cs) throws Exception {
 		
 		// 로그인이 풀렸을 떄 대비해서 넣음
 		if ( session.getAttribute("UserVO") == null) {return "redirect:/Login/main.do";}
@@ -124,6 +125,30 @@ public class DeliveryController {
 		deliveryService.return_delivery(cv);
 		
 		return 1;
+	}
+	
+	// 마이페이지 주문내역 중에 취소반푼교환내역
+	@RequestMapping(value="/main1.do")
+	public String delivery1(Locale locale, Model model, HttpSession session, Criteria cs) throws Exception {
+		
+		// 로그인이 풀렸을 떄 대비해서 넣음
+		if ( session.getAttribute("UserVO") == null) {return "redirect:/Login/main.do";}
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		int midx = uv.getMidx();
+		
+		cs.setPerPageNum(10);
+		
+		PageMaker pm = new PageMaker();
+		pm.setMidx(midx);
+		pm.setScri(cs);
+		
+		//midx와 pm에 따른 오더 총 갯수
+		int setTotalCount = deliveryService.re_delivery_count(pm);
+		pm.setTotalCount(setTotalCount);
+
+		model.addAttribute("pm",pm);
+		model.addAttribute("list", deliveryService.re_deivery_list(pm));
+		return "delivery/main1";
 	}
 	
 	

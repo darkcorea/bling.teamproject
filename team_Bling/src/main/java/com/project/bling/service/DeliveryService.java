@@ -10,6 +10,8 @@ public interface DeliveryService {
 	
 	int delivery_count(PageMaker pm) throws Exception;
 	List<CombineVO> deivery_list(PageMaker pm) throws Exception;
+	int re_delivery_count(PageMaker pm) throws Exception;
+	List<CombineVO> re_deivery_list(PageMaker pm) throws Exception;
 	void confirm_fn(int order_idx) throws Exception ;
 	List<CombineVO> order_list(int order_idx) throws Exception;
 	int addmileage_check(int order_idx) throws Exception;

@@ -27,7 +27,19 @@ public class deliveryServiceImpl implements DeliveryService {
 	public List<CombineVO> deivery_list(PageMaker pm) throws Exception {
 		return deliveryDAO.deivery_list(pm);
 	}
-
+	
+	// midx와 pageMaker로 교환,반품,취소  총 갯수 가져 오기
+	@Override
+	public int re_delivery_count(PageMaker pm) throws Exception {
+		return deliveryDAO.re_delivery_count(pm);
+	}
+	
+	// midx로 배pageMaker로 교환,반품,취소 리스트 가져오기
+	@Override
+	public List<CombineVO> re_deivery_list(PageMaker pm) throws Exception {
+		return deliveryDAO.re_deivery_list(pm);
+	}
+	
 	// order_idx로 구매확정 하기
 	@Override
 	public void confirm_fn(int order_idx) throws Exception {

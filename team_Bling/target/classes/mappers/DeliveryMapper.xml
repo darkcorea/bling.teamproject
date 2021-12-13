@@ -5,17 +5,21 @@
  
 <mapper namespace="com.project.bling.mapper.deliveryMapper">
 
+	<!-- 날짜 검색 반복되는 쿼리문 -->
+	<sql id="date_search">
+		<if test='scri.kind == "B"'>AND DATE_FORMAT(ord.rdate,'%Y-%m-%d') = DATE_FORMAT(sysdate(),'%Y-%m-%d')</if>
+		<if test='scri.kind == "C"'><![CDATA[AND ord.rdate >= DATE_ADD(sysdate(), INTERVAL -1 WEEK )]]></if>
+		<if test='scri.kind == "D"'><![CDATA[AND ord.rdate >= DATE_ADD(sysdate(), INTERVAL -1 MONTH )]]></if>
+		<if test='scri.kind == "E"'><![CDATA[AND ord.rdate >= DATE_ADD(sysdate(), INTERVAL -3 MONTH )]]></if>
+		<if test='scri.kind == "F"'><![CDATA[AND ord.rdate >= DATE_ADD(sysdate(), INTERVAL -6 MONTH )]]></if>
+		<if test='scri.kind == "G"'>AND ord.rdate BETWEEN DATE_FORMAT(#{scri.rdate1},'%Y-%m-%d') AND DATE_FORMAT(#{scri.rdate2},'%Y-%m-%d')</if>
+	</sql>
+	
+	
 	<!-- 페이징에 필요한 배송정보 총 갯수 -->
 	<select id="delivery_count" parameterType="PageMaker" resultType="int">
-
-		SELECT count(*) FROM bg_order WHERE midx=#{midx}
-		
-		<if test='scri.kind == "B"'><![CDATA[AND rdate >= sysdate()]]></if>
-		<if test='scri.kind == "C"'><![CDATA[AND rdate >= DATE_ADD(sysdate(), INTERVAL -1 WEEK )]]></if>
-		<if test='scri.kind == "D"'><![CDATA[AND rdate >= DATE_ADD(sysdate(), INTERVAL -1 MONTH )]]></if>
-		<if test='scri.kind == "E"'><![CDATA[AND rdate >= DATE_ADD(sysdate(), INTERVAL -3 MONTH )]]></if>
-		<if test='scri.kind == "F"'><![CDATA[AND rdate >= DATE_ADD(sysdate(), INTERVAL -6 MONTH )]]></if>
-		<if test='scri.kind == "G"'>AND rdate BETWEEN DATE_FORMAT(#{scri.rdate1},'%Y-%m-%d') AND DATE_FORMAT(#{scri.rdate2},'%Y-%m-%d')</if>
+		SELECT count(*) FROM bg_order ord WHERE midx=#{midx}
+		<include refid="date_search"></include>
 
 	</select>
 
@@ -23,7 +27,7 @@
 	<select id="deivery_list" parameterType="PageMaker" resultType="CombineVO">
 		SELECT * FROM (
 			SELECT ord.order_idx, od.detail_idx, ord.rdate, im.main, pr.pname, op.oname, od.quantity , ord.tot_price,
-			de.cancel, de.refund, de.exchange, de.deli_stat, de.order_yn, re.ridx, de.invoice_num, de.confirm_yn
+			de.cancel, de.refund, de.exchange, de.deli_stat, re.ridx, de.invoice_num, de.confirm_yn
 			,COUNT(*) OVER(PARTITION BY ord.order_idx) AS count
 			,SUM(od.quantity) OVER(PARTITION BY ord.order_idx) AS quantitySum
 		    ,TIMESTAMPDIFF(DAY, de.deli_com, now()) AS date_differ
@@ -36,15 +40,8 @@
 			JOIN bg_delivery de ON de.order_idx = ord.order_idx
 			LEFT OUTER JOIN  open_a_2021.bg_review re ON re.DETAIL_IDX = od.detail_idx
 			WHERE ord.midx=#{midx}
-			
-			<if test='scri.kind == "B"'><![CDATA[AND ord.rdate >= sysdate()]]></if>
-			<if test='scri.kind == "C"'><![CDATA[AND ord.rdate >= DATE_ADD(sysdate(), INTERVAL -1 WEEK )]]></if>
-			<if test='scri.kind == "D"'><![CDATA[AND ord.rdate >= DATE_ADD(sysdate(), INTERVAL -1 MONTH )]]></if>
-			<if test='scri.kind == "E"'><![CDATA[AND ord.rdate >= DATE_ADD(sysdate(), INTERVAL -3 MONTH )]]></if>
-			<if test='scri.kind == "F"'><![CDATA[AND ord.rdate >= DATE_ADD(sysdate(), INTERVAL -6 MONTH )]]></if>
-			<if test='scri.kind == "G"'>AND ord.rdate BETWEEN DATE_FORMAT(#{scri.rdate1},'%Y-%m-%d') AND DATE_FORMAT(#{scri.rdate2},'%Y-%m-%d')</if>
-			
-			AND now() >= date_add(now(), interval -3 month)
+			<include refid="date_search"></include>
+
 			ORDER BY ord.order_idx desc, od.detail_idx desc) A
         WHERE RNUM =1
         Limit #{startPost},#{scri.perPageNum}
@@ -100,4 +97,43 @@
 	  		<if test='kind == "F"'>cancel = 'N'</if>
 	  	WHERE order_idx=#{order_idx}
 	  </update>
+	  
+	  <!-- 취소반품 교환 내역 페이징에 필요한 총 카운트-->
+	  <select id="re_delivery_count" parameterType="PageMaker" resultType="int">
+		SELECT count(*) FROM bg_delivery de
+		JOIN bg_order ord ON ord.order_idx=de.order_idx
+		WHERE ord.midx=#{midx} AND ( de.cancel is not null OR de.refund is not null OR de.exchange is not null)
+		<include refid="date_search"></include>
+
+	</select>
+	  
+	  
+	  <!-- 주문내역 중에 취소반품 교환 내역 -->
+	  <select id="re_deivery_list" parameterType="PageMaker" resultType="CombineVO">
+	  SELECT * FROM (
+			SELECT ord.order_idx, od.detail_idx, ord.rdate, im.main, pr.pname, op.oname, od.quantity , ord.tot_price,
+			de.cancel, de.refund, de.exchange, de.invoice_num, qe.rdate as rdate1
+			,COUNT(*) OVER(PARTITION BY ord.order_idx) AS count
+			,SUM(od.quantity) OVER(PARTITION BY ord.order_idx) AS quantitySum
+		    ,ROW_NUMBER() OVER(PARTITION BY ord.order_idx ORDER BY ord.order_idx asc )AS RNUM
+			FROM bg_order_detail od
+			JOIN bg_order ord ON ord.order_idx = od.order_idx
+			JOIN bg_option op ON op.oidx = od.oidx
+			JOIN bg_product pr ON pr.pidx = op.pidx
+			JOIN BG_IMAGE im ON im.pidx = pr.pidx
+			JOIN bg_delivery de ON de.order_idx = ord.order_idx
+			join bg_question qe ON (qe.order_idx = od.order_idx)
+			WHERE ord.midx=#{midx} and ( de.cancel is not null or de.refund is not null or de.exchange is not null)
+			
+			<if test='scri.kind == "B"'>AND DATE_FORMAT(qe.rdate,'%Y-%m-%d') = DATE_FORMAT(sysdate(),'%Y-%m-%d')</if>
+			<if test='scri.kind == "C"'><![CDATA[AND qe.rdate >= DATE_ADD(sysdate(), INTERVAL -1 WEEK )]]></if>
+			<if test='scri.kind == "D"'><![CDATA[AND qe.rdate >= DATE_ADD(sysdate(), INTERVAL -1 MONTH )]]></if>
+			<if test='scri.kind == "E"'><![CDATA[AND qe.rdate >= DATE_ADD(sysdate(), INTERVAL -3 MONTH )]]></if>
+			<if test='scri.kind == "F"'><![CDATA[AND qe.rdate >= DATE_ADD(sysdate(), INTERVAL -6 MONTH )]]></if>
+			<if test='scri.kind == "G"'>AND qe.rdate BETWEEN DATE_FORMAT(#{scri.rdate1},'%Y-%m-%d') AND DATE_FORMAT(#{scri.rdate2},'%Y-%m-%d')</if>
+			
+			ORDER BY ord.order_idx desc, od.detail_idx desc) A
+        WHERE RNUM =1
+        Limit #{startPost},#{scri.perPageNum}
+	  </select>
 </mapper>

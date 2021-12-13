@@ -40,7 +40,7 @@ public class MyPageController {
 	@Autowired
 	LoginService  loginService;
 	
-    String uploadPath = "C:\\Users\\dark\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
+    String uploadPath = "C:\\Users\\MYCOM\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
     
     //커스터마이징
     @RequestMapping(value="/ssss.do")

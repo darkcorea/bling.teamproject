@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>주문확인 배송조회</title>
+<title>주문내역 배송조회</title>
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script src="/js/bootstrap.bundle.js"></script>
 <!-- SweetAlert2(alert,modal창) -->
@@ -323,6 +323,11 @@
 		    opacity: 0.4
 		}
 		
+	/*  페이징 번호들을 붙이기 위해서 */
+	.page-item {
+		padding: 0px;
+	}
+	
 </style>
 </head>
 <body>
@@ -333,7 +338,7 @@
 	<div class="title text_center">주문내역</div><br>
 	<div class="title text_center row">
 		<div class="col"><a href="/Delivery/main.do" class="title3"><span>주문내역조회</span></a></div>
-		<div class="col"><a href="/Delivery/main.do" class="title2"><span>취소/반품/교환내역</span></a></div>
+		<div class="col"><a href="/Delivery/main1.do" class="title2"><span>취소/반품/교환내역</span></a></div>
 	</div>
 	<hr>
 	<div id="reviewList">
@@ -370,14 +375,14 @@
 		<table class="table text_center" style="margin-top:15px;">
 			<thead>
 				<tr id="tr">
-					<th>주문일자[주문번호]</th>
-					<th>이미지</th>
-					<th>상품명(옵션)</th>
-					<th>수량</th>
-					<th>상품구매금액</th>
+					<th style="width:180px;">주문일자[주문번호]</th>
+					<th style="width:80px;">이미지</th>
+					<th style="width:230px;">상품명(옵션)</th>
+					<th style="width:55px;">수량</th>
+					<th style="width:132px;">상품구매금액</th>
 					<th>배송상태</th>
 					<th>구매상태</th>
-					<th>취소/교환/반품</th>
+					<th style="width:140px">취소/교환/반품</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -468,6 +473,10 @@
 						<c:if test="${list.refund == 'Y'}">
 							<span>환불완료</span>
 						</c:if>
+						<!-- 환불이 되면 -->
+						<c:if test="${list.exchange == 'Y'}">
+							<span>교환완료</span>
+						</c:if>
 						<!-- 입금이 완료 전이면-->
 						<c:if test="${list.deli_stat == 'N' && list.cancel == null}">
 							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'F')">취소</button>
@@ -481,8 +490,8 @@
 							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'F')">취소</button>
 						</c:if>
 						<!-- 배송 중이면 -->
-						<c:if test="${list.deli_stat == 'B'}">
-							 <button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'D')">교환/반품하기</button>
+						<c:if test="${list.deli_stat == 'B' && list.refund == null && list.exchange == null}">
+							 <button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'D')">교환/반품</button>
 						</c:if>
 						 
 						 <!-- 배송 완료가 되고-->
@@ -501,9 +510,12 @@
 							 		<c:if test="${list.exchange == 'Y'}">
 							 			<br><span>교환완료</span>
 							 		</c:if>
-							 		<!-- 교환에 아무것도 없으면 -->
-							 		<c:if test="${list.exchange == null}">
-							 			<br><button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'D')">교환/반품하기</button>
+							 		<c:if test="${list.refund == 'Y'}">
+							 			<br><span>반품완료</span>
+							 		</c:if>
+							 		<!-- 교환 반품에 아무것도 없으면 -->
+							 		<c:if test="${list.exchange == null && list.refund == null}">
+							 			<br><button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'D')">교환/반품</button>
 							 		</c:if>
 							 		<!-- 리뷰를 쓰지 않았다면 -->
 							 		<c:if test="${list.ridx == null || list.ridx == 0}">
@@ -548,7 +560,7 @@
 			<c:if test="${pm.prev == true}">
 			<li class='page-item'>
 			<c:set var="prev" value="${pm.startPage -1}"/>
-				<a class='page-link' aria-label='Previous' href="/Customer/main.do?page=${prev}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
+				<a class='page-link' aria-label='Previous' href="/Delivery/main.do?page=${prev}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
 					<span aria-hidden='true' class='pointer' >&laquo;</span>
 				</a>
 			</li>
@@ -559,14 +571,14 @@
 			<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
 				<c:if test = "${pageNum == page}">
 				<li class="page-item active">	
-					<a class="page-link pointer" href="/Customer/main.do?page=${pageNum}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
+					<a class="page-link pointer" href="/Delivery/main.do?page=${pageNum}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
 						<c:out value="${pageNum}"/>
 					</a>
 				</li>
 				</c:if>
 				<c:if test = "${pageNum != page}">
 				<li class="page-item">	
-					<a class="page-link pointer" href="/Customer/main.do?page=${pageNum}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
+					<a class="page-link pointer" href="/Delivery/main.do?page=${pageNum}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
 						<c:out value="${pageNum}"/>
 					</a>
 				</li>
@@ -576,7 +588,7 @@
 			<!-- 뒤로 가기 버튼 , 키워드 유지하면서 이동하기 -->
 			<c:if test="${pm.next && pm.endPage > 0}">
 			<li class='page-item'>
-				<a class='page-link' aria-label='Next' href="/Customer/main.do?page=${pm.endPage + 1}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
+				<a class='page-link' aria-label='Next' href="/Delivery/main.do?page=${pm.endPage + 1}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
 					<span aria-hidden='true' class='pointer'>&raquo;</span>
 				</a>
 			</li>
@@ -921,6 +933,8 @@ $(document).ready(function() {
 			ContentType: "json",
 			success: function(data){
 				alert("리뷰가 작성되었습니다.");
+				location.reload();
+				
 			},
 			error: function(){
 				console.log("!!!!!리뷰작성 에러!!!!!");

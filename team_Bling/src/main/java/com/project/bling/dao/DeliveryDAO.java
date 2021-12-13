@@ -23,9 +23,18 @@ public class DeliveryDAO {
 		return sqlSession.selectOne(dm +"delivery_count", pm);
 	}
 
-	// midx로 배송주문 상태 가져오기 
+	// midx로 배송주문 상태 리스트 가져오기 
 	public List<CombineVO> deivery_list(PageMaker pm) throws Exception {	
 		return sqlSession.selectList(dm + "deivery_list", pm);
+	}
+	
+	// midx와 pageMaker로 교환,반품,취소  총 갯수 가져 오기
+	public int re_delivery_count(PageMaker pm) throws Exception {
+		return sqlSession.selectOne(dm +"re_delivery_count", pm);
+	}
+	// midx로 배pageMaker로 교환,반품,취소 리스트 가져오기
+	public List<CombineVO> re_deivery_list(PageMaker pm) throws Exception {	
+		return sqlSession.selectList(dm + "re_deivery_list", pm);
 	}
 	
 	// order_idx로 적립금이 있는지 없는지 확인
