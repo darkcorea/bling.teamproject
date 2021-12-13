@@ -23,25 +23,18 @@
 		 #select{
               width:200px;
               height:1000px;
-              background-color: cornflowerblue;
           }
           #main{
               width:800px;
               height:800px;
-              background-color: yellow;
           }
           #kind{
               width:200px;
               height:800px;
-              background-color: orange;
           }
           #typescroll{
               width:800px;
               height:200px;
-              background-color: burlywood;
-          }
-          #but{
-              background-color: coral;
           }
           #type{
               width: 180px;
@@ -67,6 +60,18 @@
 			width:80px;
 			height:80px;
 		}
+		table{
+			border:1px solid black;
+			border-collapse:collapse;
+		}
+		th,td{
+			border:1px solid black;
+		}
+		#zz{
+			width:200px;
+            height:1000px;
+			overflow-y:auto;
+		}
 	</style>
 </head>
 	
@@ -74,12 +79,29 @@
         <table style="margin-right: auto;margin-left: auto;">
             <h2 style="text-align: center;">커스터마이징</h2>
             <tr>
+            <!-- 선택한옵션 -->
                 <td id="select" rowspan="2">
-                    선택한옵션
+                	<div id="zz">
+	                	<h4>선택한 상품들</h4>
+	                	<hr>
+	                	<div id="selectoption"> 
+	                		
+	                	</div>
+	                	<hr>
+	                	<div id="total">
+	                		
+	                	</div>
+                	</div>
                 </td>
+                 <!-- 커스터마이징 이미지 보이는 곳 -->
                 <td id="main">
-                	<div id="maindiv">
-                	 
+               		<div id="capture">
+	                	<div style="position:relative">
+	                		<div style="position:absolute" id="optiondiv">
+	                		
+	                		</div>
+	                		<p id="maindiv"> </p>
+	                	</div>
                 	</div>
                 </td>
                 <td id="kind">
@@ -92,61 +114,125 @@
                 </td>
             </tr>
             <tr>
+           <!-- 선택한 종류들 -->
                 <td id="typescroll">
                     <div style="height:200px;width: 800px; overflow: auto;" id="scroll">
                         
                     </div>
                 </td>
                 <td id="but">
-                    <button type="button" class="btnScreenShot" id="btnScreenShot">커마저장</button>
+                    <button type="button" class="btnScreenShot" id="shot">커마저장</button>
                 </td>
             </tr>
         </table>
     </body>
 
     <script>
+    
+    var sum = 0;
+    //타입별 종류들
         function types(type){
             var str = "";
-            if(type == 1){
-            	for(var i = 1;i<4;i++){
-            		str += "<a style='cursor:pointer;' onclick='javascript:main_option(1,"+i+")'><img src='/resources/custom/체인"+i+".png' id='type'></a>";
+            
+            $.ajax({
+            	url:"/Custom/customoption.do",
+            	type:"post",
+            	data:{"type":type},
+            	dataType:'json',
+            	success:function(data){
+        			console.log(data[0].type);
+        			console.log(data[0])
+            		for(var i=0;i<data.length;i++){
+            			if(data[0].type == 1){
+            				str += "<a style='cursor:pointer;' onclick='main_option("+data[i].type+","+data[i].shape+")'><img src='/resources/custom/"+data[i].customimg+"' id='type'></a>";
+            			}else{
+            				str += "<a style='cursor:pointer;' onclick='options("+data[i].type+","+data[i].shape+")'><img src='/resources/custom/"+data[i].customimg+"' id='type'></a>";
+            			}
+            		}
+            		 $('#scroll').html(str);
+            	},error:function(){
+            		alert("타입 불러오기 에러!");
             	}
-            }else if(type == 2){
-            	for(var j = 1;j<7;j++){
-            		str += "<a style='cursor:pointer;' onclick='javascript:options(2,"+j+")'><img src='/resources/custom/고리"+j+".png' id='type'></a>";
-            	}
-            }else if(type == 3){
-            	for(var k = 1;k<6;k++){
-            		str += "<a style='cursor:pointer;' onclick='javascript:options(3,"+k+")'><img src='/resources/custom/장식"+k+".png' id='type'></a>";
-            	}
-            }
-
-            $('#scroll').html(str);
+            });
+        }
+        ////////////////////////////////////////////////가격스크롤/////////////////////////////////////////////
+       //체인 고르기
+        function main_option(type,shape){
+    	   console.log(type);
+    	   console.log(shape);
+        	 $.ajax({
+             	url:"/Custom/customshape.do",
+             	type:"post",
+             	data:{"type":type,"shape":shape},
+             	dataType:'json',
+             	success:function(data){
+             		console.log(data);
+             		//체인 고르면 이미지 나오게 함
+             		var str_chain = "";
+             		str_chain += "<img src='/resources/custom/"+data[0].customimg+"' class='type'>";
+                	$('#maindiv').html(str_chain);
+                	//선택옵션 글 나오게함
+                	
+                	var chainprice = $('#chainprice').val();
+                	if(chainprice == 0 || chainprice == '' || chainprice == null){
+                		var str2_chain = "";
+                    	str2_chain += "<h5>"+data[0].name + "</h5>";
+                    	str2_chain += data[0].price + "원<hr>";
+                    	str2_chain += "<input type='hidden' id='chainprice' value='"+data[0].price+"'>";
+                    	$('#selectoption').append(str2_chain);
+                		total(data[0].price);
+                	}else{
+                		//////////////////////////////////////////////이부분 고쳐야함...///////////////////////////////////////
+                		var str2_chain = "";
+                    	str2_chain += "<h5>"+data[0].name + "</h5>";
+                    	str2_chain += data[0].price + "원<hr>";
+                    	str2_chain += "<input type='hidden' id='chainprice' value='"+data[0].price+"'>";
+                		minus(chainprice,data[0].price);
+                		$('#selectoption').append(str2_chain);
+                	}
+             	}
+        	 });
         }
         
-        
-        function main_option(type,option){
-        	
-        	var str_chain = "";
-        	str_chain += "<img src='/resources/custom/체인"+option+".png' class='type'>";
-        	$('#maindiv').html(str_chain);
+        //장식품들 고르면 드래그 가능 이미지 나옴
+        function options(type,shape){
+        	 $.ajax({
+              	url:"/Custom/customshape.do",
+              	type:"post",
+              	data:{"type":type,"shape":shape},
+              	dataType:'json',
+              	success:function(data){
+              		var str2 = "";
+              		str2 += "<img src='/resources/custom/"+data[0].customimg+"' id='optionss' class='drag'>";
+                	$('#optiondiv').append(str2);
+                	//선택옵션 글 나오게함
+                	var str2_option = "";
+                	str2_option += "<h5>"+data[0].name + "</h5>";
+                	str2_option += data[0].price + "원<hr>";
+                	$('#selectoption').append(str2_option);
+                	total(data[0].price);
+              	}
+        	});
         }
         
-        
-        function options(type,option){
-        	var str2 = "";
-        	if(type == 3){
-        		str2 += "<div ><img src='/resources/custom/장식"+option+".png' id='optionss' class='drag'></div>";
-        	}else{
-        		str2 += "<img src='/resources/custom/고리"+option+".png' id='optionss' class='drag'>";
-        	}
-        	
-        	$('#maindiv').prepend(str2);
+        //총 금액
+        function total(price){
+        	sum += price;
+        	var str3 = "";
+        	str3 += "<h5>총 금액 : "+sum+"원</h5>";
+        	str3 += "<input type='hidden' id='totalprice' value='"+sum+"'>";
+        	$('#total').html(str3);
         }
         
+        function minus(minustot,plustot){
+        	var mp = minustot + plustot
+        	var minusprice = $('#totalprice').val() - mp;
+        	str3 += "<h5>총 금액 : "+minusprice+"원</h5>";
+        	str3 += "<input type='hidden' id='totalprice' value='"+minusprice+"'>";
+        	$('#total').html(str3);
+        }
         
-        
-        
+        //드래그 객체
         var dragobject={
         		z: 0, 
         		x: 0, 
@@ -192,13 +278,31 @@
         		}
        dragobject.initialize()
        
-       $("#btnScreenShot").on("click",function(){
-    	   html2canvas(document.getElementById("scroll"), {
-    		    backgroundColor: "#000000"
-    		}).then(function(canvas) {
-    		    var base64image = canvas.toDataURL("image/png");
-    		    window.open(base64image , "_blank");  // Open the image in a new window
-    		});
-       });
+       //스크린샷 https://samanoske.tistory.com/94
+       $(function(){
+			$("#shot").on("click", function(){
+				// 캡쳐 라이브러리를 통해서 canvas 오브젝트를 받고 이미지 파일로 리턴한다.
+				html2canvas(document.querySelector("#capture")).then(canvas => {
+					saveAs(canvas.toDataURL('image/png'),"capture-test.png");
+				});
+			});
+			function saveAs(uri, filename) {
+				// 캡쳐된 파일을 이미지 파일로 내보낸다.
+				var link = document.createElement('a');
+				if (typeof link.download === 'string') {
+					link.href = uri;
+					link.download = filename;
+					document.body.appendChild(link);
+					link.click();
+					document.body.removeChild(link);
+				} else {
+					indow.open(uri);
+				}
+			}
+		});
+
+
+//스샷 파일을 db에 저장, 삭제버튼, 회전, 체인 바꿀때 추가 되는거, 제품 선택한거 db에 저장
+       
     </script>
 </html>
