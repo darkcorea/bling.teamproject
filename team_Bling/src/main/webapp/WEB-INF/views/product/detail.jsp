@@ -223,8 +223,10 @@
 				<!-- 데이터베이스에서 null값을 아래로 내리는 방법을 찾아내서 매퍼를 수정함 -->
 				<div class="review-image">
 					<c:forEach items="${review}" var="review" end="9">
+						<c:if test="${review.image1 != null}">
 						<img class="review-image1 img-thumbnail"
 							src="/resources/review_img/${review.image1}">
+						</c:if>
 					</c:forEach>
 				</div>
 			</div>
