@@ -172,7 +172,7 @@
 <script>
 	function detail(pqidx){
 		$.ajax({
-			url:"/Customer/pruduct_myquestion_detail.do",
+			url:"/Customer/product_myquestion_detail.do",
 			type:"POST",
 			data:{"pqidx":pqidx},
 			dataType:"json",
@@ -198,7 +198,7 @@
 				str += "</table><br><br>";
 				str += "<div id='btndiv'>";
 				str += "<button class='btn btn-secondary t' onclick='linkFn(); return false;'>돌아가기</button>";
-				str += "<button class='btn btn-secondary' onclick='delFn("+data.qidx+")'>삭제 하기</button>";
+				str += "<button class='btn btn-secondary' onclick='delFn("+data.pqidx+")'>삭제 하기</button>";
 				str += "</div>";
 				$("#content").html(str);
 			},
@@ -211,13 +211,13 @@
 	
 	function linkFn(){
 		
-		location.href="/Customer/myquestion_pruduct.do";
+		location.href="/Customer/myquestion_product.do";
 	}
-	function delFn(qidx){
+	function delFn(pqidx){
 		$.ajax({
-			url:"/Customer/pruduct_myquestion_delete.do",
+			url:"/Customer/product_myquestion_delete.do",
 			type:"POST",
-			data:{"qidx":qidx},
+			data:{"pqidx":pqidx},
 			dataType:"json",
 			success:function(data){
 				alert("삭제되었습니다");

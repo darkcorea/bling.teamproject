@@ -87,8 +87,13 @@ public class CustomerDAO {
 		sqlSession.delete(cm+"myquestion_delete",qidx);
 	}
 	
-	public List<QuestionVO> pruduct_question_list(int midx) throws Exception {
-		return sqlSession.selectList(cm+"pruduct_question_list",midx);
+	public List<QuestionVO> product_question_list(int midx) throws Exception {
+		return sqlSession.selectList(cm+"product_question_list",midx);
 	}
-	
+	public QuestionVO product_myquestion_detail(int pqidx) throws Exception {
+		return sqlSession.selectOne(cm+"product_myquestion_detail",pqidx);
+	}
+	public void product_myquestion_delete(int pqidx) throws Exception {
+		sqlSession.delete(cm+"product_myquestion_delete",pqidx);
+	}
 }

@@ -110,6 +110,7 @@
 			 <include refid="keyword"></include>
 		Limit #{startPost},#{scri.perPageNum} 	
 	</select> 
+	
 	<!-- 나의 1:1문의내역 리스트 -->
 	<select id="question_list" parameterType="int" resultType="QuestionVO">
 	<![CDATA[	SELECT rownum,title,category,rdate,qidx,depth from(select @rownum:=@rownum + 1 as rownum,
@@ -121,6 +122,7 @@
     ]]>
 	</select>
 	
+	<!-- 나의 1:1문의내역 상세보기-->
 	<select id="myquestion_detail" parameterType="int" resultType="QuestionVO">
 	<![CDATA[	SELECT a.qidx,a.title,a.content, a.rdate,b.oname,d.pname
    				FROM bg_question a LEFT JOIN bg_order_detail c ON a.detail_idx=c.detail_idx 
@@ -130,13 +132,16 @@
     ]]>
 	</select>
 	
+	<!-- 나의 1:1문의내역 삭제-->
 	<delete id="myquestion_delete" parameterType="int">
 		
 		<![CDATA[
 		DELETE FROM bg_question WHERE qidx = #{qidx}
 		  ]]>
 	</delete>
-	<select id="pruduct_question_list" parameterType="int" resultType="QuestionVO">
+	
+	<!-- 나의 상품문의내역 리스트-->
+	<select id="product_question_list" parameterType="int" resultType="QuestionVO">
 	<![CDATA[SELECT *
 				 FROM ( SELECT A.*
 		                    , @rownum := @rownum + 1 AS rownum
@@ -157,5 +162,19 @@
     ]]>
 	</select>
 	
+	<!-- 나의 상품문의내역 상세보기-->
+	<select id="product_myquestion_detail" parameterType="int" resultType="QuestionVO">
+	<![CDATA[	SELECT a.pqidx,a.title,a.comments, a.rdate,d.pname
+   				FROM bg_product_question a LEFT JOIN bg_product d ON a.pidx=d.pidx 
+                WHERE pqidx=#{pqidx}
+    ]]>
+	</select>
 	
+	<!-- 나의 상품문의내역 삭제-->
+	<delete id="product_myquestion_delete" parameterType="int">
+		
+		<![CDATA[
+		DELETE FROM bg_product_question WHERE pqidx = #{pqidx}
+		  ]]>
+	</delete>
 </mapper>
