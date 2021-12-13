@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project.bling.dao.DeliveryDAO;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.NonorderVO;
 import com.project.bling.vo.QuestionVO;
 
 @Service("DeliveryService")
@@ -81,6 +82,12 @@ public class deliveryServiceImpl implements DeliveryService {
 	public void return_delivery(CombineVO cv) throws Exception {
 		deliveryDAO.return_delivery(cv);
 		
+	}
+
+	/// 이름과 주문번호로 비회원 주문이 있는지 조회
+	@Override
+	public String nonDel_check(NonorderVO nv) throws Exception {
+		return deliveryDAO.nonDel_check(nv);
 	}
 
 

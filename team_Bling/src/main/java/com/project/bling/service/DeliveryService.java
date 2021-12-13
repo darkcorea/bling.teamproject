@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.NonorderVO;
 import com.project.bling.vo.QuestionVO;
 
 public interface DeliveryService {
@@ -19,4 +20,5 @@ public interface DeliveryService {
 	void addmileage_zero(int order_idx) throws Exception;
 	void return_delivery_question(QuestionVO qv) throws Exception;
 	void return_delivery(CombineVO cv) throws Exception;
+	String nonDel_check(NonorderVO nv) throws Exception;
 }

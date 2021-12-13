@@ -118,20 +118,13 @@
 	#delivery_select2 {
 		justify-content: center;
 	}		
-	/* 모달 버튼 */
-	#modal_button1{
-	background-color: #CB7878;
-	}
-		
+
 	/* 모달 버튼 크기*/
 	#modal_button1{
+		background-color: #CB7878;
 		width:120px;
 	}
 		
-	/* 모달 버튼 크기*/
-	#modal_button2{
-		width:120px;
-	}
 	/* 모달창에 나오는 상품 이미지 크기  */
 	.image_main{
 		width:80px;

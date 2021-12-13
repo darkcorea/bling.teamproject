@@ -110,28 +110,20 @@
 		cursor: pointer;
 	}
 	
-	/* 클래스 붙이면 백그라운드 색상이 블링 색으로 */
-	.bling_color {
-		background-color: #CB7878;
-	}
 	/* 모달 버튼 가운데로 오기*/
 	#delivery_select2 {
 		justify-content: center;
 	}		
 	/* 모달 버튼 */
-	#modal_button1{
+	#modal_button1, .bling_color{
 	background-color: #CB7878;
 	}
 		
 	/* 모달 버튼 크기*/
-	#modal_button1{
+	#modal_button1, #modal_button2{
 		width:120px;
 	}
 		
-	/* 모달 버튼 크기*/
-	#modal_button2{
-		width:120px;
-	}
 	/* 모달창에 나오는 상품 이미지 크기  */
 	.image_main{
 		width:80px;
@@ -490,7 +482,7 @@
 							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'F')">취소</button>
 						</c:if>
 						<!-- 배송 중이면 -->
-						<c:if test="${list.deli_stat == 'B' && list.refund == null && list.exchange == null}">
+						<c:if test="${list.deli_stat == 'B' && list.refund == null && list.exchange == null && list.cancel == null}">
 							 <button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'D')">교환/반품</button>
 						</c:if>
 						 

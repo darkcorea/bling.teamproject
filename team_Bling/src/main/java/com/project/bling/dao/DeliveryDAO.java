@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.NonorderVO;
 import com.project.bling.vo.QuestionVO;
 
 @Repository
@@ -72,4 +73,11 @@ public class DeliveryDAO {
 		sqlSession.update(dm +"return_delivery", cv);
 	}
 
+	// 이름과 주문번호로 비회원 주문이 있는지 조회
+	public String nonDel_check(NonorderVO nv) throws Exception {
+		return ( sqlSession.selectOne(dm +"nonDel_check", nv));
+				
+	}
+	
+	
 }
