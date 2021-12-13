@@ -110,9 +110,9 @@
 			 <include refid="keyword"></include>
 		Limit #{startPost},#{scri.perPageNum} 	
 	</select> 
-	
+	<!-- 나의 1:1문의내역 리스트 -->
 	<select id="question_list" parameterType="int" resultType="QuestionVO">
-	<![CDATA[	SELECT rownum,title,rdate,qidx,depth from(select @rownum:=@rownum + 1 as rownum,
+	<![CDATA[	SELECT rownum,title,category,rdate,qidx,depth from(select @rownum:=@rownum + 1 as rownum,
 			    t1.*
 				FROM bg_question t1,
 			    (SELECT @rownum:=0) tmp
@@ -137,11 +137,23 @@
 		  ]]>
 	</delete>
 	<select id="pruduct_question_list" parameterType="int" resultType="QuestionVO">
-	<![CDATA[	SELECT rownum,title,rdate,pqidx,depth from(select @rownum:=@rownum + 1 as rownum,
-			    t1.*
-				FROM bg_product_question t1,
-			    (SELECT @rownum:=0) tmp
-			    WHERE midx =#{midx} ORDER BY originpqidx asc)sub;
+	<![CDATA[SELECT *
+				 FROM ( SELECT A.*
+		                    , @rownum := @rownum + 1 AS rownum
+		             FROM (
+		                      SELECT  T2 .pname
+		                              , T1 .title
+		                              , T1 .rdate
+		                              , T1 .pqidx
+		                              , T1 .originpqidx
+		                              , T1 .depth
+		                             , T1 .midx
+		                             , T1 .show_yn
+		                       FROM bg_product_question T1
+		                       LEFT JOIN bg_product T2 ON (T2 .pidx = T1. pidx)
+		                       JOIN ( SELECT @rownum := 0) R
+		                       where midx =#{midx}) AS A
+		                  order by originpqidx asc) AS B
     ]]>
 	</select>
 	
