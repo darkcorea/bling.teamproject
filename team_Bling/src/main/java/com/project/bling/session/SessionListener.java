@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSessionListener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.project.bling.dao.VisitCountDAO;
 import com.project.bling.service.VisitCountService;
 import com.project.bling.vo.UserVO;
 
@@ -73,13 +74,17 @@ public class SessionListener implements HttpSessionListener {
 	 //방문자수 카운트 포함
     @Override
     public void sessionCreated(HttpSessionEvent hse) {
-        System.out.println(hse);
+        System.out.println("123456789!!!"+hse);
         sessions.put(hse.getSession().getId(), hse.getSession());
+        
+        //VisitCountDAO visitcountDAO = new VisitCountDAO();
         try {
+        	//visitcountDAO.visiter();
 			visitcountService.visiter();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+        
     }
 
     @Override
@@ -89,6 +94,4 @@ public class SessionListener implements HttpSessionListener {
             sessions.remove(hse.getSession().getId());	
         }
     }
-    
-    
 }
