@@ -110,7 +110,20 @@
 						$("#red2").hide();
 						$("#not_id").focus();
 					}else{
-						location.href='/Delivery/non_main.do?orderid='+data;
+						let frm = document.createElement("form");
+						
+						frm.name = "frm";
+						frm.method = "post";
+						frm. action = "/Delivery/non_main.do";
+						
+					    let input = document.createElement("input");
+					    input.setAttribute("type","hidden");
+					    input.setAttribute("name","orderid");
+					    input.setAttribute("value",data);
+						
+					    frm.appendChild(input);
+						document.body.appendChild(frm);
+						frm.submit();
 					}
 				},
 				error:function(){

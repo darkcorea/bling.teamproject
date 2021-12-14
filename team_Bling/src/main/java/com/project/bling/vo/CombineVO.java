@@ -43,6 +43,7 @@ public class CombineVO {
 	private String confirm_yn;
 	// order
 	private int order_idx;
+	private int orderid;
 	private int midx;
 	private int tot_price;
 	private String delivery_yn;
@@ -72,6 +73,12 @@ public class CombineVO {
 	
 	
 	
+	public int getOrderid() {
+		return orderid;
+	}
+	public void setOrderid(int orderid) {
+		this.orderid = orderid;
+	}
 	public int getMileage() {
 		return mileage;
 	}
