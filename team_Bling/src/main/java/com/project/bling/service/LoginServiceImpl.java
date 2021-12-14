@@ -20,9 +20,9 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public boolean loginCheck(UserVO vo, HttpSession session, HttpServletRequest request) throws Exception {
 		boolean result = loginDAO.loginCheck(vo);
-		int delyn = delyn(vo);
+		boolean delyn = delyn(vo);
 		if (result) { // true일 경우 세션에 등록
-			if(delyn == 1) {
+			if(delyn == true) {
 				UserVO vo2 = viewMember(vo);
 				// 세션 변수 등록
 				session.setAttribute("UserVO", vo2);
@@ -54,7 +54,7 @@ public class LoginServiceImpl implements LoginService {
 	}
 	
 	@Override
-	public int delyn(UserVO vo) throws Exception {
+	public boolean delyn(UserVO vo) throws Exception {
 		return loginDAO.delyn(vo);
 	}
 	
