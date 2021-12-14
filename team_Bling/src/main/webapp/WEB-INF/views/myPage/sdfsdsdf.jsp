@@ -176,17 +176,18 @@
                 	var chainprice = $('#chainprice').val();
                 	if(chainprice == 0 || chainprice == '' || chainprice == null){
                 		var str2_chain = "";
-                    	str2_chain += "<h5>"+data[0].name + "</h5>";
+                    	str2_chain += "<div class='chainprice'><h5>"+data[0].name + "</h5>";
                     	str2_chain += data[0].price + "원<hr>";
-                    	str2_chain += "<input type='hidden' id='chainprice' value='"+data[0].price+"'>";
+                    	str2_chain += "<input type='hidden' id='chainprice' value='"+data[0].price+"'></div>";
                     	$('#selectoption').append(str2_chain);
                 		total(data[0].price);
                 	}else{
                 		//////////////////////////////////////////////이부분 고쳐야함...///////////////////////////////////////
                 		var str2_chain = "";
-                    	str2_chain += "<h5>"+data[0].name + "</h5>";
+                		$(".chainprice").detach();
+                    	str2_chain += "<div class='chainprice'><h5>"+data[0].name + "</h5>";
                     	str2_chain += data[0].price + "원<hr>";
-                    	str2_chain += "<input type='hidden' id='chainprice' value='"+data[0].price+"'>";
+                    	str2_chain += "<input type='hidden' id='chainprice' value='"+data[0].price+"'></div>";
                 		minus(chainprice,data[0].price);
                 		$('#selectoption').append(str2_chain);
                 	}
