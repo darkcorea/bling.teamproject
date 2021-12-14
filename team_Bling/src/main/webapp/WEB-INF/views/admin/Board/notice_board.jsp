@@ -137,6 +137,7 @@
 					  	
 					  	console.log("start"+pm.startPage);
 					  	console.log("end"+pm.endPage);
+					  	console.log("!!!!!!!"+data.totalList[0].imgfile);
 					  	
 						for(let i=0;i<data.totalList.length;i++){
 							str +="<tr>";
@@ -155,7 +156,9 @@
 							}
 							//이미지 있을 시 아이콘 붙음
 							if(data.totalList[i].imges != null){
-								str += "&nbsp; <i class='bi bi-image text-success'></i>";
+								if(data.totalList[i].imges != 0){
+									str += "&nbsp; <i class='bi bi-image text-success'></i>";
+								}
 							}
 							
 							str += "</td>";
