@@ -491,17 +491,18 @@ function iamport(){
 	var rphone = $("#rphone").val();
 	var recipient = $("#recipient").val();
 	IMP.init('imp72441252');
-	if(agree == false){
-		alert("약관 동의에 체크해주세요");
-		 return;
-	}else if(recipient==""){
+	if( $("#payed_mileage").val() == "" ){
+		$("#payed_mileage").val(0);
+	}
+	else if(recipient==""){
 		alert("받는 분 이름을 입력하세요");
 	}else if(zipcode==""){
 		alert("주소검색을 하세요");
 	}else if(rphone==""){
 		alert("받는 분 휴대폰번호를 입력하세요");
-	}else if( $("#payed_mileage").val() == "" ){
-		$("#payed_mileage").val(0);
+	}else if(agree == false){
+		alert("약관 동의에 체크해주세요");
+		return;
 	}
 	else{ if(payment=="카드"){
 		IMP.request_pay({
@@ -511,13 +512,13 @@ function iamport(){
 		    name : productname, //결제창에서 보여질 이름
 		    amount : tot_price, //실제 결제되는 가격
 		}, function(rsp) {
-			console.log(rsp);
+			
 				// 결제검증
 				$.ajax({
 					type:"post",
 					url:"/Order/"+rsp.imp_uid
 				}).done(function(data){
-						console.log(data);
+						
 				// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
 				    if (rsp.paid_amount == data.response.amount) {
 						var formData = $("form[name=frm]").serialize();
@@ -528,6 +529,7 @@ function iamport(){
 								data:formData,
 								ContentType:"application/json",
 								success:function(data){
+									
 								var str = "";
 								let Json = JSON.parse('${jsonData}');
 								var formData2 = "";
@@ -906,7 +908,7 @@ $(document).on('change', '#checkBoxId',function(event){
  	var result = mile-mile;
  	var result2 = totalprice-mile;
     if($("#checkBoxId").is(":checked")){
-    	if(mile1 > totalprice1){
+    	if(mile1 > tot){
     		alert("총결제금액보다 내 적립금이 큽니다");
     		$(this).prop("checked",false);
     	}

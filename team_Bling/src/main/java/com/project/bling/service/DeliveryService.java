@@ -21,4 +21,5 @@ public interface DeliveryService {
 	void return_delivery_question(QuestionVO qv) throws Exception;
 	void return_delivery(CombineVO cv) throws Exception;
 	String nonDel_check(NonorderVO nv) throws Exception;
+	List<CombineVO> nonDel_list(String order_idx) throws Exception;
 }

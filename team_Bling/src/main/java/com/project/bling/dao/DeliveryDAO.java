@@ -76,7 +76,11 @@ public class DeliveryDAO {
 	// 이름과 주문번호로 비회원 주문이 있는지 조회
 	public String nonDel_check(NonorderVO nv) throws Exception {
 		return ( sqlSession.selectOne(dm +"nonDel_check", nv));
-				
+	}
+	
+	// orderid로 구매한 상품 정보 뿌려주기
+	public List<CombineVO> nonDel_list(String order_idx) throws Exception{
+		return sqlSession.selectList(dm + "nonDel_list", order_idx);
 	}
 	
 	

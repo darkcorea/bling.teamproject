@@ -168,7 +168,8 @@ public class DeliveryController {
 	// 비회원 주문조회 디테일 페이지
 	@RequestMapping(value="/non_main.do")
 	public String non_main(Locale locale, Model model,NonorderVO nv) throws Exception {
-		
+		String orderid = (String)nv.getOrderid();
+		model.addAttribute("list", deliveryService.nonDel_list(orderid));
 		return "delivery/non_main";
 	}
 	
