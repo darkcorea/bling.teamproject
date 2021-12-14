@@ -138,13 +138,13 @@
 	  </select>
 	  
 	  <!-- 이름과 주문번호로  비회원 주문이 있는지 검색 -->
-	  <select id="nonDel_check" parameterType="NonorderVO" resultType="String">
+	  <select id="nonDel_check" parameterType="NonorderVO" resultType="string">
 	 	 SELECT orderid FROM bg_nonorder WHERE name=#{name} AND orderid=#{orderid}
 	  </select>
 	  
 	  <!-- 비회원 주문 조회  -->
 	  <select id="nonDel_list" parameterType="String" resultType="CombineVO">
-	  	SELECT a.orderid, a.rdate, a.recipient, a.phone, a.zip_code, a.addr1, a.addr2, a.tot_price, e.pidx, b.invoice_num, b.deli_stat,
+	  	SELECT a.orderid, a.rdate, a.recipient, a.phone as rphone, a.zip_code, a.addr1, a.addr2, a.tot_price, e.pidx, b.invoice_num, b.deli_stat,
 		e.pname, f.main, d.oname, c.quantity
 		FROM bg_nonorder a
 		JOIN bg_nondelivery b ON b.nonidx = a.nonidx
@@ -152,6 +152,6 @@
 		JOIN bg_option d ON d.oidx = c.oidx
 		JOIN bg_product e ON e.pidx = d.pidx
 		JOIN bg_image f ON f.pidx = e.pidx
-		WHERE orderid = #{orderid}
+		WHERE a.orderid = #{orderid}
 	  </select>
 </mapper>

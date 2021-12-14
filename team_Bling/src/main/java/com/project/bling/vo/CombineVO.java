@@ -43,7 +43,7 @@ public class CombineVO {
 	private String confirm_yn;
 	// order
 	private int order_idx;
-	private int orderid;
+	private String orderid;
 	private int midx;
 	private int tot_price;
 	private String delivery_yn;
@@ -73,10 +73,10 @@ public class CombineVO {
 	
 	
 	
-	public int getOrderid() {
+	public String getOrderid() {
 		return orderid;
 	}
-	public void setOrderid(int orderid) {
+	public void setOrderid(String orderid) {
 		this.orderid = orderid;
 	}
 	public int getMileage() {
