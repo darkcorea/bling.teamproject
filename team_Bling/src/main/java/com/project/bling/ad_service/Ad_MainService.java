@@ -28,4 +28,7 @@ public interface Ad_MainService {
 	List<CombineVO> recentmem() throws Exception;
 	List<CombineVO> newmem() throws Exception;
 	List<CombineVO> delmem() throws Exception;
+	
+	//페이지별 방문수
+	void pagevisit() throws Exception;
 }

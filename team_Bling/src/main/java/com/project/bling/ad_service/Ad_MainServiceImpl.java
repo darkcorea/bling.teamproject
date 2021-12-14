@@ -69,6 +69,9 @@ public class Ad_MainServiceImpl implements Ad_MainService{
 
 	
 	
-	
+	@Override
+	public void pagevisit() throws Exception {
+		ad_mainDAO.pagevisit();
+	}
 	
 }

@@ -58,4 +58,8 @@ public class Ad_MainDAO {
 	public List<CombineVO> delmem() throws Exception{
 		return sqlSession.selectList(ps+"delmem");
 	}
+	
+	public void pagevisit() throws Exception{
+		sqlSession.insert(ps+"visiter");
+	}
 }

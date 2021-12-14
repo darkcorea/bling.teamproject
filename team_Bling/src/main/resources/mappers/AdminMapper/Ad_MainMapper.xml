@@ -138,6 +138,13 @@
 	
 	
 	
+	<!-- type 3 -->
+	<!-- 방문자수 count -->
+	<!-- 페이지당 방문수 count -->
+	<insert id="visiter">
+		insert into bg_visit value(now(),2)
+	</insert>
+	
 	
 	
 </mapper>	

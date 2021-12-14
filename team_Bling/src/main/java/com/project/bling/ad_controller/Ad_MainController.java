@@ -72,4 +72,10 @@ public class Ad_MainController {
 		
 		return price;
 	}
+	
+	@RequestMapping(value="/count.do")
+	@ResponseBody
+	public void count() throws Exception {
+		ad_mainService.pagevisit();
+	}
 }

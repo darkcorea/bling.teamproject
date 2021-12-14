@@ -199,6 +199,15 @@ scrollTop 은 윈도우에서 스크롤의 위치가 가장 상위에 있다는 
         }
     });
     
+    $.ajax({
+		url:"/Ad_Main/count.do",
+		type:"POST",
+		success:function(){
+		},error:function(){
+			alert("방문자수count 에러!");
+		}
+	});
+    
 });
 
 
@@ -258,5 +267,6 @@ $(document).ready(function () {
 	});
 
 });
+
 </script>
 </html>

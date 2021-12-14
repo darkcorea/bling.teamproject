@@ -7,4 +7,5 @@ import org.apache.ibatis.session.SqlSession;
 public interface VisitCountService {
 	
 	void visiter(HttpSessionEvent hse,SqlSession sqlSession) throws Exception;
+	
 }
