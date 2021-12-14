@@ -75,8 +75,8 @@ public class CustomerDAO {
 		return sqlSession.selectList(cm +"Question_page", pm);
 	}
 	
-	public List<QuestionVO> question_list(int midx) throws Exception {
-		return sqlSession.selectList(cm+"question_list",midx);
+	public List<QuestionVO> question_list(PageMaker pm) throws Exception {
+		return sqlSession.selectList(cm+"question_list",pm);
 	}
 	
 	public QuestionVO myquestion_detail(int qidx) throws Exception {
@@ -95,5 +95,8 @@ public class CustomerDAO {
 	}
 	public void product_myquestion_delete(int pqidx) throws Exception {
 		sqlSession.delete(cm+"product_myquestion_delete",pqidx);
+	}
+	public int questionCount(int midx) throws Exception {
+		return sqlSession.selectOne(cm+"questionCount", midx);
 	}
 }
