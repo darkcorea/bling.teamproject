@@ -63,7 +63,6 @@
 		<!-- 옆 nav 바 -->	
 		<div class="quickmenu">
 			  <ul>
-			 	<li><a href="#">홈</a></li>
 			    <li><a href="/Ad_regist/list.do?page=1">리스트</a></li>
 			    <li><a href="/Ad_regist/regist.do">상품 등록</a></li>
 			    <li><a href="#">품절상품</a></li> 

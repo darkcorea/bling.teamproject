@@ -28,9 +28,11 @@ public class Ad_RegistController {
 	@Autowired
 	Ad_RegistService ad_registService;
 	
+	String path = "D:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image\\";
+	String spath = "D:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage\\";
+	
 	/* 파일이름를 입력하면 파일을 삭제하는 메소드 image폴더*/
 	public void imageDel(String name) {
-		 String path = "C:\\Users\\MYCOM\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image\\";
 		 File deleteFile = new File(path+name);
 		 if(deleteFile.exists()) {   
 	            // 파일을 삭제합니다.
@@ -43,8 +45,7 @@ public class Ad_RegistController {
 	
 	/* 파일이름를 입력하면 파일을 삭제하는 메소드 simage폴더*/
 	public void simageDel(String name) {
-		 String path = "C:\\Users\\MYCOM\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage\\";
-		 File deleteFile = new File(path+name);
+		 File deleteFile = new File(spath+name);
 		 if(deleteFile.exists()) {   
 	            // 파일을 삭제합니다.
 	            deleteFile.delete(); 
@@ -191,10 +192,6 @@ public class Ad_RegistController {
 	// 중복코드가 많다. 리펙토링 해야 한다. (리펙토링 1차 진행)
 	@RequestMapping(value = "/insertImg.do", method = RequestMethod.POST)
 	public String uploadFile(MultipartHttpServletRequest request) throws Exception {
-		
-		// 제품 이미지 절대경로 위치, 각 검퓨터 마다 다름
-		String path = "C:\\Users\\MYCOM\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image\\";
-		String spath = "C:\\Users\\MYCOM\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage\\";
 
 		// 추가로 들어 올 수도 있는 이미지 들
 		// 오류가 난 이유
@@ -322,10 +319,6 @@ public class Ad_RegistController {
 		// 중복코드가 많다. 리펙토링 해야 한다. (리펙토링 1차 진행)
 		@RequestMapping(value = "/modifyImg.do", method = RequestMethod.POST)
 		public String modifyImg(MultipartHttpServletRequest request) throws Exception {
-			
-			// 제품 이미지 절대경로 위치, 각 검퓨터 마다 다름
-			String path = "C:\\Users\\MYCOM\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image\\";
-			String spath = "C:\\Users\\MYCOM\\git\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage\\";
 			
 			// 제품번호
 			int pidx = Integer.parseInt(request.getParameter("pidx"));

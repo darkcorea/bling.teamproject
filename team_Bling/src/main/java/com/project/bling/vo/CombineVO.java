@@ -73,9 +73,31 @@ public class CombineVO {
 	// 임의(관리자 주문)
 	private String O_order_yn;
 	private String D_order_yn;
+	//방문자수, 페이지뷰, 관심상품수
+	private int visit;
+	private int pageview;
+	private int attention;
 	
 	
 	
+	public int getVisit() {
+		return visit;
+	}
+	public void setVisit(int visit) {
+		this.visit = visit;
+	}
+	public int getPageview() {
+		return pageview;
+	}
+	public void setPageview(int pageview) {
+		this.pageview = pageview;
+	}
+	public int getAttention() {
+		return attention;
+	}
+	public void setAttention(int attention) {
+		this.attention = attention;
+	}
 	public String getOrderid() {
 		return orderid;
 	}
