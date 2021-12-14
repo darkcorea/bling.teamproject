@@ -9,6 +9,7 @@ import com.project.bling.ad_dao.Ad_BoardDAO;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
+import com.project.bling.vo.QuestionVO;
 
 @Service("Ad_BoardService")
 public class Ad_BoardServiceImpl implements Ad_BoardService{
@@ -64,5 +65,13 @@ public class Ad_BoardServiceImpl implements Ad_BoardService{
 	public void event_insert(EventVO vo) throws Exception {
 		ad_boardDAO.event_insert(vo);
 	}
+	
+	// 문의사할 리스트
+	@Override
+	public List<QuestionVO> question_list() throws Exception {
+		return ad_boardDAO.question_list();
+	}
+	
+	
 	
 }
