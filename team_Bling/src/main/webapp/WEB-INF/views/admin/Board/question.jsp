@@ -27,37 +27,7 @@ a {text-decoration:none;}
 .quickmenu ul li:last-child {border-bottom:0;}
 .content {position:relative;min-height:1000px;}
 
-/* ----------------------------------*/
-	/* 크기 */
-	section{
-		max-width:1008px;
-		margin:  0px auto;
-	}
-	/* 클래스 붙이면 문자 크기 조정 */
-	.title{
-		font-size:25px;
-		font-weight:900;
-	}
-	/* 조회문자 */
-	.title2{
-		text-decoration: none;
-		color:black;
-	}	
-	.title2:hover{
-		color:#CB7878;
-	}
-	/* 조회문자 */
-	.title3{
-		text-decoration: none;
-		color:#C4C4C4;
-	}	
-	.title3:hover{
-		color: #CB7878;
-	}
-	/* 클래스 붙이면 문자 가운데 */
-	.center{
-		text-align:center;
-	}
+
 </style>
 </head>
 <body>
@@ -66,90 +36,23 @@ a {text-decoration:none;}
 	<%@ include file="/WEB-INF/views/admin/ad_header.jsp" %><BR>
 </header>
 
-<section>
 <!-- 옆 nav 바 -->
 <div class="d1">
 	<div class="quickmenu">
 		  <ul>
 		 	<li><a href="/Ad_board/question.do">문의게시판</a></li>
-		    <li><a href="/Ad_board/board.do?page=1&type=T">공지&amp;문의</a></li>
+		    <li><a href="/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
 		    <li><a href="#">이벤트</a></li>
 		    <li><a href="#">리뷰관리</a></li> 
 		  </ul>
 	</div>
 </div>
 
+
 <!--여기서부터 본문-->
 <div id="">
-	<h1 class="center">문의 게시판</h1><br>
-	<div class="title center row">
-		<div class="col"><a href="/Ad_board/question.do" class="title3"><span>일반문의</span></a></div>
-		<div class="col"><a href="/Ad_board/question.do" class="title2"><span>제품문의</span></a></div>
-	</div><br>	
-  	<div>
-  		<table class="table">
-  			<thead class="center">
-  				<tr>
-  					<th style="width:50px;">번호</th>
-  					<th style="width:180px;">타입</th>
-  					<th style="width:100px;">유저번호</th>
-  					<th>제목</th>
-  					<th style="width:120px;">작성날짜</th>
-  					<th>버튼</th>
-  				<tr>
-  			</thead>
-  			<tbody>
-  			<c:forEach var="list" items="${list}">
-  				<tr>
-  					<td class="center"><b><c:out value="${list.qidx}"/></b></td>
-  					<td class="center">
-  						<c:if test="${list.category == 'A'}">
-  							배송문의
-  						</c:if>
-  						<c:if test="${list.category == 'B'}">
-  							교환/환불/취소문의
-  						</c:if>
-  						<c:if test="${list.category == 'C'}">
-  							기타
-  						</c:if>
-  						<c:if test="${list.category == 'D'}">
-  							교환신청
-  						</c:if>
-  						<c:if test="${list.category == 'E'}">
-  							환불신청
-  						</c:if>
-  						<c:if test="${list.category == 'F'}">
-  							취소신청
-  						</c:if>
-  					</td>
-  					<td class="center"><c:out value="${list.midx}"/></td>
-  					
-  					<td>
-  						<c:if test="${list.depth == 0}">
-  						<c:out value="${list.title}"/>
-  						</c:if>
-  						<c:if test="${list.depth == 1}">
-  						&nbsp;<i class='bi bi-arrow-return-right bolder'></i>&nbsp;<c:out value="${list.title}"/>
-  						</c:if>
-  					</td>
-  					
-  					<c:set var="date" value="${list.rdate}"/>
-					<td class="center"><c:out value="${fn:substring(date,0,10)}"/></td>
-					<td>
-						<c:if test="${lsit.depth == 0 && lsit.state == 'N'}"></c:if>						
-						<button class="button"></button>
-					</td>
-  				</tr>
-  			</c:forEach>
-  			</tbody>
-  		</table>
-  	
-  	</div>
-  
-  
 </div>
 
-</section>
 </body>
 
 <script>

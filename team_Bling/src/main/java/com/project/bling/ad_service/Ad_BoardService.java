@@ -5,7 +5,6 @@ import java.util.List;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
-import com.project.bling.vo.QuestionVO;
 
 public interface Ad_BoardService {
 	
@@ -38,10 +37,5 @@ public interface Ad_BoardService {
 	
 	//이벤트 db에 등록
 	void event_insert(EventVO vo) throws Exception;
-	
-	
-	/*---------------------------------------------------------*/
-	// 문의사항 리스트
-	List<QuestionVO> question_list()throws Exception;
 	
 }

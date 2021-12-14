@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
-import com.project.bling.vo.QuestionVO;
 
 @Repository
 public class Ad_BoardDAO {
@@ -66,10 +65,5 @@ public class Ad_BoardDAO {
 	//이벤트 db에 저장
 	public void event_insert(EventVO vo)throws Exception{
 		sqlSession.insert(ps+"event_regist",vo);
-	}
-	
-	//문의 사항 리스트
-	public List<QuestionVO> question_list()throws Exception{
-		return sqlSession.selectList(ps+"question_list");
 	}
 }

@@ -96,9 +96,4 @@
 			,#{event_end}
 		)
 	</insert>
-	
-	
-	<select id="question_list" resultType="QuestionVO">
-		SELECT * FROM bg_question ORDER BY originqidx desc
-	</select>
 </mapper>
