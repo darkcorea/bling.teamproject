@@ -39,7 +39,7 @@ public class Ad_BoardController {
 	/////////////////////////////////////공지사항///////////////////////////////////////
 	
 	//공지사항 파일, 이미지 저장 경로
-	private static final String FILE_SERVER_PATH = "C:\\image\\uploadFile\\";
+	private static final String FILE_SERVER_PATH = "D:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice\\";
 	
 	//공지사항 게시글리스트메인
 	@RequestMapping(value = "/board.do")
@@ -47,7 +47,7 @@ public class Ad_BoardController {
 		model.addAttribute("page",page);
 		model.addAttribute("type",type);
 		//System.out.println("공지사항 게시글 리스트메인"+page+type);
-		return "admin/Board/board";
+		return "admin/Board/notice_board";
 	}
 	
 	//공지사항 게시글 에이작스 리스트
@@ -105,6 +105,24 @@ public class Ad_BoardController {
 	@ResponseBody
 	public void deletearry(@RequestParam(value="checkbox[]") List<Integer> checkbox) throws Exception {
 		for(int i=0;i<checkbox.size();i++) {
+			System.out.println("9999999999999999999999999999++++++"+checkbox.get(i));
+			
+			NoticeVO vo = ad_boardService.detail(checkbox.get(i));
+			
+			//파일삭제(수정누르면 바로 파일 삭제)
+			String files = vo.getImgfile();
+			File deletefile = new File(FILE_SERVER_PATH + files);
+			if(deletefile.exists()) {
+				deletefile.delete();
+			}
+			
+			//사진파일 삭제
+			String imges = vo.getImges();
+			File deleteimg = new File(FILE_SERVER_PATH + imges);
+			if(deleteimg.exists()) {
+				deleteimg.delete();
+			}
+			
 			ad_boardService.deleteArr(checkbox.get(i));
 			//System.out.println(">>>삭제 배열>>"+checkbox.get(i));
 		}
@@ -113,7 +131,7 @@ public class Ad_BoardController {
 	//공지사항 등록란
 	@RequestMapping(value="/regist.do")
 	public String regist(Locale locale,Model model) throws Exception{
-		return "admin/Board/regist";
+		return "admin/Board/notice_regist";
 	}
 	
 	//공지사항 내용 db에 등록
@@ -200,13 +218,30 @@ public class Ad_BoardController {
 	@RequestMapping(value="/detail.do")
 	public String detail(Locale locale,Model model,int nidx) throws Exception{
 		model.addAttribute("detail",ad_boardService.detail(nidx));
-		return "admin/Board/detail";
+		return "admin/Board/notice_detail";
 	}
 	
 	//공지사항 detail 삭제
 	@RequestMapping(value="/detail_del.do")
 	@ResponseBody
 	public void detail_del(Locale locale,Model model,int nidx)throws Exception{
+		
+		NoticeVO vo = ad_boardService.detail(nidx);
+		
+		//파일삭제(수정누르면 바로 파일 삭제)
+		String files = vo.getImgfile();
+		File deletefile = new File(FILE_SERVER_PATH + files);
+		if(deletefile.exists()) {
+			deletefile.delete();
+		}
+		
+		//사진파일 삭제
+		String imges = vo.getImges();
+		File deleteimg = new File(FILE_SERVER_PATH + imges);
+		if(deleteimg.exists()) {
+			deleteimg.delete();
+		}
+		
 		ad_boardService.deleteArr(nidx);
 		//return "admin/Board/board";
 	}
@@ -229,7 +264,7 @@ public class Ad_BoardController {
 	@RequestMapping(value="/bf_modify.do")
 	public String ad_modify(Locale locale, Model model,int nidx) throws Exception {
 		model.addAttribute("modify",ad_boardService.detail(nidx));
-		return "admin/Board/modify";
+		return "admin/Board/notice_modify";
 	}
 	
 	@RequestMapping(value="/af_modify.do")
