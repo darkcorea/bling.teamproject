@@ -91,59 +91,6 @@
 		select ifnull(sum(quantity),0) as depth from ad_main_order where rdate between date_add(now(),interval -30 day) and  now()
 	</select>
 	
-	<!-- type 3 -->
-	<!-- 방문자수 count -->
-	<!-- 페이지당 방문수 count -->
-	<insert id="visiter">
-		insert into bg_visit value(now(),2)
-	</insert>
-	<!-- 방문자수 -->
-	<!-- 오늘 기준 7일간 데이터, 7,15,30 -->
-	<select id="visit" resultType="CombineVO">
-		<![CDATA[
-			select count(rdate) as visit from bg_visit where type = 1 and date(rdate) = curdate() union all
-			select count(rdate) as visit from bg_visit where type = 1 and date(rdate) = curdate() -1 union all
-			select count(rdate) as visit from bg_visit where type = 1 and date(rdate) = curdate() -2 union all
-			select count(rdate) as visit from bg_visit where type = 1 and date(rdate) = curdate() -3 union all
-			select count(rdate) as visit from bg_visit where type = 1 and date(rdate) = curdate() -4 union all
-			select count(rdate) as visit from bg_visit where type = 1 and date(rdate) = curdate() -5 union all
-			select count(rdate) as visit from bg_visit where type = 1 and date(rdate) = curdate() -6 union all
-			select count(rdate) as visit from bg_visit where type = 1 and rdate between date_add(now(),interval -1 week) and now() union all
-			select count(rdate) as visit from bg_visit where type = 1 and rdate between date_add(now(),interval -15 day) and now() union all
-			select count(rdate) as visit from bg_visit where type = 1 and rdate between date_add(now(),interval -30 day) and now()
-		]]>	
-	</select>
-	
-	<select id="pageview" resultType="CombineVO">
-		<![CDATA[
-			select count(rdate) as pageview from bg_visit where type = 2 and date(rdate) = curdate() union all
-			select count(rdate) as pageview from bg_visit where type = 2 and date(rdate) = curdate() -1 union all
-			select count(rdate) as pageview from bg_visit where type = 2 and date(rdate) = curdate() -2 union all
-			select count(rdate) as pageview from bg_visit where type = 2 and date(rdate) = curdate() -3 union all
-			select count(rdate) as pageview from bg_visit where type = 2 and date(rdate) = curdate() -4 union all
-			select count(rdate) as pageview from bg_visit where type = 2 and date(rdate) = curdate() -5 union all
-			select count(rdate) as pageview from bg_visit where type = 2 and date(rdate) = curdate() -6 union all
-			select count(rdate) as pageview from bg_visit where type = 2 and rdate between date_add(now(),interval -1 week) and now() union all
-			select count(rdate) as pageview from bg_visit where type = 2 and rdate between date_add(now(),interval -15 day) and now() union all
-			select count(rdate) as pageview from bg_visit where type = 2 and rdate between date_add(now(),interval -30 day) and now()
-		]]>	
-	</select>
-	
-	<select id="attention" resultType="CombineVO">
-		<![CDATA[
-			select count(rdate) as attention from bg_like where date(rdate) = curdate() union all
-			select count(rdate) as attention from bg_like where date(rdate) = curdate() -1 union all
-			select count(rdate) as attention from bg_like where date(rdate) = curdate() -2 union all
-			select count(rdate) as attention from bg_like where date(rdate) = curdate() -3 union all
-			select count(rdate) as attention from bg_like where date(rdate) = curdate() -4 union all
-			select count(rdate) as attention from bg_like where date(rdate) = curdate() -5 union all
-			select count(rdate) as attention from bg_like where date(rdate) = curdate() -6 union all
-			select count(rdate) as attention from bg_like where rdate between date_add(now(),interval -1 week) and now() union all
-			select count(rdate) as attention from bg_like where rdate between date_add(now(),interval -15 day) and now() union all
-			select count(rdate) as attention from bg_like where rdate between date_add(now(),interval -30 day) and now()
-		]]>	
-	</select>
-	
 	
 	<!-- type 4 -->
 	<!-- 전체회원 -->
@@ -188,5 +135,16 @@
 		select count(midx) as oidx from bg_user where rdate between date_add(now(),interval -15 day) and now() and delyn = 0 union all
 		select count(midx) as oidx from bg_user where rdate between date_add(now(),interval -30 day) and now() and delyn = 0
 	</select>
+	
+	
+	
+	<!-- type 3 -->
+	<!-- 방문자수 count -->
+	<!-- 페이지당 방문수 count -->
+	<insert id="visiter">
+		insert into bg_visit value(now(),2)
+	</insert>
+	
+	
 	
 </mapper>	

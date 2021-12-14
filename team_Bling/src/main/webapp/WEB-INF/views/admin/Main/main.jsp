@@ -135,7 +135,7 @@
 					<button type="button" class="btn btn-outline-secondary me-md-2" id="menubtn" onclick='price(3);typealt(3);'>
 						<b>방문자(7일)</b>
 						<br>
-						${visit[7].visit}명
+						0명
 					</button>
 					<button type="button" class="btn btn-outline-secondary me-md-2" id="menubtn" onclick='price(4);typealt(4);'>
 						<b>신규회원(7일)</b>
@@ -230,18 +230,13 @@
 							first = cal(recent);//판매금액
 							ffirst = recent;
 							second = data.ordertot[a].ridx; 
-							ssecond = (data.ordertot[a].ridx)*100000;
+							ssecond = data.ordertot[a].ridx;
 							third = data.ordercount[a].depth;
-							tthird = (data.ordercount[a].depth)*100000;
+							ttird = data.ordercount[a].depth;
 						}
 						//3번째 버튼
 						else if(type == 3){
-							first = data.visit[a].visit;
-							ffirst = data.visit[a].visit;
-							second = data.pageview[a].pageview;
-							ssecond = data.pageview[a].pageview;
-							third = data.attention[a].attention;
-							tthird = data.attention[a].attention;
+							
 						}
 						//4번째 버튼
 						else if(type == 4){
@@ -270,7 +265,7 @@
 						
 						//값 배열로 넣음. 차트
 						if(type == 1){arr1[0] = '매출';arr2[0] = '판매';arr3[0] = '환불';}
-						else if(type == 2){arr1[0] = '판매금액';arr2[0] = '구매건수(*10만)';arr3[0] = '구매개수(*10만)';}
+						else if(type == 2){arr1[0] = '판매금액';arr2[0] = '구매건수';arr3[0] = '구매개수';}
 						else if(type == 3){arr1[0] = '방문자수';arr2[0] = '페이지뷰';arr3[0] = '관심등록';}
 						else if(type == 4){arr1[0] = '전체회원';arr2[0] = '신규회원';arr3[0] = '탈퇴회원';}
 						
@@ -298,9 +293,7 @@
 							daysecond = data.ordertot[z].ridx; 
 							daythird = data.ordercount[z].depth;
 						}else if(type == 3){
-							dayfirst = data.visit[z].visit;
-							daysecond = data.pageview[z].pageview;
-							daythird = data.attention[z].attention;
+							
 						}else if(type == 4){
 							daysecond = data.newmem[z].pidx;
 							daythird = data.delmem[z].oidx;

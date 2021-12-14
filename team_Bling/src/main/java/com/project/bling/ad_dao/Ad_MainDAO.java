@@ -48,17 +48,6 @@ public class Ad_MainDAO {
 		return sqlSession.selectList(ps+"ordercount");
 	}
 	
-	//버튼3번
-	public List<CombineVO> visit() throws Exception{
-		return sqlSession.selectList(ps+"visit");
-	}
-	public List<CombineVO> pageview() throws Exception{
-		return sqlSession.selectList(ps+"pageview");
-	}
-	public List<CombineVO> attention() throws Exception{
-		return sqlSession.selectList(ps+"attention");
-	}
-	
 	//버튼4번
 	public List<CombineVO> recentmem() throws Exception{
 		return sqlSession.selectList(ps+"recentmem");

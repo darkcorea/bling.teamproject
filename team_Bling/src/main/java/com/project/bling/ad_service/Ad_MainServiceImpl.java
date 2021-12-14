@@ -53,22 +53,6 @@ public class Ad_MainServiceImpl implements Ad_MainService{
 		return ad_mainDAO.ordercount();
 	}	
 	
-	//버튼3번
-	@Override
-	public List<CombineVO> visit() throws Exception {
-		return ad_mainDAO.visit();
-	}
-
-	@Override
-	public List<CombineVO> pageview() throws Exception {
-		return ad_mainDAO.pageview();
-	}
-
-	@Override
-	public List<CombineVO> attention() throws Exception {
-		return ad_mainDAO.attention();
-	}
-	
 	//버튼4번
 	@Override
 	public List<CombineVO> recentmem() throws Exception {
@@ -84,12 +68,10 @@ public class Ad_MainServiceImpl implements Ad_MainService{
 	}
 
 	
-	//페이지별 방문자수 카운트
+	
 	@Override
 	public void pagevisit() throws Exception {
 		ad_mainDAO.pagevisit();
 	}
-
-	
 	
 }
