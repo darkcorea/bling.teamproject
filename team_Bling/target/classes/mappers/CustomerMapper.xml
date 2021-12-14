@@ -145,25 +145,25 @@
 	</delete>
 	
 	<!-- 나의 상품문의내역 리스트-->
-	<select id="product_question_list" parameterType="int" resultType="QuestionVO">
-	<![CDATA[SELECT *
-				 FROM ( SELECT A.*
-		                    , @rownum := @rownum + 1 AS rownum
-		             FROM (
-		                      SELECT  T2 .pname
-		                              , T1 .title
-		                              , T1 .rdate
-		                              , T1 .pqidx
-		                              , T1 .originpqidx
-		                              , T1 .depth
-		                             , T1 .midx
-		                             , T1 .show_yn
-		                       FROM bg_product_question T1
-		                       LEFT JOIN bg_product T2 ON (T2 .pidx = T1. pidx)
-		                       JOIN ( SELECT @rownum := 0) R
-		                       where midx =#{midx}) AS A
-		                  order by originpqidx asc) AS B
-    ]]>
+	<select id="product_question_list" parameterType="PageMaker" resultType="QuestionVO">
+	SELECT *
+		 FROM ( SELECT A.*
+                    , @rownum := @rownum + 1 AS rownum
+             FROM (
+                      SELECT  T2 .pname
+                              , T1 .title
+                              , T1 .rdate
+                              , T1 .pqidx
+                              , T1 .originpqidx
+                              , T1 .depth
+                             , T1 .midx
+                             , T1 .show_yn
+                       FROM bg_product_question T1
+                       LEFT JOIN bg_product T2 ON (T2 .pidx = T1. pidx)
+                       JOIN ( SELECT @rownum := 0) R
+                       where midx =#{midx}) AS A
+                  order by originpqidx asc) AS B
+  					Limit #{startPost},#{scri.perPageNum}
 	</select>
 	
 	<!-- 나의 상품문의내역 상세보기-->
@@ -185,6 +185,12 @@
 	<select id="questionCount" resultType="int">
 		SELECT count(qidx)
 		FROM bg_question
+		WHERE midx=#{midx}
+	</select>
+	
+	<select id="product_questionCount" resultType="int">
+		SELECT count(pqidx)
+		FROM bg_product_question
 		WHERE midx=#{midx}
 	</select>
 </mapper>

@@ -176,11 +176,28 @@ public class CustomerController {
 	}
 	//나의 제품문의 리스트 가기
 	@RequestMapping(value="/myquestion_product.do")
-	public String myquestion_product(Locale locale, Model model, HttpSession session) throws Exception {
-		
+	public String myquestion_product(Locale locale, Model model, HttpSession session,int page) throws Exception {
+		// 로그인이 풀렸을 떄 대비해서 넣음
+				if(session.getAttribute("UserVO") == null) {
+					return "redirect:/Login/main.do";
+				}
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		int midx = uv.getMidx();
-		model.addAttribute("list", customerService.product_question_list(midx));
+		
+		int p_questionCount = customerService.product_questionCount(midx);
+		
+		Criteria sc = new Criteria();
+		sc.setPerPageNum(8);
+		sc.setPage(page);
+		
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		pm.setMidx(midx);
+		pm.setTotalCount(p_questionCount);
+		
+		model.addAttribute("pm", pm);
+		model.addAttribute("list", customerService.product_question_list(pm));
+		
 		return "customer/my_qestion_product";
 	}
 	//나의 제품문의 상세보기
