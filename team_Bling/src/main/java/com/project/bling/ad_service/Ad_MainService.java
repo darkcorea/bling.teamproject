@@ -24,11 +24,6 @@ public interface Ad_MainService {
 	List<CombineVO> ordertot() throws Exception;
 	List<CombineVO> ordercount() throws Exception;
 
-	//버튼3번
-	List<CombineVO> visit() throws Exception;
-	List<CombineVO> pageview() throws Exception;
-	List<CombineVO> attention() throws Exception;
-	
 	//버튼4번
 	List<CombineVO> recentmem() throws Exception;
 	List<CombineVO> newmem() throws Exception;

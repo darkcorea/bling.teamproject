@@ -51,11 +51,7 @@
 		LEFT JOIN bg_review r
         ON od.detail_idx=r.detail_idx
 		<if test='kind=="all"'></if>
-		<if test='kind=="N"'>WHERE d.deli_stat='N'</if>
-		<if test='kind=="Y"'>WHERE d.deli_stat='Y'</if>
-		<if test='kind=="A"'>WHERE d.deli_stat='A'</if>
-		<if test='kind=="B"'>WHERE d.deli_stat='B'</if>
-		<if test='kind=="C"'>WHERE d.deli_stat='C'</if>
+		<if test='kind!="all"'>WHERE d.deli_stat=#{kind}</if> 
 		GROUP BY o.order_idx
 		ORDER BY o.order_idx
 		DESC
@@ -85,4 +81,37 @@
 		</if>
 		WHERE o.order_idx=#{order_idx}
 	</update>
+	
+	
+	
+	<!-- 전체 배송 개수 -->
+	<select id="deliveryCnt" resultType="int" parameterType="Criteria">
+		SELECT count(didx)
+		FROM bg_delivery
+		<if test='kind=="all"'>WHERE didx</if>
+		<if test='kind!="all"'>WHERE deli_stat=#{kind}</if> 
+	</select>
+	
+	<!-- 전체 배송 리스트(didx 내림차순) -->
+	<select id="deliveryList" resultType="CombineVO" parameterType="PageMaker">
+		SELECT d.didx,
+			   o.order_idx,
+			   d.invoice_num,
+		       u.uname,
+		       d.send_day,
+		       d.deli_com,
+		       d.deli_stat
+		FROM bg_delivery d
+		RIGHT JOIN bg_order o
+		ON d.order_idx=o.order_idx
+		
+		INNER JOIN bg_user u
+		ON o.midx=u.midx
+		
+		
+		<if test='scri.kind!="all"'>WHERE d.deli_stat=#{scri.kind}</if> 
+		ORDER BY d.didx
+		DESC
+		LIMIT #{startPost},#{scri.perPageNum}
+	</select>
 </mapper>

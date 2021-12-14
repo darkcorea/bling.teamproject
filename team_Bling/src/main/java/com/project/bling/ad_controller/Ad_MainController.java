@@ -32,7 +32,7 @@ public class Ad_MainController {
 		//버튼4개
 		model.addAttribute("price",ad_mainService.recenttot());
 		model.addAttribute("order",ad_mainService.ordertot());
-		model.addAttribute("visit",ad_mainService.visit());
+		
 		model.addAttribute("newmem",ad_mainService.newmem());
 		
 		return "admin/Main/main";
@@ -58,9 +58,7 @@ public class Ad_MainController {
 		}
 		//방문자
 		else if(type == 3) {
-			price.put("visit", ad_mainService.visit());
-			price.put("pageview",ad_mainService.pageview());
-			price.put("attention",ad_mainService.attention());
+			
 		}
 		//신규회원
 		else if(type == 4) {

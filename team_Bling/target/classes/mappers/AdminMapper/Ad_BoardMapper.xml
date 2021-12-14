@@ -61,13 +61,7 @@
 			,#{contents}
 			,#{type}
 			,#{imgfile, jdbcType=VARCHAR}
-			<if test="imges == null">
-			,0
-			</if>
-			<if test="imges != null">
 			,#{imges, jdbcType=VARCHAR}
-			</if>
-			
 		)
 	</insert>
 	
