@@ -89,4 +89,11 @@ public class Ad_Order_deliveryController {
 		return "주문상태 변경";
 	}
 
+	
+	
+	@RequestMapping(value="/delivery.do")
+	public String deiListPage() throws Exception {
+		
+		return "admin/Order_delivery/delivery";
+	}
 }

@@ -22,8 +22,9 @@ public class LoginDAO {
 		return (name == null) ? false : true;
 	}
 	
-	public int delyn(UserVO vo) throws Exception{
-		return sqlSession.selectOne(lm+"delyn",vo);
+	public boolean delyn(UserVO vo) throws Exception{
+		Integer delyn =  sqlSession.selectOne(lm+"delyn",vo);
+		return (delyn == null) ? false : true;
 	}
 	
 	// 01_02. 회원 로그인 정보
