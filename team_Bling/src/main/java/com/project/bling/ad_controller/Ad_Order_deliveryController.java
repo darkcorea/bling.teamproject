@@ -22,7 +22,7 @@ public class Ad_Order_deliveryController {
 	@Autowired
 	Ad_Order_deliveryService ad_order_deliveryService;
 	
-/* ------------------------------order------------------------------ */	
+	
 	@RequestMapping(value="/order.do")
 	public String orderListPage() throws Exception {
 		
@@ -68,6 +68,7 @@ public class Ad_Order_deliveryController {
 		Map<String, Object> order = new HashMap<String, Object>();
 		order.put("orderList", ad_order_deliveryService.orderList(pm));
 		order.put("pm", pm);
+		order.put("totalCnt",orderCnt);
 		
 		//ajax로 화면 로딩시 출력할 데이터들을 return
 		return order;
@@ -88,53 +89,11 @@ public class Ad_Order_deliveryController {
 		return "주문상태 변경";
 	}
 
-/* ------------------------------order------------------------------ */
 	
 	
-/* ------------------------------delivery------------------------------ */
 	@RequestMapping(value="/delivery.do")
 	public String deiListPage() throws Exception {
+		
 		return "admin/Order_delivery/delivery";
 	}
-	
-	
-	@ResponseBody
-	@RequestMapping(value="/deliveryList.do")
-	public Map<String, Object> deliveryList(Criteria sc) throws Exception {
-		System.out.println("관리자 배송리스트 컨트롤러 : deliveryList 실행");
-		
-		System.out.println("관리자 배송 컨트롤러-page : "+sc.getPage());
-		System.out.println("관리자 배송 컨트롤러-kind : "+sc.getKind());
-		
-		PageMaker pm = new PageMaker();
-		
-		
-		// 주문 개수
-		int deliveryCnt = ad_order_deliveryService.deliveryCnt(sc);
-		System.out.println("관리자 주문 컨트롤러-주문개수 : "+deliveryCnt);
-		
-		//페이징 정보1(page 정보는 매개변수 sc에 담겨있다)
-		sc.setPerPageNum(10);
-		
-		//페이징 정보2
-		pm.setScri(sc);
-		pm.setStart(0);
-		pm.setTotalCount(deliveryCnt);
-		
-		System.out.println("관리자 주문 컨트롤러-page : "+pm.getScri().getPage());
-		System.out.println("관리자 주문 컨트롤러-perPageNum : "+pm.getScri().getPerPageNum());
-		System.out.println("관리자 주문 컨트롤러-startPage : "+pm.getStartPage());
-		System.out.println("관리자 주문 컨트롤러-endPage : "+pm.getEndPage());
-		
-		
-		//"orderList" key에 주문 리스트들(List<CombineVO>), "pm" key에 페이징 정보들을 Map에 담는다.
-		Map<String, Object> delivery = new HashMap<String, Object>();
-		delivery.put("deliveryList", ad_order_deliveryService.deliveryList(pm));
-		delivery.put("pm", pm);
-		
-		//ajax로 화면 로딩시 출력할 데이터들을 return
-		return delivery;
-	}
-	
-/* ------------------------------delivery------------------------------ */
 }
