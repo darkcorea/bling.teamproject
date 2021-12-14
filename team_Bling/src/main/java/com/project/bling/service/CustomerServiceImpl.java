@@ -87,8 +87,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<QuestionVO> question_list(PageMaker pm) throws Exception {
-		return customerDAO.question_list(pm);
+	public List<QuestionVO> question_list(int midx) throws Exception {
+		return customerDAO.question_list(midx);
 	}
 
 	@Override
@@ -118,12 +118,6 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		customerDAO.product_myquestion_delete(pqidx);
 		
-	}
-
-	@Override
-	public int questionCount(int midx) throws Exception {
-		
-		return customerDAO.questionCount(midx);
 	}
 	
 }

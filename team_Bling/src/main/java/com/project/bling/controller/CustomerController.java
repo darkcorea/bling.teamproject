@@ -133,37 +133,21 @@ public class CustomerController {
 	
 	// 나의 문의 내역 페이지 이동
 	@RequestMapping(value="/my_qestion.do")
-	public String my_qestion(Locale locale, Model model, HttpSession session,int page) throws Exception {
+	public String my_qestion(Locale locale, Model model, HttpSession session) throws Exception {
 		
-		// 로그인이 풀렸을 떄 대비해서 넣음
-		if(session.getAttribute("UserVO") == null) {
-			return "redirect:/Login/main.do";
-		}
-				
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		int midx = uv.getMidx();
+		model.addAttribute("list", customerService.question_list(midx));
 		
-		int questionCount = customerService.questionCount(midx);
-		// 가져오는 페이지 수 5
-		Criteria sc = new Criteria();
-		sc.setPerPageNum(8);
-		sc.setPage(page);
 		
-		// 페이징 하기 위해서 필요한 값들 넣음
-		PageMaker pm = new PageMaker();
-		pm.setScri(sc);
-		pm.setMidx(midx);
-		pm.setTotalCount(questionCount);
-	
-		model.addAttribute("pm", pm);
-		model.addAttribute("list", customerService.question_list(pm));
+		
 		return "customer/my_qestion";
 	}
 	//나의 문의내역 상세보기
 	@RequestMapping(value="/myquestion_detail.do")
 	@ResponseBody
 	public QuestionVO myquestion_detail(int qidx) throws Exception {
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>"+customerService.myquestion_detail(qidx));
+		
 		return customerService.myquestion_detail(qidx);
 	}
 	//나의문의내역 삭제
@@ -190,7 +174,7 @@ public class CustomerController {
 		
 		return customerService.product_myquestion_detail(pqidx);
 	}
-	//나의 제품문의 삭제
+	//나의 상품문의내역 삭제
 		@RequestMapping(value="/product_myquestion_delete.do")
 		@ResponseBody
 		public int product_myquestion_delete(int pqidx) throws Exception {

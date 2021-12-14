@@ -99,15 +99,6 @@
 	.t{
 		margin:5px;
 	}
-	#question_btn{
-		background-color: #CB7878;
-		border: 1px solid #CB7878;
-		width:130px;
-		float: right;
-	}
-	.page-item {
-		padding: 0px;
-	}
 </style>
 </head>
 <body>
@@ -188,49 +179,9 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				
-				<nav aria-label="Page navigation">
-					<ul class="pagination justify-content-center">
-						
-						<c:if test="${pm.prev == true}">
-						<li class='page-item'>
-						<c:set var="prev" value="${pm.startPage -1}"/>
-							<a class='page-link' aria-label='Previous' href="/Customer/my_qestion.do?page=${prev}">
-								<span aria-hidden='true' class='pointer' >&laquo;</span>
-							</a>
-						</li>
-						</c:if>
-						<c:set var="page" value="${pm.scri.page}"/>
-						<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
-							<c:if test = "${pageNum == page}">
-							<li class="page-item active">	
-								<a class="page-link pointer" href="/Customer/my_qestion.do?page=${pageNum}">
-									<c:out value="${pageNum}"/>
-								</a>
-							</li>
-							</c:if>
-							<c:if test = "${pageNum != page}">
-							<li class="page-item">	
-								<a class="page-link" href="/Customer/my_qestion.do?page=${pageNum}">
-									<c:out value="${pageNum}"/>
-								</a>
-							</li>
-							</c:if>
-						</c:forEach>
-						
-						<!-- 뒤로 가기 버튼 , 키워드 유지하면서 이동하기 -->
-						<c:if test="${pm.next && pm.endPage > 0}">
-						<li class='page-item'>
-							<a class='page-link' aria-label='Next' href="/Customer/my_qestion.do?page=${pm.endPage + 1}">
-								<span aria-hidden='true' class='pointer'>&raquo;</span>
-							</a>
-						</li>
-						</c:if>
-					</ul>
-				</nav>
 				</div>
-				<button type="button" class="btn btn-danger" id="question_btn" onclick="location.href='/Customer/question.do'">문의하기</button>
 				<br><br><br>
+				
 			</div>
 		</div>
 	</div>
@@ -288,7 +239,8 @@
 	}
 	
 	function linkFn(){
-		location.href="/Customer/my_qestion.do?page=1"; 
+		
+		location.href="/Customer/my_qestion.do";
 	}
 	function delFn(qidx){
 		$.ajax({

@@ -112,27 +112,28 @@
 	</select> 
 	
 	<!-- 나의 1:1문의내역 리스트 -->
-	<select id="question_list" parameterType="PageMaker" resultType="QuestionVO">
-	SELECT rownum,title,category,rdate,qidx,depth from(select @rownum:=@rownum + 1 as rownum,
+	<select id="question_list" parameterType="int" resultType="QuestionVO">
+	<![CDATA[	SELECT rownum,title,category,rdate,qidx,depth from(select @rownum:=@rownum + 1 as rownum,
 			    t1.*
 				FROM bg_question t1,
 			    (SELECT @rownum:=0) tmp
 			    WHERE midx =#{midx} ORDER BY originqidx asc)sub
-			    Limit #{startPost},#{scri.perPageNum}
 							   
+    ]]>
 	</select>
 	
 	<!-- 나의 1:1문의내역 상세보기-->
 	<select id="myquestion_detail" parameterType="int" resultType="QuestionVO">
-	<![CDATA[SELECT * FROM
-					(SELECT a.qidx,a.title,a.content, a.rdate,b.oname,d.pname,a.order_idx
-					,COUNT(*) OVER(PARTITION BY a.qidx) AS count
-					,ROW_NUMBER() OVER(PARTITION BY a.qidx ORDER BY a.qidx asc )AS RNUM
-	   				FROM bg_question a LEFT JOIN bg_order_detail c  on c.order_idx=a.order_idx
-	                LEFT JOIN bg_option b ON c.oidx=b.oidx
-	                LEFT JOIN bg_product d ON b.pidx=d.pidx
-	                WHERE qidx=#{qidx}) A
-               WHERE RNUM =1
+	<![CDATA[SELECT * FROM (
+			   select a.qidx,a.rdate, d.pname, c.oname, a.content, a.title
+			   ,ROW_NUMBER() OVER(PARTITION BY a.qidx ORDER BY a.qidx asc )AS RNUM
+			   ,COUNT(*) OVER(PARTITION BY a.qidx) AS count
+			    from bg_question a
+			   join bg_order_detail b on a.order_idx = b.order_idx
+			   join bg_option c on b.oidx = c.oidx
+			   join bg_product d on d.pidx = c.pidx
+			   where qidx=#{qidx}) A
+				WHERE RNUM =1; 
     ]]>
 	</select>
 	
@@ -181,10 +182,4 @@
 		DELETE FROM bg_product_question WHERE pqidx = #{pqidx}
 		  ]]>
 	</delete>
-	
-	<select id="questionCount" resultType="int">
-		SELECT count(qidx)
-		FROM bg_question
-		WHERE midx=#{midx}
-	</select>
 </mapper>

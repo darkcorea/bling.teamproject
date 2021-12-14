@@ -99,12 +99,6 @@
 	.text_left{
 		text-align:left;
 	}
-	#question_btn{
-		background-color: #CB7878;
-		border: 1px solid #CB7878;
-		width:130px;
-		float: right;
-	}
 </style>
 </head>
 <body>
@@ -164,8 +158,8 @@
 					</tbody>
 				</table>
 				</div>
-				<button type="button" class="btn btn-danger" id="question_btn" onclick="location.href='/Customer/question.do'">문의하기</button>
 				<br><br><br>
+				
 			</div>
 		</div>
 	</div>
