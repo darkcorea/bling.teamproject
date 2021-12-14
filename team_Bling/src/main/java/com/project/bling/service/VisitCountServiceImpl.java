@@ -11,8 +11,8 @@ import com.project.bling.dao.VisitCountDAO;
 @Service
 public class VisitCountServiceImpl implements VisitCountService{
 	
-	//@Autowired
-	//VisitCountDAO visitcountDAO;
+	@Autowired
+	VisitCountDAO visitcountDAO;
 
 	@Override
 	public void visiter(HttpSessionEvent hse,SqlSession sqlSession) throws Exception {
@@ -20,5 +20,5 @@ public class VisitCountServiceImpl implements VisitCountService{
 		System.out.println("9999999999999999999test"+visitcountDAO);
 		visitcountDAO.visiter(hse,sqlSession);
 	}
-
+	
 }

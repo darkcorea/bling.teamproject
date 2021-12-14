@@ -22,4 +22,5 @@ public class VisitCountDAO {
 		sqlSession.insert(vc+"visiter");
 	}
 	
+	
 }
