@@ -7,11 +7,12 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.project.bling.dao.VisitCountDAO;
 import com.project.bling.service.VisitCountService;
-import com.project.bling.vo.UserVO;
+import com.project.bling.service.VisitCountServiceImpl;
 
 
 public class SessionListener implements HttpSessionListener {
@@ -68,8 +69,6 @@ public class SessionListener implements HttpSessionListener {
 	 * sessions.remove(userId); } }
 	 */
 
-	@Autowired
-    VisitCountService visitcountService;
 	
 	 //방문자수 카운트 포함
     @Override
@@ -77,16 +76,19 @@ public class SessionListener implements HttpSessionListener {
         System.out.println("123456789!!!"+hse);
         sessions.put(hse.getSession().getId(), hse.getSession());
         
-        //VisitCountDAO visitcountDAO = new VisitCountDAO();
+        VisitCountService visitcountService = new VisitCountServiceImpl();
+        System.out.println(visitcountService);
+        
+        SqlSession session = sqlSessionMethod(hse);       
+        
         try {
-        	//visitcountDAO.visiter();
-			visitcountService.visiter();
+			visitcountService.visiter(hse,session);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
         
     }
-
+ 
     @Override
     public void sessionDestroyed(HttpSessionEvent hse) {
         if(sessions.get(hse.getSession().getId()) != null){
@@ -94,4 +96,25 @@ public class SessionListener implements HttpSessionListener {
             sessions.remove(hse.getSession().getId());	
         }
     }
+    
+    
+    public SqlSession sqlSessionMethod(HttpSessionEvent hse) {
+    	
+    	HttpSession session = hse.getSession();
+        ApplicationContext ctx = 
+              WebApplicationContextUtils.
+                    getWebApplicationContext(session.getServletContext());
+        SqlSession sqlSession = 
+                    (SqlSession) ctx.getBean("sqlSession");
+		System.out.println("sqlSession"+sqlSession);
+		return sqlSession;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 }
