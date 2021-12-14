@@ -386,6 +386,7 @@
 		orderList(1,"all");
      });
 	
+	/* int로 변수 page를 넘기면 null값일 때 오류발생해서 문자열로 변환해서 넘김 */
 	function orderList(pageN,kindN){
 		let str = "";
 		let page = ""+pageN+"";
@@ -415,8 +416,6 @@
 			
 			let ol = data.orderList;
 			
-			let cnt = data.totalCnt;
-			
 			let pm = data.pm;
 			let prev = parseInt(pm.startPage - 1) ;
 		  	let next = parseInt(pm.endPage + 1) ;
@@ -425,10 +424,10 @@
 		  	str += "<table>";
 		  	
 		  	console.log(data.orderList.length);
-		  	if(data.orderList.length == 0){
+		  	if(ol.length == 0){
 		  		str += "<tr><td colspan='8' id='noneList'><div id='noneDiv'>해당 조건의 주문이 존재하지 않습니다.</div></td></tr>";
 		  	}
-		  	else if(data.orderList.length != 0){
+		  	else if(ol.length != 0){
 			
 				for(let i=0; ol.length > i; i++){
 					str += "<tr class='tableRow'>";
