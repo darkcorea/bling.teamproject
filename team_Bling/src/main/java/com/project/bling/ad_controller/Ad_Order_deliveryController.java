@@ -47,7 +47,7 @@ public class Ad_Order_deliveryController {
 		
 		
 		// 주문 개수
-		int orderCnt = ad_order_deliveryService.orderCnt();
+		int orderCnt = ad_order_deliveryService.orderCnt(pm);
 		System.out.println("관리자 주문 컨트롤러-주문개수 : "+orderCnt);
 		
 		//페이징 정보1(page 정보는 매개변수 sc에 담겨있다)
@@ -63,10 +63,12 @@ public class Ad_Order_deliveryController {
 		System.out.println("관리자 주문 컨트롤러-startPage : "+pm.getStartPage());
 		System.out.println("관리자 주문 컨트롤러-endPage : "+pm.getEndPage());
 		
+		
 		//"orderList" key에 주문 리스트들(List<CombineVO>), "pm" key에 페이징 정보들을 Map에 담는다.
 		Map<String, Object> order = new HashMap<String, Object>();
 		order.put("orderList", ad_order_deliveryService.orderList(pm));
 		order.put("pm", pm);
+		order.put("totalCnt",orderCnt);
 		
 		//ajax로 화면 로딩시 출력할 데이터들을 return
 		return order;
@@ -82,6 +84,7 @@ public class Ad_Order_deliveryController {
 		
 		//주문상태 변경
 		ad_order_deliveryService.prodStat(vo);
+		
 		
 		return "주문상태 변경";
 	}

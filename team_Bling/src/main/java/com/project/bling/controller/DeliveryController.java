@@ -15,6 +15,7 @@ import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.service.DeliveryService;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.NonorderVO;
 import com.project.bling.vo.QuestionVO;
 import com.project.bling.vo.UserVO;
 
@@ -151,5 +152,24 @@ public class DeliveryController {
 		return "delivery/main1";
 	}
 	
+	// 비회원 주문조회
+	@RequestMapping(value="/nonDelivery.do")
+	public String nonDelivey(Locale locale, Model model) throws Exception {	
+		return "delivery/nonDelivery";
+	}
+		
+	// 이름과 주문번호로 비회원 주문이 있는지 조회
+	@RequestMapping(value="/nonDel_check.do")
+	@ResponseBody
+	public String nonDel_check(NonorderVO nv) throws Exception {
+		return deliveryService.nonDel_check(nv);	
+	}
+	
+	// 비회원 주문조회 디테일 페이지
+	@RequestMapping(value="/non_main.do")
+	public String non_main(Locale locale, Model model,NonorderVO nv) throws Exception {
+		
+		return "delivery/non_main";
+	}
 	
 }

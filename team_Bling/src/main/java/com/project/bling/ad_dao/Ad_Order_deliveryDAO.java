@@ -16,8 +16,8 @@ public class Ad_Order_deliveryDAO {
 	
 	private String ps = "com.project.bling.mapper.adminmapper.ad_order_deliveryMapper.";
 
-	public int orderCnt() throws Exception {
-		return sqlSession.selectOne(ps+"orderCnt");
+	public int orderCnt(PageMaker pm) throws Exception {
+		return sqlSession.selectOne(ps+"orderCnt",pm);
 	}
 	
 	public List<CombineVO> orderList(PageMaker pm) throws Exception {

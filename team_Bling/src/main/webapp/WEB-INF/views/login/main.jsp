@@ -161,7 +161,7 @@
 							<span>｜</span>
 							<span id="searchSpan"><a href="/Login/pwdFind.do" id="searchA">비밀번호 찾기</a></span>
 							<span>｜</span>
-							<span id="searchSpan"><a href="#" id="searchA">비회원 주문조회</a></span>
+							<span id="searchSpan"><a href="/Delivery/nonDelivery.do" id="searchA">비회원 주문조회</a></span>
 						</div>
 					</form>
 				</div>

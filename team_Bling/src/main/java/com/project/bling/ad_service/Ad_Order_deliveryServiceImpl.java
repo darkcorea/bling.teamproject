@@ -16,8 +16,8 @@ public class Ad_Order_deliveryServiceImpl implements Ad_Order_deliveryService{
 
 	
 	@Override
-	public int orderCnt() throws Exception {
-		return ad_order_deliveryDAO.orderCnt();
+	public int orderCnt(PageMaker pm) throws Exception {
+		return ad_order_deliveryDAO.orderCnt(pm);
 	}
 
 	@Override
