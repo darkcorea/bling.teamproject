@@ -300,7 +300,8 @@
 	<!-- 탈퇴 -->
 	<update id="del" parameterType="int">
 		UPDATE bg_user SET
-		delyn = 0
+		delyn = 0,
+		rdate = sysdate()
 		WHERE midx=#{midx}
 	</update>
 </mapper>
