@@ -128,7 +128,7 @@
 			<div class="title text_center1">나의 문의 내역</div><br>
 				<div class="title1">
 					<div class="sub border1"><span class="title3">1:1 문의</span></div>
-					<div class="sub"><a href="/Customer/myquestion_product.do" class="title2"><span>제품 문의</span></a></div>
+					<div class="sub"><a href="/Customer/myquestion_product.do?page=1" class="title2"><span>제품 문의</span></a></div>
 				</div>
 				<br><br><br>
 				<div id="content">

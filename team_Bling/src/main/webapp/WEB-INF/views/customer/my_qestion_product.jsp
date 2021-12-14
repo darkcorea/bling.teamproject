@@ -105,6 +105,9 @@
 		width:130px;
 		float: right;
 	}
+	.page-item {
+		padding: 0px;
+	}
 </style>
 </head>
 <body>
@@ -122,7 +125,7 @@
 			<div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
 			<div class="title text_center1">나의 문의 내역</div><br>
 				<div class="title1">
-					<div class="sub"><a href="/Customer/my_qestion.do" class="title2">1:1 문의</a></div>
+					<div class="sub"><a href="/Customer/my_qestion.do?page=1" class="title2">1:1 문의</a></div>
 					<div class="sub border1"><span class="title3">제품 문의</span></div>
 				</div>
 				<br><br><br>
@@ -163,6 +166,43 @@
 						</c:forEach>
 					</tbody>
 				</table>
+				<nav aria-label="Page navigation">
+					<ul class="pagination justify-content-center">
+						
+						<c:if test="${pm.prev == true}">
+						<li class='page-item'>
+						<c:set var="prev" value="${pm.startPage -1}"/>
+							<a class='page-link' aria-label='Previous' href="/Customer/myquestion_product.do?page=${prev}">
+								<span aria-hidden='true' class='pointer' >&laquo;</span>
+							</a>
+						</li>
+						</c:if>
+						<c:set var="page" value="${pm.scri.page}"/>
+						<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
+							<c:if test = "${pageNum == page}">
+							<li class="page-item active">	
+								<a class="page-link pointer" href="/Customer/myquestion_product.do?page=${pageNum}">
+									<c:out value="${pageNum}"/>
+								</a>
+							</li>
+							</c:if>
+							<c:if test = "${pageNum != page}">
+							<li class="page-item">	
+								<a class="page-link" href="/Customer/myquestion_product.do?page=${pageNum}">
+									<c:out value="${pageNum}"/>
+								</a>
+							</li>
+							</c:if>
+						</c:forEach>
+						<c:if test="${pm.next && pm.endPage > 0}">
+						<li class='page-item'>
+							<a class='page-link' aria-label='Next' href="/Customer/myquestion_product.do?page=${pm.endPage + 1}">
+								<span aria-hidden='true' class='pointer'>&raquo;</span>
+							</a>
+						</li>
+						</c:if>
+					</ul>
+				</nav>
 				</div>
 				<button type="button" class="btn btn-danger" id="question_btn" onclick="location.href='/Customer/question.do'">문의하기</button>
 				<br><br><br>
@@ -217,7 +257,7 @@
 	
 	function linkFn(){
 		
-		location.href="/Customer/myquestion_product.do";
+		location.href="/Customer/myquestion_product.do?page=1";
 	}
 	function delFn(pqidx){
 		$.ajax({

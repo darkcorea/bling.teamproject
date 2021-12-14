@@ -103,8 +103,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<QuestionVO> product_question_list(int midx) throws Exception {
-		return customerDAO.product_question_list(midx);
+	public List<QuestionVO> product_question_list(PageMaker pm) throws Exception {
+		return customerDAO.product_question_list(pm);
 	}
 
 	@Override
@@ -124,6 +124,12 @@ public class CustomerServiceImpl implements CustomerService {
 	public int questionCount(int midx) throws Exception {
 		
 		return customerDAO.questionCount(midx);
+	}
+
+	@Override
+	public int product_questionCount(int midx) throws Exception {
+		
+		return customerDAO.product_questionCount(midx);
 	}
 	
 }
