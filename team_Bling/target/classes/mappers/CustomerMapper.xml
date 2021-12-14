@@ -92,7 +92,7 @@
 	
 	<!-- 반복되는 쿼리문 -->
 	<sql id="keyword">
-		<if test="scri.keyword != null">
+		<if test="scri.keyword != null &amp;&amp; scri.keyword != ''">
 			AND subject LIKE CONCAT('%',#{scri.keyword},'%') OR contents LIKE CONCAT('%',#{scri.keyword},'%')
 			</if>
 	</sql>

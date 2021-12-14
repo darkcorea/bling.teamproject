@@ -90,6 +90,10 @@ public class deliveryServiceImpl implements DeliveryService {
 		return deliveryDAO.nonDel_check(nv);
 	}
 
-
+	// orderid로 구매한 상품 정보 뿌려주기
+	@Override
+	public List<CombineVO> nonDel_list(String order_idx) throws Exception{
+		return deliveryDAO.nonDel_list(order_idx);
+	}
 	
 }
