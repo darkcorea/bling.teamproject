@@ -71,8 +71,8 @@ $(document).ready(function () {
 	}
 	
 	.image {
-		width:78px;
-		height:78px;
+		width:60px;
+		height:60px;
 	}
 	
 	.btn-white {

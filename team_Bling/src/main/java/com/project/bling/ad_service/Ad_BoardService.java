@@ -38,9 +38,9 @@ public interface Ad_BoardService {
 	
 	//이벤트 db에 등록
 	void event_insert(EventVO vo) throws Exception;
-	
-	
-	/*---------------------------------------------------------*/
+
+
+		/*---------------------------------------------------------*/
 	// 문의사항 리스트
 	List<QuestionVO> question_list()throws Exception;
 	
