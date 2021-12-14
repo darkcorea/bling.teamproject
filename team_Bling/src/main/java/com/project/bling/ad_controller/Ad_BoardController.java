@@ -399,11 +399,13 @@ public class Ad_BoardController {
 	}	
 	
 	
+	
+	/*       	 문의 사항          		   */
 	// 관리자 문의하기 게시판 이동
 	@RequestMapping(value="/question.do")
 	public String question(Locale locale,Model model) throws Exception{
-
 		
+		model.addAttribute("list", ad_boardService.question_list());
 		return "admin/Board/question";
 	}
 	
