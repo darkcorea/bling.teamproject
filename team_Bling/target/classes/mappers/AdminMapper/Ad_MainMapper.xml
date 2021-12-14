@@ -188,5 +188,5 @@
 		select count(midx) as oidx from bg_user where rdate between date_add(now(),interval -15 day) and now() and delyn = 0 union all
 		select count(midx) as oidx from bg_user where rdate between date_add(now(),interval -30 day) and now() and delyn = 0
 	</select>
-
+	
 </mapper>	

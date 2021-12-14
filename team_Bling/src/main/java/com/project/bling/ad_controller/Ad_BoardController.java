@@ -8,11 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
@@ -32,7 +28,6 @@ import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
-import com.project.bling.vo.ProductVO;
 
 @RequestMapping(value="/Ad_board")
 @Controller
@@ -367,6 +362,16 @@ public class Ad_BoardController {
 		
 		return "redirect:/Ad_board/board.do?page=1&type=T";
 	}	
+	
+	
+	// 관리자 문의하기 게시판 이동
+	@RequestMapping(value="/question.do")
+	public String question(Locale locale,Model model) throws Exception{
+
+		
+		return "admin/Board/question";
+	}
+	
 	
 }
 
