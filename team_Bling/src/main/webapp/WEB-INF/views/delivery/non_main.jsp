@@ -65,13 +65,11 @@
 			 </tr> 
 			 <tr> 
 				 <td><b>연 락 처</b></td> 
-				 <td><c:out value="${list[0].phone}"/></td> 
+				 <td><c:out value="${list[0].rphone}"/></td> 
 			 </tr> 
 			 <tr> 
 				  <td><b>받는주소</b></td> 
-				 <td>(<c:out value="${list[0].zip_code}"/>)<br>
-				 <c:out value="${list[0].addr1}"/><br>
-				 <c:out value="${list[0].addr2}"/>
+				 <td>(<c:out value="${list[0].zip_code}"/>) <c:out value="${list[0].addr1}"/> <c:out value="${list[0].addr2}"/>
 				 </td> 
 			 </tr>
 			 <tr> 
@@ -102,7 +100,7 @@
 		 <table>
 		 <tr>
 			 <td style='width:150px;'> 
-				 <a href='/Product/detail.do?pidx=${list[0].pidx}'><img class='image_main' src='/resources/image/${list[0].mian}'></a> 	
+				 <a href='/Product/detail.do?pidx=${list[0].pidx}'><img class='image_main' src='/resources/image/${list[0].main}'></a> 	
 			 </td> 	
 			 <td style='width:300px;'> <a href='/Product/detail.do?pidx=${list[0].pidx}' class='title4'>
 				 <span><b><c:out value="${list[0].pname}"/></b></span></a>
@@ -116,11 +114,11 @@
 	</div> 
 	<div style='margin-top:30px;'> 
 	<span class='title'>결제금액 : </span><span class='title'><c:out value="${list[0].tot_price}"/></span> 
-	</div><br>
+	</div><br><br>
 	<div>
 		취소 / 교환 / 반품은 고객센터에 문의해 주세요.
 	</div>
-</div>
+</div><br><br><br>
 </section>
 
 <footer>
