@@ -34,12 +34,15 @@ public class CombineVO {
 	private String rdate;
 	private String show_yn;
 	// delivery
+	private int didx;
+	private String send_day;
+	private String deli_com;
 	private String deli_stat;
 	private String cancel;
 	private String refund;
 	private String exchange;
 	private String order_yn;
-	private long invoice_num;
+	private String invoice_num;
 	private String confirm_yn;
 	// order
 	private int order_idx;
@@ -157,10 +160,10 @@ public class CombineVO {
 	public void setOrder_yn(String order_yn) {
 		this.order_yn = order_yn;
 	}
-	public long getInvoice_num() {
+	public String getInvoice_num() {
 		return invoice_num;
 	}
-	public void setInvoice_num(long invoice_num) {
+	public void setInvoice_num(String invoice_num) {
 		this.invoice_num = invoice_num;
 	}
 	public String getConfirm_yn() {
@@ -408,6 +411,24 @@ public class CombineVO {
 	}
 	public void setD_order_yn(String d_order_yn) {
 		D_order_yn = d_order_yn;
+	}
+	public int getDidx() {
+		return didx;
+	}
+	public void setDidx(int didx) {
+		this.didx = didx;
+	}
+	public String getSend_day() {
+		return send_day;
+	}
+	public void setSend_day(String send_day) {
+		this.send_day = send_day;
+	}
+	public String getDeli_com() {
+		return deli_com;
+	}
+	public void setDeli_com(String deli_com) {
+		this.deli_com = deli_com;
 	}
 	
 	
