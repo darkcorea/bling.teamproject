@@ -362,10 +362,10 @@ public class Ad_BoardController {
 		
 		return "redirect:/Ad_board/board.do?page=1&type=T";
 	}	
-
-
 	
-/*       	 문의 사항          		   */
+	
+	
+	/*       	 문의 사항          		   */
 	// 관리자 문의하기 게시판 이동
 	@RequestMapping(value="/question.do")
 	public String question(Locale locale,Model model) throws Exception{
