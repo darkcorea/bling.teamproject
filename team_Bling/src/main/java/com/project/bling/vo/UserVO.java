@@ -17,7 +17,35 @@ public class UserVO {
 	private String agree_email;
 	private String agree_shopping;
 	private int delyn;
+	private String rdate;
+	private String rdate1;
+	private int sum;
+	private int count;
 	
+	public String getRdate() {
+		return rdate;
+	}
+	public void setRdate(String rdate) {
+		this.rdate = rdate;
+	}
+	public String getRdate1() {
+		return rdate1;
+	}
+	public void setRdate1(String rdate1) {
+		this.rdate1 = rdate1;
+	}
+	public int getSum() {
+		return sum;
+	}
+	public void setSum(int sum) {
+		this.sum = sum;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public int getDelyn() {
 		return delyn;
 	}
