@@ -56,7 +56,7 @@
 		<hr>
 		<ul class="nav nav-pills">
 		  <li class="nav-item">
-		    <a class="nav-link" href="admin/Home/home">홈</a>
+		    <a class="nav-link" href="/Ad_Main/main.do">홈</a>
 		  </li>
 		  <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">주문/배송</a>
@@ -78,7 +78,7 @@
 		   <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">회원 관리</a>
 		    <ul class="dropdown-menu">
-		      <li><a class="dropdown-item" href="#">회원 리스트</a></li>
+		      <li><a class="dropdown-item" href="/Ad_user/userList.do">회원 리스트</a></li>
 		      <li><a class="dropdown-item" href="#">회원 등급 설정</a></li>
 		      <li><a class="dropdown-item" href="#">탈퇴회원 리스트</a></li>
 		    </ul>

@@ -101,6 +101,12 @@ public class LoginServiceImpl implements LoginService {
 		loginDAO.tempPwd(vo);
 	}
 
+	@Override
+	public void final_login(int midx) throws Exception {
+		loginDAO.final_login(midx);
+		
+	}
+
 	
 	
 }

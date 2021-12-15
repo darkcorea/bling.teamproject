@@ -19,4 +19,5 @@ public interface LoginService {
 	public int pwdFindEmail(UserVO vo) throws Exception;
 	public int pwdFindPhone(UserVO vo) throws Exception;
 	public void tempPwd(UserVO vo) throws Exception;
+	public void final_login(int midx) throws Exception;
 }
