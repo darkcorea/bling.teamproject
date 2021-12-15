@@ -93,7 +93,7 @@ public class Ad_Order_deliveryController {
 	
 /* ------------------------------delivery------------------------------ */
 	@RequestMapping(value="/delivery.do")
-	public String deiListPage() throws Exception {
+	public String deliListPage() throws Exception {
 		return "admin/Order_delivery/delivery";
 	}
 	
@@ -137,4 +137,12 @@ public class Ad_Order_deliveryController {
 	}
 	
 /* ------------------------------delivery------------------------------ */
+	
+/* ------------------------------return------------------------------ */
+	@RequestMapping(value="/return.do")
+	public String returnListPage() throws Exception {
+		return "admin/Order_delivery/return";
+	}
+	
+/* ------------------------------return------------------------------ */
 }

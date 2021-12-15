@@ -579,6 +579,12 @@
 						icon: 'warning',
 						title: '주문번호 '+order_idx+'의 송장번호를 입력해주세요!',
 						input: 'text',
+						inputAttributes: {
+						    autocapitalize: 'off',
+						    minlength: 10,
+						    maxlength: 15,
+						    placeholder: '10~15자 사이로 입력해주세요.'
+						 },
 						showCancelButton: true,
 						confirmButtonText: '저장',
 						cancelButtonText: '취소'
@@ -712,6 +718,13 @@
 			icon: 'warning',
 			html: '구매확정된 상품입니다! <br> (배송완료일로부터 7일 초과)',
 		});
+	}
+	
+	//기본적으로 input의 type이 text일땐, maxlength를 지정해주면 최대 글자 수를 지정을 할 수 있지만 number는 그렇지가 않습니다.
+	function maxLengthCheck(object){
+	    if (object.value.length > object.maxLength){
+	      object.value = object.value.slice(0, object.maxLength);
+	    }    
 	}
 	
 </script>
