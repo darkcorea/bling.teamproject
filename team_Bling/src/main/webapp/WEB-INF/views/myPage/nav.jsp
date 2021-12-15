@@ -105,7 +105,7 @@
 
 			<div class="pa_top"><a class="navA" href="/MyPage/modify.do">나의 정보/수정</a></div>
 			<div class="pa_top"><a class="navA" href="/Addr/main.do?page=1">배송지 목록</a></div>
-			<div class="pa_top"><a class="navA" href="/MyPage/deletemain.do">회원탈퇴</a></div>
+			<div class="pa_top"><a class="navA" href="/MyPage/deletes.do">회원탈퇴</a></div>
 		</div>
 	</div>
 </body>

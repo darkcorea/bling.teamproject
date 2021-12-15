@@ -67,14 +67,9 @@ public class MyPageDAO {
 		sqlSession.update(mm+"remodify",uv);
 	}
 	
-	//탈퇴비번확인
-	public String delconfirm(int midx) throws Exception{
-		return sqlSession.selectOne(mm+"delconfirm",midx);
-	}
-	
 	//탈퇴
-	public void del(CombineVO vo)throws Exception{
-		sqlSession.update(mm+"del",vo);
+	public void del(int midx)throws Exception{
+		sqlSession.update(mm+"del",midx);
 	}
 	
 }

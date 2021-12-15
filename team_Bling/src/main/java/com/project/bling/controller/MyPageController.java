@@ -425,50 +425,27 @@ public class MyPageController {
 	
 /* 회원 탈퇴 */
 	//회원탈퇴
-	@RequestMapping(value="/deletemain.do")
-	public String delmain(Model model, HttpSession session)throws Exception{
+	@RequestMapping(value="/deletes.do")
+	public String del(Model model, HttpSession session)throws Exception{
 		//로그인시 세션에 저장된 회원정보 불러오기
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		//회원정보에서 회원번호만 선택
 		int midx = uv.getMidx();
+		
 		model.addAttribute("data",myPageService.confirm(midx));
+				
 		return "myPage/delete";
 	}
 	
-	@RequestMapping(value="/deletequit.do")
-	@ResponseBody
-	public int del(HttpSession session,String pass)throws Exception{
-		
-		int confirm = 0;
-		//로그인시 세션에 저장된 회원정보 불러오기
-		UserVO uv = (UserVO)session.getAttribute("UserVO");
-		//회원정보에서 회원번호만 선택
-		int midx = uv.getMidx();
-
-		String realpass = myPageService.delconfirm(midx);
-		
-		if(!realpass.equals(pass)) {
-			confirm = 0; //비번틀림
-		}else {
-			confirm = 1; //비번 맞음
-		}
-				
-		return confirm;
-	}
-	
 	@RequestMapping(value="/deletefin.do")
-	@ResponseBody
-	public int delfin(HttpSession session, String quitval)throws Exception{
+	public String delfin(HttpSession session)throws Exception{
 		//로그인시 세션에 저장된 회원정보 불러오기
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		//회원정보에서 회원번호만 선택
 		int midx = uv.getMidx();
-		CombineVO vo = new CombineVO();
-		vo.setMidx(midx);
-		vo.setQuitval(quitval);
 		loginService.logout(session);
-		myPageService.del(vo);
-		return 0;
+		myPageService.del(midx);
+		return "redirect:/";
 	}
 	
 	

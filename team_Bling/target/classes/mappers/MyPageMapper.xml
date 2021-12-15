@@ -297,16 +297,10 @@
 		WHERE midx = #{midx}
 	</update>
 	
-	<!-- 탈퇴비번확인 -->
-	<select id="delconfirm" parameterType="int" resultType="String">
-		select pwd from bg_user where midx = #{midx}
-	</select>
-	
 	<!-- 탈퇴 -->
-	<update id="del" parameterType="CombineVO">
+	<update id="del" parameterType="int">
 		UPDATE bg_user SET
 		delyn = 0,
-		quit = #{quitval},
 		rdate = sysdate()
 		WHERE midx=#{midx}
 	</update>

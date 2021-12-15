@@ -81,18 +81,11 @@ public class MyPageServiceImpl implements MyPageService {
 	public void remodify(UserVO uv) throws Exception {
 		myPageDAO.remodify(uv);
 	}
-	
-	//탈퇴비번확인
-	@Override
-	public String delconfirm(int midx) throws Exception {
-		return myPageDAO.delconfirm(midx);
-	}
-	
+
 	//탈퇴
 	@Override
-	public void del(CombineVO vo) throws Exception {
-		myPageDAO.del(vo);
+	public void del(int midx) throws Exception {
+		myPageDAO.del(midx);
 	}
-
 	
 }
