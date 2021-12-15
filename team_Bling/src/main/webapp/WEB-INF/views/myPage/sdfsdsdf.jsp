@@ -76,7 +76,7 @@
 			color: red;
 		}
 		div:focus{
-			background-color: red;
+			background-color: orange;
 		}
 	</style>
 </head>
@@ -134,8 +134,11 @@
 
     <script>
    
-    function test(){
+    function test(coidx){
     	//alert("테스트");
+    	var imgname = document.getElementById(coidx);
+    	console.log(coidx);
+    	coidx.style.border = 1px;
     }
     
     var sum = 0;
@@ -217,7 +220,7 @@
                 	$('#optiondiv').append(str2);
                 	//선택옵션 글 나오게함
                 	var str2_option = "";
-                	str2_option += "<div id='"+data[0].coidx+"' onclick='test()' tabindex='1'><h5>"+data[0].name + "&nbsp;<i class='bi bi-x-lg'></i></h5>";
+                	str2_option += "<div id='"+data[0].coidx+"' onclick='test("+data[0].coidx+")' tabindex='1'><h5>"+data[0].name + "&nbsp;<i class='bi bi-x-lg'></i></h5>";
                 	str2_option += data[0].price + "원";
                 	str2_option += "<input type='range' class='form-range' id='customRange1'><hr></div>";
                 	$('#selectoption').append(str2_option);
