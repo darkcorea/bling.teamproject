@@ -53,5 +53,7 @@ public class LoginDAO {
 	public void tempPwd(UserVO vo) throws Exception{
 		sqlSession.update(lm+"tempPwd", vo);
 	}
-	
+	public void final_login(int midx) throws Exception{
+		sqlSession.update(lm+"final_login", midx);
+	}
 }

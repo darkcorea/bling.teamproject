@@ -192,7 +192,7 @@
 							 <!-- 배송완료 후 7일이 넘지 않았으면  -->
 							 <c:if test="${list.date_differ <= 7}">
 							 	<!-- 구매 확정 버튼을 누르지 않았다면 -->
-							 	<c:if test="${list.confirm_yn == 'N'}">
+							 	<c:if test="${list.confirm_yn == 'N' && list.refund == null && list.exchange == null && list.cancel == null}">
 							 	<button id="btn_25" class="btn btn-outline-secondary" onclick="confirm_fn(${list.order_idx})">구매확정</button>
 							 		<!-- 교환이 완료가 되었으면 -->
 							 		<c:if test="${list.exchange == 'Y'}">

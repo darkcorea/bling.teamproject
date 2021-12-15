@@ -52,4 +52,10 @@
 		WHERE midx=#{midx}
 	</update>
 	
+	<update id="final_login" parameterType="int">
+		UPDATE bg_user
+		SET rdate1 = CURRENT_TIMESTAMP
+		WHERE midx = #{midx}
+	</update>
+	
 </mapper>

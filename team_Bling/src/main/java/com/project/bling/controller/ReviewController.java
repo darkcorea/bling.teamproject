@@ -31,7 +31,7 @@ public class ReviewController {
 	@Autowired
 	ReviewService reviewService;
 	
-    String uploadPath = "D:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
+    String uploadPath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
 	
 	
 	

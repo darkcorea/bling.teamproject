@@ -28,8 +28,8 @@ public class Ad_RegistController {
 	@Autowired
 	Ad_RegistService ad_registService;
 	
-	String path = "D:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image\\";
-	String spath = "D:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage\\";
+	String path = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image\\";
+	String spath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage\\";
 	
 	/* 파일이름를 입력하면 파일을 삭제하는 메소드 image폴더*/
 	public void imageDel(String name) {

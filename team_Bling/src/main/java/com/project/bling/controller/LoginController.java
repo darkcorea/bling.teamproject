@@ -41,6 +41,13 @@ public class LoginController {
 		ModelAndView mav = new ModelAndView();
 		if (result == true) { // 로그인 성공
 			// home.jsp로 이동
+
+			//로그인시 세션에 저장된 회원정보 불러오기
+			UserVO uv = (UserVO)session.getAttribute("UserVO");
+			//회원정보에서 회원번호만 선택
+			int midx = uv.getMidx();
+			
+			loginService.final_login(midx);
 			mav.setViewName("redirect:/");
 			//mav.addObject("msg", "success");
 		} else {	// 로그인 실패
