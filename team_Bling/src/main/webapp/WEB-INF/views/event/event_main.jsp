@@ -120,15 +120,15 @@
 					  	str += "<hr />";
 					  	if(types == 1){
 					  		str += "<a onclick='list_fn(1,1);' id='option' style='background-color:#FFEDED'>전체 ("+data.count_tot+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
-						  	str += "<a onclick='list_fn(1,2);' id='option'>진행중 이벤트 ("+data.count_ing+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
-						  	str += "<a onclick='list_fn(1,3);' id='option'>종료된 이벤트 ("+data.count_end+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+						  	str += "<a onclick='list_fn(1,2);' id='option' style='cursor:pointer;'>진행중 이벤트 ("+data.count_ing+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+						  	str += "<a onclick='list_fn(1,3);' id='option' style='cursor:pointer;'>종료된 이벤트 ("+data.count_end+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
 					  	}else if(types==2){
-					  		str += "<a onclick='list_fn(1,1);' id='option'>전체 ("+data.count_tot+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+					  		str += "<a onclick='list_fn(1,1);' id='option' style='cursor:pointer;'>전체 ("+data.count_tot+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
 						  	str += "<a onclick='list_fn(1,2);' id='option' style='background-color:#FFEDED'>진행중 이벤트 ("+data.count_ing+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
-						  	str += "<a onclick='list_fn(1,3);' id='option'>종료된 이벤트 ("+data.count_end+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+						  	str += "<a onclick='list_fn(1,3);' id='option' style='cursor:pointer;'>종료된 이벤트 ("+data.count_end+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
 					  	}else if(types==3){
-					  		str += "<a onclick='list_fn(1,1);' id='option'>전체 ("+data.count_tot+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
-						  	str += "<a onclick='list_fn(1,2);' id='option'>진행중 이벤트 ("+data.count_ing+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+					  		str += "<a onclick='list_fn(1,1);' id='option' style='cursor:pointer;'>전체 ("+data.count_tot+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+						  	str += "<a onclick='list_fn(1,2);' id='option' style='cursor:pointer;'>진행중 이벤트 ("+data.count_ing+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
 						  	str += "<a onclick='list_fn(1,3);' id='option' style='background-color:#FFEDED'>종료된 이벤트 ("+data.count_end+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
 					  	}
 					  	

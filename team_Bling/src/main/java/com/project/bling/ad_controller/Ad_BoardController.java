@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
 import com.project.bling.ad_service.Ad_BoardService;
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
+import com.project.bling.service.EventService;
 import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
 
@@ -35,11 +37,14 @@ public class Ad_BoardController {
 	
 	@Autowired
 	Ad_BoardService ad_boardService;
+	@Autowired
+	EventService eventService;
 	
 	/////////////////////////////////////공지사항///////////////////////////////////////
 	
 	//공지사항 파일, 이미지 저장 경로
-	private static final String FILE_SERVER_PATH = "D:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice\\";
+	private static final String FILE_SERVER_PATH = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice\\";
+	private static final String FILE_SERVER_PATH2 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\event\\";
 	
 	//공지사항 게시글리스트메인
 	@RequestMapping(value = "/board.do")
@@ -320,23 +325,72 @@ public class Ad_BoardController {
 	}
 	
 	/////////////////////////////////////////이벤트////////////////////////////////////////
+	/* 이름을 입력하면 이름을 변경해 주는 메소드 */
+	public String imgName1(String name) {
+		String ext = name.substring(name.lastIndexOf("."));
+		SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmmss");
+		int rand = (int)(Math.random()*1000);
+		String imgName = sdf.format(System.currentTimeMillis()) + "_" + rand + ext;
+		return imgName;
+	}
 	
 	//이벤트
 	@RequestMapping(value="/event.do")
-	public String event(Locale locale, Model model,int page,int type) throws Exception {
-		model.addAttribute("page",page);
-		model.addAttribute("type",type);
+	public String event(Locale locale, Model model) throws Exception {
+		
 		return "admin/Board/event_board";
 	}
 	
 	//이벤트 게시글 에이작스 리스트
 	@RequestMapping(value="/eventlist.do")
 	@ResponseBody
-	public Map<String, Object> eventlist(int page,int type) throws Exception{
+	public Map<String, Object> eventlist(int page,int types) throws Exception{
+		//옵션마다 개수
+		int count = 0;
+		String type = null;
+		if(types == 1) {
+			type = "tot";
+			 count = eventService.eventCount_tot();
+		}else if(types == 2) {
+			type = "ing";
+			 count = eventService.eventCount_ing();
+		}else if(types == 3) {
+			type = "end";
+			 count = eventService.eventCount_end();
+		}
 		
+		Criteria sc = new Criteria();
 		
-		return null;
+		sc.setPerPageNum(3);
+		sc.setPage(page);
+		
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		pm.setTotalCount(count);
+		pm.setType(type);
+		
+		//옵션마다 개수
+		type="tot";
+		int count_tot = eventService.eventCount_tot();
+		type="ing";
+		int count_ing = eventService.eventCount_ing();
+		type="end";
+		int count_end = eventService.eventCount_end();
+		
+		Map<String, Object> eventlist = new HashMap<String, Object>();
+		
+		eventlist.put("pm", pm);
+		eventlist.put("totalList", eventService.eventTotal(pm));
+		eventlist.put("page", page);
+		eventlist.put("types", types);
+		
+		eventlist.put("count_tot", count_tot);
+		eventlist.put("count_ing", count_ing);
+		eventlist.put("count_end", count_end);
+		
+		return eventlist;
 	}
+	
 	
 	//이벤트 등록
 	@RequestMapping(value="/event_regist.do")
@@ -345,60 +399,78 @@ public class Ad_BoardController {
 	}
 	
 	@RequestMapping(value="/event_regist_all.do", method = RequestMethod.POST)
-	public String event_regist_all(EventVO vo,HttpServletRequest request,@RequestParam("image") MultipartFile file1,@RequestParam("banner") MultipartFile file2 ) throws Exception{
-	
-		String image = file1.getOriginalFilename();
-		String banner = file2.getOriginalFilename();
+	public String event_regist_all(MultipartHttpServletRequest request ) throws Exception{
+		
+		EventVO vo = new EventVO();
+		vo.setSubject(request.getParameter("subject"));
+		vo.setContents(request.getParameter("contents"));
 		
 		String images=null;
 		String banners=null;
 		
 		// 파일 업로드 
 		
-		if(image != null) {
-			// 기존 파일 이름을 받고 확장자 저장
-			String ext = image.substring(image.lastIndexOf("."));
-			
-			// 이름 값 변경을 위한 설정 
-			SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmmssSSS");
-			int rand = (int)(Math.random()*1000);
-			
-			// 파일 이름 변경
-			images = sdf.format(System.currentTimeMillis()) + "_" + rand + ext;
-			
-			// 파일 저장
-			file1.transferTo(new File(FILE_SERVER_PATH + images));
+		if(request.getFile("image") != null) {
+			MultipartFile f_image = request.getFile("image");
+			if(f_image.getOriginalFilename() != null && f_image.getOriginalFilename() != "") {
+				String name = f_image.getOriginalFilename();
+				images = imgName1(name);
+				f_image.transferTo(new File(FILE_SERVER_PATH2+images));
+				vo.setImage(images);
+			}
 		}
-		if(banner != null) {
-			// 기존 파일 이름을 받고 확장자 저장
-			String ext = banner.substring(banner.lastIndexOf("."));
-			
-			// 이름 값 변경을 위한 설정 
-			SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmmssSSS");
-			int rand = (int)(Math.random()*1000);
-			
-			// 파일 이름 변경
-			banners = sdf.format(System.currentTimeMillis()) + "_" + rand + ext;
-			
-			// 파일 저장
-			file2.transferTo(new File(FILE_SERVER_PATH + banners));
+		if(request.getFile("banner") != null) {
+			MultipartFile f_banner = request.getFile("banner");
+			if(f_banner.getOriginalFilename() != null && f_banner.getOriginalFilename() != "") {
+				String name = f_banner.getOriginalFilename();
+				banners = imgName1(name);
+				f_banner.transferTo(new File(FILE_SERVER_PATH2+banners));
+				vo.setBanner(banners);
+			}
 		}
-		System.out.println(vo.getEvent_start());
-		System.out.println(vo.getEvent_end());
 		
-		System.out.println(banners);
-		System.out.println(images);
+		vo.setEvent_start(request.getParameter("event_start"));
+		vo.setEvent_end(request.getParameter("event_end"));
 		
-		//vo.setBanner(banner);
-		//vo.setImage(image);
+		ad_boardService.event_insert(vo);
 		
-		
-		//ad_boardService.event_insert(vo);
-		
-		return "redirect:/Ad_board/board.do?page=1&type=T";
+		return "redirect:/Ad_board/event.do";
 	}	
 	
+	//이벤트 detail
+	@RequestMapping(value="/eventdetail.do")
+	public String eventdetail(Locale locale,Model model,int eidx) throws Exception{
+		model.addAttribute("detail",eventService.detail(eidx));
+		return "admin/Board/event_detail";
+	}
 	
+	//이벤트 글리스트 지우기
+	@RequestMapping(value="/deleteArryEvent.do")
+	@ResponseBody
+	public void deletearryEvent(@RequestParam(value="checkbox[]") List<Integer> checkbox) throws Exception {
+		for(int i=0;i<checkbox.size();i++) {
+			System.out.println("9999999999999999999999999999++++++"+checkbox.get(i));
+			
+			EventVO vo = eventService.detail(checkbox.get(i));
+			
+			//파일삭제(수정누르면 바로 파일 삭제)
+			String files = vo.getImage();
+			File deletefile = new File(FILE_SERVER_PATH2 + files);
+			if(deletefile.exists()) {
+				deletefile.delete();
+			}
+			
+			//사진파일 삭제
+			String imges = vo.getBanner();
+			File deleteimg = new File(FILE_SERVER_PATH2 + imges);
+			if(deleteimg.exists()) {
+				deleteimg.delete();
+			}
+			
+			ad_boardService.deleteArrEvent(checkbox.get(i));
+		}
+	}
+		
 	
 	/*       	 문의 사항          		   */
 	// 관리자 문의하기 게시판 이동
@@ -409,7 +481,30 @@ public class Ad_BoardController {
 		return "admin/Board/question";
 	}
 	
-	
+	//이벤트 detail 삭제
+		@RequestMapping(value="/event_detail_del.do")
+		@ResponseBody
+		public void event_detail_del(Locale locale,Model model,int eidx)throws Exception{
+			
+			EventVO vo = eventService.detail(eidx);
+			
+			//파일삭제(수정누르면 바로 파일 삭제)
+			String files = vo.getImage();
+			File deletefile = new File(FILE_SERVER_PATH + files);
+			if(deletefile.exists()) {
+				deletefile.delete();
+			}
+			
+			//사진파일 삭제
+			String imges = vo.getBanner();
+			File deleteimg = new File(FILE_SERVER_PATH + imges);
+			if(deleteimg.exists()) {
+				deleteimg.delete();
+			}
+			
+			ad_boardService.deleteArrEvent(eidx);
+			//return "admin/Board/board";
+		}
 }
 
 

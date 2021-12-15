@@ -40,7 +40,7 @@
 				  <ul>
 				 	<li><a href="#">문의게시판</a></li>
 				    <li><a href="/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
-				    <li><a href="#">이벤트</a></li>
+				    <li><a href="/Ad_board/event.do?page=1&type=1">이벤트</a></li>
 				    <li><a href="#">리뷰관리</a></li> 
 				  </ul>
 			</div>

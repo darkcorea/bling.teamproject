@@ -92,7 +92,7 @@
 			
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 			   <input type="submit" class="btn btn-primary" value="등록하기">
-			  <button class="btn btn-outline-secondary" type="button" onclick="location.href='/Ad_board/board.do?page=1&type=T'">취소하기</button>
+			  <button class="btn btn-outline-secondary" type="button" onclick="location.href='/Ad_board/event.do'">취소하기</button>
 			</div>
 			
 			<br>

@@ -94,14 +94,21 @@
 	
 	<!-- 이벤트 데이터 저장 -->
 	<insert id="event_regist" parameterType="EventVO">
-		INSERT INTO bg_event(subject,contents,event_start,event_end)
+		INSERT INTO bg_event(subject,contents,image,banner,event_start,event_end)
 		values(
-			,#{subject}
+			#{subject}
 			,#{contents}
 			,#{image, jdbcType=VARCHAR}
+			,#{banner, jdbcType=VARCHAR}
+			,#{event_start}
 			,#{event_end}
 		)
 	</insert>
+	
+	<!-- 이벤트 데이터 삭제 -->
+	<delete id="deleteArrEvent" parameterType="int">
+		 DELETE FROM bg_event WHERE eidx=#{eidx}
+	</delete>
 	
 	
 	<select id="question_list" resultType="QuestionVO">
