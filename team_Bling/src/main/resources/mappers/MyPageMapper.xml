@@ -56,6 +56,9 @@
 	               od.detail_idx,
 	               od.quantity,
 	               d.deli_stat,
+	               d.cancel,
+	               d.refund,
+	               d.exchange,
 	               d.order_yn,
 	               d.deli_com,
 	               od.oidx,
@@ -85,6 +88,9 @@
 	       po.addprice,
 	       sum(oOdDr.quantity) AS 'quantitySum',
 	       oOdDr.deli_stat,
+	       oOdDr.cancel,
+	       oOdDr.refund,
+	       oOdDr.exchange,
 	       oOdDr.ridx,
 	       oOdDr.contents
 	FROM oOdDr

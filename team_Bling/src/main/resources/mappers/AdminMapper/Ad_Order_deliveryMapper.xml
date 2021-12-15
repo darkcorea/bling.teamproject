@@ -29,6 +29,9 @@
 		       d.order_yn AS 'D_order_yn',
 			   o.delivery_yn,
 		       d.deli_stat,
+		       d.cancel,
+		       d.refund,
+		       d.exchange,
 		       r.ridx,
 		       DATEDIFF(sysdate(),d.deli_com) AS 'date_differ'
 		FROM bg_product p
