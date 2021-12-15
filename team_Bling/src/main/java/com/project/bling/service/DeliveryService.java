@@ -22,4 +22,7 @@ public interface DeliveryService {
 	void return_delivery(CombineVO cv) throws Exception;
 	String nonDel_check(NonorderVO nv) throws Exception;
 	List<CombineVO> nonDel_list(String order_idx) throws Exception;
+	int payed_mileage_check(int order_idx) throws Exception;
+	void payed_mileage_zero(int order_idx) throws Exception;
+	void cancle_delivery(int order_idx) throws Exception;
 }

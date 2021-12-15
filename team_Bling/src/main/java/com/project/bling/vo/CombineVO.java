@@ -49,6 +49,7 @@ public class CombineVO {
 	private String orderid;
 	private int midx;
 	private int tot_price;
+	private int payed_mileage;
 	private String delivery_yn;
 	private String addr1;
 	private String addr2;

@@ -96,4 +96,23 @@ public class deliveryServiceImpl implements DeliveryService {
 		return deliveryDAO.nonDel_list(order_idx);
 	}
 	
+	// order_idx로  물건을 구매할 때 쓴 마일리지가 있는 지 조회
+	@Override
+	public int payed_mileage_check(int order_idx) throws Exception {
+	return deliveryDAO.payed_mileage_check(order_idx);
+	}
+	
+	// order_idx로 사용한 마일리지 0원으로 만들기
+	@Override
+	public void payed_mileage_zero(int order_idx) throws Exception{
+		deliveryDAO.payed_mileage_zero(order_idx);
+	}
+
+	// order_idx로 배송정보 취소 Y
+	@Override
+	public void cancle_delivery(int order_idx) throws Exception {
+		deliveryDAO.cancle_delivery(order_idx);
+	}
+	
+	
 }

@@ -58,6 +58,10 @@ a {text-decoration:none;}
 	.center{
 		text-align:center;
 	}
+	/* 클래스 추가하면 가져다 대면 손모양 나옴*/
+	.pointer {
+		cursor: pointer;
+	}
 </style>
 </head>
 <body>
@@ -81,11 +85,14 @@ a {text-decoration:none;}
 
 <!--여기서부터 본문-->
 <div id="">
+	<!-- 상단 내용 -->
 	<h1 class="center">문의 게시판</h1><br>
 	<div class="title center row">
 		<div class="col"><a href="/Ad_board/question.do" class="title3"><span>일반문의</span></a></div>
 		<div class="col"><a href="/Ad_board/question.do" class="title2"><span>제품문의</span></a></div>
 	</div><br>	
+	
+	<!-- 문의 테이블  -->
   	<div>
   		<table class="table">
   			<thead class="center">
@@ -95,13 +102,13 @@ a {text-decoration:none;}
   					<th style="width:100px;">유저번호</th>
   					<th>제목</th>
   					<th style="width:120px;">작성날짜</th>
-  					<th>버튼</th>
+  					<th style="width:150px;">버튼</th>
   				<tr>
   			</thead>
   			<tbody>
   			<c:forEach var="list" items="${list}">
   				<tr>
-  					<td class="center"><b><c:out value="${list.qidx}"/></b></td>
+  					<td class="center"><b><c:out value="${list.originqidx}"/></b></td>
   					<td class="center">
   						<c:if test="${list.category == 'A'}">
   							배송문의
@@ -126,33 +133,70 @@ a {text-decoration:none;}
   					
   					<td>
   						<c:if test="${list.depth == 0}">
-  						<c:out value="${list.title}"/>
+  						<div class="accordion">
+							<div class="accordion-item" style="border:0;">
+								<div class="accordion-header" id="heading${list.qidx}">
+						     		<span onclick="coll_fn(${list.qidx})" id="coll${list.qidx}" class="pointer">
+						        		<c:out value="${list.title}"/>
+						      		</span>
+						    	</div>
+						    	<div id="collapse${list.qidx}" class="accordion-collapse collapse">
+							    	<div class="accordion-body">
+							      		<c:out value="${list.content}"/>
+							      	</div>
+						    	</div>
+							</div>
+						</div>
   						</c:if>
   						<c:if test="${list.depth == 1}">
-  						&nbsp;<i class='bi bi-arrow-return-right bolder'></i>&nbsp;<c:out value="${list.title}"/>
+  	  					<div class="accordion">
+							<div class="accordion-item" style="border:0;">
+								<div class="accordion-header" id="heading${list.qidx}">
+						     		<span onclick="coll_fn(${list.qidx})" id="coll${list.qidx}" class="pointer">
+						        		&nbsp;<i class='bi bi-arrow-return-right bolder'></i>&nbsp;<c:out value="${list.title}"/>
+						      		</span>
+						    	</div>
+						    	<div id="collapse${list.qidx}" class="accordion-collapse collapse">
+							    	<div class="accordion-body">
+							      		<c:out value="${list.content}"/>
+							      	</div>
+						    	</div>
+							</div>
+						</div>
   						</c:if>
   					</td>
   					
   					<c:set var="date" value="${list.rdate}"/>
 					<td class="center"><c:out value="${fn:substring(date,0,10)}"/></td>
-					<td>
-						<c:if test="${lsit.depth == 0 && lsit.state == 'N'}"></c:if>						
-						<button class="button"></button>
+					<td class="center">
+						<c:if test="${list.depth == 0 && list.state == 'N'}">						
+						<button class="btn btn-outline-primary" onclick="reply_fn(${list.qidx})">답글작성</button>
+						</c:if>
+						<c:if test="${list.depth == 1 && list.state == 'Y'}">						
+						<button class="btn btn-outline-success" onclick="modify_fn(${list.qidx})">수정</button>
+						</c:if>
 					</td>
   				</tr>
   			</c:forEach>
   			</tbody>
   		</table>
-  	
   	</div>
-  
-  
 </div>
 
 </section>
 </body>
 
 <script>
+/* 문의 제목을 클릭하면 제옥 아래로 내용이 보였다가 사라졌다 한다 */
+function coll_fn(qidx){
+	let show = $("#collapse"+qidx).hasClass("show");
+	if (show == false){
+		$("#collapse"+qidx).addClass("show");
+	}else if (show == true){
+		$("#collapse"+qidx).removeClass("show");
+	}
+}
+
 
 </script>
 </html>

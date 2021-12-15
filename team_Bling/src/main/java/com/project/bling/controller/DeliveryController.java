@@ -16,6 +16,7 @@ import com.project.bling.domain.PageMaker;
 import com.project.bling.service.DeliveryService;
 import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.NonorderVO;
+import com.project.bling.vo.OrderVO;
 import com.project.bling.vo.QuestionVO;
 import com.project.bling.vo.UserVO;
 
@@ -172,5 +173,40 @@ public class DeliveryController {
 		model.addAttribute("list", deliveryService.nonDel_list(orderid));
 		return "delivery/non_main";
 	}
+	
+	// 배송 전에 주문 취소를 눌렀을 때 배송 취소하고 사용한 마일리지가 있으면 마일리지 돌려주고 마일리지 0원으로 만들기
+	@RequestMapping(value="/return_now.do")
+	@ResponseBody
+	public int return_now(int order_idx, HttpSession session) throws Exception {
+		
+		// 마일리지를 썼는지 안 썼는지 확인
+		int payed_mileage = deliveryService.payed_mileage_check(order_idx);
+		
+		// 배송정보 취소 완료로 만들기 
+		deliveryService.cancle_delivery(order_idx);
+
+		// 마일리지 사용 금액이 0이 아니라면
+		if ( payed_mileage != 0){
+			
+			// 회원 midx 불러오기
+			UserVO uv = (UserVO)session.getAttribute("UserVO");
+			int midx = uv.getMidx();
+			CombineVO cv = new CombineVO();
+		
+			cv.setMidx(midx);
+			cv.setMileage(payed_mileage);
+			
+			// 소비한 마일리지 회원 마일리지에 추가
+			deliveryService.addmileage_user(cv);
+			// 로그인 세션에 마일리지 추가
+			uv.setMileage(uv.getMileage()+payed_mileage);
+			// 돌려준 마일리지 0원으로 만들기
+			deliveryService.payed_mileage_zero(order_idx);
+
+			return payed_mileage;
+		}
+		return 0;
+	}
+	
 	
 }

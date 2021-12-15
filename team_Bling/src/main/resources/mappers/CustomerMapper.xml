@@ -57,6 +57,7 @@
 			JOIN bg_product pr ON op.pidx = pr.pidx
 			JOIN bg_image im ON pr.pidx = im.pidx
 			WHERE midx=#{midx} AND bor.rdate >= date_add(now(), interval -2 month)
+			ORDER BY bor.rdate DESC
 		]]>
 	</select>
 	
