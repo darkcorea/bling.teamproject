@@ -56,7 +56,7 @@
 			height:700px;
 			/* z-index:1; */
 		}
-		#optionss{
+		.optionss{
 			width:80px;
 			height:80px;
 		}
@@ -71,6 +71,12 @@
 			width:200px;
             height:1000px;
 			overflow-y:auto;
+		}
+		.bi-x-lg{
+			color: red;
+		}
+		div:focus{
+			background-color: red;
 		}
 	</style>
 </head>
@@ -87,7 +93,6 @@
 	                	<div id="selectoption"> 
 	                		
 	                	</div>
-	                	<hr>
 	                	<div id="total">
 	                		
 	                	</div>
@@ -128,6 +133,10 @@
     </body>
 
     <script>
+   
+    function test(){
+    	//alert("테스트");
+    }
     
     var sum = 0;
     //타입별 종류들
@@ -168,7 +177,6 @@
              	success:function(data){
              		console.log(data);
              		//체인 고르면 이미지 나오게 함
-             		var str_chain = "";
              		str_chain += "<img src='/resources/custom/"+data[0].customimg+"' class='type'>";
                 	$('#maindiv').html(str_chain);
                 	//선택옵션 글 나오게함
@@ -204,18 +212,21 @@
               	dataType:'json',
               	success:function(data){
               		var str2 = "";
-              		str2 += "<img src='/resources/custom/"+data[0].customimg+"' id='optionss' class='drag'>";
+              		str2 += "";
+              		str2 += "<img src='/resources/custom/"+data[0].customimg+"' id='"+data[0].coidx+"' class='drag optionss'>";
                 	$('#optiondiv').append(str2);
                 	//선택옵션 글 나오게함
                 	var str2_option = "";
-                	str2_option += "<h5>"+data[0].name + "</h5>";
-                	str2_option += data[0].price + "원<hr>";
+                	str2_option += "<div id='"+data[0].coidx+"' onclick='test()' tabindex='1'><h5>"+data[0].name + "&nbsp;<i class='bi bi-x-lg'></i></h5>";
+                	str2_option += data[0].price + "원";
+                	str2_option += "<input type='range' class='form-range' id='customRange1'><hr></div>";
                 	$('#selectoption').append(str2_option);
                 	total(data[0].price);
               	}
         	});
         }
         
+       
         //총 금액
         function total(price){
         	sum += price;
