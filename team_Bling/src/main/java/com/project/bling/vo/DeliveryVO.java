@@ -12,6 +12,7 @@ public class DeliveryVO {
 	private String send_day;
 	private String order_yn;
 	private String confirm_yn;
+	private String rdate;
 	
 	//어드민 메인에 뿌려줄때 사용할 그릇
 	private int deli_stat_n;
@@ -22,6 +23,14 @@ public class DeliveryVO {
 	
 	
 	
+	public String getRdate() {
+		return rdate;
+	}
+
+	public void setRdate(String rdate) {
+		this.rdate = rdate;
+	}
+
 	public int getDeli_stat_n() {
 		return deli_stat_n;
 	}

@@ -149,8 +149,8 @@
 <section>
 	<div class="title text_center">주문내역</div><br>
 	<div class="title text_center row">
-		<div class="col"><a href="/Delivery/main.do" class="title2"><span>주문내역조회</span></a></div>
-		<div class="col"><a href="/Delivery/main1.do" class="title3"><span>취소/반품/교환내역</span></a></div>
+		<div class="col"><a href="/Delivery/main.do" class="title3"><span>주문내역조회</span></a></div>
+		<div class="col"><a href="/Delivery/main1.do" class="title2"><span>취소/반품/교환내역</span></a></div>
 	</div>
 	<hr>
 	<div id="reviewList">
