@@ -127,11 +127,11 @@ a {text-decoration:none;}
   			<thead class="center">
   				<tr>
   					<th style="width:50px;">번호</th>
-  					<th style="width:180px;">타입</th>
-  					<th style="width:100px;">유저번호</th>
+  					<th style="width:170px;">타입</th>
+  					<th style="width:80px;">유저번호</th>
   					<th>제목</th>
   					<th style="width:120px;">작성날짜</th>
-  					<th style="width:150px;">버튼</th>
+  					<th style="width:120px;">버튼</th>
   				<tr>
   			</thead>
   			<tbody>
