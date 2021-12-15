@@ -41,52 +41,62 @@
 		}
 		#th1{
 			text-align: center;
+			width: 70px;
 		}
 		#th2{
 			text-align: center;
-			width: 120px;
+			width: 70px;
 		}
 		#th3{
 			text-align: center;
-			width: 90px;
+			width: 150px;
 		}
 		#th4{
 			text-align: center;
-			width: 300px;
+			width: 70px;
 		}
 		#th5{
 			text-align: center;
-			width: 66px;
+			width: 110px;
 		}
 		#th6{
 			text-align: center;
 			width: 110px;
 		}
-		.td{
-			text-align: center;
-		}
-		.td1{
-			text-align: center;
-			width: 66px;
-		}
-		.td2{
+		#th7{
 			text-align: center;
 			width: 120px;
 		}
+		.td{
+			text-align: center;
+			height: 35px;
+		}
+		.td1{
+			text-align: center;
+			width: 70px;
+		}
+		.td2{
+			text-align: center;
+			width: 70px;
+		}
 		.td3{
-			width: 90px;
-			padding-left: 15px;
+			text-align: center;
+			width: 150px;
 		}
 		.td4{
-			width: 300px;
+			width: 70px;
 		}
 		.td5{
 			text-align: center;
-			width: 66px;
+			width: 110px;
 		}
 		.td6{
 			text-align: center;
 			width: 110px;
+		}
+		.td7{
+			text-align: center;
+			width: 120px;
 		}
 		select{
 			width: 20px;
@@ -342,6 +352,16 @@
 				<th id="th4">주문자</th>
 				<th id="th5">배송일</th>
 				<th id="th6">배송완료일</th>
+				<th id="th7">배송상태
+					<select id="deliStat" onchange="deliveryList(1,this.value)">
+						<option value="all">전체선택</option>
+						<option value="N">결제대기(N)</option>
+						<option value="Y">결제완료(Y)</option>
+						<option value="A">상품준비중(A)</option>
+						<option value="B">배송중(B)</option>
+						<option value="C">배송완료(C)</option>
+					</select>
+				</th>
 			</tr>
 		</table>
 		<div id="ajaxTable">
@@ -356,119 +376,121 @@
 	if(page == null) {page=1};
 
 	$(function(){
-		orderList(1,"all");
+		deliveryList(1,"all");
      });
 	
-	function orderList(pageN,kindN){
-		let str = "";
-		let page = ""+pageN+"";
-		let kind = kindN;
-		console.log("orderList-page : "+page);
-		console.log("orderList-kindN : "+kindN);
-		console.log("orderList-kind : "+kind);
-		
-		const option = {
-			method: "post",
-			headers: {
-				"Content-Type": "application/json",
+	function deliveryList(page,kind){
+		$.ajax({
+			url: "/Ad_order_delivery/deliveryList.do",
+			type: "post",
+			data: {"page":page,"kind":kind},
+			success: function(data){
+				console.log("배송목록 불러오기 성공");
+				
+				let str = "";
+				
+				let dl = data.deliveryList;
+				
+				let pm = data.pm;
+				let prev = parseInt(pm.startPage - 1) ;
+			  	let next = parseInt(pm.endPage + 1) ;
+
+			  	
+			  	str += "<table>";
+			  	
+			  	if(dl.length == 0){
+			  		str += "<tr><td colspan='7' id='noneList'><div id='noneDiv'>해당 조건의 배송이 존재하지 않습니다.</div></td></tr>";
+			  	}
+			  	else if(dl.length != 0){
+				
+					for(let i=0; dl.length > i; i++){
+						str += "<tr class='tableRow'>";
+						str += "	<td class='td td1'>"+dl[i].didx+"</td>";
+						str += "	<td class='td td2'>"+dl[i].order_idx+"</td>";
+						
+						if(dl[i].invoice_num == null){
+							str += "	<td class='td3'></td>";
+						}else if(dl[i].invoice_num != null){
+							str += "	<td class='td3'>"+dl[i].invoice_num+"</td>";							
+						}
+						
+						str += "	<td class='td4'>"+dl[i].uname+"</td>";
+						
+						if(dl[i].send_day == null){
+							str += "	<td class='td5'></td>";
+						}else if(dl[i].send_day != null){
+							str += "	<td class='td td5'>"+dl[i].send_day+"</td>";						
+						}
+						
+						if(dl[i].deli_com == null){
+							str += "	<td class='td6'></td>";
+						}else if(dl[i].deli_com != null){
+							str += "	<td class='td td6'>"+dl[i].deli_com+"</td>";						
+						}
+						
+						if(dl[i].deli_stat == "N"){
+							str += "	<td class='td td7'>결제대기(N)</td>";	
+						}else if(dl[i].deli_stat == "Y"){
+							str += "	<td class='td td7'>결제완료(Y)</td>";	
+						}else if(dl[i].deli_stat == "A"){
+							str += "	<td class='td td7'>상품중비중(A)</td>";	
+						}else if(dl[i].deli_stat == "B"){
+							str += "	<td class='td td7'>배송중(B)</td>";	
+						}else if(dl[i].deli_stat == "C"){
+							str += "	<td class='td td7'>배송완료(C)</td>";	
+						}
+						
+						str += "</tr>";
+					}
+			  	}
+				str += "</table>";
+				
+				
+				str += "<br><br><br>";
+		  		
+				
+				// 페이징 할 수 있는 번호 나오는 곳 뿌려 주기
+			  	str += "	<nav aria-label='Page navigation'>";
+			  	str += "	<ul class='pagination justify-content-center'>";
+			  	str += "	<li class='page-item'>";
+			  	
+			  	//console.log(prev);
+			  	if(pm.prev == true){
+			  	    str += "<a class='page-link' aria-label='Previous' onclick='deliveryList("+prev+",\""+kind+"\")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
+			  	}
+			  	
+			  	str += "	</li>";
+			  	let startPage = parseInt(pm.startPage);
+			  	let endPage = parseInt(pm.endPage);
+			  	
+			  	for (let k = pm.startPage; k<=pm.endPage; k++ ){
+			  		 if(page == k){
+			  			str += "<li class='page-item active'><a class='page-link pointer' onclick='deliveryList("+k+",\""+kind+"\")'>"+k+"</a></li>";    
+			  		 }else{
+			  			str += "<li class='page-item'><a class='page-link pointer' onclick='deliveryList("+k+",\""+kind+"\")'>"+k+"</a></li>";    
+			  		 }
+			  	 }
+			  	 
+			  	 str += "	<li class='page-item'>";
+			  	
+			  	 if(pm.next && pm.endPage > 0){
+			  	     str += "<a class='page-link' aria-label='Next' onclick='deliveryList("+next+",\""+kind+"\")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
+			  	 }
+			  	 
+			  	 str += "	</li>";
+			  	 str += "	</ul>";
+			  	 str += "	</nav>";
+				
+				
+				$("#ajaxTable").html(str);	
 			},
-			body: JSON.stringify({page:page,kind:kind}),
-		}
-		
-		fetch("/Ad_order_delivery/orderList.do", option)
-		.then((response) => {
-			if(!response.ok){
-				throw new Error('400 아니면 500 에러 발생');
+			error: function(){
+				console.log("deliveryList() 에러발생");
 			}
-			
-			return response.json();
-		})
-		.then((data) => {
-			console.log('화면출력 성공');
-			
-			let ol = data.orderList;
-			
-			let cnt = data.totalCnt;
-			
-			let pm = data.pm;
-			let prev = parseInt(pm.startPage - 1) ;
-		  	let next = parseInt(pm.endPage + 1) ;
-			
-		  	
-		  	str += "<table>";
-		  	
-		  	console.log(data.orderList.length);
-		  	if(data.orderList.length == 0){
-		  		str += "<tr><td colspan='8' id='noneList'><div id='noneDiv'>해당 조건의 주문이 존재하지 않습니다.</div></td></tr>";
-		  	}
-		  	else if(data.orderList.length != 0){
-			
-				for(let i=0; ol.length > i; i++){
-					str += "<tr class='tableRow'>";
-					str += "	<td class='td td1'>"+ol[i].order_idx+"</td>";
-					str += "	<td class='td td2'>"+ol[i].rdate+"</td>";
-					str += "	<td class='td3'>"+ol[i].uname+"</td>";
-					if(ol[i].orderCompCnt == 1){
-						str += "	<td class='td4'><a id='prodLink' class='pointer' onclick='order_list("+ol[i].order_idx+")'> 상품 : <span id='pname'>"+ol[i].pname+"</span> <br> 옵션 : "+ol[i].oname+"</a></td>";
-					}
-					else if(ol[i].orderCompCnt != 1){
-						str += "	<td class='td4'><a id='prodLink' class='pointer' onclick='order_list("+ol[i].order_idx+")'> 상품 : <span id='pname'>"+ol[i].pname+"</span> <br> 옵션 : "+ol[i].oname+" 등 <span id='orderCnt'>"+ol[i].orderCompCnt+"건</span></a></td>";
-					}
-					
-					str += "	<td class='td td5'>"+ol[i].quantity+"</td>";
-					str += "	<td class='td td6'>"+ol[i].tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원</td>";
-							
-							
-					str += "	</td>";
-					str += "</tr>";
-				}
-		  	}
-			str += "</table>";
-			
-			
-			str += "<br><br><br>";
-	  		
-			
-			// 페이징 할 수 있는 번호 나오는 곳 뿌려 주기
-		  	str += "	<nav aria-label='Page navigation'>";
-		  	str += "	<ul class='pagination justify-content-center'>";
-		  	str += "	<li class='page-item'>";
-		  	
-		  	//console.log(prev);
-		  	if(pm.prev == true){
-		  	    str += "<a class='page-link' aria-label='Previous' onclick='orderList("+prev+",\""+kind+"\")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
-		  	}
-		  	
-		  	str += "	</li>";
-		  	let startPage = parseInt(pm.startPage);
-		  	let endPage = parseInt(pm.endPage);
-		  	
-		  	for (let k = pm.startPage; k<=pm.endPage; k++ ){
-		  		 if(page == k){
-		  			str += "<li class='page-item active'><a class='page-link pointer' onclick='orderList("+k+",\""+kind+"\")'>"+k+"</a></li>";    
-		  		 }else{
-		  			str += "<li class='page-item'><a class='page-link pointer' onclick='orderList("+k+",\""+kind+"\")'>"+k+"</a></li>";    
-		  		 }
-		  	 }
-		  	 
-		  	 str += "	<li class='page-item'>";
-		  	
-		  	 if(pm.next && pm.endPage > 0){
-		  	     str += "<a class='page-link' aria-label='Next' onclick='orderList("+next+",\""+kind+"\")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
-		  	 }
-		  	 
-		  	 str += "	</li>";
-		  	 str += "	</ul>";
-		  	 str += "	</nav>";
-			
-			
-			$("#ajaxTable").html(str);
-			
-		})
-		.catch(() => {
-			console.log('ajax 화면출력 에러');
-		})
+		});
 	}
+	
+	
 	
 	
 		
@@ -532,79 +554,7 @@
 	}
 	
 	
-	// 구매한 오더의 이미지나 상품명(옵션을 눌렀을 떄)
-	function order_list(order_idx){	
-		$.ajax({
-			url:"/Delivery/order_list.do",
-			type:"POST",
-			data:{"order_idx":order_idx},
-			async: false,
-			success:function(data){
-				let str = "";
-				let phone1 = "";
-				let phone2 = "";
-				let phone3 = "";
-				
-				// 받는 사람 뿌려 주기
-				str += "<div>";
-				str += "<p><span class='title'>배송정보</span></p>";
-				str += " <table>";
-				str += " <tr>";
-				str += " <td style='width:80px;''><b>받는사람</b></td>";
-				str += "<td>"+data[0].recipient+"</td>";
-				str += "</tr>";
-				str += "<tr>";
-				str += "<td><b>연 락 처</b></td>";
-				if(data[0].rphone.length == 11){
-					phone1 = data[0].rphone.substring(0,3);
-					phone2 = data[0].rphone.substring(3,7);
-					phone3 = data[0].rphone.substring(7);
-				}
-				if(data[0].rphone.length == 10){
-					phone1 = data[0].rphone.substring(0,3);
-					phone2 = data[0].rphone.substring(3,6);
-					phone3 = data[0].rphone.substring(6);
-				}
-				str += "<td>"+phone1+"-"+phone2+"-"+phone3+"</td>";
-				str += "</tr>";
-				str += "<tr>";
-				str += " <td><b>받는주소</b></td>";
-				str += "<td>("+data[0].zip_code+")"+data[0].addr1+data[0].addr2+"</td>";
-				str += "</tr>";
-				str += "</table>";
-				str += "</div>";
-				// 상품에 대한 정보 뿌려 주기
-				for(let i=0; i<data.length; i++){	
-					str += "<div style='margin-top:30px;'>";	
-					str += "<table>";	
-					str += "</tr>";	
-					str += " <td style='width:150px;'>";
-					str += "<a href='/Product/detail.do?pidx="+data[0].pidx+"'>"
-					str += " <img class='image_main' src='/resources/image/"+data[i].main+"'></a>";	
-					str += "</td>";	
-					str += "<td style='width:300px;'>";
-					str += "<a href='/Product/detail.do?pidx="+data[0].pidx+"' class='title4'>"
-					str += "<span><b>"+data[i].pname+"</b></span></a><br>";	
-					var oname = data[i].oname.split("+")[0]
-					str += " <span>"+oname+"</span>(수량: <span>"+data[i].quantity+"</span>)";	
-					str += "</td>";	
-					str += "</tr>";	
-					str += "</table>";
-					str += "</div>";
-				}
-				str += "<div style='margin-top:30px;'>";
-				let price = data[0].tot_price.toLocaleString();
-				str += "<span class='title'>결제금액 : </span><span class='title'>"+price+"원</span>";
-				str += "</div>";
-
-				$("#delivery_select1").html(str);
-				$("#delivery_select").modal("show");
-			},
-			error:function(){
-				alert("구매 상품 불러오기 실행 오류");
-			}
-		});
-	}
+	
 	
 	
 	//리뷰가 존재할 때 경고창

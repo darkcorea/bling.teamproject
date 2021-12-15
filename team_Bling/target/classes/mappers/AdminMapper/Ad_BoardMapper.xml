@@ -61,7 +61,13 @@
 			,#{contents}
 			,#{type}
 			,#{imgfile, jdbcType=VARCHAR}
+			<if test="imges == null">
+			,0
+			</if>
+			<if test="imges != null">
 			,#{imges, jdbcType=VARCHAR}
+			</if>
+			
 		)
 	</insert>
 	
@@ -96,4 +102,9 @@
 			,#{event_end}
 		)
 	</insert>
+	
+	
+	<select id="question_list" resultType="QuestionVO">
+		SELECT * FROM bg_question ORDER BY originqidx desc
+	</select>
 </mapper>

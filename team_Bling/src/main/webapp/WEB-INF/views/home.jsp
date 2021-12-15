@@ -113,13 +113,13 @@
 					<div class="carousel-inner">
 						<c:set var="event" value="${event}" />
 							<div class="carousel-item active" >
-								<a href="/Event/detail.do?eidx=${event[0].eidx}"><img src="C:\image\uploadFile\${event[0].banner}" class="d-block w-100" style="height:256px;"></a>
+								<a href="/Event/detail.do?eidx=${event[0].eidx}"><img src="/resources/event/${event[0].banner}" class="d-block w-100" style="height:256px;"></a>
 							</div>
 							<div class="carousel-item" >
-								<a href="/Event/detail.do?eidx=${event[1].eidx}"><img src="C:\image\uploadFile\${event[1].banner}" class="d-block w-100" style="height:256px;"></a>
+								<a href="/Event/detail.do?eidx=${event[1].eidx}"><img src="/resources/event/${event[1].banner}" class="d-block w-100" style="height:256px;"></a>
 							</div>
 							<div class="carousel-item">
-								<a href="/Event/detail.do?eidx=${event[2].eidx}"><img src="C:\image\uploadFile\${event[2].banner}" class="d-block w-100" style="height:256px;"></a>
+								<a href="/Event/detail.do?eidx=${event[2].eidx}"><img src="/resources/event/${event[2].banner}" class="d-block w-100" style="height:256px;"></a>
 							</div>
 					</div>
 					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="prev">

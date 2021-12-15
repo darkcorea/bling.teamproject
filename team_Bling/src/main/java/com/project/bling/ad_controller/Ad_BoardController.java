@@ -8,11 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
@@ -32,7 +28,6 @@ import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
-import com.project.bling.vo.ProductVO;
 
 @RequestMapping(value="/Ad_board")
 @Controller
@@ -44,7 +39,7 @@ public class Ad_BoardController {
 	/////////////////////////////////////공지사항///////////////////////////////////////
 	
 	//공지사항 파일, 이미지 저장 경로
-	private static final String FILE_SERVER_PATH = "C:\\image\\uploadFile\\";
+	private static final String FILE_SERVER_PATH = "D:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice\\";
 	
 	//공지사항 게시글리스트메인
 	@RequestMapping(value = "/board.do")
@@ -52,7 +47,7 @@ public class Ad_BoardController {
 		model.addAttribute("page",page);
 		model.addAttribute("type",type);
 		//System.out.println("공지사항 게시글 리스트메인"+page+type);
-		return "admin/Board/board";
+		return "admin/Board/notice_board";
 	}
 	
 	//공지사항 게시글 에이작스 리스트
@@ -110,6 +105,24 @@ public class Ad_BoardController {
 	@ResponseBody
 	public void deletearry(@RequestParam(value="checkbox[]") List<Integer> checkbox) throws Exception {
 		for(int i=0;i<checkbox.size();i++) {
+			System.out.println("9999999999999999999999999999++++++"+checkbox.get(i));
+			
+			NoticeVO vo = ad_boardService.detail(checkbox.get(i));
+			
+			//파일삭제(수정누르면 바로 파일 삭제)
+			String files = vo.getImgfile();
+			File deletefile = new File(FILE_SERVER_PATH + files);
+			if(deletefile.exists()) {
+				deletefile.delete();
+			}
+			
+			//사진파일 삭제
+			String imges = vo.getImges();
+			File deleteimg = new File(FILE_SERVER_PATH + imges);
+			if(deleteimg.exists()) {
+				deleteimg.delete();
+			}
+			
 			ad_boardService.deleteArr(checkbox.get(i));
 			//System.out.println(">>>삭제 배열>>"+checkbox.get(i));
 		}
@@ -118,7 +131,7 @@ public class Ad_BoardController {
 	//공지사항 등록란
 	@RequestMapping(value="/regist.do")
 	public String regist(Locale locale,Model model) throws Exception{
-		return "admin/Board/regist";
+		return "admin/Board/notice_regist";
 	}
 	
 	//공지사항 내용 db에 등록
@@ -205,13 +218,30 @@ public class Ad_BoardController {
 	@RequestMapping(value="/detail.do")
 	public String detail(Locale locale,Model model,int nidx) throws Exception{
 		model.addAttribute("detail",ad_boardService.detail(nidx));
-		return "admin/Board/detail";
+		return "admin/Board/notice_detail";
 	}
 	
 	//공지사항 detail 삭제
 	@RequestMapping(value="/detail_del.do")
 	@ResponseBody
 	public void detail_del(Locale locale,Model model,int nidx)throws Exception{
+		
+		NoticeVO vo = ad_boardService.detail(nidx);
+		
+		//파일삭제(수정누르면 바로 파일 삭제)
+		String files = vo.getImgfile();
+		File deletefile = new File(FILE_SERVER_PATH + files);
+		if(deletefile.exists()) {
+			deletefile.delete();
+		}
+		
+		//사진파일 삭제
+		String imges = vo.getImges();
+		File deleteimg = new File(FILE_SERVER_PATH + imges);
+		if(deleteimg.exists()) {
+			deleteimg.delete();
+		}
+		
 		ad_boardService.deleteArr(nidx);
 		//return "admin/Board/board";
 	}
@@ -234,7 +264,7 @@ public class Ad_BoardController {
 	@RequestMapping(value="/bf_modify.do")
 	public String ad_modify(Locale locale, Model model,int nidx) throws Exception {
 		model.addAttribute("modify",ad_boardService.detail(nidx));
-		return "admin/Board/modify";
+		return "admin/Board/notice_modify";
 	}
 	
 	@RequestMapping(value="/af_modify.do")
@@ -367,6 +397,18 @@ public class Ad_BoardController {
 		
 		return "redirect:/Ad_board/board.do?page=1&type=T";
 	}	
+	
+	
+	
+	/*       	 문의 사항          		   */
+	// 관리자 문의하기 게시판 이동
+	@RequestMapping(value="/question.do")
+	public String question(Locale locale,Model model) throws Exception{
+		
+		model.addAttribute("list", ad_boardService.question_list());
+		return "admin/Board/question";
+	}
+	
 	
 }
 

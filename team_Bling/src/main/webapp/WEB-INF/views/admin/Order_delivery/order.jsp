@@ -386,6 +386,7 @@
 		orderList(1,"all");
      });
 	
+	/* int로 변수 page를 넘기면 null값일 때 오류발생해서 문자열로 변환해서 넘김 */
 	function orderList(pageN,kindN){
 		let str = "";
 		let page = ""+pageN+"";
@@ -415,8 +416,6 @@
 			
 			let ol = data.orderList;
 			
-			let cnt = data.totalCnt;
-			
 			let pm = data.pm;
 			let prev = parseInt(pm.startPage - 1) ;
 		  	let next = parseInt(pm.endPage + 1) ;
@@ -425,10 +424,10 @@
 		  	str += "<table>";
 		  	
 		  	console.log(data.orderList.length);
-		  	if(data.orderList.length == 0){
+		  	if(ol.length == 0){
 		  		str += "<tr><td colspan='8' id='noneList'><div id='noneDiv'>해당 조건의 주문이 존재하지 않습니다.</div></td></tr>";
 		  	}
-		  	else if(data.orderList.length != 0){
+		  	else if(ol.length != 0){
 			
 				for(let i=0; ol.length > i; i++){
 					str += "<tr class='tableRow'>";
@@ -479,15 +478,15 @@
 				
 					str += "	</button>";
 					str += "	<ul class='dropdown-menu'>";
-					str += "		<li><input type='radio' name='prodStat' id='prodStatN"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"N\",\""+kind+"\","+ol[i].order_idx+")'></li>";
+					str += "		<li><input type='radio' name='prodStat' id='prodStatN"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"N\",\""+kind+"\","+ol[i].order_idx+","+page+")'></li>";
 					str += "			<label for='prodStatN"+ol[i].order_idx+"'>결제대기</label><br>";
-					str += "		<li><input type='radio' name='prodStat' id='prodStatY"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"Y\",\""+kind+"\","+ol[i].order_idx+")'></li>";
+					str += "		<li><input type='radio' name='prodStat' id='prodStatY"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"Y\",\""+kind+"\","+ol[i].order_idx+","+page+")'></li>";
 					str += "			<label for='prodStatY"+ol[i].order_idx+"'>결제완료</label><br>";
-					str += "		<li><input type='radio' name='prodStat' id='prodStatA"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"A\",\""+kind+"\","+ol[i].order_idx+")'></li>";
+					str += "		<li><input type='radio' name='prodStat' id='prodStatA"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"A\",\""+kind+"\","+ol[i].order_idx+","+page+")'></li>";
 					str += "			<label for='prodStatA"+ol[i].order_idx+"'>상품준비중</label><br>";
-					str += "		<li><input type='radio' name='prodStat' id='prodStatB"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"B\",\""+kind+"\","+ol[i].order_idx+")'></li>";
+					str += "		<li><input type='radio' name='prodStat' id='prodStatB"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"B\",\""+kind+"\","+ol[i].order_idx+","+page+")'></li>";
 					str += "			<label for='prodStatB"+ol[i].order_idx+"'>배송중</label><br>";
-					str += "		<li><input type='radio' name='prodStat' id='prodStatC"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"C\",\""+kind+"\","+ol[i].order_idx+")'></li>";
+					str += "		<li><input type='radio' name='prodStat' id='prodStatC"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"C\",\""+kind+"\","+ol[i].order_idx+","+page+")'></li>";
 					str += "			<label for='prodStatC"+ol[i].order_idx+"'>배송완료</label><br>";
 					str += "	</ul>";
 					str += "</div>";
@@ -546,13 +545,15 @@
 	
 	
 		
-	function deli(kind,statN,order_idx){
+	function deli(kind,statN,order_idx,page){
 		console.log("deli() 실행");
 		console.log("kind : "+kind);
 		console.log("order_idx : "+order_idx);
 		
 		let stat = statN;
 		console.log("stat : "+stat);
+		console.log("page : "+page);
+		
 		
 		let kind2 = "";
 		if(kind=="N"){
@@ -573,34 +574,48 @@
 			showCancelButton: true
 		}).then((result) => {
 			if (result.isConfirmed) {
-				let prodData = {
-						method: "post",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify({kind:kind, order_idx:order_idx})
-					}
-				
-				fetch('/Ad_order_delivery/prodStat.do', prodData)
-				.then((response) => {
-					if(!response.ok){
-						throw new Error('400 아니면 500 에러 발생');
-					}
+				if(kind=="B"){
+					Swal.fire({
+						icon: 'warning',
+						title: '주문번호 '+order_idx+'의 송장번호를 입력해주세요!',
+						input: 'text',
+						showCancelButton: true,
+						confirmButtonText: '저장',
+						cancelButtonText: '취소'
+					}).then((result) => {
+						
+					});
+				}else{
+					let prodData = {
+							method: "post",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({kind:kind, order_idx:order_idx})
+						}
 					
-					return response;
-				})
-				/* 
-					해당 fetch()의 response가 그냥 String이므로 	return response.json();가 아닌 그냥 response를 return함.
-					return response;가 아래의 .then((data)=>{})의 data에 들어간다.
-				*/
-				.then((data) => {
-					console.log("response=data : "+data);
-					console.log("deli()-stat : "+stat);
-					orderList("1",stat);
-				})
-				.catch(() => {
-					console.log('출고버튼 에러');
-				})
+					fetch('/Ad_order_delivery/prodStat.do', prodData)
+					.then((response) => {
+						if(!response.ok){
+							throw new Error('400 아니면 500 에러 발생');
+						}
+						
+						return response;
+					})
+					/* 
+						해당 fetch()의 response가 그냥 String이므로 	return response.json();가 아닌 그냥 response를 return함.
+						return response;가 아래의 .then((data)=>{})의 data에 들어간다.
+					*/
+					.then((data) => {
+						console.log("response=data : "+data);
+						console.log("deli()-stat : "+stat);
+						orderList(""+page+"",stat);
+					})
+					.catch(() => {
+						console.log('출고버튼 에러');
+					})
+				}
+				
 			}
 		});
 	}

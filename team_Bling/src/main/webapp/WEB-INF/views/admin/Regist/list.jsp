@@ -71,8 +71,8 @@ $(document).ready(function () {
 	}
 	
 	.image {
-		width:60px;
-		height:60px;
+		width:78px;
+		height:78px;
 	}
 	
 	.btn-white {
@@ -89,7 +89,6 @@ $(document).ready(function () {
 	<div class="container">
 		<div class="quickmenu">
 			  <ul>
-			 	<li><a href="#">홈</a></li>
 			    <li><a href="/Ad_regist/list.do?page=1">리스트</a></li>
 			    <li><a href="/Ad_regist/regist.do">상품 등록</a></li>
 			    <li><a href="#">품절상품</a></li> 

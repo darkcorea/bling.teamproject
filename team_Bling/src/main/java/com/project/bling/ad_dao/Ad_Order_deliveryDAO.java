@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
 
@@ -26,5 +27,13 @@ public class Ad_Order_deliveryDAO {
 	
 	public void prodStat(CombineVO vo) throws Exception {
 		sqlSession.update(ps+"prodStat", vo);
+	}
+	
+	public int deliveryCnt(Criteria sc) throws Exception {
+		return sqlSession.selectOne(ps+"deliveryCnt", sc);
+	}
+	
+	public List<CombineVO> deliveryList(PageMaker pm) throws Exception {
+		return sqlSession.selectList(ps+"deliveryList", pm);
 	}
 }
