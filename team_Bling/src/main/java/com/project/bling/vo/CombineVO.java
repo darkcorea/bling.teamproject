@@ -77,9 +77,16 @@ public class CombineVO {
 	private int visit;
 	private int pageview;
 	private int attention;
+	//탈퇴사유
+	private String quitval;
 	
 	
-	
+	public String getQuitval() {
+		return quitval;
+	}
+	public void setQuitval(String quitval) {
+		this.quitval = quitval;
+	}
 	public int getVisit() {
 		return visit;
 	}
