@@ -38,7 +38,7 @@
 				  <ul>
 				 	<li><a href="#">문의게시판</a></li>
 				    <li><a href="/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
-				    <li><a href="/Ad_board/event.do?page=1&type=1">이벤트</a></li>
+				    <li><a href="/Ad_board/event.do">이벤트</a></li>
 				    <li><a href="#">리뷰관리</a></li> 
 				  </ul>
 			</div>
@@ -55,7 +55,7 @@
 		
 			<!-- 게시글 등록/삭제 -->
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='/Ad_board/regist.do'">등록</button>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='/Ad_board/event_regist.do'">등록</button>
 				<button type="button" class="btn btn-outline-danger" onclick="deleteArry()">삭제</button>
 			</div>
 		
@@ -64,21 +64,21 @@
 	</body>
 	
 	<script>
-		var page = 0;
-		var type = 0;
+		var page = 1;
+		var types = 1;
 			
 			if(page == null) {page=1};
-			if(type == null) {type=1};
+			if(types == null) {types=1};
 		
 		$(function(){
-			list_fn(page,type);
+			list_fn(1,1);
 		});
 		
-		function list_fn(page,type){
+		function list_fn(page,types){
 				$.ajax({
 					url:"/Ad_board/eventlist.do",
 					type:"POST",
-					data:{"page":page, "type":type},
+					data:{"page":page, "types":types},
 					dataType: 'json',
 					success:function(data){
 						
@@ -94,12 +94,22 @@
 					  	
 					  	
 					  	str += "<hr />";
-					  	str += "<a onclick='list_fn(1,1)'>전체"+data.sum+"</a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
-					  	str += "<a onclick='list_fn(1,2)'>진행중 이벤트"+data.sum+"</a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
-					  	str += "<a onclick='list_fn(1,3)'>종료된 이벤트"+data.sum+"</a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+					  	if(types == 1){
+					  		str += "<a onclick='list_fn(1,1);' id='option' style='background-color:#FFEDED'>전체 ("+data.count_tot+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+						  	str += "<a onclick='list_fn(1,2);' id='option' style='cursor:pointer;'>진행중 이벤트 ("+data.count_ing+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+						  	str += "<a onclick='list_fn(1,3);' id='option' style='cursor:pointer;'>종료된 이벤트 ("+data.count_end+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+					  	}else if(types==2){
+					  		str += "<a onclick='list_fn(1,1);' id='option' style='cursor:pointer;'>전체 ("+data.count_tot+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+						  	str += "<a onclick='list_fn(1,2);' id='option' style='background-color:#FFEDED'>진행중 이벤트 ("+data.count_ing+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+						  	str += "<a onclick='list_fn(1,3);' id='option' style='cursor:pointer;'>종료된 이벤트 ("+data.count_end+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+					  	}else if(types==3){
+					  		str += "<a onclick='list_fn(1,1);' id='option' style='cursor:pointer;'>전체 ("+data.count_tot+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+						  	str += "<a onclick='list_fn(1,2);' id='option' style='cursor:pointer;'>진행중 이벤트 ("+data.count_ing+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+						  	str += "<a onclick='list_fn(1,3);' id='option' style='background-color:#FFEDED'>종료된 이벤트 ("+data.count_end+") </a> &nbsp;&nbsp; | &nbsp;&nbsp; ";
+					  	}
+					  	str += "<hr />";
 					  	
-					  	
-						str +="<table class='table'>";
+					  	str += "<table class='table align-middle'>";
 						str +="<thead>";
 						str +="<tr class='text-center'>";
 						str +="<th scope='col' style='width:5%'>삭제</th>";
@@ -110,34 +120,33 @@
 						str +="<tbody>";
 						
 						for(let i=0;i<data.totalList.length;i++){
-							str +="<tr height='400'>";
+							str +="<tr height='250'>";
 							str +="<td scope='row'>";
 							//삭제버튼
 							str +="<div class='form-check'>";
-							str +="<input class='form-check-input' type='checkbox' value='"+data.totalList[i].nidx+"' id='flexCheckDefault' name='checkname'>";
+							str +="<input class='form-check-input' type='checkbox' value='"+data.totalList[i].eidx+"' id='flexCheckDefault' name='checkname'>";
 							str +="</div>";
 							str +="</td>";
 							//사진
 							str +="<td>";
-							str +="<a href='/Ad_board/detail.do?nidx="+data.totalList[i].nidx+"' class='link-dark'>"+data.totalList[i].subject+"</a>";
+							str +="<a href='/Ad_board/eventdetail.do?eidx="+data.totalList[i].eidx+"' class='link-dark'>"
+							str +="<img src='/resources/event/"+data.totalList[i].banner+"' class='d-block w-100' style='height:200px;'>";
+							str +="</a>"
 							str +="</td>";
 							//내용 3개
 							str +="<td>";
-							str +="<a href='/Ad_board/detail.do?nidx="+data.totalList[i].nidx+"' class='link-dark'>"
+							str +="<a href='/Ad_board/eventdetail.do?eidx="+data.totalList[i].eidx+"' class='link-dark'>"
 							//제목
-							str += data.totalList[i].subject;
-							str +="<br>";
+							str += "<p class='text-center fs-3'>"+data.totalList[i].subject+"</p>";
 							//간단내용
-							str +=data.totalList[i].contents;
-							str +="<br>";
+							str +="<p class='fs-5'>"+data.totalList[i].contents+"</p>";
 							//기간
-							str +="이벤트 기간 :"
-							str +=data.totalList[i].event_start;
+							str +="<p class='text-end'>"+data.totalList[i].event_start.substring(0,10);
 							str +="&nbsp ~ &nbsp";
-							str +=data.totalList[i].event_end;
+							str +=data.totalList[i].event_end.substring(0,10)+"</p>";
+							str +="</a>"
 							str +="<br>";
 							
-							str +="</a>";
 							str +="</td>";
 							
 							str +="</tr>";
@@ -149,27 +158,28 @@
 						
 						str +="<br>";
 						
+						//네이게이션바
 						str +="<nav aria-label='Page navigation example'>";
 						str +="<ul class='pagination justify-content-center'>";
 						str +="<li class='page-item'>";
-						str +="<a class='page-link' href='#' aria-label='Previous'>";
-						str +="<span aria-hidden='true'>&laquo;</span>";
-						str +="</a>";
-						str +="</li>";
 						
 						if ((pm.startPage - 1) != 0){
-					  	     str += "<a class='page-link' aria-label='Previous' onclick='list_fn("+prev+",\""+type+"\")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
+					  	     str += "<a class='page-link' aria-label='Previous' onclick='list_fn("+prev+",\""+data.types+"\")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
 					  	 }
 					  	 str += "</li>";
 					  	 
 					  	 for (let k = pm.startPage; k<=pm.endPage; k++ ){
-					  	 	str += "<li class='page-item'><a class='page-link pointer' onclick='list_fn("+k+",\""+type+"\")'>"+k+"</a>";      
+					  		 if(page == k){
+					  			str += "<li class='page-item active'><a class='page-link pointer' onclick='list_fn("+k+",\""+data.types+"\")'>"+k+"</a></li>";    
+					  		 }else{
+					  			str += "<li class='page-item'><a class='page-link pointer' onclick='list_fn("+k+",\""+data.types+"\")'>"+k+"</a></li>";    
+					  		 }
 					  	 }
 					  	 
 					  	 str += "<li class='page-item'>";
 					  	
-					  	 if(pm.endPage+1 && pm.endPage > 0){
-					  	     str += "<a class='page-link' aria-label='Next' onclick='list_fn("+next+",\""+type+"\")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
+					  	 if(pm.next && pm.endPage > 0){
+					  	     str += "<a class='page-link' aria-label='Next' onclick='list_fn("+next+",\""+data.types+"\")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
 					  	 }
 					  	 
 					  	 str += "</li>";
@@ -198,7 +208,7 @@
 			
 			$.ajax({
 				type:"POST",
-				url:"/Ad_board/deleteArry.do",
+				url:"/Ad_board/deleteArryEvent.do",
 				data:{"checkbox":checkbox},
 				success:function(){
 					location.reload();
@@ -206,7 +216,7 @@
 					alert("글 지우기 에러!")
 				}
 			});
-		}
+		} 
 		
 		
 	</script>

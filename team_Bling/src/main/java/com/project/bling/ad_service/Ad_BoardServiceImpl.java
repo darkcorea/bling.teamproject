@@ -66,6 +66,11 @@ public class Ad_BoardServiceImpl implements Ad_BoardService{
 		ad_boardDAO.event_insert(vo);
 	}
 	
+	@Override
+	public void deleteArrEvent(int eidx) throws Exception {
+		ad_boardDAO.deleteArrEvent(eidx);
+	}
+	
 	// 문의사할 리스트
 	@Override
 	public List<QuestionVO> question_list() throws Exception {

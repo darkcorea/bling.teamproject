@@ -68,6 +68,11 @@ public class Ad_BoardDAO {
 		sqlSession.insert(ps+"event_regist",vo);
 	}
 	
+	//이벤트 삭제
+	public void deleteArrEvent(int eidx)throws Exception{
+		sqlSession.delete(ps+"deleteArrEvent",eidx);
+	}
+	
 	//문의 사항 리스트
 	public List<QuestionVO> question_list()throws Exception{
 		return sqlSession.selectList(ps+"question_list");

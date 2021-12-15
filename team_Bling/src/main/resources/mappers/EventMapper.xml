@@ -9,7 +9,7 @@
 	<select id="eventlist" resultType="EventVO">
 		<![CDATA[
 			SELECT * FROM bg_event
-			ORDER BY rdate desc
+			WHERE sysdate() <= event_end 
 		]]>	
 	</select>
 	
@@ -39,6 +39,10 @@
 	<select id="event_Total" resultType="EventVO" parameterType="PageMaker">
 		SELECT *
 		FROM bg_event
+		<!-- 전체옵션 -->	
+		<if test = 'type == "ing"'>
+			where 1=1
+		</if>
 		<!-- 진행중옵션 -->	
 		<if test = 'type == "ing"'>
 			<![CDATA[
@@ -51,8 +55,8 @@
 				WHERE sysdate() > event_end 
 			]]>
 		</if>		
-		ORDER BY event_end desc
-		Limit #{startPost}, #{scri.perPageNum}
+		ORDER BY eidx desc
+		Limit #{startPost}, 3
 	</select>
 	
 	<!-- 이벤트 detail -->

@@ -39,6 +39,8 @@ public interface Ad_BoardService {
 	//이벤트 db에 등록
 	void event_insert(EventVO vo) throws Exception;
 	
+	//공지사항 삭제
+	void deleteArrEvent(int eidx)throws Exception;
 	
 	/*---------------------------------------------------------*/
 	// 문의사항 리스트

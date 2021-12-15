@@ -54,7 +54,7 @@
 			<table class="table">
 				<tr>
 					<th class="head">제목</th>
-					<td colspan="3">
+					<td colspan="3" height="30">
 						<input type="text" name="subject" id="subject" style="width:941px ; height:30px">
 					</td>
 				</tr>
@@ -78,7 +78,7 @@
 				<tr>
 					<th class="head">내용	</th>
 					<td colspan="3" height="294.8">
-						<textarea id="summernote" name="contents" id="summernote"></textarea>
+						<textarea id="summernote" name="contents"></textarea>
 						<input type="hidden" name="imges" id="imges">
 					</td>
 				</tr>

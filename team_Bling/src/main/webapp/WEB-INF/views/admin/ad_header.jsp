@@ -90,7 +90,7 @@
 		    <ul class="dropdown-menu">
 		      <li><a class="dropdown-item" href="/Ad_board/question.do">문의 게시판</a></li>
 		      <li><a class="dropdown-item" href="/Ad_board/board.do?page=1&type=T">공지사항 게시판</a></li>
-		      <li><a class="dropdown-item" href="/Ad_board/event_regist.do">이벤트 게시판</a></li>
+		      <li><a class="dropdown-item" href="/Ad_board/event.do">이벤트 게시판</a></li>
 		      <li><a class="dropdown-item" href="#">리뷰 관리</a></li>
 		    </ul>
 		  </li>
