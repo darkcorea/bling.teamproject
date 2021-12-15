@@ -28,7 +28,17 @@
 	 <filter-mapping> 
 	    <filter-name>encodingFilter</filter-name> 
 	    <url-pattern>/*</url-pattern> 
-	 </filter-mapping> 
+	 </filter-mapping>
+	 
+	 <!-- xssEscapeServletFilter는 CharacterEncodingFilter 뒤에 위치해야 한다. -->
+	<filter>
+		<filter-name>xssEscapeServletFilter</filter-name>
+		<filter-class>com.navercorp.lucy.security.xss.servletfilter.XssEscapeServletFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>xssEscapeServletFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<!-- Processes application requests -->
 	<servlet><!--가상경로를 맞이함-->
