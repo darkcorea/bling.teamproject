@@ -173,10 +173,7 @@
 						<c:if test="${list.deli_stat == 'Y' && list.cancel == null}">
 							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return_now(${list.order_idx})">취소</button>
 						</c:if>
-						<!-- 배송 준비중이면 -->
-						<c:if test="${list.deli_stat == 'A' && list.cancel == null}">
-							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'F')">취소</button>
-						</c:if>
+						<!-- 배송 준비중이면 아무것도 안나타남  -->
 						<!-- 배송 중이면 아무것도 안나타남-->
 						 
 						 <!-- 배송 완료가 되고-->
