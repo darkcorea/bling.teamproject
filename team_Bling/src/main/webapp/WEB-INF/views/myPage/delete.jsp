@@ -23,6 +23,36 @@
 					max-width:1008px;
 					margin:  0px auto;
 				}
+				/* 모달창 CSS */
+				.modal {
+		        	text-align: center;
+				}
+				.modal-dialog {
+			        display: inline-block;
+			        text-align: left;
+			        vertical-align: middle;
+				}
+				.modal-header{
+					background-color: #CB7878;
+				}
+				.modal-title{
+					color: #ffffff;
+					font-size: 30px;
+					position: relative;
+					left: 150px;
+				}
+				#form{
+					width:430px;
+					height:350px;
+					margin: 0 auto;
+				}
+				.red{
+					color:red;
+				}
+				.modal-backdrop{
+					background-color: #000000 !important;
+					opacity: 0.3 !important;
+				}
 			</style>
 		
 	</head>
@@ -49,7 +79,6 @@
 								</th>
 								<td>
 									<input type="password" id="pass">
-									<input type="hidden" value="${data.pwd }" id="that">
 								</td>
 							</tr>
 						</table>
@@ -62,18 +91,114 @@
 		<footer>
 				<%@ include file="/WEB-INF/views/footer.jsp" %>
 		</footer>
+		
+		
+		<!-- 탈퇴 사유 모달 -->
+		<div class="modal fade" id="quitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">탈퇴 사유</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+			      <div id="form">
+			      		<hr/>
+				        	<h4>탈퇴 사유</h4>
+				        <hr/>
+				        <div class="form-check">
+						  <input class="form-check-input" type="radio" name="quit" id="quit1" value="상품 다양성,가격품질 불만" checked>
+						  <label class="form-check-label" for="flexRadioDefault1">
+						   상품 다양성 / 가격품질 불만
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="quit" id="quit2" value="교환/환불/품질 불만" >
+						  <label class="form-check-label" for="flexRadioDefault2">
+						    교환/환불/품질 불만
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="quit" id="quit3" value="배송 불만" >
+						  <label class="form-check-label" for="flexRadioDefault3">
+						   배송 불만
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="quit" id="quit4" value="이용빈도 낮음" >
+						  <label class="form-check-label" for="flexRadioDefault4">
+						  이용빈도 낮음
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="quit" id="quit5" value="A/S 불만" >
+						  <label class="form-check-label" for="flexRadioDefault5">
+						  A/S 불만
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="quit" id="quit6" value="기타사유" >
+						  <label class="form-check-label" for="flexRadioDefault3">
+						   기타 사유(적어주세요)
+						  </label>
+						  <br>
+						  <textarea id="quit6why" style="width:400px;height:100px;"></textarea>
+						</div>
+			      </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		        <button type="button" class="btn btn-primary" onclick="quit()">탈퇴</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 	</body>
 	<script>
 		function confirm(){
 			var pass = document.getElementById("pass").value;
-			var real = document.getElementById("that").value;
-			
-			if(pass == real){
-				alert("탈퇴되었습니다.");
-				location.href="/MyPage/deletefin.do";
-			}else{
-				alert("비밀번호가 틀렸습니다.");
+			$.ajax({
+				url:"/MyPage/deletequit.do",
+				type:"post",
+				data:{"pass":pass},
+				dataType:"json",
+				success:function(data){
+					if(data == 1){
+						$('#quitModal').modal('show');
+					}else{
+						alert("비밀번호가 틀렸습니다.");
+					}
+				},error:function(){
+					alert("비밀번호확인오류!");
+				}
+			});
+				//alert("탈퇴되었습니다.");
+		}
+		function quit(){
+			var quitval = $("input[name='quit']:checked").val()
+			//1. 상품 다양성 / 가격품질 불만
+			//2. 교환/환불/품질 불만
+			//3. 배송 불만
+			//4. 이용빈도 낮음
+			//5. A/S 불만
+			//6. 기타 사유(적어주세요)
+			console.log(quitval);
+			console.log(document.getElementById("quit6why").value);
+			if(quitval=="기타사유"){
+				quitval = document.getElementById("quit6why").value
 			}
+			$.ajax({
+				url:"/MyPage/deletefin.do",
+				type:"post",
+				data:{"quitval":quitval},
+				dataType:"json",
+				success:function(data){
+					alert("탈퇴되었습니다.")
+					window.location.href = "/";
+				},error:function(){
+					alert("탈퇴사유오류!");
+				}
+			});
 		}
 	</script>
 </html>

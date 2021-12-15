@@ -22,6 +22,8 @@ public interface MyPageService {
 	public UserVO confirm(int midx)throws Exception;
 	//회원정보 수정
 	public void remodify(UserVO uv)throws Exception;
+	//탈퇴비번확인
+	public String delconfirm(int midx)throws Exception;
 	//탈퇴
-	public void del(int midx)throws Exception;
+	public void del(CombineVO vo)throws Exception;
 }
