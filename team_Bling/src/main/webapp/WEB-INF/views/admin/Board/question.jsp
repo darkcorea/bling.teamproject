@@ -38,6 +38,11 @@ a {text-decoration:none;}
 		font-size:25px;
 		font-weight:900;
 	}
+	/* 클래스 붙이면 문자 크기 조정 */
+	.title1{
+		font-size:35px;
+		font-weight:900;
+	}
 	/* 조회문자 */
 	.title2{
 		text-decoration: none;
@@ -61,6 +66,19 @@ a {text-decoration:none;}
 	/* 클래스 추가하면 가져다 대면 손모양 나옴*/
 	.pointer {
 		cursor: pointer;
+	}
+	/* 모달 버튼 가운데로 오기*/
+	#reply_write2 {
+		justify-content: center;
+	}		
+	/* 모달 버튼 */
+	#modal_button1, .bling_color{
+		background-color: #CB7878;
+	}
+		
+	/* 모달 버튼 크기*/
+	#modal_button1, #modal_button2{
+		width:120px;
 	}
 </style>
 </head>
@@ -86,10 +104,21 @@ a {text-decoration:none;}
 <!--여기서부터 본문-->
 <div id="">
 	<!-- 상단 내용 -->
-	<h1 class="center">문의 게시판</h1><br>
+	<div class="center">
+	<span class="title1">문의 게시판</span>&nbsp;
+	<select>
+	<option>배송문의</option>
+	<option>교환/환불/취소문의</option>
+	<option>기타문의</option>
+	<option>교환신청</option>
+	<option>반품신청</option>
+	<option>취소신청</option>
+	</select>
+	</div>
+	<br>
 	<div class="title center row">
-		<div class="col"><a href="/Ad_board/question.do" class="title3"><span>일반문의</span></a></div>
-		<div class="col"><a href="/Ad_board/question.do" class="title2"><span>제품문의</span></a></div>
+		<div class="col"><a href="/Ad_board/question.do" class="title2"><span>일반문의</span></a></div>
+		<div class="col"><a href="/Ad_board/question.do" class="title3"><span>제품문의</span></a></div>
 	</div><br>	
 	
 	<!-- 문의 테이블  -->
@@ -137,7 +166,7 @@ a {text-decoration:none;}
 							<div class="accordion-item" style="border:0;">
 								<div class="accordion-header" id="heading${list.qidx}">
 						     		<span onclick="coll_fn(${list.qidx})" id="coll${list.qidx}" class="pointer">
-						        		<c:out value="${list.title}"/>
+						        		<b><c:out value="${list.title}"/></b>
 						      		</span>
 						    	</div>
 						    	<div id="collapse${list.qidx}" class="accordion-collapse collapse">
@@ -153,7 +182,7 @@ a {text-decoration:none;}
 							<div class="accordion-item" style="border:0;">
 								<div class="accordion-header" id="heading${list.qidx}">
 						     		<span onclick="coll_fn(${list.qidx})" id="coll${list.qidx}" class="pointer">
-						        		&nbsp;<i class='bi bi-arrow-return-right bolder'></i>&nbsp;<c:out value="${list.title}"/>
+						        		&nbsp;<i class='bi bi-arrow-return-right bolder'></i>&nbsp;<span style="color:#1a7ed5;"><b><c:out value="${list.title}"/></b></span>
 						      		</span>
 						    	</div>
 						    	<div id="collapse${list.qidx}" class="accordion-collapse collapse">
@@ -184,6 +213,26 @@ a {text-decoration:none;}
 </div>
 
 </section>
+
+<!-- 답글 작성 모달창 -->
+<div class="modal fade" id="reply_write" data-bs-backdrop="static"  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bling_color">
+        <h5 class="modal-title">답글달기</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      	<div id="reply_write1" style="margin-left:135px;">
+      	</div>
+      </div>
+      <div class="modal-footer" id="reply_write2">
+        <button type="button" class="btn btn-secondary" id="modal_button1" >확인</button>
+        <button type="button" class="btn btn-secondary" id="modal_button2" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 
 <script>
@@ -195,6 +244,14 @@ function coll_fn(qidx){
 	}else if (show == true){
 		$("#collapse"+qidx).removeClass("show");
 	}
+}
+
+// 답글 작성 버튼을 누르면
+function reply_fn(qidx){
+	$("#reply_write").modal("show");
+	
+	
+	
 }
 
 
