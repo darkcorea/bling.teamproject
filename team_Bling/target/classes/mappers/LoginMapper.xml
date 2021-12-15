@@ -8,18 +8,18 @@
 	<select id="loginCheck" resultType="String">
 		SELECT uname
 		FROM bg_user
-		WHERE id=#{id} AND pwd=#{pwd}
+		WHERE id=#{id} AND pwd=#{pwd} AND delyn = 1
 	</select>
 	<select id="delyn" resultType="int">
 		SELECT delyn
 		FROM bg_user
-		WHERE id=#{id} AND pwd=#{pwd}
+		WHERE id=#{id} AND pwd=#{pwd} AND delyn = 1
 	</select>	
 	  
 	<select id="viewMember" resultType="UserVO">
 		SELECT *
 		FROM bg_user
-		WHERE id=#{id} AND pwd=#{pwd}
+		WHERE id=#{id} AND pwd=#{pwd} AND delyn = 1
 	</select>
 	
 	<select id="idFindEmail" resultType="String">
