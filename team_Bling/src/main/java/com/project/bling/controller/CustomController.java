@@ -48,7 +48,8 @@ public class CustomController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/scrshot.do", method = RequestMethod.POST)
-	public ModelMap ImgSaveTest(@RequestParam HashMap<Object, Object> param, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	public ModelMap ImgSaveTest(@RequestParam HashMap<Object, Object> param, final HttpServletRequest request, final HttpServletResponse response
+			,String name, int countval, int total, String totalname) throws Exception {
 		ModelMap map = new ModelMap();
 		
 		String binaryData = request.getParameter("imgSrc");
@@ -67,6 +68,15 @@ public class CustomController {
 			stream.write(file);
 			stream.close();
 			System.out.println("캡처 저장");
+			
+			CustomVO vo = new CustomVO();
+			vo.setName(name);
+			vo.setCntoption(countval);
+			vo.setPrice(total);
+			vo.setSumcoidx(totalname);
+			vo.setCustomimg(fileName+".png");
+			
+			
 		    
 		}catch(Exception e){
 			e.printStackTrace();

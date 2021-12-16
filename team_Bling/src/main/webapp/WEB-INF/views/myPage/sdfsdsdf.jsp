@@ -89,7 +89,8 @@
                 <td id="select" rowspan="2">
                 	<div id="zz">
 	                	<h4>선택한 상품들</h4>
-	                	
+	                	<div id="cnt"> </div>
+	                	<input type="hidden" id="cntval">
 	                	<hr>
 	                	<div id="selectoption"> 
 	                		
@@ -125,6 +126,7 @@
                     <div style="height:200px;width: 800px; overflow: auto;" id="scroll">
                         
                     </div>
+                    <input type="hidden" id="totalname">
                 </td>
                 <td id="but">
                 	* 커스터마이징한 제품의 <br>이름을 지어주세요.
@@ -144,6 +146,17 @@
 		  alert("영역밖입니다.");
 	  } 
    }); */
+   var count = 0;
+   //옵션 카운트
+   function cnt(){
+	   count++;
+	   var str="";
+	   str += "선택한 옵션 개수 : "+count+"개";
+	   $('#cnt').html(str);
+	   document.getElementById("cntval").value = count;
+   }
+   
+   
    
    //글 선택시 
     function test(coidx){
@@ -210,6 +223,7 @@
                     	str2_chain += "<div class='chainprice'><h5>"+data[0].name + "</h5>";
                     	str2_chain += data[0].price + "원<hr>";
                     	str2_chain += "<input type='hidden' id='chainprice' value='"+data[0].price+"'></div>";
+                    	str2_chain += "<input type = 'hidden' id='chainname' value='"+data[0].coidx+"'>";
                     	$('#selectoption').append(str2_chain);
                 		total(data[0].price);
                 	}else{
@@ -219,6 +233,7 @@
                     	str2_chain += "<div class='chainprice'><h5>"+data[0].name + "</h5>";
                     	str2_chain += data[0].price + "원<hr>";
                     	str2_chain += "<input type='hidden' id='chainprice' value='"+data[0].price+"'></div>";
+                    	str2_chain += "<input type = 'hidden' id='chainname' value='"+data[0].coidx+"'>";
                 		minus(chainprice,data[0].price);
                 		$('#selectoption').append(str2_chain);
                 	}
@@ -246,8 +261,10 @@
 	                	/*  */
 	                	str2_option += data[0].price + "원";
 	                	str2_option += "<input type='range' class='form-range' id='customRange1'><hr></div>";
+	                	str2_option += "<input type = 'hidden' id='optionname' value='"+data[0].coidx+"'>";
 	                	$('#selectoption').append(str2_option);
 	                	total(data[0].price);
+	                	cnt();
 	              	}
 	        	});
 			}else{
@@ -266,6 +283,7 @@
         	$('#total').html(str3);
         }
         
+        //옵션빼기
         function minus(minustot,plustot){
         	var mp = minustot + plustot
         	var minusprice = $('#totalprice').val() - mp;
@@ -331,12 +349,24 @@
     		   html2canvas(t).then(function(canvas){
     			   var myImg = canvas.toDataURL("image/png");
     			   
-    			   myImg = myImg.replace("'data:image/png;base64,",""); //제품 사진
-    			   var name = document.getElementById("name").value; //제품이름
+    			   //제품 coidx 리스트 정렬
+    			   var list = new Array();
+    			   $("input[id=optionname]").each(function(index,item){
+    				   list.push($(item).val());
+    			   });
+    			   list.push(document.getElementById("chainname").value);
+    			   $("#totalname").val(list);
+    			   
+    			   myImg = myImg.replace("'data:image/png;base64,",""); //제품 사진 customimg
+    			   var name = document.getElementById("name").value; //제품이름 name
+    			   var countval = document.getElementById("cntval").value; //옵션개수(체인뺀) cntoption
+    			   var total = document.getElementById("totalprice").value //총가격 	price
+    			   var totalname = document.getElementById("totalname").value; //옵션 coidx sumcoidx
     			   
     			   $.ajax({
     					type:"POST",
-    					data:{"imgSrc":myImg,"name":name},
+    					data:{"imgSrc":myImg,"name":name,"countval":countval,
+    						"total":total,"totalname":totalname},
     					dataType:"text",
     					url:"/Custom/scrshot.do",
     					success:function(data){
