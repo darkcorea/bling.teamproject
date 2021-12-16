@@ -90,8 +90,9 @@
 	<div id="navMenu">
 		<div id="menuHead">나의 활동</div>
 		<div id="navSub">
-			<div class="pa_top"><a class="navA" href="${cPath}/Review/myReview.do">나의 리뷰</a></div>
-			<div class="pa_top"><a class="navA" href="${cPath}/Customer/my_qestion.do?page=1">나의 문의 내역</a></div>
+			<div class="pa_top"><a class="navA" href="/Review/myReview.do">나의 리뷰</a></div>
+			<div class="pa_top"><a class="navA" href="/Customer/my_qestion.do?page=1">나의 문의 내역</a></div>
+			<div class="pa_top"><a class="navA" href="/Custom/list.do">커스터마이징</a></div>
 		</div>
 	</div>
 	<div>

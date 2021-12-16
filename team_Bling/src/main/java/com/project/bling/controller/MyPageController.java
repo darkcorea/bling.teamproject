@@ -49,11 +49,6 @@ public class MyPageController {
 	
 	String uploadPath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
     
-    //커스터마이징
-    @RequestMapping(value="/ssss.do")
-    public String ssss()throws Exception{
-    	return "myPage/sdfsdsdf";
-    }
 	
 	//MyPage 메인페이지 -> 실행시 바로 화면에 최근 주문 정보 출력
 	@RequestMapping(value="/main.do")

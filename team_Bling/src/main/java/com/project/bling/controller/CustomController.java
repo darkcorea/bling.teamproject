@@ -5,6 +5,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 import java.util.Base64.Decoder;
 
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.bling.domain.Criteria;
+import com.project.bling.domain.PageMaker;
 import com.project.bling.service.CustomService;
 import com.project.bling.vo.CustomVO;
 import com.project.bling.vo.UserVO;
@@ -33,6 +36,37 @@ public class CustomController {
 	
 	@Autowired
 	CustomService customService;
+	
+	//커스터마이징 리스트
+	@RequestMapping(value="/list.do")
+	public String customlist()throws Exception{
+		return "myPage/customizing_list";
+	}
+	
+	//리스트페이징
+	@RequestMapping(value="/listajax.do")
+	@ResponseBody
+	public Map<String,Object> list(int page)throws Exception{
+		int count = 0;
+		count = customService.howmany();
+		Criteria sc = new Criteria();
+		sc.setPerPageNum(6);
+		sc.setPage(page);
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		pm.setTotalCount(count);
+		Map<String, Object> list = new HashMap<String, Object>();
+		list.put("list", customService.listajax(pm));
+		list.put("pm", pm);
+		
+		return list;
+	}
+	
+	//커스터마이징하는 곳
+    @RequestMapping(value="/ssss.do")
+    public String ssss()throws Exception{
+    	return "myPage/sdfsdsdf";
+    }
 	
 	@RequestMapping(value="/customoption.do")
 	@ResponseBody

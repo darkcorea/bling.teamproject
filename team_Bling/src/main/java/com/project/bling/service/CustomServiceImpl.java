@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.bling.dao.CustomDAO;
+import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CustomVO;
 
 @Service("CustomService")
@@ -27,5 +28,16 @@ public class CustomServiceImpl implements CustomService{
 	@Override
 	public void insertdb(CustomVO co) throws Exception {
 		customDAO.insertdb(co);
+	}
+	
+	//개수
+	@Override
+	public int howmany() throws Exception {
+		return customDAO.howmany();
+	}
+	//리스트
+	@Override
+	public List<CustomVO> listajax(PageMaker pm) throws Exception {
+		return customDAO.listajax(pm);
 	}
 }

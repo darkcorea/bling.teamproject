@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CustomVO;
 
 @Repository
@@ -27,5 +28,16 @@ public class CustomDAO {
 	//저장하기
 	public void insertdb(CustomVO co) throws Exception{
 		sqlSession.insert(cm+"insertdb",co);
+	}
+	
+	//개수
+	public int howmany() throws Exception{
+		return sqlSession.selectOne(cm+"howmany");
+	}
+	
+	//리스트
+	public List<CustomVO> listajax(PageMaker pm) throws Exception{	
+	
+		return sqlSession.selectList(cm+"listajax",pm);
 	}
 }

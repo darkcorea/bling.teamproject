@@ -17,6 +17,21 @@
 			(sumcoidx, cntoption, customimg, price, midx, name)
 		values(#{sumcoidx},#{cntoption},#{customimg},#{price},#{midx},#{name})
 	</insert>
+	
+	<!-- 커스텀 개수 -->
+	<select id="howmany" resultType="int">
+		<![CDATA[
+			select count(cuidx) from bg_custom_user where cuidx > 0
+		]]>	
+	</select>
+	
+	<!-- 커스텀 페이징 -->
+	<select id="listajax" parameterType="PageMaker" resultType="CustomVO">
+		select *
+		from bg_custom_user
+		order by cuidx desc
+		Limit #{startPost}, #{scri.perPageNum}	
+	</select>
 </mapper>
   
   
