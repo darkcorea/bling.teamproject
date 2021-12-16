@@ -9,10 +9,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>나의 문의 내역</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style>
 	
 	section{
@@ -128,7 +124,7 @@
 			<div class="title text_center1">나의 문의 내역</div><br>
 				<div class="title1">
 					<div class="sub border1"><span class="title3">1:1 문의</span></div>
-					<div class="sub"><a href="/Customer/myquestion_product.do?page=1" class="title2"><span>제품 문의</span></a></div>
+					<div class="sub"><a href="/team_Bling/Customer/myquestion_product.do?page=1" class="title2"><span>제품 문의</span></a></div>
 				</div>
 				<br><br><br>
 				<div id="content">
@@ -195,7 +191,7 @@
 						<c:if test="${pm.prev == true}">
 						<li class='page-item'>
 						<c:set var="prev" value="${pm.startPage -1}"/>
-							<a class='page-link' aria-label='Previous' href="/Customer/my_qestion.do?page=${prev}">
+							<a class='page-link' aria-label='Previous' href="/team_Bling/Customer/my_qestion.do?page=${prev}">
 								<span aria-hidden='true' class='pointer' >&laquo;</span>
 							</a>
 						</li>
@@ -204,14 +200,14 @@
 						<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
 							<c:if test = "${pageNum == page}">
 							<li class="page-item active">	
-								<a class="page-link pointer" href="/Customer/my_qestion.do?page=${pageNum}">
+								<a class="page-link pointer" href="/team_Bling/Customer/my_qestion.do?page=${pageNum}">
 									<c:out value="${pageNum}"/>
 								</a>
 							</li>
 							</c:if>
 							<c:if test = "${pageNum != page}">
 							<li class="page-item">	
-								<a class="page-link" href="/Customer/my_qestion.do?page=${pageNum}">
+								<a class="page-link" href="/team_Bling/Customer/my_qestion.do?page=${pageNum}">
 									<c:out value="${pageNum}"/>
 								</a>
 							</li>
@@ -221,7 +217,7 @@
 						<!-- 뒤로 가기 버튼 , 키워드 유지하면서 이동하기 -->
 						<c:if test="${pm.next && pm.endPage > 0}">
 						<li class='page-item'>
-							<a class='page-link' aria-label='Next' href="/Customer/my_qestion.do?page=${pm.endPage + 1}">
+							<a class='page-link' aria-label='Next' href="/team_Bling/Customer/my_qestion.do?page=${pm.endPage + 1}">
 								<span aria-hidden='true' class='pointer'>&raquo;</span>
 							</a>
 						</li>
@@ -229,7 +225,7 @@
 					</ul>
 				</nav>
 				</div>
-				<button type="button" class="btn btn-danger" id="question_btn" onclick="location.href='/Customer/question.do'">문의하기</button>
+				<button type="button" class="btn btn-danger" id="question_btn" onclick="location.href='/team_Bling/Customer/question.do'">문의하기</button>
 				<br><br><br>
 			</div>
 		</div>
@@ -243,7 +239,7 @@
 <script>
 	function detail(qidx){
 		$.ajax({
-			url:"/Customer/myquestion_detail.do",
+			url:"/team_Bling/Customer/myquestion_detail.do",
 			type:"POST",
 			data:{"qidx":qidx},
 			dataType:"json",
@@ -288,11 +284,11 @@
 	}
 	
 	function linkFn(){
-		location.href="/Customer/my_qestion.do?page=1"; 
+		location.href="/team_Bling/Customer/my_qestion.do?page=1"; 
 	}
 	function delFn(qidx){
 		$.ajax({
-			url:"/Customer/myquestion_delete.do",
+			url:"/team_Bling/Customer/myquestion_delete.do",
 			type:"POST",
 			data:{"qidx":qidx},
 			dataType:"json",

@@ -3,9 +3,7 @@
 	pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
- 
     request.setCharacterEncoding("UTF-8");
- 
 %>
 <!DOCTYPE html>
 <html>
@@ -19,9 +17,6 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-<script src="/js/jquery-3.6.0.min.js"></script>
- <script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
 
 <style>
 /* 전반적인 크기에 관한 설정 */
@@ -205,7 +200,7 @@
 				</tr>
 				<tr class="line">
 					<td class="gray"><span class="white">적립금</span></td>
-					<td class="fill"><span id="addInfo">비회원은 적립금이 없습니다</span><a href="/Join/normal.do" id="join">회원가입 바로가기</a></td>
+					<td class="fill"><span id="addInfo">비회원은 적립금이 없습니다</span><a href="${cPath}/Join/normal.do" id="join">회원가입 바로가기</a></td>
 				</tr>
 				<tr class="line">
 					<td class="gray"><span class="white">총결제금액</span></td>
@@ -358,7 +353,7 @@ function iamport(){
 				// 결제검증
 				$.ajax({
 					type:"post",
-					url:"/Order/"+rsp.imp_uid
+					url:"${cPath}/Order/"+rsp.imp_uid
 				}).done(function(data){
 						console.log(data);
 				// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
@@ -370,7 +365,7 @@ function iamport(){
 						var msg = '결제가 완료되었습니다.';
 						
 						 $.ajax({
-								url:"/Order/orderinsert.do",
+								url:"${cPath}/Order/orderinsert.do",
 								type:"POST",
 								data:formData,
 								ContentType:"application/json",
@@ -394,14 +389,14 @@ function iamport(){
 									formData2 = $("form[name=fm"+i+"]").serialize();
 									formData3 =  $("form[name=frm]").serialize();
 									 $.ajax({
-											url:"/Order/orderdetailinsert.do",
+											url:"${cPath}/Order/orderdetailinsert.do",
 											type:"POST",
 											data:formData2,
 											async: false,
 											ContentType:"application/json",
 											success:function(data){
 												$.ajax({
-													url:"/Order/stock_update.do",
+													url:"${cPath}/Order/stock_update.do",
 													type:"POST",
 													data:{"oidx":oidx, "stock":stock},
 													dataType:"json",
@@ -419,7 +414,7 @@ function iamport(){
 										});
 									}
 								$.ajax({
-									url:"/Order/nondelivery_insert.do",
+									url:"${cPath}/Order/nondelivery_insert.do",
 									type:"POST",
 									data:formData3,
 									ContentType:"application/json",
@@ -471,7 +466,7 @@ function iamport(){
 			var formData = $("form[name=frm]").serialize();
 			var orderid = $("#orderid").val();
 			 $.ajax({
-					url:"/Order/orderinsert.do",
+					url:"${cPath}/Order/orderinsert.do",
 					type:"POST",
 					data:formData,
 					ContentType:"application/json",
@@ -496,14 +491,14 @@ function iamport(){
 						formData2 = $("form[name=fm"+i+"]").serialize();
 						formData3 =  $("form[name=frm]").serialize();
 						 $.ajax({
-								url:"/Order/orderdetailinsert.do",
+								url:"${cPath}/Order/orderdetailinsert.do",
 								type:"POST",
 								data:formData2,
 								async: false,
 								ContentType:"application/json",
 								success:function(data){
 									 $.ajax({
-											url:"/Order/stock_update.do",
+											url:"${cPath}/Order/stock_update.do",
 											type:"POST",
 											data:{"oidx":oidx, "stock":stock},
 											dataType:"json",
@@ -521,7 +516,7 @@ function iamport(){
 							});
 						}
 					$.ajax({
-						url:"/Order/nondelivery_insert.do",
+						url:"${cPath}/Order/nondelivery_insert.do",
 						type:"POST",
 						data:formData3,
 						ContentType:"application/json",

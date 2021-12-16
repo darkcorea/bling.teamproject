@@ -10,11 +10,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>상품 상세페이지</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet"	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-<link rel="stylesheet" href="/css/pro_detail.css">
+<link rel="stylesheet" href="/team_Bling/css/pro_detail.css">
 </head>
 <body>
 
@@ -27,20 +23,20 @@
 		<!-- 상세이미지 보여주는  -->
 		<div class="w-100 explan">
 			<div class="image1">
-				<img src="/resources/image/${image.main}"
+				<img src="${cPath}/resources/image/${image.main}"
 					class="img-thumbnail image2" id="image-main"> <img
-					src="/resources/image/${image.main}" class="img-thumbnail image3"
+					src="${cPath}/resources/image/${image.main}" class="img-thumbnail image3"
 					id="main">
 				<c:if test="${image.detail1 ne null}">
-					<img src="/resources/image/${image.detail1}"
+					<img src="${cPath}/resources/image/${image.detail1}"
 						class="img-thumbnail image3" id="detail1">
 				</c:if>
 				<c:if test="${image.detail2 ne null}">
-					<img src="/resources/image/${image.detail2}"
+					<img src="${cPath}/resources/image/${image.detail2}"
 						class="img-thumbnail image3" id="detail2">
 				</c:if>
 				<c:if test="${image.detail3 ne null}">
-					<img src="/resources/image/${image.detail3}"
+					<img src="${cPath}/resources/image/${image.detail3}"
 						class="img-thumbnail image3" id="detail3">
 				</c:if>
 			</div>
@@ -127,7 +123,7 @@
 						<c:when test="${sessionScope.UserVO.id == null}">
 							<div class="btn-two">
 								<button type="button" class="btn btn-danger" onclick="nonorder()">비회원 바로구매</button>
-								<button type="button" class="btn btn-light" onclick="location.href='/Basket/cart.do'">장바구니</button>
+								<button type="button" class="btn btn-light" onclick="location.href='${cPath}/Basket/cart.do'">장바구니</button>
 								&ensp;<i class="bi bi-suit-heart" id="heart" onclick="heart(${detail.pidx})"></i>	
 							</div>
 						</c:when>
@@ -160,18 +156,18 @@
 		</div>
 		<!-- 상품 상세 설명 이미지 -->
 		<div class="detail-image">
-			<img src="/resources/simage/<c:out value="${image.showing1}"/>">
+			<img src="${cPath}/resources/simage/<c:out value="${image.showing1}"/>">
 			<c:if test="${image.showing2 ne null}">
-				<img src="/resources/simage/<c:out value="${image.showing2}"/>">
+				<img src="${cPath}/resources/simage/<c:out value="${image.showing2}"/>">
 			</c:if>
 			<c:if test="${image.showing3 ne null}">
-				<img src="/resources/simage/<c:out value="${image.showing3}"/>">
+				<img src="${cPath}/resources/simage/<c:out value="${image.showing3}"/>">
 			</c:if>
 			<c:if test="${image.showing4 ne null}">
-				<img src="/resources/simage/<c:out value="${image.showing4}"/>">
+				<img src="${cPath}/resources/simage/<c:out value="${image.showing4}"/>">
 			</c:if>
 			<c:if test="${image.showing5 ne null}">
-				<img src="/resources/simage/<c:out value="${image.showing5}"/>">
+				<img src="${cPath}/resources/simage/<c:out value="${image.showing5}"/>">
 			</c:if>
 		</div>
 
@@ -225,7 +221,7 @@
 					<c:forEach items="${review}" var="review" end="9">
 						<c:if test="${review.image1 != null}">
 						<img class="review-image1 img-thumbnail"
-							src="/resources/review_img/${review.image1}">
+							src="${cPath}/resources/review_img/${review.image1}">
 						</c:if>
 					</c:forEach>
 				</div>
@@ -267,7 +263,7 @@
 				class="detail-nav-1"><a id="move_giude">구매가이드</a></span>
 		</div>
 		<div class="detail-guide">
-			<img src="/resources/simage/제품구매가이드.jpg">
+			<img src="${cPath}/resources/simage/제품구매가이드.jpg">
 		</div>
 		<div id="form2"></div>
 	</section>
@@ -285,25 +281,25 @@
 		// 마우스 호버 할 시 이미지 변경 main
 		$("#main").hover(function(){
 			let main = '<c:out value="${image.main}"/>';
-			$("#image-main").attr("src", "/resources/image/"+main);
+			$("#image-main").attr("src", "/team_Bling/resources/image/"+main);
 		});
 		
 		// 마우스 호버 할 시 이미지 변경 detail1
 		$("#detail1").hover(function(){
 		    let detail1 = '<c:out value="${image.detail1}"/>';
-			$("#image-main").attr("src", "/resources/image/"+detail1);
+			$("#image-main").attr("src", "/team_Bling/resources/image/"+detail1);
 		});
 		
 		// 마우스 호버 할 시 이미지 변경 detail2
 		$("#detail2").hover(function(){
 		    let detail2 = '<c:out value="${image.detail2}"/>';
-			$("#image-main").attr("src", "/resources/image/"+detail2);
+			$("#image-main").attr("src", "/team_Bling/resources/image/"+detail2);
 		});
 		
 		// 마우스 호버 할 시 이미지 변경 detail3
 		$("#detail3").hover(function(){
 		    let detail3 = '<c:out value="${image.detail3}"/>';
-			$("#image-main").attr("src", "/resources/image/"+detail3);
+			$("#image-main").attr("src", "/team_Bling/resources/image/"+detail3);
 		});
 		
 		
@@ -568,7 +564,7 @@
 	      if (type == null){type = "R"};
 	      
 	      $.ajax({
-		  	url:"detail_review.do",
+		  	url:"${cPath}/Product/detail_review.do",
 		    data:{"pidx":pidx, "page":page, "type":type},
 		    dataType: 'json',
 		  	type:"post",
@@ -616,12 +612,12 @@
 			  	if(reviews[i].image1 == null || reviews[i].image1 == ""){
 			  	  str += "";
 			  	}else{
-			  	  str += "<img class='review-image1 img-thumbnail' src='/resources/review_img/"+reviews[i].image1+"'>";   
+			  	  str += "<img class='review-image1 img-thumbnail' src='/team_Bling/resources/review_img/"+reviews[i].image1+"'>";   
 			  	}
 			  	if(reviews[i].image2 == null || reviews[i].image2 == ""){
 				  	  str += "";
 				}else{
-				  	  str += "<img class='review-image1 img-thumbnail' src='/resources/review_img/"+reviews[i].image2+"'>";   
+				  	  str += "<img class='review-image1 img-thumbnail' src='/team_Bling/resources/review_img/"+reviews[i].image2+"'>";   
 				}
 			  	str += "</td>";
 			  	let name = reviews[i].uname.slice(0,-2);
@@ -725,7 +721,7 @@
   	      if (page == null){page = 1};
   	      
   	      $.ajax({
-  		  	url:"detail_question.do",
+  		  	url:"${cPath}/Product/detail_question.do",
   		    data:{"pidx":pidx, "page":page},
   		    dataType: 'json',
   		  	type:"post",
@@ -804,7 +800,7 @@
   		  	 }
   		  	 str += "</tbody>"
   		  	 str += "</table>";
-  		  	 str += "<button type='button' class='btn btn-danger' id='btn-question' onclick='location.href=\"/Customer/product.do?pidx="+pidx+"\"'>상품문의하기</button><br><br>";
+  		  	 str += "<button type='button' class='btn btn-danger' id='btn-question' onclick='location.href=\"/team_Bling/Customer/product.do?pidx="+pidx+"\"'>상품문의하기</button><br><br>";
   		  	 
   		  	 // 페이징 할 수 있는 번호 나오는 곳 뿌려 주기
   		  	 str += "<nav aria-label='Page navigation'>";
@@ -863,7 +859,7 @@
   		let uid = '${sessionScope.UserVO.id}';
   		if (uid != ""){
   			$.ajax({
-  				url:"/Customer/show_check.do",
+  				url:"${cPath}/Customer/show_check.do",
   				type:"POST",
   				data:{"pidx":pidx},
   				ContentType:"application/json",
@@ -898,7 +894,7 @@
   	function like(){
   		let pidx = <c:out value="${detail.pidx}"/>;
 		$.ajax({
-			url:"/Basket/checklike.do",
+			url:"${cPath}/Basket/checklike.do",
 			type:"POST",
 			data:{"pidx":pidx},
 			ContentType:"application/json",
@@ -932,7 +928,7 @@
 				like = 1;
 			}
 			$.ajax({
-				url:"/Basket/like.do",
+				url:"${cPath}/Basket/like.do",
 				type:"POST",
 				data:{"yn":like,"pidx":pidx},
 				ContentType:"application/json",
@@ -1126,7 +1122,7 @@
 			//console.log(formData2);
 			
 			 $.ajax({
-					url:"/Basket/cartinsert.do",
+					url:"${cPath}/Basket/cartinsert.do",
 					type:"POST",
 					data:formData2,
 					async: false,

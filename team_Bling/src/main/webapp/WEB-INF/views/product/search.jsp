@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,11 +10,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>검색</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style>
 	section {
 		width:1008px;
@@ -178,8 +174,8 @@
 	<c:forEach items="${list}" var="list">
 		<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
 			<div id="img1">
-				<a href="/Product/detail.do?pidx=${list.pidx}" style="text-decoration:none">
-					<img class="img-fluid" src="/resources/image/${list.main }">
+				<a href="${cPath}/Product/detail.do?pidx=${list.pidx}" style="text-decoration:none">
+					<img class="img-fluid" src="${cPath}/resources/image/${list.main }">
 				</a>
 			</div>
 			<div>
@@ -197,7 +193,7 @@
 						<!-- 상품 이름 -->
 						<div>
 							<h3 class="text-base mb-0">
-								<a class="text-dark prodName" href="/Product/detail.do?pidx=${list.pidx}" style="text-decoration:none">${list.pname}</a>
+								<a class="text-dark prodName" href="${cPath}/Product/detail.do?pidx=${list.pidx}" style="text-decoration:none">${list.pname}</a>
 							</h3>
 						</div>
 						<!-- 가격 할인율이 0일 경우와 아닐 경우를 나눔 -->
@@ -253,7 +249,7 @@ function heart(pidx){
 			like = 1;
 		}
 		$.ajax({
-			url:"/Basket/like.do",
+			url:"${cPath}/Basket/like.do",
 			type:"POST",
 			data:{"yn":like,"pidx":pidx},
 			ContentType:"application/json",
@@ -270,7 +266,7 @@ function like_do(){
     var uid = '${sessionScope.UserVO.id}';
     if (uid != ""){
 		$.ajax({
-			url:"/Basket/checklike1.do",
+			url:"${cPath}/Basket/checklike1.do",
 			type:"POST",
 			async: false,
 			data:{},

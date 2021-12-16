@@ -8,15 +8,13 @@
 <meta charset="UTF-8">
 	<title>login main</title>
 	<!-- Bootstrap core CSS -->
-  		<link href="/resources/css/bootstrap.css" rel="stylesheet">
-  	<!-- Bootstrap core JavaScript -->
-  		<script src="/resources/js/jquery-3.6.0.min.js"></script>
-		<script src="/resources/js/bootstrap.bundle.js"></script>
-  	<!-- Bootsrap icon(cart, heart) -->
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-  	
-  	
-  	
+	<link href="/team_Bling/resources/css/bootstrap.css" rel="stylesheet">
+	<!-- Bootstrap core JavaScript -->
+	<script src="/team_Bling/resources/js/jquery-3.6.0.min.js"></script>
+	<script src="/team_Bling/resources/js/bootstrap.bundle.js"></script>
+	<!-- Bootstrap icon -->	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
   	<style>
   		section{
 			max-width:1008px;
@@ -89,7 +87,7 @@
 				
 				</div>
 				<div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8" id="formDiv">
-					<form name="form" action="/Ad_login/check2.do" method="post">
+					<form name="form" action="/team_Bling/Ad_login/check2.do" method="post">
 						<div id="pwDiv">	
 							<div id="formText">
 								<label for="login_Pw">비밀번호 입력</label>

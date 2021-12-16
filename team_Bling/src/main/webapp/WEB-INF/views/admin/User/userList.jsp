@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +15,6 @@
 <meta http-equiv="X-UA-Compatible" content ="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원 관리</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-
 	<style>
 		div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
 		a {text-decoration:none;}
@@ -43,8 +39,9 @@
 		}
 		#info{
 			font-size:8pt;
-			line-height:-5px;
+			color:#cd2828;
 		}
+		
 	</style>
 </head>
 	<body>
@@ -68,22 +65,21 @@
 			<br>
 			<table>
 				<tr>
-					<th>번호</th>
+					<th style='width:100px;'>번호</th>
 					<th style='width:140px;'>아이디</th>
 					<th style='width:140px;'>이름</th>
 					<th>
 						<select name="grade" id="grade" onchange="location.href=this.value">
-							<option value="/Ad_user/userList.do?page=1&grade=A">모든 등급</option>
-							<option value="/Ad_user/userList.do?page=1&grade=B">브론즈(B)</option>
-							<option value="/Ad_user/userList.do?page=1&grade=S">실버(S)</option>
-							<option value="/Ad_user/userList.do?page=1&grade=G">골드(G)</option>
+							<option value="/team_Bling/Ad_user/userList.do?page=1&grade=A">모든 등급</option>
+							<option value="/team_Bling/Ad_user/userList.do?page=1&grade=B">브론즈(B)</option>
+							<option value="/team_Bling/Ad_user/userList.do?page=1&grade=S">실버(S)</option>
+							<option value="/team_Bling/Ad_user/userList.do?page=1&grade=G">골드(G)</option>
 						</select>
 					</th>
 					<th style='width:110px;'>마일리지</th>
-					<th>총 주문건수</th>
-					<th style='width:110px;'>주문금액<br><span id="info">(30일 기준)</span></th>
-					<th style='width:135px;'>회원가입일</th>
-					<th style='width:135px;'>최종로그인</th>
+					<th style='width:110px;'>주문금액</th>
+					<th style='width:140px;'>회원가입일</th>
+					<th style='width:140px;'>최종로그인</th>
 					
 				</tr>
 				<c:set var="page1" value="${pm.scri.page}"/>
@@ -96,9 +92,11 @@
 						<td><c:out value="${list.id}"/></td>
 						<td><c:out value="${list.uname}"/></td>
 						<td><c:out value="${list.grade}"/></td>
-						<td><c:out value="${list.mileage}"/></td>
-						<td><c:out value="${list.count}"/></td>
-						<td><c:out value="${list.sum}"/></td>
+						<td>
+						<fmt:formatNumber value="${list.mileage}" type="number"/></td>
+						
+						<td>
+						<fmt:formatNumber value="${list.sum}" type="number"/></td>
 						<td><c:set var="rdate" value="${list.rdate}"/>
 								<c:set var="date" value="${fn:substring(rdate,0,10)}"/>
 								<c:out value="${date}"/></td>
@@ -116,7 +114,7 @@
 						<c:if test="${pm.prev == true}">
 						<li class='page-item'>
 						<c:set var="prev" value="${pm.startPage -1}"/>
-							<a class='page-link' aria-label='Previous' href="/Ad_user/userList.do?page=${prev}&kind=${pm.grade}">
+							<a class='page-link' aria-label='Previous' href="/team_Bling/Ad_user/userList.do?page=${prev}&grade=${pm.grade}">
 								<span aria-hidden='true' class='pointer' >&laquo;</span>
 							</a>
 						</li>
@@ -125,14 +123,14 @@
 						<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
 							<c:if test = "${pageNum == page}">
 							<li class="page-item active">	
-								<a class="page-link pointer" href="/Ad_user/userList.do?page=${pageNum}&kind=${pm.grade}">
+								<a class="page-link pointer" href="/team_Bling/Ad_user/userList.do?page=${pageNum}&grade=${pm.grade}">
 									<c:out value="${pageNum}"/>
 								</a>
 							</li>
 							</c:if>
 							<c:if test = "${pageNum != page}">
 							<li class="page-item">	
-								<a class="page-link" href="/Ad_user/userList.do?page=${pageNum}&kind=${pm.grade}">
+								<a class="page-link" href="/team_Bling/Ad_user/userList.do?page=${pageNum}&grade=${pm.grade}">
 									<c:out value="${pageNum}"/>
 								</a>
 							</li>
@@ -141,7 +139,7 @@
 						
 						<c:if test="${pm.next && pm.endPage > 0}">
 						<li class='page-item'>
-							<a class='page-link' aria-label='Next' href="/Ad_user/userList.do?page=${pm.endPage + 1}&kind=${pm.grade}">
+							<a class='page-link' aria-label='Next' href="/team_Bling/Ad_user/userList.do?page=${pm.endPage + 1}&&grade=${pm.grade}">
 								<span aria-hidden='true' class='pointer'>&raquo;</span>
 							</a>
 						</li>
@@ -152,14 +150,15 @@
 		</div>
 	<script>
 	function proselected(){
-		let kind = "<c:out value='${pm.grade}'/>";
-		if(kind == "B"){
+		let grade = "<c:out value='${pm.grade}'/>";
+		console.log(grade);
+		if(grade == "B"){
 			$("#grade option:eq(1)").attr("selected", "selected");
 		}
-		if(kind == "S"){
+		if(grade == "S"){
 			$("#grade option:eq(2)").attr("selected", "selected");
 		}
-		if(kind == "G"){
+		if(grade == "G"){
 			$("#grade option:eq(3)").attr("selected", "selected");
 		}
 		

@@ -15,8 +15,7 @@
 
 	<select id="user_list" parameterType="PageMaker" resultType="UserVO">
 	select a.midx,a.uname,a.id,a.grade,a.mileage,a.rdate,a.rdate1,
-       sum(c.tot_price) as sum,
-       count(c.order_idx) as count
+       sum(c.tot_price) as sum
 		from bg_user a
 		left join bg_order c
 		on a.midx=c.midx

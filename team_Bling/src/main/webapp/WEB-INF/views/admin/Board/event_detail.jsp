@@ -10,10 +10,6 @@
 		<meta http-equiv="X-UA-Compatible" content ="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>이벤트관리</title>
-		<script src="/js/jquery-3.6.0.min.js"></script>
-		<script src="/js/bootstrap.bundle.js"></script>
-		<link rel="stylesheet" href="/css/bootstrap.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	
 			<style>
 				div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
@@ -38,9 +34,9 @@
 		<div class="d1">
 			<div class="quickmenu">
 				  <ul>
-				 	<li><a href="#">문의게시판</a></li>
-				    <li><a href="/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
-				    <li><a href="/Ad_board/event.do?page=1&type=1">이벤트</a></li>
+				 	<li><a href="/team_Bling/Ad_board/question.do">문의게시판</a></li>
+				    <li><a href="/team_Bling/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
+				    <li><a href="/team_Bling/Ad_board/event.do?page=1&type=1">이벤트</a></li>
 				    <li><a href="#">리뷰관리</a></li> 
 				  </ul>
 			</div>
@@ -54,13 +50,13 @@
 			<table class="table">
 				<tr>
 					<td colspan="2">
-						<img src='/resources/event/${detail.image}' class='d-block w-100'>
+						<img src='/team_Bling/resources/event/${detail.image}' class='d-block w-100'>
 					</td>
 				</tr>
 			</table>
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 			  <button class="btn btn-outline-danger" type="button" onclick="detail_del(${detail.eidx})">삭제하기</button>
-			  <button class="btn btn-outline-secondary" type="button" onclick="location.href='/Ad_board/event.do'">목록가기</button>
+			  <button class="btn btn-outline-secondary" type="button" onclick="location.href='/team_Bling/Ad_board/event.do'">목록가기</button>
 			</div>
 		</div>
 		<br>
@@ -72,7 +68,7 @@
 				alert(eidx+"번 게시물을 삭제합니다");
 				
 				$.ajax({
-					url:"/Ad_board/event_detail_del.do",
+					url:"/team_Bling/Ad_board/event_detail_del.do",
 					type:"POST",
 					data:{"eidx":eidx},
 					ContentType:"application/json",

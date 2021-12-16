@@ -20,7 +20,7 @@
 <body>
 	<section style="text-align:center;margin:100px auto;">
 		<span style="font-size:30px;font-weight:800;">존재하지 않는 페이지 입니다.</span><br><br><br>
-		<span style="font-size:20px;color:#gray;">궁금하신 사항은 <a href="/Customer/main.do?page=1" class="title">고객센터</a>로 문의해 주시기 바랍니다</span>
+		<span style="font-size:20px;color:#gray;">궁금하신 사항은 <a href="${cPath}/Customer/main.do?page=1" class="title">고객센터</a>로 문의해 주시기 바랍니다</span>
 		<br><br><br>
 		<a href="javascript:history.back();" class="title">이전페이지로 이동</a>			
 	</section>

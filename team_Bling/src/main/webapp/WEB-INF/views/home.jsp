@@ -10,10 +10,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--  위의 3가지는 먼저 와야 합니다. -->
 	<title>Home</title>
- 	<script src="/js/jquery-3.6.0.min.js"></script>
- 	<script src="/js/bootstrap.bundle.js"></script>
-	<link rel="stylesheet" href="/css/bootstrap.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style>
 
 	/* 전반적인 크기에 관한 설정 */
@@ -79,13 +75,13 @@
 		</div>
 		<div class="carousel-inner">
 		<div class="carousel-item active">
-			<img src="/resources/simage/SS21-Slide03.jpg" class="d-block w-100">
+			<img src="/team_Bling/resources/simage/SS21-Slide03.jpg" class="d-block w-100">
 		</div>
 		<div class="carousel-item">
-			<img src="/resources/simage/SS21-Slide05.jpg" class="d-block w-100">
+			<img src="/team_Bling/resources/simage/SS21-Slide05.jpg" class="d-block w-100">
 		</div>
 		<div class="carousel-item">
-			<img src="/resources/simage/SS21-Slide06.png" class="d-block w-100">
+			<img src="/team_Bling/resources/simage/SS21-Slide06.png" class="d-block w-100">
 		</div>
 		</div>
 		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -103,7 +99,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xl-8" id="eventDiv">
-				<span><a id="subMenu1" href="/Event/main.do">Event</a></span>
+				<span><a id="subMenu1" href="/team_Bling/Event/main.do">Event</a></span>
 				<div id="carouselExampleIndicators2" class="carousel slide" data-bs-ride="carousel">
 					<div class="carousel-indicators">
 					<button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -113,13 +109,13 @@
 					<div class="carousel-inner">
 						<c:set var="event" value="${event}" />
 							<div class="carousel-item active" >
-								<a href="/Event/detail.do?eidx=${event[0].eidx}"><img src="/resources/event/${event[0].banner}" class="d-block w-100" style="height:256px;"></a>
+								<a href="/team_Bling/Event/detail.do?eidx=${event[0].eidx}"><img src="/team_Bling/resources/event/${event[0].banner}" class="d-block w-100" style="height:256px;"></a>
 							</div>
 							<div class="carousel-item" >
-								<a href="/Event/detail.do?eidx=${event[1].eidx}"><img src="/resources/event/${event[1].banner}" class="d-block w-100" style="height:256px;"></a>
+								<a href="/team_Bling/Event/detail.do?eidx=${event[1].eidx}"><img src="/team_Bling/resources/event/${event[1].banner}" class="d-block w-100" style="height:256px;"></a>
 							</div>
 							<div class="carousel-item">
-								<a href="/Event/detail.do?eidx=${event[2].eidx}"><img src="/resources/event/${event[2].banner}" class="d-block w-100" style="height:256px;"></a>
+								<a href="/team_Bling/Event/detail.do?eidx=${event[2].eidx}"><img src="/team_Bling/resources/event/${event[2].banner}" class="d-block w-100" style="height:256px;"></a>
 							</div>
 					</div>
 					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="prev">
@@ -133,10 +129,10 @@
 				</div>
 			</div>
 			<div class="col-xl-4">
-				<span><a id="subMenu1" href="/Notice/notice_main.do">Notice</a></span>
+				<span><a id="subMenu1" href="/team_Bling/Notice/notice_main.do">Notice</a></span>
 				<div id="notice">
 					<c:forEach var="notice" items="${notice}">
-						<a href="/Notice/detail.do?nidx=${notice.nidx}" class='link-dark' style='text-decoration:none'>
+						<a href="/team_Bling/Notice/detail.do?nidx=${notice.nidx}" class='link-dark' style='text-decoration:none'>
 							<h6>&nbsp;&middot;&nbsp;${notice.subject} &#40; ${fn:substring(notice.rdate,0,10)} &#41;</h6> 
 						</a><br>
 					</c:forEach>
@@ -148,15 +144,15 @@
 
 <!-- 제품 미리보기 BEST-->
 		<div class="container">
-			<span><a id="subMenu1" href="/Product/best_new.do?kind=best">BEST</a></span><span><a id="subMenu2" href="/Product/best_new.do?kind=best">+더보기</a></span>
+			<span><a id="subMenu1" href="/team_Bling/Product/best_new.do?kind=best">BEST</a></span><span><a id="subMenu2" href="/Product/best_new.do?kind=best">+더보기</a></span>
 			<br>
 			<div class="row" id="prodRow">
 				<c:forEach items="${best}" var="best" begin="0" end="2">
 				<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
 					<div id="img1">
 						<span class="product-badge badge badge-secondary bg-danger" style="position: absolute;">best</span>
-						<a href="/Product/detail.do?pidx=${best.pidx}" style="text-decoration:none">
-							<img class="img-fluid" src="/resources/image/${best.main }">
+						<a href="/team_Bling/Product/detail.do?pidx=${best.pidx}" style="text-decoration:none">
+							<img class="img-fluid" src="/team_Bling/resources/image/${best.main }">
 						</a>
 					</div>
 					<div>
@@ -174,7 +170,7 @@
 								<!-- 상품 이름 -->
 								<div>
 									<h3 class="text-base mb-0">
-										<a class="text-dark prodName" href="/Product/detail.do?pidx=${best.pidx}" style="text-decoration:none">${best.pname}</a>
+										<a class="text-dark prodName" href="/team_Bling/Product/detail.do?pidx=${best.pidx}" style="text-decoration:none">${best.pname}</a>
 									</h3>
 								</div>
 								<!-- 가격 할인율이 0일 경우와 아닐 경우를 나눔 -->
@@ -201,15 +197,15 @@
 	
 	<!-- 제품 미리보기 NEW-->
 		<div class="container">
-			<span><a id="subMenu1" href="/Product/best_new.do?kind=new">NEW</a></span><span><a id="subMenu2" href="/Product/best_new.do?kind=new">+더보기</a></span>
+			<span><a id="subMenu1" href="/team_Bling/Product/best_new.do?kind=new">NEW</a></span><span><a id="subMenu2" href="/team_Bling/Product/best_new.do?kind=new">+더보기</a></span>
 			<br>
 			<div class="row" id="prodRow">
 				<c:forEach items="${newProd}" var="newProd" begin="0" end="5">
 				<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
 					<div id="img1">
 						<span class="product-badge badge badge-secondary bg-danger" style="position: absolute;">new</span>
-						<a href="/Product/detail.do?pidx=${newProd.pidx}" style="text-decoration:none">
-							<img class="img-fluid" src="/resources/image/${newProd.main }">
+						<a href="/team_Bling/Product/detail.do?pidx=${newProd.pidx}" style="text-decoration:none">
+							<img class="img-fluid" src="/team_Bling/resources/image/${newProd.main }">
 						</a>
 					</div>
 					<div>
@@ -224,7 +220,7 @@
 								</div>
 								<div>
 									<h3 class="text-base mb-0">
-										<a class="text-dark prodName" href="/Product/detail.do?pidx=${newProd.pidx}" style="text-decoration:none">${newProd.pname}</a>
+										<a class="text-dark prodName" href="/team_Bling/Product/detail.do?pidx=${newProd.pidx}" style="text-decoration:none">${newProd.pname}</a>
 									</h3>
 								</div>
 								<div id="totprice">
@@ -249,15 +245,15 @@
 	
 	<!-- 제품 종류 Ring-->
 		<div class="container">
-			<span><a id="subMenu1" href="/Product/sroll.do?kind=R">반지</a></span>
-			<span><a id="subMenu2" href="/Product/sroll.do?kind=R">+더보기</a></span>
+			<span><a id="subMenu1" href="/team_Bling/Product/sroll.do?kind=R">반지</a></span>
+			<span><a id="subMenu2" href="/team_Bling/Product/sroll.do?kind=R">+더보기</a></span>
 			<br>
 			<div class="row" id="prodRow">
 				<c:forEach items="${ring}" var="ring" begin="0" end="2">
 				<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
 					<div id="img1">
-						<a href="/Product/detail.do?pidx=${ring.pidx}" style="text-decoration:none">
-							<img class="img-fluid" src="/resources/image/${ring.main }">
+						<a href="/team_Bling/Product/detail.do?pidx=${ring.pidx}" style="text-decoration:none">
+							<img class="img-fluid" src="/team_Bling/resources/image/${ring.main }">
 						</a>
 					</div>
 					<div>
@@ -272,7 +268,7 @@
 								</div>
 								<div>
 									<h3 class="text-base mb-0">
-										<a class="text-dark prodName" href="/Product/detail.do?pidx=${ring.pidx}" style="text-decoration:none">${ring.pname}</a>
+										<a class="text-dark prodName" href="/team_Bling/Product/detail.do?pidx=${ring.pidx}" style="text-decoration:none">${ring.pname}</a>
 									</h3>
 								</div>
 								<div id="totprice">
@@ -299,7 +295,7 @@
 	</section>
 <!-- middle banner -->
 	<div>
-		<img src="/resources/simage/middle banner.jpg" class="w-100">
+		<img src="/team_Bling/resources/simage/middle banner.jpg" class="w-100">
 	</div>
 	<br><br><br>
 	
@@ -307,15 +303,15 @@
 	<section>
 	<!-- 제품 종류 Necklace-->
 		<div class="container">
-			<span><a id="subMenu1" href="/Product/sroll.do?kind=N">목걸이</a></span>
-			<span><a id="subMenu2" href="/Product/sroll.do?kind=N">+더보기</a></span>
+			<span><a id="subMenu1" href="/team_Bling/Product/sroll.do?kind=N">목걸이</a></span>
+			<span><a id="subMenu2" href="/team_Bling/Product/sroll.do?kind=N">+더보기</a></span>
 			<br>
 			<div class="row" id="prodRow">
 				<c:forEach items="${neck}" var="neck" begin="0" end="2">
 				<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
 					<div id="img1">
-						<a href="/Product/detail.do?pidx=${neck.pidx}" style="text-decoration:none">
-							<img class="img-fluid" src="/resources/image/${neck.main }" alt="...">
+						<a href="/team_Bling/Product/detail.do?pidx=${neck.pidx}" style="text-decoration:none">
+							<img class="img-fluid" src="/team_Bling/resources/image/${neck.main }" alt="...">
 						</a>
 					</div>
 					<div>
@@ -330,7 +326,7 @@
 								</div>
 								<div>
 									<h3 class="text-base mb-0">
-										<a class="text-dark prodName" href="/Product/detail.do?pidx=${neck.pidx}" style="text-decoration:none">${neck.pname}</a>
+										<a class="text-dark prodName" href="/team_Bling/Product/detail.do?pidx=${neck.pidx}" style="text-decoration:none">${neck.pname}</a>
 									</h3>
 								</div>
 								<div id="totprice">
@@ -355,15 +351,15 @@
 	
 	<!-- 제품 종류 Earring-->
 		<div class="container">
-			<span><a id="subMenu1" href="/Product/sroll.do?kind=E">귀걸이</a></span>
-			<span><a id="subMenu2" href="/Product/sroll.do?kind=E">+더보기</a></span>
+			<span><a id="subMenu1" href="/team_Bling/Product/sroll.do?kind=E">귀걸이</a></span>
+			<span><a id="subMenu2" href="/team_Bling/Product/sroll.do?kind=E">+더보기</a></span>
 			<br>
 			<div class="row" id="prodRow">
 				<c:forEach items="${ear}" var="ear" begin="0" end="2">
 				<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
 					<div id="img1">
-						<a href="/Product/detail.do?pidx=${ear.pidx}" style="text-decoration:none">
-							<img class="img-fluid" src="/resources/image/${ear.main }" alt="...">
+						<a href="/team_Bling/Product/detail.do?pidx=${ear.pidx}" style="text-decoration:none">
+							<img class="img-fluid" src="/team_Bling/resources/image/${ear.main }" alt="...">
 						</a>
 					</div>
 					<div>
@@ -378,7 +374,7 @@
 								</div>
 								<div>
 									<h3 class="text-base mb-0">
-										<a class="text-dark prodName" href="/Product/detail.do?pidx=${ear.pidx}" style="text-decoration:none">${ear.pname}</a>
+										<a class="text-dark prodName" href="/team_Bling/Product/detail.do?pidx=${ear.pidx}" style="text-decoration:none">${ear.pname}</a>
 									</h3>
 								</div>
 								<div id="totprice">
@@ -403,15 +399,15 @@
 		
 	<!-- 제품 종류 Bracelet-->
 		<div class="container">
-			<span><a id="subMenu1" href="/Product/sroll.do?kind=B">팔찌</a></span>
-			<span><a id="subMenu2" href="/Product/sroll.do?kind=B">+더보기</a></span>
+			<span><a id="subMenu1" href="/team_Bling/Product/sroll.do?kind=B">팔찌</a></span>
+			<span><a id="subMenu2" href="/team_Bling/Product/sroll.do?kind=B">+더보기</a></span>
 			<br>
 			<div class="row" id="prodRow">
 				<c:forEach items="${brac}" var="brac" begin="0" end="2">
 				<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
 					<div id="img1">
-						<a href="/Product/detai.dol?pidx=${brac.pidx}" style="text-decoration:none">
-							<img class="img-fluid" src="/resources/image/${brac.main}" alt="...">
+						<a href="/team_Bling/Product/detail.do?pidx=${brac.pidx}" style="text-decoration:none">
+							<img class="img-fluid" src="/team_Bling/resources/image/${brac.main}" alt="...">
 						</a>
 					</div>
 					<div>
@@ -426,7 +422,7 @@
 								</div>
 								<div>
 									<h3 class="text-base mb-0">
-										<a class="text-dark prodName" href="/Product/detail.do?pidx=${brac.pidx}" style="text-decoration:none">${brac.pname}</a>
+										<a class="text-dark prodName" href="/team_Bling/Product/detail.do?pidx=${brac.pidx}" style="text-decoration:none">${brac.pname}</a>
 									</h3>
 								</div>
 								<div id="totprice">
@@ -460,7 +456,7 @@
      var uid = '${sessionScope.UserVO.id}';
      if (uid != ""){
  		$.ajax({
- 			url:"/Basket/checklike1.do",
+ 			url:"/team_Bling/Basket/checklike1.do",
  			type:"POST",
  			async: false,
  			data:{},
@@ -496,7 +492,7 @@
 					like = 1;
 				}
 				$.ajax({
-					url:"/Basket/like.do",
+					url:"/team_Bling/Basket/like.do",
 					type:"POST",
 					data:{"yn":like,"pidx":pidx},
 					ContentType:"application/json",

@@ -7,15 +7,6 @@
 <head>
 <meta charset="UTF-8">
 	<title>login main</title>
-	<!-- Bootstrap core CSS -->
-  		<link href="/resources/css/bootstrap.css" rel="stylesheet">
-  	<!-- Bootstrap core JavaScript -->
-  		<script src="/resources/js/jquery-3.6.0.min.js"></script>
-		<script src="/resources/js/bootstrap.bundle.js"></script>
-  	<!-- Bootsrap icon(cart, heart) -->
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-  	
-  	
   	
   	<style>
   		section{
@@ -116,7 +107,7 @@
 				
 				</div>
 				<div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8" id="formDiv">
-					<form name="form" action="/Login/check.do" method="post">
+					<form name="form" action="${cPath}/Login/check.do" method="post">
 						<div>
 							<div id="formText">
 								<label for="login_Id">아이디 입력</label>
@@ -154,14 +145,14 @@
 						</div>
 						<div id="btnDiv2">
 							<input class="btn btn-primary" id="nonMemberBuy" type="button" 
-							onclick="location.href='/Order/nonorder.do'" value="비회원으로 구매하기" style="display:none;">
+							onclick="location.href='{cPath}/Order/nonorder.do'" value="비회원으로 구매하기" style="display:none;">
 						</div>
 						<div id="searchDiv">
-							<span id="searchSpan"><a href="/Login/idFind.do" id="searchA">아이디 찾기</a></span>
+							<span id="searchSpan"><a href="{cPath}/Login/idFind.do" id="searchA">아이디 찾기</a></span>
 							<span>｜</span>
-							<span id="searchSpan"><a href="/Login/pwdFind.do" id="searchA">비밀번호 찾기</a></span>
+							<span id="searchSpan"><a href="{cPath}/Login/pwdFind.do" id="searchA">비밀번호 찾기</a></span>
 							<span>｜</span>
-							<span id="searchSpan"><a href="/Delivery/nonDelivery.do" id="searchA">비회원 주문조회</a></span>
+							<span id="searchSpan"><a href="{cPath}/Delivery/nonDelivery.do" id="searchA">비회원 주문조회</a></span>
 						</div>
 					</form>
 				</div>

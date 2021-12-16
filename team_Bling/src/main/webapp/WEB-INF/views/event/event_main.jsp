@@ -10,10 +10,6 @@
 		<meta http-equiv="X-UA-Compatible" content ="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>이벤트</title>
-		<script src="/js/jquery-3.6.0.min.js"></script>
-		<script src="/js/bootstrap.bundle.js"></script>
-		<link rel="stylesheet" href="/css/bootstrap.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	
 		<style>
 			/* 전반적인 크기에 관한 설정 */
@@ -97,7 +93,7 @@
 		
 		function list_fn(page,types){
 				$.ajax({
-					url:"/Event/eventlist.do",
+					url:"${cPath}/Event/eventlist.do",
 					type:"POST",
 					data:{"page":page, "types":types},
 					dataType: 'json',
@@ -142,13 +138,13 @@
 							str +="<td scope='row'>";
 							//사진
 							str +="<td>";
-							str +="<a href='/Event/detail.do?eidx="+data.totalList[i].eidx+"' class='link-dark'>"
-							str +="<img src='/resources/event/"+data.totalList[i].banner+"' class='d-block w-100' style='height:256px;'>";
+							str +="<a href='/team_Bling/Event/detail.do?eidx="+data.totalList[i].eidx+"' class='link-dark'>"
+							str +="<img src='/team_Bling/resources/event/"+data.totalList[i].banner+"' class='d-block w-100' style='height:256px;'>";
 							str +="</a>"
 							str +="</td>";
 							//내용 3개
 							str +="<td>";
-							str +="<a href='/Event/detail.do?eidx="+data.totalList[i].eidx+"' class='link-dark'>"
+							str +="<a href='/team_Bling/Event/detail.do?eidx="+data.totalList[i].eidx+"' class='link-dark'>"
 							//제목
 							str += "<p class='text-center fs-3'>"+data.totalList[i].subject+"</p>";
 							//간단내용

@@ -9,14 +9,7 @@
 		<!--차트-->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css"/>
 		<script src="https://d3js.org/d3.v3.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
-		<!-- Bootstrap core CSS -->
-  		<link href="/resources/css/bootstrap.css" rel="stylesheet">
-  	<!-- Bootstrap core JavaScript -->
-  		<script src="/resources/js/jquery-3.6.0.min.js"></script>
-		<script src="/resources/js/bootstrap.bundle.js"></script>
-	<!-- Bootstrap icon -->	
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-	<!-- SweetAlert2(alert,modal창) -->
+		<!-- SweetAlert2(alert,modal창) -->
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<meta charset="UTF-8">
 		<title>관리자 홈</title>
@@ -171,7 +164,7 @@
 		
 		function price(type){
 			$.ajax({
-				url:"/Ad_Main/price.do",
+				url:"/team_Bling/Ad_Main/price.do",
 				type:"POST",
 				data:{"type":type},
 				dataType:'json',

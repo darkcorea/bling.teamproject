@@ -8,11 +8,6 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>비밀번호 확인</title>
-		<!-- Bootstrap core CSS -->
-  		<link href="/resources/css/bootstrap.css" rel="stylesheet">
-  	<!-- Bootstrap core JavaScript -->
-  		<script src="/resources/js/jquery-3.6.0.min.js"></script>
-		<script src="/resources/js/bootstrap.bundle.js"></script>
 	<!-- SweetAlert2(alert,modal창) -->
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		
@@ -60,7 +55,7 @@
 		</section>
 		
 		<footer>
-				<%@ include file="/WEB-INF/views/footer.jsp" %>
+			<%@ include file="/WEB-INF/views/footer.jsp" %>
 		</footer>
 	</body>
 	
@@ -70,7 +65,7 @@
 			var real = document.getElementById("that").value;
 			
 			if(pass == real){
-				location.href="/MyPage/modifyInformation.do";
+				location.href="${cPath}/MyPage/modifyInformation.do";
 			}else{
 				alert("비밀번호가 틀렸습니다.");
 			}

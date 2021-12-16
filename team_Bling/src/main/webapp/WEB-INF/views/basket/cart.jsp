@@ -10,10 +10,6 @@
 	<meta http-equiv="X-UA-Compatible" content ="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>장바구니</title>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-	<script src="/js/jquery-3.6.0.min.js"></script>
-	<script src="/js/bootstrap.bundle.js"></script>
-	<link rel="stylesheet" href="/css/bootstrap.css">
 	
 	<style>
 		section {
@@ -147,7 +143,7 @@
 		
 		let midx = "${sessionScope.UserVO.midx}";
 		$.ajax({
-			url:"/Basket/cartlist.do",
+			url:"/team_Bling/Basket/cartlist.do",
 			type:"get",
 			data:"midx="+midx,
 			ContentType:"application/json",
@@ -178,8 +174,8 @@
 					str += "	<input type='hidden' name='pname' value='"+item.pname+"'>";
 					str += "	<input type='hidden' name='stock1' value='"+item.stock+"'>";
 					str += "	</td>";
-					str += "	<td><img class='img-fluid' src='/resources/image/"+item.main+"'></td>";
-					str += "	<td><a class='deco' href='/Product/detail.do?pidx="+item.pidx+"'>"+item.pname+"</a>";
+					str += "	<td><img class='img-fluid' src='/team_Bling/resources/image/"+item.main+"'></td>";
+					str += "	<td><a class='deco' href='/team_Bling/Product/detail.do?pidx="+item.pidx+"'>"+item.pname+"</a>";
 					str += "		<p>옵션명 : "+item.oname+"</p>";
 					str += "	<input type='hidden' name='stock' value='"+item.stock+"' id='s_"+item.cart_idx+"'>";
 					str += "	</td><td>";
@@ -375,7 +371,7 @@
 	function updateFn(cart_idx){
 		var quantity = $("#q_"+cart_idx).text();
 		$.ajax({
-			url:"/Basket/cartupdate.do",
+			url:"/team_Bling/Basket/cartupdate.do",
 			data:{"cart_idx":cart_idx, "quantity":quantity},
 			dataType:"JSON",
 			type:"POST",
@@ -390,7 +386,7 @@
 	}
 	function deleteFn(cart_idx){
 		$.ajax({
-			url:"/Basket/cartdelete.do",
+			url:"/team_Bling/Basket/cartdelete.do",
 			data:{"cart_idx":cart_idx},
 			type:"post",
 			dataType:"JSON",
@@ -416,7 +412,7 @@
 	          });
 	         
 	         $.ajax({
-					url:"/Basket/check_delete.do",
+					url:"/team_Bling/Basket/check_delete.do",
 					data:{"list":list},
 					dataType:"json",
 					type:"POST",
@@ -433,7 +429,7 @@
 	          let cart_idx = $(".cart_idx:checked").val();
 	          
 	          $.ajax({
-	  			url:"/Basket/cartdelete.do",
+	  			url:"/team_Bling/Basket/cartdelete.do",
 	  			data:{"cart_idx":cart_idx},
 	  			type:"post",
 	  			dataType:"JSON",
@@ -479,7 +475,7 @@
 	          var frm = document.createElement("form");
 		      frm.name = 'frm';
 		      frm.method = 'post';
-		      frm.action = '/Order/memberorder.do';
+		      frm.action = '/team_Bling/Order/memberorder.do';
 		      
 		      var input1 = document.createElement("input");
 		     
