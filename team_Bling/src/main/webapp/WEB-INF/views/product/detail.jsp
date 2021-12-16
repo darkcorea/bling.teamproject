@@ -564,7 +564,7 @@
 	      if (type == null){type = "R"};
 	      
 	      $.ajax({
-		  	url:"${cPath}/detail_review.do",
+		  	url:"/detail_review.do",
 		    data:{"pidx":pidx, "page":page, "type":type},
 		    dataType: 'json',
 		  	type:"post",
@@ -721,7 +721,7 @@
   	      if (page == null){page = 1};
   	      
   	      $.ajax({
-  		  	url:"${cPath}/detail_question.do",
+  		  	url:"/detail_question.do",
   		    data:{"pidx":pidx, "page":page},
   		    dataType: 'json',
   		  	type:"post",
