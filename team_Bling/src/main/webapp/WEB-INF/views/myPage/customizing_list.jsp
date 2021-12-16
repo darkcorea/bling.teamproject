@@ -68,72 +68,26 @@
 		
 		
 		function list(page){
-			var str = "";
+			
 			$.ajax({
 				url:"${cPath}/Custom/listajax.do",
 				type:"POST",
 				data:{"page":page},
 				dataType:'json',
 				success:function(data){
-					
+					var str = "";
 					let pm = data.pm;
 					let prev = parseInt(pm.startPage - 1) ;
 				  	let next = parseInt(pm.endPage + 1) ;
 				  	
-				  	console.log(data);
-				  	console.log(data.list.length);
-				  	console.log(data.list);
-				  	
 					//본문
 					if(data.length < 4){
-						str+="<div class='card-group'>";
-						for(let i=0 ; i<data.list.length ; i++){
-							str+="<div class='card'>";
-							if(data.list[i] == null){
-								str+="<img src='...' class='card-img-top'>";
-								str+="<div class='card-body'>";
-								str+="<h5 class='card-title'>커스터마이징을 해보세요</h5>";
-								str+=" <p class='card-text'>커스터마이징</p>";
-							}else{
-								str+="<img src='/team_Bling/resources/usercustomizing/"+data.list[i].customimg+"' class='card-img-top'>";
-								str+="<div class='card-body'>";
-								str+="<h5 class='card-title'>"+data.list[i].name+"</h5>";
-								str+=" <p class='card-text'>"+data.list[i].price+"원</p>";
-							}
-							str+="<a href='#' class='btn btn-outline-dark'>장바구니에 담기</a>";
-							str+="</div>";
-							str+="</div>";
-						}
-						str+="</div>";
-						//threelist(str,0,data.list.length);
+						str += threelist(str,0,data.list.length);
 					}else if(3 < data.list.length < 7){
-						str+="<div class='card-group'>";
-						for(let i=0 ; i<3 ; i++){
-							str+="<div class='card'>";
-							str+="<img src='/team_Bling/resources/usercustomizing/"+data.list[i].customimg+"' class='card-img-top'>";
-							str+="<div class='card-body'>";
-							str+="<h5 class='card-title'>"+data.list[i].name+"</h5>";
-							str+=" <p class='card-text'>"+data.list[i].price+"원</p>";
-							str+="<a href='#' class='btn btn-outline-dark'>장바구니에 담기</a>";
-							str+="</div>";
-							str+="</div>";
-						}
-						str+="</div>";
-						str+="<div class='card-group'>";
-						for(let i=3 ; i<data.list.length ; i++){
-							str+="<div class='card'>";
-							str+="<img src='/team_Bling/resources/usercustomizing/"+data.list[i].customimg+"' class='card-img-top'>";
-							str+="<div class='card-body'>";
-							str+="<h5 class='card-title'>"+data.list[i].name+"</h5>";
-							str+=" <p class='card-text'>"+data.list[i].price+"원</p>";
-							str+="<a href='#' class='btn btn-outline-dark'>장바구니에 담기</a>";
-							str+="</div>";
-							str+="</div>";
-						}
-						str+="</div>";
-						//threelist(str,0,3,data);
-						//threelist(str,3,data.list.length,data);
+						str += threelist(str,0,3,data);
+						str += threelist(str,3,data.list.length,data);
 					}
+					
 					/* else if(6 < data.list.length < 10){
 						threelist(0,3,data);
 						threelist(3,6,data);
@@ -182,20 +136,28 @@
 			
 		}
 		
-		/* function threelist( start,end,data){
+		function threelist( start,end,data){
+			let str = "";
 			str+="<div class='card-group'>";
 			for(let i=start ; i<end ; i++){
 				str+="<div class='card'>";
-				str+="<img src='/team_Bling/resources/usercustomizing/"+data.list[i].customimg+"' class='card-img-top'>";
-				str+="<div class='card-body'>";
-				str+="<h5 class='card-title'>"+data.list[i].name+"</h5>";
-				str+=" <p class='card-text'>"+data.list[i].price+"원</p>";
+				if(data.list[i] == null){
+					str+="<img src='...' class='card-img-top'>";
+					str+="<div class='card-body'>";
+					str+="<h5 class='card-title'>커스터마이징을 해보세요</h5>";
+					str+=" <p class='card-text'>커스터마이징</p>";
+				}else{
+					str+="<img src='/team_Bling/resources/usercustomizing/"+data.list[i].customimg+"' class='card-img-top'>";
+					str+="<div class='card-body'>";
+					str+="<h5 class='card-title'>"+data.list[i].name+"</h5>";
+					str+=" <p class='card-text'>"+data.list[i].price+"원</p>";
+				}
 				str+="<a href='#' class='btn btn-outline-dark'>장바구니에 담기</a>";
 				str+="</div>";
 				str+="</div>";
 			}
 			str+="</div>";
 			return str;
-		} */
+		}
 	</script>
 </html>
