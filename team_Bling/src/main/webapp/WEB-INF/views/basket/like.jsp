@@ -9,10 +9,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>관심상품 페이지</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style>
 	section{
 		max-width:1008px;
@@ -137,7 +133,7 @@
 					</td>
 					<td style="width:150px;">
 						<a href="/team_Bling/Product/detail.do?pidx=${list.pidx}">
-						<img class="iamge img-thumbnail" src="/resources/image/${list.main}">
+						<img class="iamge img-thumbnail" src="/team_Bling/resources/image/${list.main}">
 						</a>
 					</td>
 					<td>

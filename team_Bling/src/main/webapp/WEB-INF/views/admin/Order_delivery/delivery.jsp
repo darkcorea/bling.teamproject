@@ -9,10 +9,6 @@
 <meta http-equiv="X-UA-Compatible" content ="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>배송 리스트</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	<!-- SweetAlert2(alert,modal창) -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -226,7 +222,7 @@
 	
 	function deliveryList(page,kind){
 		$.ajax({
-			url: "/Ad_order_delivery/deliveryList.do",
+			url: "/team_Bling/Ad_order_delivery/deliveryList.do",
 			type: "post",
 			data: {"page":page,"kind":kind},
 			success: function(data){
@@ -374,7 +370,7 @@
 						body: JSON.stringify({kind:kind, order_idx:order_idx})
 					}
 				
-				fetch('/Ad_order_delivery/prodStat.do', prodData)
+				fetch('/team_Bling/Ad_order_delivery/prodStat.do', prodData)
 				.then((response) => {
 					if(!response.ok){
 						throw new Error('400 아니면 500 에러 발생');

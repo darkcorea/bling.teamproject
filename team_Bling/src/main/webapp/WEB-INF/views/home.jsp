@@ -75,13 +75,13 @@
 		</div>
 		<div class="carousel-inner">
 		<div class="carousel-item active">
-			<img src="/resources/simage/SS21-Slide03.jpg" class="d-block w-100">
+			<img src="/team_Bling/resources/simage/SS21-Slide03.jpg" class="d-block w-100">
 		</div>
 		<div class="carousel-item">
-			<img src="/resources/simage/SS21-Slide05.jpg" class="d-block w-100">
+			<img src="/team_Bling/resources/simage/SS21-Slide05.jpg" class="d-block w-100">
 		</div>
 		<div class="carousel-item">
-			<img src="/resources/simage/SS21-Slide06.png" class="d-block w-100">
+			<img src="/team_Bling/resources/simage/SS21-Slide06.png" class="d-block w-100">
 		</div>
 		</div>
 		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -109,13 +109,13 @@
 					<div class="carousel-inner">
 						<c:set var="event" value="${event}" />
 							<div class="carousel-item active" >
-								<a href="/team_Bling/Event/detail.do?eidx=${event[0].eidx}"><img src="/resources/event/${event[0].banner}" class="d-block w-100" style="height:256px;"></a>
+								<a href="/team_Bling/Event/detail.do?eidx=${event[0].eidx}"><img src="/team_Bling/resources/event/${event[0].banner}" class="d-block w-100" style="height:256px;"></a>
 							</div>
 							<div class="carousel-item" >
-								<a href="/team_Bling/Event/detail.do?eidx=${event[1].eidx}"><img src="/resources/event/${event[1].banner}" class="d-block w-100" style="height:256px;"></a>
+								<a href="/team_Bling/Event/detail.do?eidx=${event[1].eidx}"><img src="/team_Bling/resources/event/${event[1].banner}" class="d-block w-100" style="height:256px;"></a>
 							</div>
 							<div class="carousel-item">
-								<a href="/team_Bling/Event/detail.do?eidx=${event[2].eidx}"><img src="/resources/event/${event[2].banner}" class="d-block w-100" style="height:256px;"></a>
+								<a href="/team_Bling/Event/detail.do?eidx=${event[2].eidx}"><img src="/team_Bling/resources/event/${event[2].banner}" class="d-block w-100" style="height:256px;"></a>
 							</div>
 					</div>
 					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="prev">
@@ -152,7 +152,7 @@
 					<div id="img1">
 						<span class="product-badge badge badge-secondary bg-danger" style="position: absolute;">best</span>
 						<a href="/team_Bling/Product/detail.do?pidx=${best.pidx}" style="text-decoration:none">
-							<img class="img-fluid" src="/resources/image/${best.main }">
+							<img class="img-fluid" src="/team_Bling/resources/image/${best.main }">
 						</a>
 					</div>
 					<div>
@@ -205,7 +205,7 @@
 					<div id="img1">
 						<span class="product-badge badge badge-secondary bg-danger" style="position: absolute;">new</span>
 						<a href="/team_Bling/Product/detail.do?pidx=${newProd.pidx}" style="text-decoration:none">
-							<img class="img-fluid" src="/resources/image/${newProd.main }">
+							<img class="img-fluid" src="/team_Bling/resources/image/${newProd.main }">
 						</a>
 					</div>
 					<div>
@@ -252,8 +252,8 @@
 				<c:forEach items="${ring}" var="ring" begin="0" end="2">
 				<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
 					<div id="img1">
-						<a href="/team_Bling/team_Bling/Product/detail.do?pidx=${ring.pidx}" style="text-decoration:none">
-							<img class="img-fluid" src="/resources/image/${ring.main }">
+						<a href="/team_Bling/Product/detail.do?pidx=${ring.pidx}" style="text-decoration:none">
+							<img class="img-fluid" src="/team_Bling/resources/image/${ring.main }">
 						</a>
 					</div>
 					<div>
@@ -295,7 +295,7 @@
 	</section>
 <!-- middle banner -->
 	<div>
-		<img src="/resources/simage/middle banner.jpg" class="w-100">
+		<img src="/team_Bling/resources/simage/middle banner.jpg" class="w-100">
 	</div>
 	<br><br><br>
 	
@@ -311,7 +311,7 @@
 				<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
 					<div id="img1">
 						<a href="/team_Bling/Product/detail.do?pidx=${neck.pidx}" style="text-decoration:none">
-							<img class="img-fluid" src="/resources/image/${neck.main }" alt="...">
+							<img class="img-fluid" src="/team_Bling/resources/image/${neck.main }" alt="...">
 						</a>
 					</div>
 					<div>
@@ -359,7 +359,7 @@
 				<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
 					<div id="img1">
 						<a href="/team_Bling/Product/detail.do?pidx=${ear.pidx}" style="text-decoration:none">
-							<img class="img-fluid" src="/resources/image/${ear.main }" alt="...">
+							<img class="img-fluid" src="/team_Bling/resources/image/${ear.main }" alt="...">
 						</a>
 					</div>
 					<div>
@@ -406,8 +406,8 @@
 				<c:forEach items="${brac}" var="brac" begin="0" end="2">
 				<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
 					<div id="img1">
-						<a href="/team_Bling/Product/detai.dol?pidx=${brac.pidx}" style="text-decoration:none">
-							<img class="img-fluid" src="/resources/image/${brac.main}" alt="...">
+						<a href="/team_Bling/Product/detail.do?pidx=${brac.pidx}" style="text-decoration:none">
+							<img class="img-fluid" src="/team_Bling/resources/image/${brac.main}" alt="...">
 						</a>
 					</div>
 					<div>

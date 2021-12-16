@@ -7,9 +7,6 @@
 <meta http-equiv="X-UA-Compatible" content ="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>관리자 상품 등록</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
 
 <style>
 	section {
@@ -63,8 +60,8 @@
 		<!-- 옆 nav 바 -->	
 		<div class="quickmenu">
 			  <ul>
-			    <li><a href="/Ad_regist/list.do?page=1">리스트</a></li>
-			    <li><a href="/Ad_regist/regist.do">상품 등록</a></li>
+			    <li><a href="/team_Bling/Ad_regist/list.do?page=1">리스트</a></li>
+			    <li><a href="/team_Bling/Ad_regist/regist.do">상품 등록</a></li>
 			    <li><a href="#">품절상품</a></li> 
 			  </ul>
 		</div>
@@ -225,7 +222,7 @@
 			
 			<!-- 이미지 등록 -->
 			<br><br>
-			<form name="iamge_fn1" action="/Ad_regist/insertImg.do" method="post" enctype="multipart/form-data">
+			<form name="iamge_fn1" action="/team_Bling/Ad_regist/insertImg.do" method="post" enctype="multipart/form-data">
 				<span class="title">이미지 </span><span class="warning"> *사진을 순서에 맞에 넣어주세요.</span>
 				<br><br>
 				<div>
@@ -310,7 +307,7 @@ function insertPro(form){
 		let formData = $("form[name=frm]").serialize();
 			$.ajax({
 				cache:false,
-				url:"/Ad_regist/registPro.do",
+				url:"/team_Bling/Ad_regist/registPro.do",
 				type:"POST",
 				data:formData,
 				ContentType:"application/json",
@@ -358,7 +355,7 @@ function insertOpt(type){
 	 var formData = $("form[name="+type+"]").serialize();
 		$.ajax({
 			cache:false,
-			url:"/Ad_regist/insertOpt.do",
+			url:"/team_Bling/Ad_regist/insertOpt.do",
 			type:"POST",
 			data:formData,
 			ContentType:"application/json",

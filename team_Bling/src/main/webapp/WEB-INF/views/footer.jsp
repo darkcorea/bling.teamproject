@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 
 <style>
-
 .logo{
 	 height:75px;
 	 width: 77px;
