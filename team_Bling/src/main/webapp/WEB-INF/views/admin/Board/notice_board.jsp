@@ -7,10 +7,6 @@
 		<meta http-equiv="X-UA-Compatible" content ="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>공지사항관리</title>
-		<script src="/js/jquery-3.6.0.min.js"></script>
-		<script src="/js/bootstrap.bundle.js"></script>
-		<link rel="stylesheet" href="/css/bootstrap.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	
 			<style>
 				div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
@@ -36,9 +32,9 @@
 		<div class="d1">
 			<div class="quickmenu">
 				  <ul>
-				 	<li><a href="#">문의게시판</a></li>
-				    <li><a href="/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
-				    <li><a href="#">이벤트</a></li>
+				 	<li><a href="/team_Bling/Ad_board/question.do">문의게시판</a></li>
+				    <li><a href="/team_Bling/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
+				    <li><a href="/team_Bling/Ad_board/event.do">이벤트</a></li>
 				    <li><a href="#">리뷰관리</a></li> 
 				  </ul>
 			</div>
@@ -95,7 +91,7 @@
 		
 			<!-- 게시글 등록/삭제 -->
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='/Ad_board/regist.do'">등록</button>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='/team_Bling/Ad_board/regist.do'">등록</button>
 				<button type="button" class="btn btn-outline-danger" onclick="deleteArry()">삭제</button>
 			</div>
 		
@@ -117,7 +113,7 @@
 		
 		function list_fn(page,type,keyword){
 				$.ajax({
-					url:"/Ad_board/list.do",
+					url:"/team_Bling/Ad_board/list.do",
 					type:"POST",
 					data:{"page":page, "type":type,"keyword":keyword},
 					dataType: 'json',
@@ -148,7 +144,7 @@
 							str +="</td>";
 							str +="<th class='text-center'>"+(pagenum + i+1)+"</th>";
 							str +="<td class='text-center'>"+data.totalList[i].type+"</td>";
-							str +="<td><a href='/Ad_board/detail.do?nidx="+data.totalList[i].nidx+"' class='link-dark'>"+data.totalList[i].subject+"</a>";
+							str +="<td><a href='/team_Bling/Ad_board/detail.do?nidx="+data.totalList[i].nidx+"' class='link-dark'>"+data.totalList[i].subject+"</a>";
 									
 							//파일 있을시 파일아이콘 제목옆에 붙음
 							if(data.totalList[i].imgfile != null){
@@ -226,7 +222,7 @@
 			
 			$.ajax({
 				type:"POST",
-				url:"/Ad_board/deleteArry.do",
+				url:"/team_Bling/Ad_board/deleteArry.do",
 				data:{"checkbox":checkbox},
 				success:function(){
 					location.reload();

@@ -7,10 +7,6 @@
 		<meta http-equiv="X-UA-Compatible" content ="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>이벤트관리</title>
-		<script src="/js/jquery-3.6.0.min.js"></script>
-		<script src="/js/bootstrap.bundle.js"></script>
-		<link rel="stylesheet" href="/css/bootstrap.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	
 			<style>
 				div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
@@ -36,9 +32,9 @@
 		<div class="d1">
 			<div class="quickmenu">
 				  <ul>
-				 	<li><a href="#">문의게시판</a></li>
-				    <li><a href="/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
-				    <li><a href="/Ad_board/event.do">이벤트</a></li>
+				 	<li><a href="/team_Bling/Ad_board/question.do">문의게시판</a></li>
+				    <li><a href="/team_Bling/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
+				    <li><a href="/team_Bling/Ad_board/event.do">이벤트</a></li>
 				    <li><a href="#">리뷰관리</a></li> 
 				  </ul>
 			</div>
@@ -55,7 +51,7 @@
 		
 			<!-- 게시글 등록/삭제 -->
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='/Ad_board/event_regist.do'">등록</button>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='/team_Bling/Ad_board/event_regist.do'">등록</button>
 				<button type="button" class="btn btn-outline-danger" onclick="deleteArry()">삭제</button>
 			</div>
 		
@@ -76,7 +72,7 @@
 		
 		function list_fn(page,types){
 				$.ajax({
-					url:"/Ad_board/eventlist.do",
+					url:"/team_Bling/Ad_board/eventlist.do",
 					type:"POST",
 					data:{"page":page, "types":types},
 					dataType: 'json',
@@ -129,13 +125,13 @@
 							str +="</td>";
 							//사진
 							str +="<td>";
-							str +="<a href='/Ad_board/eventdetail.do?eidx="+data.totalList[i].eidx+"' class='link-dark'>"
-							str +="<img src='/resources/event/"+data.totalList[i].banner+"' class='d-block w-100' style='height:200px;'>";
+							str +="<a href='/team_Bling/Ad_board/eventdetail.do?eidx="+data.totalList[i].eidx+"' class='link-dark'>"
+							str +="<img src='/team_Bling/resources/event/"+data.totalList[i].banner+"' class='d-block w-100' style='height:200px;'>";
 							str +="</a>"
 							str +="</td>";
 							//내용 3개
 							str +="<td>";
-							str +="<a href='/Ad_board/eventdetail.do?eidx="+data.totalList[i].eidx+"' class='link-dark'>"
+							str +="<a href='/team_Bling/Ad_board/eventdetail.do?eidx="+data.totalList[i].eidx+"' class='link-dark'>"
 							//제목
 							str += "<p class='text-center fs-3'>"+data.totalList[i].subject+"</p>";
 							//간단내용
@@ -208,7 +204,7 @@
 			
 			$.ajax({
 				type:"POST",
-				url:"/Ad_board/deleteArryEvent.do",
+				url:"/team_Bling/Ad_board/deleteArryEvent.do",
 				data:{"checkbox":checkbox},
 				success:function(){
 					location.reload();

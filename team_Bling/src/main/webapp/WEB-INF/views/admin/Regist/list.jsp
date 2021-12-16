@@ -13,9 +13,7 @@
 <meta http-equiv="X-UA-Compatible" content ="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>관리자 상품 리스트</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
+
 <script>
 $(document).ready(function () {
 	
@@ -89,8 +87,8 @@ $(document).ready(function () {
 	<div class="container">
 		<div class="quickmenu">
 			  <ul>
-			    <li><a href="/Ad_regist/list.do?page=1">리스트</a></li>
-			    <li><a href="/Ad_regist/regist.do">상품 등록</a></li>
+			    <li><a href="/team_Bling/Ad_regist/list.do?page=1">리스트</a></li>
+			    <li><a href="/team_Bling/Ad_regist/regist.do">상품 등록</a></li>
 			    <li><a href="#">품절상품</a></li> 
 			  </ul>
 		</div>
@@ -98,11 +96,11 @@ $(document).ready(function () {
 		<div style="text-align:center;">
 		<span class="title">상품 리스트&ensp;</span>
 		<select name="kind" id="kind" onchange="location.href=this.value">
-			<option value="/Ad_regist/list.do?page=1&kind=A">모든 제품</option>
-			<option value="/Ad_regist/list.do?page=1&kind=R">반지</option>
-			<option value="/Ad_regist/list.do?page=1&kind=E">귀걸이</option>
-			<option value="/Ad_regist/list.do?page=1&kind=N">목걸이</option>
-			<option value="/Ad_regist/list.do?page=1&kind=B">팔찌</option>
+			<option value="/team_Bling/Ad_regist/list.do?page=1&kind=A">모든 제품</option>
+			<option value="/team_Bling/Ad_regist/list.do?page=1&kind=R">반지</option>
+			<option value="/team_Bling/Ad_regist/list.do?page=1&kind=E">귀걸이</option>
+			<option value="/team_Bling/Ad_regist/list.do?page=1&kind=N">목걸이</option>
+			<option value="/team_Bling/Ad_regist/list.do?page=1&kind=B">팔찌</option>
 		</select>
 		<span> 상품 갯수 : <c:out value="${count}" />개</span>
 		</div>
@@ -127,7 +125,7 @@ $(document).ready(function () {
 				<td><c:out value="${list.pidx}"/></td>
 				
 				<!-- 상품이미지 -->
-				<td><a href="/Ad_regist/modify.do?pidx=${list.pidx}"><img class="img-thumbnail image" src="/resources/image/${list.main}"></a></td>
+				<td><a href="/team_Bling/Ad_regist/modify.do?pidx=${list.pidx}"><img class="img-thumbnail image" src="/team_Bling/resources/image/${list.main}"></a></td>
 				
 				<!-- 상품종류 -->
 				<td>
@@ -147,7 +145,7 @@ $(document).ready(function () {
 				
 				<!-- 상품이름 -->
 				<td>
-					<a href="/Ad_regist/modify.do?pidx=${list.pidx}">
+					<a href="/team_Bling/Ad_regist/modify.do?pidx=${list.pidx}">
 						<span style="color:#cb7878" data-bs-toggle="tooltip" title="수정하기">
 							<c:out value="${list.pname}"/>
 						</span>
@@ -196,7 +194,7 @@ $(document).ready(function () {
 				<td><c:out value="${fn:substring(date,0,10)}"/></td>
 				
 				<!-- 수정 -->
-				<td><button type="button" class="btn btn-white btn-sm" onclick="location.href='/Ad_regist/modify.do?pidx=${list.pidx}'">수정</button></td>
+				<td><button type="button" class="btn btn-white btn-sm" onclick="location.href='/team_Bling/Ad_regist/modify.do?pidx=${list.pidx}'">수정</button></td>
 			</tr>
 			</c:forEach>
 			</table>
@@ -210,7 +208,7 @@ $(document).ready(function () {
 					<c:if test="${pm.prev == true}">
 					<li class='page-item'>
 					<c:set var="prev" value="${pm.startPage -1}"/>
-						<a class='page-link' aria-label='Previous' href="/Ad_regist/list.do?page=${prev}&kind=${pm.kind}">
+						<a class='page-link' aria-label='Previous' href="/team_Bling/Ad_regist/list.do?page=${prev}&kind=${pm.kind}">
 							<span aria-hidden='true' class='pointer' >&laquo;</span>
 						</a>
 					</li>
@@ -221,14 +219,14 @@ $(document).ready(function () {
 					<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
 						<c:if test = "${pageNum == page}">
 						<li class="page-item active">	
-							<a class="page-link pointer" href="/Ad_regist/list.do?page=${pageNum}&kind=${pm.kind}">
+							<a class="page-link pointer" href="/team_Bling/Ad_regist/list.do?page=${pageNum}&kind=${pm.kind}">
 								<c:out value="${pageNum}"/>
 							</a>
 						</li>
 						</c:if>
 						<c:if test = "${pageNum != page}">
 						<li class="page-item">	
-							<a class="page-link pointer" href="/Ad_regist/list.do?page=${pageNum}&kind=${pm.kind}">
+							<a class="page-link pointer" href="/team_Bling/Ad_regist/list.do?page=${pageNum}&kind=${pm.kind}">
 								<c:out value="${pageNum}"/>
 							</a>
 						</li>
@@ -238,7 +236,7 @@ $(document).ready(function () {
 					<!-- 뒤로 가기 버튼 , 키워드 유지하면서 이동하기 -->
 					<c:if test="${pm.next && pm.endPage > 0}">
 					<li class='page-item'>
-						<a class='page-link' aria-label='Next' href="/Ad_regist/list.do?page=${pm.endPage + 1}&kind=${pm.kind}">
+						<a class='page-link' aria-label='Next' href="/team_Bling/Ad_regist/list.do?page=${pm.endPage + 1}&kind=${pm.kind}">
 							<span aria-hidden='true' class='pointer'>&raquo;</span>
 						</a>
 					</li>

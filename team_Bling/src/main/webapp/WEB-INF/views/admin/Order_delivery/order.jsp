@@ -9,10 +9,6 @@
 <meta http-equiv="X-UA-Compatible" content ="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>주문 리스트</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	<!-- SweetAlert2(alert,modal창) -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -338,9 +334,9 @@
 	<div class="d1">
 		<div class="quickmenu">
 			  <ul>
-			 	<li><a href="#">문의게시판</a></li>
-			    <li><a href="/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
-			    <li><a href="#">이벤트</a></li>
+			 	<li><a href="/team_Bling/Ad_board/question.do">문의게시판</a></li>
+			    <li><a href="/team_Bling/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
+			    <li><a href="/team_Bling/Ad_board/event.do">이벤트</a></li>
 			    <li><a href="#">리뷰관리</a></li> 
 			  </ul>
 		</div>
@@ -403,7 +399,7 @@
 			body: JSON.stringify({page:page,kind:kind}),
 		}
 		
-		fetch("/Ad_order_delivery/orderList.do", option)
+		fetch("/team_Bling/Ad_order_delivery/orderList.do", option)
 		.then((response) => {
 			if(!response.ok){
 				throw new Error('400 아니면 500 에러 발생');
@@ -599,7 +595,7 @@
 				body: JSON.stringify({kind:kind, order_idx:order_idx})
 			}
 		
-		fetch('/Ad_order_delivery/prodStat.do', prodData)
+		fetch('/team_Bling/Ad_order_delivery/prodStat.do', prodData)
 		.then((response) => {
 			if(!response.ok){
 				throw new Error('400 아니면 500 에러 발생');
@@ -648,7 +644,7 @@
 					body: JSON.stringify({invoice_num:result.value, order_idx:order_idx})
 				}
 			
-			fetch('/Ad_order_delivery/invoice.do', invoice)
+			fetch('/team_Bling/Ad_order_delivery/invoice.do', invoice)
 			.then((response) => {
 				if(!response.ok){
 					throw new Error('400 아니면 500 에러 발생');
@@ -683,7 +679,7 @@
 				body: JSON.stringify({invoice_num:invoice_num, order_idx:order_idx})
 			}
 		
-		fetch('/Ad_order_delivery/invoice.do', invoice)
+		fetch('/team_Bling/Ad_order_delivery/invoice.do', invoice)
 		.then((response) => {
 			if(!response.ok){
 				throw new Error('400 아니면 500 에러 발생');
@@ -708,7 +704,7 @@
 	// 구매한 오더의 이미지나 상품명(옵션을 눌렀을 떄)
 	function order_list(order_idx){	
 		$.ajax({
-			url:"/Delivery/order_list.do",
+			url:"/team_Bling/Delivery/order_list.do",
 			type:"POST",
 			data:{"order_idx":order_idx},
 			async: false,
@@ -752,11 +748,11 @@
 					str += "<table>";	
 					str += "</tr>";	
 					str += " <td style='width:150px;'>";
-					str += "<a href='/Product/detail.do?pidx="+data[0].pidx+"'>"
+					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"'>"
 					str += " <img class='image_main' src='/resources/image/"+data[i].main+"'></a>";	
 					str += "</td>";	
 					str += "<td style='width:300px;'>";
-					str += "<a href='/Product/detail.do?pidx="+data[0].pidx+"' class='title4'>"
+					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"' class='title4'>"
 					str += "<span><b>"+data[i].pname+"</b></span></a><br>";	
 					var oname = data[i].oname.split("+")[0]
 					str += " <span>"+oname+"</span>(수량: <span>"+data[i].quantity+"</span>)";	
