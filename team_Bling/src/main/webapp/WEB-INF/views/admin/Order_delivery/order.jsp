@@ -749,7 +749,7 @@
 					str += "</tr>";	
 					str += " <td style='width:150px;'>";
 					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"'>"
-					str += " <img class='image_main' src='/resources/image/"+data[i].main+"'></a>";	
+					str += " <img class='image_main' src='/team_Bling/resources/image/"+data[i].main+"'></a>";	
 					str += "</td>";	
 					str += "<td style='width:300px;'>";
 					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"' class='title4'>"

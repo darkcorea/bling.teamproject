@@ -23,7 +23,7 @@
 		function reviewList(page,type,date1,date2){
 			console.log(page);
 			$.ajax({
-				url:"${cPath}/Review/reviewlist.do",
+				url:"/team_Bling/Review/reviewlist.do",
 				type:"POST",
 				data:{"page":page,"type":type,"date1":date1,"date2":date2},
 				dataType: 'json',

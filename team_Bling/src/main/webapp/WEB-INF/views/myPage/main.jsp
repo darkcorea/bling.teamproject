@@ -25,7 +25,7 @@
 				str += "	<tr id='tableRow'>";
 				str += "		<td id='td1'><span id='t1'>${ro.rdate}</span></td>";
 				str += "		<td id='td2'><span id='t2'>${ro.order_idx}</span></td>";
-				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/{cPath}Product/detail.do?pidx=${ro.pidx}'>${ro.pname} <br> ${ro.oname}</a></span></td>";
+				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/team_Bling/Product/detail.do?pidx=${ro.pidx}'>${ro.pname} <br> ${ro.oname}</a></span></td>";
 				str += "		<td id='td4'><span id='t4'><fmt:formatNumber value='${(ro.saleprice+ro.addprice)*ro.quantitySum}' pattern='#,###' />원</span></td>";
 				str += "		<td id='td5'><span id='t5'>${ro.quantitySum}</span></td>";
 				
@@ -388,7 +388,7 @@
 					}).then((result) => {
 						  /* Read more about isConfirmed, isDenied below */
 						  if (result.isConfirmed) {
-							   window.location.replace("/MyPage/main.do?page=1");
+							   window.location.replace("/team_Bling/MyPage/main.do?page=1");
 						  } else if (result.isDenied) {
 					   }
 					});
@@ -1041,7 +1041,7 @@
 								<c:if test="${pm.prev == true}">
 								<li class='page-item'>
 								<c:set var="prev" value="${pm.startPage -1}"/>
-									<a class='page-link' aria-label='Previous' href="{cPath}/MyPage/main.do?page=${prev}">
+									<a class='page-link' aria-label='Previous' href="/team_Bling/MyPage/main.do?page=${prev}">
 										<span aria-hidden='true' class='pointer' >&laquo;</span>
 									</a>
 								</li>
@@ -1052,14 +1052,14 @@
 								<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
 									<c:if test = "${pageNum == page}">
 									<li class="page-item active">	
-										<a class="page-link pointer" href="{cPath}/MyPage/main.do?page=${pageNum}">
+										<a class="page-link pointer" href="/team_Bling/MyPage/main.do?page=${pageNum}">
 											<c:out value="${pageNum}"/>
 										</a>
 									</li>
 									</c:if>
 									<c:if test = "${pageNum != page}">
 									<li class="page-item">	
-										<a class="page-link pointer" href="{cPath}/MyPage/main.do?page=${pageNum}">
+										<a class="page-link pointer" href="/team_Bling/MyPage/main.do?page=${pageNum}">
 											<c:out value="${pageNum}"/>
 										</a>
 									</li>
@@ -1069,7 +1069,7 @@
 								<!-- 뒤로 가기 버튼 , 키워드 유지하면서 이동하기 -->
 								<c:if test="${pm.next && pm.endPage > 0}">
 								<li class='page-item'>
-									<a class='page-link' aria-label='Next' href="{cPath}/MyPage/main.do?page=${pm.endPage + 1}">
+									<a class='page-link' aria-label='Next' href="/team_Bling/MyPage/main.do?page=${pm.endPage + 1}">
 										<span aria-hidden='true' class='pointer'>&raquo;</span>
 									</a>
 								</li>
