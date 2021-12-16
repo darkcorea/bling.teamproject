@@ -107,7 +107,7 @@
 				
 				</div>
 				<div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8" id="formDiv">
-					<form name="form" action="/Login/check.do" method="post">
+					<form name="form" action="${cPath}/Login/check.do" method="post">
 						<div>
 							<div id="formText">
 								<label for="login_Id">아이디 입력</label>
