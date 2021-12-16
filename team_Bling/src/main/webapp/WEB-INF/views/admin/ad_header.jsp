@@ -79,7 +79,7 @@
 		   <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" id="admin_user">회원 관리</a>
 		    <ul class="dropdown-menu">
-		      <li><a class="dropdown-item" href="/Ad_user/userList.do?page=1">회원 리스트</a></li>
+		      <li><a class="dropdown-item" href="/Ad_user/userList.do?page=1&grade=A">회원 리스트</a></li>
 		      <li><a class="dropdown-item" href="#">탈퇴회원 리스트</a></li>
 		    </ul>
 		     </li>
