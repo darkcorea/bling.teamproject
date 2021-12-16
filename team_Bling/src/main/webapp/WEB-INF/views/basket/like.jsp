@@ -115,11 +115,11 @@
 			</div><br>
 			<!-- 관심상품의 종류 선택 하는 곳 -->
 			<hr style="border:none;background-color:black;height:3px;"></hr>
-			<a href="/Basket/like1.do?kind=A" class="pname" id="kind_A"><span class="title2">전체</span></a>&ensp;&ensp;
-			<a href="/Basket/like1.do?kind=R" class="pname" id="kind_R"><span class="title2">반지</span></a>&ensp;&ensp;
-			<a href="/Basket/like1.do?kind=N" class="pname" id="kind_N"><span class="title2">목걸이</span></a>&ensp;&ensp;
-			<a href="/Basket/like1.do?kind=E" class="pname" id="kind_E"><span class="title2">귀걸이</span></a>&ensp;&ensp;
-			<a href="/Basket/like1.do?kind=B" class="pname" id="kind_B"><span class="title2">팔찌</span></a>
+			<a href="/team_Bling/Basket/like1.do?kind=A" class="pname" id="kind_A"><span class="title2">전체</span></a>&ensp;&ensp;
+			<a href="/team_Bling/Basket/like1.do?kind=R" class="pname" id="kind_R"><span class="title2">반지</span></a>&ensp;&ensp;
+			<a href="/team_Bling/Basket/like1.do?kind=N" class="pname" id="kind_N"><span class="title2">목걸이</span></a>&ensp;&ensp;
+			<a href="/team_Bling/Basket/like1.do?kind=E" class="pname" id="kind_E"><span class="title2">귀걸이</span></a>&ensp;&ensp;
+			<a href="/team_Bling/Basket/like1.do?kind=B" class="pname" id="kind_B"><span class="title2">팔찌</span></a>
 			<hr style="border:none;background-color:black;height:3px;"></hr>
 			<div>
 			<!-- 전체 선택및 삭제 -->
@@ -136,12 +136,12 @@
 						<input type="checkbox" class="checkbox2" name="check_like" value="${list.interest_idx}">
 					</td>
 					<td style="width:150px;">
-						<a href="/Product/detail.do?pidx=${list.pidx}">
+						<a href="/team_Bling/Product/detail.do?pidx=${list.pidx}">
 						<img class="iamge img-thumbnail" src="/resources/image/${list.main}">
 						</a>
 					</td>
 					<td>
-						<a href="/Product/detail.do?pidx=${list.pidx}" class="pname">
+						<a href="/team_Bling/Product/detail.do?pidx=${list.pidx}" class="pname">
 						<b><c:out value="${list.pname}"/></b>
 						</a><br>
 					<span class="red"><fmt:formatNumber value="${list.saleprice}" pattern="#,###" />원</span>

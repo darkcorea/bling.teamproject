@@ -124,7 +124,7 @@
 									    	<td align="center" valign="middle">${one[0].rphone}</td>
 									    	<td align="center" valign="middle">
 										      	<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modify" onclick="modify(${one[0].addr_idx })">수정</button>
-										      	<button type="button" class="btn btn-light"  onclick="location.href='/Addr/delete.do?addr_idx=${one[0].addr_idx }'">삭제</button>
+										      	<button type="button" class="btn btn-light"  onclick="location.href='/team_Bling/Addr/delete.do?addr_idx=${one[0].addr_idx }'">삭제</button>
 									    	</td>
 									    </tr>
 								    </c:if>
@@ -145,7 +145,7 @@
 									    <td align="center" valign="middle">${list.rphone}</td>
 									    <td align="center" valign="middle">
 									      	<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modify" onclick="modify(${list.addr_idx })">수정</button>
-									      	<button type="button" class="btn btn-light" onclick="location.href='/Addr/delete.do?addr_idx=${list.addr_idx }'">삭제</button>
+									      	<button type="button" class="btn btn-light" onclick="location.href='/team_Bling/Addr/delete.do?addr_idx=${list.addr_idx }'">삭제</button>
 									    </td>
 									 </tr>
 							    </c:forEach>
@@ -157,7 +157,7 @@
 							    	<ul class='pagination justify-content-center'>
 							    		<li class='page-item'>
 							    			<c:if test="${pm.prev == true }">
-							    				<a class='page-link' aria-label='Previous' href="/Addr/main.do?page=${pm.startPage-1}">
+							    				<a class='page-link' aria-label='Previous' href="/team_Bling/Addr/main.do?page=${pm.startPage-1}">
 							    					<span aria-hidden='true' class='pointer' >&laquo;</span>
 							    				</a>
 							    			</c:if>
@@ -165,14 +165,14 @@
 						    			<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
 						    				<c:if test="${pageNum == page }">
 							    				<li class='page-item active'>
-							    					<a class='page-link pointer' href="/Addr/main.do?page=${pageNum}">
+							    					<a class='page-link pointer' href="/team_Bling/Addr/main.do?page=${pageNum}">
 							    						<c:out value="${pageNum}"/>
 							    					</a>
 							    				</li>
 						    				</c:if>
 						    				<c:if test="${pageNum != page }">
 							    				<li class='page-item'>
-							    					<a class='page-link pointer' href="/Addr/main.do?page=${pageNum}">
+							    					<a class='page-link pointer' href="/team_Bling/Addr/main.do?page=${pageNum}">
 							    						<c:out value="${pageNum}"/>
 							    					</a>
 							    				</li>
@@ -180,7 +180,7 @@
 										</c:forEach>
 										<li class='page-item'>
 											<c:if test="${pm.next && pm.endPage > 0}">
-												<a class='page-link' aria-label='Next' href="/Addr/main.do?page=${pm.endPage + 1}">
+												<a class='page-link' aria-label='Next' href="/team_Bling/Addr/main.do?page=${pm.endPage + 1}">
 													<span aria-hidden='true' class='pointer'>&raquo;</span>
 												</a>
 											</c:if>
@@ -432,13 +432,13 @@
 						}
 						
 						$.ajax({
-							url:"/Addr/insert.do",
+							url:"/team_Bling/Addr/insert.do",
 							type:"post",
 							data:{"addr_name":addr_name,"name":name,"zip_code":zip_code,
 								"addr1":addr1,"addr2":addr2,"rphone":rphone,"basic_addr":basic_addr},
 							ContentType:"json",
 							success:function(data){
-								window.location.replace("/Addr/main.do?page=1");
+								window.location.replace("/team_Bling/Addr/main.do?page=1");
 							},error:function(){
 								alert("주소저장에러!");
 							}
@@ -452,7 +452,7 @@
 			function modify(addr_idx){
 				console.log(addr_idx); 
 				$.ajax({
-					url:"/Addr/modify.do",
+					url:"/team_Bling/Addr/modify.do",
 					type:"post",
 					data:{"addr_idx":addr_idx},
 					ContentType:"json",
@@ -500,13 +500,13 @@
 							basic_addr = 1;
 						}
 						$.ajax({
-							url:"/Addr/Remodify.do",
+							url:"/team_Bling/Addr/Remodify.do",
 							type:"post",
 							data:{"addr_idx":addr_idx,"midx":midx,"addr_name":addr_name,"name":name,"zip_code":zip_code,
 								"addr1":addr1,"addr2":addr2,"rphone":rphone,"basic_addr":basic_addr},
 							ContentType:"json",
 							success:function(data){
-								window.location.replace("/Addr/main.do?page=1");
+								window.location.replace("/team_Bling/Addr/main.do?page=1");
 							},error:function(){
 								alert("주소저장에러!");
 							}

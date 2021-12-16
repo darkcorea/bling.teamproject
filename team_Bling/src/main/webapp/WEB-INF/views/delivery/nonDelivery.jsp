@@ -98,7 +98,7 @@
 		}else{
 			
 			$.ajax({
-				url:"/Delivery/nonDel_check.do",
+				url:"/team_Bling/Delivery/nonDel_check.do",
 				type:"POST",
 				data:{"name":name,"orderid":orderid},
 				async: false,

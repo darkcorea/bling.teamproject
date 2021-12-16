@@ -21,15 +21,15 @@
 		        <div class="row" id="headerRow1">
 		            <div class="col-8 col-md-6" id="headerCol1">
 		            <!-- home icon -->
-		                <a href="/"><i class="bi bi-house-fill"></i></a>
-		                <a id="header_notice" href="/Notice/notice_main.do">NOTICE</a>
-		                <a id="header_event" href="/Event/main.do">EVENT</a>
+		                <a href="/team_Bling/"><i class="bi bi-house-fill"></i></a>
+		                <a id="header_notice" href="/team_Bling/Notice/notice_main.do">NOTICE</a>
+		                <a id="header_event" href="/team_Bling/Event/main.do">EVENT</a>
 	                <!-- heart icon -->
-						<a href="/Basket/like1.do?kind=A"><i class="bi bi-suit-heart-fill header_heart"></i></a>
+						<a href="/team_Bling/Basket/like1.do?kind=A"><i class="bi bi-suit-heart-fill header_heart"></i></a>
 		            </div>
 		            <div class="col-1 col-md-4"></div>
 		            <div class="col-3 col-md-2" id="headerCol2">
-		                <a id="customerCenter" href="/Customer/main.do?page=1">고객센터</a>
+		                <a id="customerCenter" href="/team_Bling/Customer/main.do?page=1">고객센터</a>
 		            </div>
 		        </div>
 		
@@ -38,20 +38,20 @@
 				<div class="row" id="headerRow3">
 					<div class="col-md-4"></div>
 					<div class="col-md-4" id="headerCol3">
-						<a href="/"><img id="title_image" src="/resources/simage/logo.png" alt=""></a>
+						<a href="/team_Bling/"><img id="title_image" src="/resources/simage/logo.png" alt=""></a>
 					</div>
 					<div class="col-md-4" id="headerCol4">
 						<c:choose>
 							<c:when test="${sessionScope.UserVO.id == null}">
-								<a href="/Join/normal.do" id="hearderMemberJoin">회원가입</a>
+								<a href="/team_Bling/Join/normal.do" id="hearderMemberJoin">회원가입</a>
 								<span>｜</span>
-								<a href="${path}/Login/main.do" id="headerLogin">로그인</a>
+								<a href="/team_Bling/${path}/Login/main.do" id="headerLogin">로그인</a>
 							</c:when>
 							<c:otherwise>
 								<div>
-									<a id="loginName" href="/MyPage/main.do?page=1">${sessionScope.UserVO.uname}</a> 님
+									<a id="loginName" href="/team_Bling/MyPage/main.do?page=1">${sessionScope.UserVO.uname}</a> 님
 								</div>
-								<a href="/MyPage/main.do?page=1" id="hearderMemberJoin">마이페이지</a>
+								<a href="/team_Bling/MyPage/main.do?page=1" id="hearderMemberJoin">마이페이지</a>
 								<span>｜</span>
 								<a id="headerLogin" data-bs-toggle="modal" data-bs-target="#logOut_motal" class="pointer">로그아웃</a>	
 							</c:otherwise>
@@ -62,14 +62,14 @@
 					<!-- cart icon -->
 					<div id="topCart">
 						<!-- 검색 -->
-						<form name="searchFrm" id="searchinput" action="/Product/search.do" method="POST" >
+						<form name="searchFrm" id="searchinput" action="/team_Bling/Product/search.do" method="POST" >
 						<input type="search" class="search" name="keyword">
 						<input type="text" style="display:none;">
 						</form>
 						<a id="searchIcon" onclick="search_Fn()" class="pointer">
 							<i class="bi bi-search" style="font-size:1.5rem"></i>
 						</a>
-						<a id="cartIcon" href="/Basket/cart.do">
+						<a id="cartIcon" href="/team_Bling/Basket/cart.do">
 							<i class="bi bi-cart2">
 								<!-- 카트 위에 나오는 장바구니 숫자 -->
 								<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart_count">
@@ -85,22 +85,22 @@
 			<div class="container" id="headerRow5">
 				<div class="row">
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/best_new.do?kind=best">BEST</a></span>
+						<span id="smenu"><a id="amenu" href="/team_Bling/Product/best_new.do?kind=best">BEST</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/best_new.do?kind=new">NEW</a></span>
+						<span id="smenu"><a id="amenu" href="/team_Bling/Product/best_new.do?kind=new">NEW</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/sroll.do?kind=R">반지</a></span>
+						<span id="smenu"><a id="amenu" href="/team_Bling/Product/sroll.do?kind=R">반지</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/sroll.do?kind=N">목걸이</a></span>
+						<span id="smenu"><a id="amenu" href="/team_Bling/Product/sroll.do?kind=N">목걸이</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-1 col-xl-1" id="menu">
-						<span id="smenu"><a id="amenu" href="/Product/sroll.do?kind=E">귀걸이</a></span>
+						<span id="smenu"><a id="amenu" href="/team_Bling/Product/sroll.do?kind=E">귀걸이</a></span>
 					</div>
 					<div class="col-4 col-md-2 col-lg-7 col-xl-7" id="menu_end">
-						<span id="smenu"><a id="amenu" href="/Product/sroll.do?kind=B">팔찌</a></span>
+						<span id="smenu"><a id="amenu" href="/team_Bling/Product/sroll.do?kind=B">팔찌</a></span>
 					</div>
 				</div>
 			</div>
@@ -111,38 +111,38 @@
      	
 		<div class="col-lg-1 col-md-1 col-sm-2 col-2 scmenu" >
 			<!-- 집 모양 메인페이지로 이동  -->
-		   <a href="/"><i class="bi bi-house-fill"></i></a>
+		   <a href="/team_Bling/"><i class="bi bi-house-fill"></i></a>
 		</div>
 		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
-			<a id="header_notice1" href="/Login/main.do">LOGIN</a>
+			<a id="header_notice1" href="/team_Bling/Login/main.do">LOGIN</a>
 		</div>
 		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
-			<a id="header_event1" href="/Join/normal.do">JOIN US</a>
+			<a id="header_event1" href="/team_Bling/Join/normal.do">JOIN US</a>
 		</div>
 		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
-			<a id="header_event1" href="/Basket/cart.do" >CART
+			<a id="header_event1" href="/team_Bling/Basket/cart.do" >CART
 	       <span class="badge bg-secondary rounded-pill" id="cart_count1"></span></a>
 		</div>
 		<div class="col-lg-2 col-md-4 col-sm-3 col-3 scmenu cust">
-		   <a id="customerCenter1" href="/Customer/main.do?page=1">고객센터</a>
+		   <a id="customerCenter1" href="/team_Bling/Customer/main.do?page=1">고객센터</a>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="amenu" href="/Product/best_new.do?kind=best">BEST</a></span>
+			<span><a id="amenu" href="/team_Bling/Product/best_new.do?kind=best">BEST</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="amenu" href="/Product/best_new.do?kind=new">NEW</a></span>
+			<span><a id="amenu" href="/team_Bling/Product/best_new.do?kind=new">NEW</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="amenu" href="/Product/sroll.do?kind=R">반지</a></span>
+			<span><a id="amenu" href="/team_Bling/Product/sroll.do?kind=R">반지</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="amenu" href="/Product/sroll.do?kind=N">목걸이</a></span>
+			<span><a id="amenu" href="/team_Bling/Product/sroll.do?kind=N">목걸이</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="amenu" href="/Product/sroll.do?kind=E">귀걸이</a></span>
+			<span><a id="amenu" href="/team_Bling/Product/sroll.do?kind=E">귀걸이</a></span>
 		</div>
 		<div class="col-lg-1 col-md-2  col-sm-2 col-2 scmenu">
-			<span><a id="amenu" href="/Product/sroll.do?kind=B">팔찌</a></span>
+			<span><a id="amenu" href="/team_Bling/Product/sroll.do?kind=B">팔찌</a></span>
 		</div>
 	</div>
   </div>
@@ -166,7 +166,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="logout_btn_no">아니요</button>
-        <button type="button" class="btn btn-primary"  id="logout_btn" onclick="location.href='${path}/Login/logout.do'" >예</button>
+        <button type="button" class="btn btn-primary"  id="logout_btn" onclick="location.href='/team_Bling/${path}/Login/logout.do'" >예</button>
       </div>
     </div>
   </div>
@@ -200,7 +200,7 @@ scrollTop 은 윈도우에서 스크롤의 위치가 가장 상위에 있다는 
     });
     
     $.ajax({
-		url:"/Ad_Main/count.do",
+		url:"/team_Bling/Ad_Main/count.do",
 		type:"POST",
 		success:function(){
 		},error:function(){
@@ -217,7 +217,7 @@ function cart_count_fn(){
 	let midx = "<c:out value='${sessionScope.UserVO.midx}'/>";
 	if(midx != null && midx != ""){
 		$.ajax({
-			url:"/Header_cart.do",
+			url:"/team_Bling/Header_cart.do",
 			type:"POST",
 			data:{"midx":midx},
 			success:function(data){

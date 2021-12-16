@@ -74,7 +74,7 @@
 
 <section>
 	<h2>상품 문의 하기</h2>
-	<form name="question" action="/Customer/product_write.do" method="POST">
+	<form name="question" action="/team_Bling/Customer/product_write.do" method="POST">
 	<table>
 		<tr class="tr1">
 			<td style="width:180px;"><span class="red">*</span>제목</td>
