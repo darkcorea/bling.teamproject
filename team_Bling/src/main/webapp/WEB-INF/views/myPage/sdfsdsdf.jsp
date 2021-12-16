@@ -87,7 +87,7 @@
 	<section>
         <table style="margin-right: auto;margin-left: auto;">
             <h2 style="text-align: center;">커스터마이징</h2>
-            <button type="button" class="btn btn-outline-primary" onclick="location.href='/Custom/list.do'" style="float: right;" id="mr">커스터마이징 리스트</button>
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='${cPath}/Custom/list.do'" style="float: right;" id="mr">커스터마이징 리스트</button>
             <button type="button" class="btn btn-outline-warning" onclick="location.href='/'" style="float: right;">홈</button>
             <br>
             <tr>
@@ -120,9 +120,9 @@
                 <td id="kind">
                     <div style="height: 800px;overflow: auto;">
                         목걸이 필수템들
-                        <a style="cursor:pointer;" onclick="javascript:types(1)"><img src="/team_Bling/resources/custom/체인.JPG" id="type"></a>
-                        <a style="cursor:pointer;" onclick="javascript:types(2)"><img src="/team_Bling/resources/custom/고리.jpg" id="type"></a>
-                        <a style="cursor:pointer;" onclick="javascript:types(3)"><img src="/team_Bling/resources/custom/장식.jpeg" id="type"></a>
+                        <a style="cursor:pointer;" onclick="javascript:types(1)"><img src="${cPath}/team_Bling/resources/custom/체인.JPG" id="type"></a>
+                        <a style="cursor:pointer;" onclick="javascript:types(2)"><img src="${cPath}/team_Bling/resources/custom/고리.jpg" id="type"></a>
+                        <a style="cursor:pointer;" onclick="javascript:types(3)"><img src="${cPath}/team_Bling/resources/custom/장식.jpeg" id="type"></a>
                     </div>
                 </td>
             </tr>
@@ -378,7 +378,7 @@
     					url:"${cPath}/Custom/scrshot.do",
     					success:function(data){
     						alert("커스터마이징이 완료되었습니다.");
-    						location.href="/Custom/list.do";
+    						location.href="${cPath}/Custom/list.do";
     						console.log(data);
     					},error:function(a,b,c){
     						alert("error");
