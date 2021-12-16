@@ -58,7 +58,7 @@ public class Ad_LoginController {
 		System.out.println("컨트롤러 check2 : "+result);
 		
 		if(result == true) {
-			mav.setViewName("redirect:/Ad_Main/main.do");
+			mav.setViewName("redirect:/team_Bling/Ad_Main/main.do");
 		}
 		else {
 			mav.setViewName("admin/Login/login2");
