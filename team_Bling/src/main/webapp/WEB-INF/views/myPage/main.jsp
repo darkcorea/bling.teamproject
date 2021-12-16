@@ -29,10 +29,10 @@
 			} else{
 				str += "<c:forEach items='${recentOrder}' var='ro'>";
 				
-				str += "	<tr>";
+				str += "	<tr id='tableRow'>";
 				str += "		<td id='td1'><span id='t1'>${ro.rdate}</span></td>";
 				str += "		<td id='td2'><span id='t2'>${ro.order_idx}</span></td>";
-				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/Product/detail.do?pidx=${ro.pidx}'>${ro.pname} / ${ro.oname}</a></span></td>";
+				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/Product/detail.do?pidx=${ro.pidx}'>${ro.pname} <br> ${ro.oname}</a></span></td>";
 				str += "		<td id='td4'><span id='t4'><fmt:formatNumber value='${(ro.saleprice+ro.addprice)*ro.quantitySum}' pattern='#,###' />원</span></td>";
 				str += "		<td id='td5'><span id='t5'>${ro.quantitySum}</span></td>";
 				
@@ -89,6 +89,9 @@
 				str += "		<c:if test='${ro.date_differ <= 7}'>";
 				str += "			<c:if test='${ro.contents != null}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite2' data-bs-toggle='modal' data-bs-target='#staticBackdrop2' onclick='reviewDetail(${ro.ridx})' value='리뷰 확인' readonly></span></td>";
+				str += "			</c:if>";
+				str += "			<c:if test='${ro.contents == null && ro.deli_stat != \"C\"}'>";
+				str += "				<td id='td7'><span id='t7'></span></td>";
 				str += "			</c:if>";
 				str += "			<c:if test='${ro.contents == null && ro.deli_stat == \"C\"}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite1' data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${ro.detail_idx})' value='리뷰 작성' readonly></span></td>";
@@ -659,6 +662,10 @@
 		#noneOrder{
 			position: relative;
 			left: 280px;
+		}
+		#tableRow{
+			border-bottom: 1px solid black;
+			width: 710px;
 		}
 		#t1,#t4{
 			width: 100px;

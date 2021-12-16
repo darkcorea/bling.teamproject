@@ -96,7 +96,7 @@ public class MyPageController {
 		//최근 주문 정보(product,option,order,order_detail,delivery,review 6개 테이블 join)
 		Criteria sc = new Criteria();
 		sc.setPage(page);
-		sc.setPerPageNum(10);
+		sc.setPerPageNum(20);
 
 		PageMaker pm = new PageMaker();
 		pm.setScri(sc);
