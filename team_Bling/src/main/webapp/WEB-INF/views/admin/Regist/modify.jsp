@@ -8,9 +8,6 @@
 <meta http-equiv="X-UA-Compatible" content ="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>관리자 상품 수정</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
 
 <style>
 	section {
@@ -95,8 +92,8 @@
 		<!-- 옆 nav 바 -->	
 		<div class="quickmenu">
 			  <ul>
-			    <li><a href="/Ad_regist/list.do?page=1">리스트</a></li>
-			    <li><a href="/Ad_regist/regist.do">상품 등록</a></li>
+			    <li><a href="/team_Bling/Ad_regist/list.do?page=1">리스트</a></li>
+			    <li><a href="/team_Bling/Ad_regist/regist.do">상품 등록</a></li>
 			    <li><a href="#">품절상품</a></li> 
 			  </ul>
 		</div>
@@ -256,22 +253,22 @@
 				<!-- 이미지들 보여주고 삭제 -->
 				<h4>제품 이미지들</h4>
 				<div id="image1">
-					<img src="/resources/image/${image.main}" class="img-thumbnail image2" id="image-main" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기  main">
+					<img src="/team_Bling/resources/image/${image.main}" class="img-thumbnail image2" id="image-main" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기  main">
 					<c:if test="${image.detail1 ne null}">
 						<div class="image2 center" id="detail1">
-						<img src="/resources/image/${image.detail1}" class="img-thumbnail" id="detail1" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기  detail1">
+						<img src="/team_Bling/resources/image/${image.detail1}" class="img-thumbnail" id="detail1" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기  detail1">
 						<br><button class="t1 btn btn-secondary" onclick="deleteImg_fn('detail1','${image.detail1}')">삭제</button>
 						</div>					
 					</c:if>
 					<c:if test="${image.detail2 ne null}">
 						<div class="image2 center" id="detail2">
-						<img src="/resources/image/${image.detail2}" class="img-thumbnail" id="detail1" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기  detail2">
+						<img src="/team_Bling/resources/image/${image.detail2}" class="img-thumbnail" id="detail1" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기  detail2">
 						<br><button class="t1 btn btn-secondary" onclick="deleteImg_fn('detail2','${image.detail2}')">삭제</button>
 						</div>
 						</c:if>
 					<c:if test="${image.detail3 ne null}">
 						<div class="image2 center" id="detail3">
-						<img src="/resources/image/${image.detail3}" class="img-thumbnail" id="detail1" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기  detail3">
+						<img src="/team_Bling/resources/image/${image.detail3}" class="img-thumbnail" id="detail1" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기  detail3">
 						<br><button class="t1 btn btn-secondary" onclick="deleteImg_fn('detail3','${image.detail3}')">삭제</button>
 						</div>	
 					</c:if>
@@ -279,22 +276,22 @@
 				<br><br>
 				<h4>상품 설명 이미지들</h4>
 				<div id="showing-image">
-					<img src="/resources/simage/${image.showing1}" class="img-thumbnail image3" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기 showing1">
+					<img src="/team_Bling/resources/simage/${image.showing1}" class="img-thumbnail image3" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기 showing1">
 					<c:if test="${image.showing2 ne null}">
 						<div class="image3 center" id="showing2">
-						<img src="/resources/simage/${image.showing2}" class="img-thumbnail image3" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기 showing2">
+						<img src="/team_Bling/resources/simage/${image.showing2}" class="img-thumbnail image3" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기 showing2">
 						<br><button class="t1 btn btn-secondary" onclick="deleteImg_fn('showing2','${image.showing2}')">삭제</button>
 						</div>
 					</c:if>
 					<c:if test="${image.showing3 ne null}">
 						<div class="image3 center" id="showing3">
-						<img src="/resources/simage/${image.showing3}" class="img-thumbnail image3" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기 showing3">
+						<img src="/team_Bling/resources/simage/${image.showing3}" class="img-thumbnail image3" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기 showing3">
 						<br><button class="t1 btn btn-secondary" onclick="deleteImg_fn('showing3','${image.showing3}')">삭제</button>
 						</div>
 					</c:if>
 					<c:if test="${image.showing4 ne null}">
 						<div class="image3 center" id="showing4">
-						<img src="/resources/simage/${image.showing4}" class="img-thumbnail image3" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기 showing4">
+						<img src="/team_Bling/resources/simage/${image.showing4}" class="img-thumbnail image3" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기 showing4">
 						<br><button class="t1 btn btn-secondary" onclick="deleteImg_fn('showing4','${image.showing4}')">삭제</button>
 						</div>
 					</c:if>
@@ -310,7 +307,7 @@
 				<!-- 이미지 수정  -->
 				<span class="title">이미지 </span><span class="red"> *사진 변경 및 추가</span>
 				<br><br>
-				<form name="iamge_fn1" action="/Ad_regist/modifyImg.do" method="post" enctype="multipart/form-data">
+				<form name="iamge_fn1" action="/team_Bling/Ad_regist/modifyImg.do" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="pidx" value="${product.pidx}" >
 					<div class="mb-3">
 	  					<label class="form-label bold">메인 이미지
@@ -396,7 +393,7 @@ function updatePro(form){
 		let formData = $("form[name=frm]").serialize();
 			$.ajax({
 				cache:false,
-				url:"/Ad_regist/updatePro.do",
+				url:"/team_Bling/Ad_regist/updatePro.do",
 				type:"POST",
 				data:formData,
 				ContentType:"application/json",
@@ -434,7 +431,7 @@ function updateOpt(type){
 	 var formData = $("form[name="+type+"]").serialize();
 		$.ajax({
 			cache:false,
-			url:"/Ad_regist/updateOpt.do",
+			url:"/team_Bling/Ad_regist/updateOpt.do",
 			type:"POST",
 			data:formData,
 			ContentType:"application/json",
@@ -475,7 +472,7 @@ function deleteOpt(type,oidx){
     	 
     	 $.ajax({
     			cache:false,
-    			url:"/Ad_regist/deleteOpt.do",
+    			url:"/team_Bling/Ad_regist/deleteOpt.do",
     			type:"POST",
     			data:{"oidx":oidx},
     			ContentType:"application/json",
@@ -501,7 +498,7 @@ function deleteImg_fn(kind,fileName){
     } else {
    	 
    	 $.ajax({
-   			url:"/Ad_regist/deleteImg.do",
+   			url:"/team_Bling/Ad_regist/deleteImg.do",
    			type:"POST",
    			data:{"pidx":pidx, "kind":kind, "fileName":fileName},
    			success:function(data){
