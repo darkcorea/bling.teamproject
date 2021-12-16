@@ -491,10 +491,8 @@ function iamport(){
 	var rphone = $("#rphone").val();
 	var recipient = $("#recipient").val();
 	IMP.init('imp72441252');
-	if( $("#payed_mileage").val() == "" ){
-		$("#payed_mileage").val(0);
-	}
-	else if(recipient==""){
+	
+	 if(recipient==""){
 		alert("받는 분 이름을 입력하세요");
 	}else if(zipcode==""){
 		alert("주소검색을 하세요");
@@ -505,6 +503,10 @@ function iamport(){
 		return;
 	}
 	else{ if(payment=="카드"){
+		
+		if( $("#payed_mileage").val() == "" ){
+			$("#payed_mileage").val(0);
+		}
 		IMP.request_pay({
 		    pg : 'kcp',
 		    pay_method : 'card',
@@ -613,6 +615,9 @@ function iamport(){
 				});
 			});
 		}else if(payment=="계좌이체"){
+			if( $("#payed_mileage").val() == "" ){
+				$("#payed_mileage").val(0);
+			}
 			IMP.request_pay({
 			    pg : 'kcp',
 			    pay_method : 'trans',
@@ -629,6 +634,10 @@ function iamport(){
 			});
 		}
 		else if(payment=="무통장"){
+			
+			if( $("#payed_mileage").val() == "" ){
+				$("#payed_mileage").val(0);
+			}
 			var formData = $("form[name=frm]").serialize();
 			var productname = $("#productname").val();
 			 $.ajax({

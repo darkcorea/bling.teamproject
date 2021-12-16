@@ -142,7 +142,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:set var="num" value="1" />
+						
 						<c:forEach items="${list}" var="list">
 						<tr style="vertical-align:middle;">
 							<td class="text_center"><c:out value="${list.rownum}"/></td>
