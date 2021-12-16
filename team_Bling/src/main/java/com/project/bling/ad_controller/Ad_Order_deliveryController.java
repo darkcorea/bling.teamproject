@@ -87,6 +87,19 @@ public class Ad_Order_deliveryController {
 		
 		return "주문상태 변경";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/invoice.do")
+	public String invoice(@RequestBody CombineVO vo) throws Exception {
+		System.out.println("관리자 주문리스트 컨트롤러 : invoice 실행");
+		System.out.println("주문상태 버튼으로 받은 invoice_num : "+vo.getInvoice_num());
+		System.out.println("주문상태 버튼으로 받은 order_idx : "+vo.getOrder_idx());
+		
+		//송장 입력
+		ad_order_deliveryService.invoice(vo);;
+		
+		return "송장 입력";
+	}
 
 /* ------------------------------order------------------------------ */
 	

@@ -29,6 +29,10 @@ public class Ad_Order_deliveryDAO {
 		sqlSession.update(ps+"prodStat", vo);
 	}
 	
+	public void invoice(CombineVO vo) throws Exception {
+		sqlSession.update(ps+"invoice", vo);
+	}
+	
 	public int deliveryCnt(Criteria sc) throws Exception {
 		return sqlSession.selectOne(ps+"deliveryCnt", sc);
 	}

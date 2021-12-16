@@ -10,10 +10,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>관리자 문의 게시판</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet"	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style>
 /* 옆에 nav바  */
 div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
@@ -93,9 +89,9 @@ a {text-decoration:none;}
 <div class="d1">
 	<div class="quickmenu">
 		  <ul>
-		 	<li><a href="/Ad_board/question.do">문의게시판</a></li>
-		    <li><a href="/Ad_board/board.do?page=1&type=T">공지&amp;문의</a></li>
-		    <li><a href="#">이벤트</a></li>
+		 	<li><a href="/team_Bling/Ad_board/question.do">문의게시판</a></li>
+		    <li><a href="/team_Bling/Ad_board/board.do?page=1&type=T">공지&amp;문의</a></li>
+		    <li><a href="/team_Bling/Ad_board/event.do">이벤트</a></li>
 		    <li><a href="#">리뷰관리</a></li> 
 		  </ul>
 	</div>
@@ -117,8 +113,8 @@ a {text-decoration:none;}
 	</div>
 	<br>
 	<div class="title center row">
-		<div class="col"><a href="/Ad_board/question.do" class="title2"><span>일반문의</span></a></div>
-		<div class="col"><a href="/Ad_board/question.do" class="title3"><span>제품문의</span></a></div>
+		<div class="col"><a href="/team_Bling/Ad_board/question.do" class="title2"><span>일반문의</span></a></div>
+		<div class="col"><a href="/team_Bling/Ad_board/question.do" class="title3"><span>제품문의</span></a></div>
 	</div><br>	
 	
 	<!-- 문의 테이블  -->
@@ -198,8 +194,16 @@ a {text-decoration:none;}
   					<c:set var="date" value="${list.rdate}"/>
 					<td class="center"><c:out value="${fn:substring(date,0,10)}"/></td>
 					<td class="center">
-						<c:if test="${list.depth == 0 && list.state == 'N'}">						
-						<button class="btn btn-outline-primary" onclick="reply_fn(${list.qidx})">답글작성</button>
+						<c:if test="${list.depth == 0 && list.state == 'N'}">
+							<c:if test="${list.order_idx != '' && list.detail_idx == ''}">
+								<button class="btn btn-outline-primary" onclick="reply_fn('${list.qidx}','${list.category}','${list.order_idx}','0')">답글작성</button>
+							</c:if>
+							<c:if test="${list.detail_idx != ''  && list.order_idx == ''}">
+								<button class="btn btn-outline-primary" onclick="reply_fn('${list.qidx}','${list.category}','0','${list.detail_idx}')">답글작성</button>
+							</c:if>
+							<c:if test="${list.detail_idx == '' && list.order_idx == ''}">
+								<button class="btn btn-outline-primary" onclick="reply_fn('${list.qidx}','${list.category}','0','0')">답글작성</button>
+							</c:if>		
 						</c:if>
 						<c:if test="${list.depth == 1 && list.state == 'Y'}">						
 						<button class="btn btn-outline-success" onclick="modify_fn(${list.qidx})">수정</button>
@@ -223,7 +227,22 @@ a {text-decoration:none;}
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      	<div id="reply_write1" style="margin-left:135px;">
+      	<div id="reply_write1" style="margin-left:50px;">
+      	<form name="reply_question" id="reply_question">
+      	<table>
+      		<tr style="height:50px;">
+      			<td style="width:80px;">제목</td>
+      			<td><input type="text" name="title" maxlength="30" style="width:491px;">
+      				<input type="hidden" name="category" id="category">
+      				<input type="text" style="display:none;">
+      			</td>
+      		</tr>
+      		<tr>
+      			<td>문의답변</td>
+      			<td><textarea name="content" cols="60" rows="15"></textarea></td>
+      		</tr>
+      	</table>
+      	</form>
       	</div>
       </div>
       <div class="modal-footer" id="reply_write2">
@@ -247,7 +266,31 @@ function coll_fn(qidx){
 }
 
 // 답글 작성 버튼을 누르면
-function reply_fn(qidx){
+function reply_fn(qidx,category,order_idx,detail_idx){
+	
+	$("#reply_question")[0].reset();
+	$("#category").val(category);
+	
+	/*
+	$.ajax({
+		url:"/team_Bling/Ad_board/question_detail.do",
+		type:"POST",
+		data:{"qidx":qidx,"order_idx":order_idx,"detail_idx":detail_idx},
+		success:function(data){
+			if(order_idx == 0 && detail_idx == 0){
+				
+				
+			}else{
+				
+				
+			}
+			
+		},error:function(){
+			alert("답글작성 오류")
+		}
+	});
+	*/
+	
 	$("#reply_write").modal("show");
 	
 	

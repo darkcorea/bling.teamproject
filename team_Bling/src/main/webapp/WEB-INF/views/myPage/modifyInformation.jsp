@@ -8,11 +8,6 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>나의 정보 수정</title>
-		<!-- Bootstrap core CSS -->
-  		<link href="/resources/css/bootstrap.css" rel="stylesheet">
-  	<!-- Bootstrap core JavaScript -->
-  		<script src="/resources/js/jquery-3.6.0.min.js"></script>
-		<script src="/resources/js/bootstrap.bundle.js"></script>
 	<!-- SweetAlert2(alert,modal창) -->
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<!-- 주소 검색 api -->
@@ -310,7 +305,7 @@
 					alert("이메일을 입력해주세요.");
 				}else{
 					$.ajax({
-						url:"/MyPage/confirmemail.do",
+						url:"${cPath}/MyPage/confirmemail.do",
 						type:"POST",
 						data:{"emaildata":emaildata},
 						ContentType:"application/json",

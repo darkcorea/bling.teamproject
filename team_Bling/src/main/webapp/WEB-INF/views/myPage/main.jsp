@@ -8,13 +8,6 @@
 <head>
 <meta charset="UTF-8">
 <title>MyPage</title>
-	<!-- Bootstrap core CSS -->
-  		<link href="/resources/css/bootstrap.css" rel="stylesheet">
-  	<!-- Bootstrap core JavaScript -->
-  		<script src="/resources/js/jquery-3.6.0.min.js"></script>
-		<script src="/resources/js/bootstrap.bundle.js"></script>
-	<!-- Bootstrap icon -->	
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	<!-- SweetAlert2(alert,modal창) -->
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	
@@ -29,10 +22,10 @@
 			} else{
 				str += "<c:forEach items='${recentOrder}' var='ro'>";
 				
-				str += "	<tr>";
+				str += "	<tr id='tableRow'>";
 				str += "		<td id='td1'><span id='t1'>${ro.rdate}</span></td>";
 				str += "		<td id='td2'><span id='t2'>${ro.order_idx}</span></td>";
-				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/Product/detail.do?pidx=${ro.pidx}'>${ro.pname} / ${ro.oname}</a></span></td>";
+				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/{cPath}Product/detail.do?pidx=${ro.pidx}'>${ro.pname} <br> ${ro.oname}</a></span></td>";
 				str += "		<td id='td4'><span id='t4'><fmt:formatNumber value='${(ro.saleprice+ro.addprice)*ro.quantitySum}' pattern='#,###' />원</span></td>";
 				str += "		<td id='td5'><span id='t5'>${ro.quantitySum}</span></td>";
 				
@@ -90,6 +83,9 @@
 				str += "			<c:if test='${ro.contents != null}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite2' data-bs-toggle='modal' data-bs-target='#staticBackdrop2' onclick='reviewDetail(${ro.ridx})' value='리뷰 확인' readonly></span></td>";
 				str += "			</c:if>";
+				str += "			<c:if test='${ro.contents == null && ro.deli_stat != \"C\"}'>";
+				str += "				<td id='td7'><span id='t7'></span></td>";
+				str += "			</c:if>";
 				str += "			<c:if test='${ro.contents == null && ro.deli_stat == \"C\"}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite1' data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${ro.detail_idx})' value='리뷰 작성' readonly></span></td>";
 				str += "			</c:if>";
@@ -115,7 +111,7 @@
 			//console.log(event.currentTarget.value);
 			
 			$.ajax({
-				url: "/MyPage/detailIdx.do",
+				url: "{cPath}/MyPage/detailIdx.do",
 				type: "post",
 				data: "detail_idx="+detail_idx,
 				ContentType: "json",
@@ -132,7 +128,7 @@
 		
 		function reviewDetail(ridx){
 			$.ajax({
-				url: "/MyPage/reviewDetail.do",
+				url: "{cPath}/MyPage/reviewDetail.do",
 				type: "post",
 				data: "ridx="+ridx,
 				ContentType: "json",
@@ -217,7 +213,7 @@
 			formData.append("image2", image2);
 			
 			$.ajax({
-				url: "/MyPage/upload.do",
+				url: "{cPath}/MyPage/upload.do",
 				type: "post",
 				data: formData,
 				// processData: true=> get방식, false => post방식
@@ -330,7 +326,7 @@
 			
 			
 			$.ajax({
-				url: "/MyPage/reviewWrite.do",
+				url: "{cPath}/MyPage/reviewWrite.do",
 				type: "post",
 				data: "contents="+contents+"&grade="+grade,
 				ContentType: "json",
@@ -379,7 +375,7 @@
 			console.log("delReview-ridx : "+ridx);
 			
 			$.ajax({
-				url: "/MyPage/delete.do",
+				url: "{cPath}/MyPage/delete.do",
 				type: "post",
 				data: {"ridx":ridx},
 				ContentType: "json",
@@ -659,6 +655,10 @@
 		#noneOrder{
 			position: relative;
 			left: 280px;
+		}
+		#tableRow{
+			border-bottom: 1px solid black;
+			width: 710px;
 		}
 		#t1,#t4{
 			width: 100px;
@@ -1041,7 +1041,7 @@
 								<c:if test="${pm.prev == true}">
 								<li class='page-item'>
 								<c:set var="prev" value="${pm.startPage -1}"/>
-									<a class='page-link' aria-label='Previous' href="/MyPage/main.do?page=${prev}">
+									<a class='page-link' aria-label='Previous' href="{cPath}/MyPage/main.do?page=${prev}">
 										<span aria-hidden='true' class='pointer' >&laquo;</span>
 									</a>
 								</li>
@@ -1052,14 +1052,14 @@
 								<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
 									<c:if test = "${pageNum == page}">
 									<li class="page-item active">	
-										<a class="page-link pointer" href="/MyPage/main.do?page=${pageNum}">
+										<a class="page-link pointer" href="{cPath}/MyPage/main.do?page=${pageNum}">
 											<c:out value="${pageNum}"/>
 										</a>
 									</li>
 									</c:if>
 									<c:if test = "${pageNum != page}">
 									<li class="page-item">	
-										<a class="page-link pointer" href="/MyPage/main.do?page=${pageNum}">
+										<a class="page-link pointer" href="{cPath}/MyPage/main.do?page=${pageNum}">
 											<c:out value="${pageNum}"/>
 										</a>
 									</li>
@@ -1069,7 +1069,7 @@
 								<!-- 뒤로 가기 버튼 , 키워드 유지하면서 이동하기 -->
 								<c:if test="${pm.next && pm.endPage > 0}">
 								<li class='page-item'>
-									<a class='page-link' aria-label='Next' href="/MyPage/main.do?page=${pm.endPage + 1}">
+									<a class='page-link' aria-label='Next' href="{cPath}/MyPage/main.do?page=${pm.endPage + 1}">
 										<span aria-hidden='true' class='pointer'>&raquo;</span>
 									</a>
 								</li>

@@ -30,6 +30,12 @@ public class Ad_Order_deliveryServiceImpl implements Ad_Order_deliveryService {
 	public void prodStat(CombineVO vo) throws Exception {
 		ad_order_deliveryDAO.prodStat(vo);
 	}
+	
+
+	@Override
+	public void invoice(CombineVO vo) throws Exception {
+		ad_order_deliveryDAO.invoice(vo);;
+	}
 
 	@Override
 	public int deliveryCnt(Criteria sc) throws Exception {

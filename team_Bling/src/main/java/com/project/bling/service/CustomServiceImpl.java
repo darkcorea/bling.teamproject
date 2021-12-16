@@ -23,4 +23,9 @@ public class CustomServiceImpl implements CustomService{
 	public List<CustomVO> shapes(CustomVO co) throws Exception {
 		return customDAO.shapes(co);
 	}
+
+	@Override
+	public void insertdb(CustomVO co) throws Exception {
+		customDAO.insertdb(co);
+	}
 }

@@ -15,7 +15,7 @@ public class CustomVO {
 	private int midx;
 	private String sumcoidx;
 	private int cntoption;
-	//customimg, price를 option이랑 같이 씀
+	//customimg, price, name을 option이랑 같이 씀
 	
 	public int getCoidx() {
 		return coidx;

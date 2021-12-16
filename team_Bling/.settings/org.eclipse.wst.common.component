@@ -28,7 +28,7 @@
         
         
         <property name="java-output-path" value="target/classes"/>
-        <property name="context-root" value="bling"/>
+        <property name="context-root" value="team_Bling"/>
                                 	
     
     

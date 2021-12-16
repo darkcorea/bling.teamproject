@@ -10,13 +10,9 @@
 	<meta http-equiv="X-UA-Compatible" content ="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>공지사항수정</title>
-	<script src="/js/jquery-3.6.0.min.js"></script>
-	<script src="/js/bootstrap.bundle.js"></script>
-	<script src="/js/summernote/summernote-lite.js"></script>
-	<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
-	
-	<link rel="stylesheet" href="/css/summernote/summernote-lite.css">
-	<link rel="stylesheet" href="/css/bootstrap.css">
+	<script src="/team_Bling/js/summernote/summernote-lite.js"></script>
+	<script src="/team_Bling/js/summernote/lang/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/team_Bling/css/summernote/summernote-lite.css">
 
 		<style>
 			div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
@@ -41,9 +37,9 @@
 		<div class="d1">
 			<div class="quickmenu">
 				  <ul>
-				 	<li><a href="#">문의게시판</a></li>
-				    <li><a href="/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
-				    <li><a href="#">이벤트</a></li>
+				 	<li><a href="/team_Bling/Ad_board/question.do">문의게시판</a></li>
+				    <li><a href="/team_Bling/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
+				    <li><a href="/team_Bling/Ad_board/event.do">이벤트</a></li>
 				    <li><a href="#">리뷰관리</a></li> 
 				  </ul>
 			</div>
@@ -119,7 +115,7 @@
 			
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 			   <input type="submit" class="btn btn-primary" value="수정하기">
-			  <button class="btn btn-outline-secondary" type="button" onclick="location.href='/Ad_board/board.do?page=1&type=T'">취소하기</button>
+			  <button class="btn btn-outline-secondary" type="button" onclick="location.href='/team_Bling/Ad_board/board.do?page=1&type=T'">취소하기</button>
 			</div>
 			
            	<br>
@@ -186,7 +182,7 @@
 			$.ajax({
 				data : data,
 				type : "POST",
-				url : "/Ad_board/uploadSummernoteImageFile",
+				url : "/team_Bling/Ad_board/uploadSummernoteImageFile",
 				contentType : false,
 				enctype : 'multipart/form-data',
 				processData : false,
