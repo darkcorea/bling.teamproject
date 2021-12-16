@@ -10,6 +10,13 @@
 	<select id="shapes" parameterType="CustomVO" resultType="CustomVO">
 		select * from bg_custom_option where type = #{type} and shape = #{shape}
 	</select>
+	
+	<!-- 커스텀db에 저장 -->
+	<insert id="insertdb" parameterType="CustomVO">
+		insert into bg_custom_user
+			(sumcoidx, cntoption, customimg, price, midx, name)
+		values(#{sumcoidx},#{cntoption},#{customimg},#{price},#{midx},#{name})
+	</insert>
 </mapper>
   
   

@@ -8,4 +8,5 @@ public interface CustomService {
 	
 	List<CustomVO> shape(int type) throws Exception;
 	List<CustomVO> shapes(CustomVO co) throws Exception;
+	void insertdb(CustomVO co)throws Exception;
 }

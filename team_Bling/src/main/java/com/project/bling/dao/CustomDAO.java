@@ -23,4 +23,9 @@ public class CustomDAO {
 	public List<CustomVO> shapes(CustomVO co) throws Exception{
 		return sqlSession.selectList(cm+"shapes",co);
 	}
+	
+	//저장하기
+	public void insertdb(CustomVO co) throws Exception{
+		sqlSession.insert(cm+"insertdb",co);
+	}
 }
