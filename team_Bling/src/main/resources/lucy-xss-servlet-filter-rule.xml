@@ -26,6 +26,9 @@
         	<url disable="true">/Order/nonorder.do</url>
         </url-rule>
         
+        <url-rule>
+        	<url disable="true">/{imp_uid}</url>
+        </url-rule>
      </url-rule-set>
 
 </config>
