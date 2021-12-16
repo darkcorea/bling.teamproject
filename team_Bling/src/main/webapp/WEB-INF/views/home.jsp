@@ -10,10 +10,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--  위의 3가지는 먼저 와야 합니다. -->
 	<title>Home</title>
- 	<script src="/js/jquery-3.6.0.min.js"></script>
- 	<script src="/js/bootstrap.bundle.js"></script>
-	<link rel="stylesheet" href="/css/bootstrap.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style>
 
 	/* 전반적인 크기에 관한 설정 */
@@ -103,7 +99,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xl-8" id="eventDiv">
-				<span><a id="subMenu1" href="/Event/main.do">Event</a></span>
+				<span><a id="subMenu1" href="/team_Bling/Event/main.do">Event</a></span>
 				<div id="carouselExampleIndicators2" class="carousel slide" data-bs-ride="carousel">
 					<div class="carousel-indicators">
 					<button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>

@@ -7,13 +7,13 @@
 <head>
 <meta charset="UTF-8">
 	<title>login main</title>
-  	<script src="/js/jquery-3.6.0.min.js"></script>
- 	<script src="/js/bootstrap.bundle.js"></script>
+  	<script src="/team_Bling/js/jquery-3.6.0.min.js"></script>
+ 	<script src="/team_Bling/js/bootstrap.bundle.js"></script>
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<link rel="stylesheet" href="/css/bootstrap.css">	
+	<link rel="stylesheet" href="/team_Bling/css/bootstrap.css">	
   	<!-- Bootsrap icon(cart, heart) -->
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-  	<link rel="stylesheet" href="/css/header.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  	<link rel="stylesheet" href="/team_Bling/css/header.css">
 </head>
 <body>
 		<!-- header -->
@@ -38,7 +38,7 @@
 				<div class="row" id="headerRow3">
 					<div class="col-md-4"></div>
 					<div class="col-md-4" id="headerCol3">
-						<a href="/team_Bling/"><img id="title_image" src="/resources/simage/logo.png" alt=""></a>
+						<a href="/team_Bling/"><img id="title_image" src="/team_Bling/resources/simage/logo.png" alt=""></a>
 					</div>
 					<div class="col-md-4" id="headerCol4">
 						<c:choose>
