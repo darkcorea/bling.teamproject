@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.bling.domain.PageMaker;
+import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
+import com.project.bling.vo.Order_detailVO;
 import com.project.bling.vo.QuestionVO;
 
 @Repository
@@ -77,4 +79,18 @@ public class Ad_BoardDAO {
 	public List<QuestionVO> question_list()throws Exception{
 		return sqlSession.selectList(ps+"question_list");
 	}
+	
+	// 문의 사항 상품 정보 가져오기
+	public List<CombineVO> question_detail(Order_detailVO ov)throws Exception{
+		return sqlSession.selectList(ps+"question_detail", ov);
+	}
+	
+	// 문의사항 답글 작성과 업데이트 원글 답변완료 달기
+	public void question_write(QuestionVO qv) throws Exception {
+		sqlSession.insert(ps+"question_write",qv);
+		sqlSession.update(ps+"question_state",qv);
+	}
+	
+	
+	
 }
