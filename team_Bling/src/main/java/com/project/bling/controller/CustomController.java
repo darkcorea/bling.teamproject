@@ -10,6 +10,7 @@ import java.util.Base64.Decoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bling.service.CustomService;
 import com.project.bling.vo.CustomVO;
+import com.project.bling.vo.UserVO;
 
 @RequestMapping(value="/Custom")
 @Controller
@@ -49,7 +51,7 @@ public class CustomController {
 	@ResponseBody
 	@RequestMapping(value = "/scrshot.do", method = RequestMethod.POST)
 	public ModelMap ImgSaveTest(@RequestParam HashMap<Object, Object> param, final HttpServletRequest request, final HttpServletResponse response
-			,String name, int countval, int total, String totalname) throws Exception {
+			,String name, int countval, int total, String totalname, HttpSession session) throws Exception {
 		ModelMap map = new ModelMap();
 		
 		String binaryData = request.getParameter("imgSrc");
@@ -69,14 +71,19 @@ public class CustomController {
 			stream.close();
 			System.out.println("캡처 저장");
 			
+			//로그인시 세션에 저장된 회원정보 불러오기
+			UserVO uv = (UserVO)session.getAttribute("UserVO");
+			int midx = uv.getMidx();
+			
 			CustomVO vo = new CustomVO();
 			vo.setName(name);
 			vo.setCntoption(countval);
 			vo.setPrice(total);
 			vo.setSumcoidx(totalname);
 			vo.setCustomimg(fileName+".png");
+			vo.setMidx(midx);
 			
-			
+			customService.insertdb(vo);
 		    
 		}catch(Exception e){
 			e.printStackTrace();
