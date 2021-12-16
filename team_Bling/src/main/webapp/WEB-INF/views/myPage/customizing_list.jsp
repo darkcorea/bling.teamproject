@@ -8,11 +8,6 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>커스터마이징 리스트</title>
-		<!-- Bootstrap core CSS -->
-  		<link href="/resources/css/bootstrap.css" rel="stylesheet">
-  	<!-- Bootstrap core JavaScript -->
-  		<script src="/resources/js/jquery-3.6.0.min.js"></script>
-		<script src="/resources/js/bootstrap.bundle.js"></script>
 	<!-- SweetAlert2(alert,modal창) -->
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		
@@ -42,7 +37,7 @@
 					</div>
 					
 					<div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
-						<button type="button" class="btn btn-primary" onclick="location.href='/Custom/ssss.do'">커스터마이징 만들기</button>
+						<button type="button" class="btn btn-primary" onclick="location.href='${cPath}/Custom/ssss.do'">커스터마이징 만들기</button>
 						<br><br>
 						
 						<!-- 커마 리스트 -->
@@ -75,7 +70,7 @@
 		function list(page){
 			var str = "";
 			$.ajax({
-				url:"/Custom/listajax.do",
+				url:"${cPath}/Custom/listajax.do",
 				type:"POST",
 				data:{"page":page},
 				dataType:'json',
@@ -94,10 +89,17 @@
 						str+="<div class='card-group'>";
 						for(let i=0 ; i<data.list.length ; i++){
 							str+="<div class='card'>";
-							str+="<img src='/resources/usercustomizing/"+data.list[i].customimg+"' class='card-img-top'>";
-							str+="<div class='card-body'>";
-							str+="<h5 class='card-title'>"+data.list[i].name+"</h5>";
-							str+=" <p class='card-text'>"+data.list[i].price+"원</p>";
+							if(data.list[i] == null){
+								str+="<img src='...' class='card-img-top'>";
+								str+="<div class='card-body'>";
+								str+="<h5 class='card-title'>커스터마이징을 해보세요</h5>";
+								str+=" <p class='card-text'>커스터마이징</p>";
+							}else{
+								str+="<img src='/team_Bling/resources/usercustomizing/"+data.list[i].customimg+"' class='card-img-top'>";
+								str+="<div class='card-body'>";
+								str+="<h5 class='card-title'>"+data.list[i].name+"</h5>";
+								str+=" <p class='card-text'>"+data.list[i].price+"원</p>";
+							}
 							str+="<a href='#' class='btn btn-outline-dark'>장바구니에 담기</a>";
 							str+="</div>";
 							str+="</div>";
@@ -108,7 +110,7 @@
 						str+="<div class='card-group'>";
 						for(let i=0 ; i<3 ; i++){
 							str+="<div class='card'>";
-							str+="<img src='/resources/usercustomizing/"+data.list[i].customimg+"' class='card-img-top'>";
+							str+="<img src='/team_Bling/resources/usercustomizing/"+data.list[i].customimg+"' class='card-img-top'>";
 							str+="<div class='card-body'>";
 							str+="<h5 class='card-title'>"+data.list[i].name+"</h5>";
 							str+=" <p class='card-text'>"+data.list[i].price+"원</p>";
@@ -120,7 +122,7 @@
 						str+="<div class='card-group'>";
 						for(let i=3 ; i<data.list.length ; i++){
 							str+="<div class='card'>";
-							str+="<img src='/resources/usercustomizing/"+data.list[i].customimg+"' class='card-img-top'>";
+							str+="<img src='/team_Bling/resources/usercustomizing/"+data.list[i].customimg+"' class='card-img-top'>";
 							str+="<div class='card-body'>";
 							str+="<h5 class='card-title'>"+data.list[i].name+"</h5>";
 							str+=" <p class='card-text'>"+data.list[i].price+"원</p>";
@@ -180,11 +182,11 @@
 			
 		}
 		
-		function threelist( start,end,data){
+		/* function threelist( start,end,data){
 			str+="<div class='card-group'>";
 			for(let i=start ; i<end ; i++){
 				str+="<div class='card'>";
-				str+="<img src='/resources/usercustomizing/"+data.list[i].customimg+"' class='card-img-top'>";
+				str+="<img src='/team_Bling/resources/usercustomizing/"+data.list[i].customimg+"' class='card-img-top'>";
 				str+="<div class='card-body'>";
 				str+="<h5 class='card-title'>"+data.list[i].name+"</h5>";
 				str+=" <p class='card-text'>"+data.list[i].price+"원</p>";
@@ -194,6 +196,6 @@
 			}
 			str+="</div>";
 			return str;
-		}
+		} */
 	</script>
 </html>
