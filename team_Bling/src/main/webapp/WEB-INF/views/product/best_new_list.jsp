@@ -11,10 +11,6 @@
 	<meta http-equiv="X-UA-Compatible" content ="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>product list</title>
-	<script src="/js/jquery-3.6.0.min.js"></script>
-	<script src="/js/bootstrap.bundle.js"></script>
-	<link rel="stylesheet" href="/css/bootstrap.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style>
 	
 	section, header {
@@ -80,7 +76,7 @@
 	<script>
 		function like(pidx){
 			$.ajax({
-				url:"/Basket/checklike.do",
+				url:"${cPath}/Basket/checklike.do",
 				type:"POST",
 				data:{"pidx":pidx},
 				ContentType:"application/json",
@@ -122,7 +118,7 @@
 				dataType:'json',
 				data:{"page":page,"orderBy":orderBy,"kind":kind},
 				async: false,
-				url:"/Product/product_scroll.do",
+				url:"${cPath}/Product/product_scroll.do",
 				success:function(returnData){
 					var data = returnData.scroll;
 					var startnum = returnData.startnum;
@@ -148,8 +144,8 @@
 			   	            		html += "NEW";
 			   	            	}
 			   	            	html += "</span>";
-			   	            	html += "<a href='/Product/detail.do?pidx="+data[i].pidx+"' style='text-decoration:none'>";
-			   	            	html += "<img class='img-fluid' src='/resources/image/"+data[i].main+"'>";
+			   	            	html += "<a href='/team_Bling/Product/detail.do?pidx="+data[i].pidx+"' style='text-decoration:none'>";
+			   	            	html += "<img class='img-fluid' src='/team_Bling/resources/image/"+data[i].main+"'>";
 			   	            	html += "</a>";
 			   	            	html += "</div>";
 			   	            	html += "<div>";
@@ -164,7 +160,7 @@
 			   	            	html += "</div>";
 			   	            	html += "<div>";
 			   	            	html += "<h3 class='text-base mb-0'>";
-			   	            	html += "<a class='text-dark prodName' href='/Product/detail.do?pidx="+data[i].pidx+"' style='text-decoration:none'>"+data[i].pname+"</a>";
+			   	            	html += "<a class='text-dark prodName' href='/team_Bling/Product/detail.do?pidx="+data[i].pidx+"' style='text-decoration:none'>"+data[i].pname+"</a>";
 			   	            	html += "</h3>";
 			   	            	html += "</div>";
 			   	            	html += "<div id='totprice'>";
@@ -214,7 +210,7 @@
 					like = 1;
 				}
 				$.ajax({
-					url:"/Basket/like.do",
+					url:"${cPath}/Basket/like.do",
 					type:"POST",
 					data:{"yn":like,"pidx":pidx},
 					ContentType:"application/json",

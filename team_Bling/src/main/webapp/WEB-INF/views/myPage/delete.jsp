@@ -8,13 +8,6 @@
 	<head>
 	<meta charset="UTF-8">
 	<title>탈퇴</title>
-		<!-- Bootstrap core CSS -->
-	  		<link href="/resources/css/bootstrap.css" rel="stylesheet">
-	  	<!-- Bootstrap core JavaScript -->
-	  		<script src="/resources/js/jquery-3.6.0.min.js"></script>
-			<script src="/resources/js/bootstrap.bundle.js"></script>
-		<!-- Bootstrap icon -->	
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 		<!-- SweetAlert2(alert,modal창) -->
 			<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 			
@@ -158,7 +151,7 @@
 		function confirm(){
 			var pass = document.getElementById("pass").value;
 			$.ajax({
-				url:"/MyPage/deletequit.do",
+				url:"{cPath}/MyPage/deletequit.do",
 				type:"post",
 				data:{"pass":pass},
 				dataType:"json",
@@ -188,7 +181,7 @@
 				quitval = document.getElementById("quit6why").value
 			}
 			$.ajax({
-				url:"/MyPage/deletefin.do",
+				url:"{cPath}/MyPage/deletefin.do",
 				type:"post",
 				data:{"quitval":quitval},
 				dataType:"json",

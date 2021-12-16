@@ -9,12 +9,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>비회원 주문 조회 디테일</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
 <!-- SweetAlert2(alert,modal창) -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style>
 	/* 크기 */
 	section{
@@ -100,7 +96,7 @@
 		 <table>
 		 <tr>
 			 <td style='width:150px;'> 
-				 <a href='/team_Bling/Product/detail.do?pidx=${list[0].pidx}'><img class='image_main' src='/resources/image/${list[0].main}'></a> 	
+				 <a href='/team_Bling/Product/detail.do?pidx=${list[0].pidx}'><img class='image_main' src='${cPath}/resources/image/${list[0].main}'></a> 	
 			 </td> 	
 			 <td style='width:300px;'> <a href='/team_Bling/Product/detail.do?pidx=${list[0].pidx}' class='title4'>
 				 <span><b><c:out value="${list[0].pname}"/></b></span></a>

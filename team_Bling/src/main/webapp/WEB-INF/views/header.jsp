@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -7,10 +8,16 @@
 <head>
 <meta charset="UTF-8">
 	<title>login main</title>
+	<c:set var="cPath" value="${pageContext.request.contextPath}"/>
+	
+	<!-- jQuery -->
   	<script src="/team_Bling/js/jquery-3.6.0.min.js"></script>
+  	<!-- bootstrap js -->
  	<script src="/team_Bling/js/bootstrap.bundle.js"></script>
+ 	<!-- bootstrap css -->
+ 	<link rel="stylesheet" href="/team_Bling/css/bootstrap.css">
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<link rel="stylesheet" href="/team_Bling/css/bootstrap.css">	
+		
   	<!-- Bootsrap icon(cart, heart) -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
   	<link rel="stylesheet" href="/team_Bling/css/header.css">

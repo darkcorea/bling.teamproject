@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>아이디 찾기</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
 <script>
 
 	function emailForm(){
@@ -42,9 +41,9 @@
 		str += "</div id='btnDiv'>";
 		
 		str += "<div id='searchDiv'>";
-		str += "	<span id='searchSpan'><a href='/Login/pwdFind.do' id='searchA'>비밀번호 찾기</a></span>";
+		str += "	<span id='searchSpan'><a href='/team_Bling/Login/pwdFind.do' id='searchA'>비밀번호 찾기</a></span>";
 		str += "	<span>｜</span>";
-		str += "	<span id='searchSpan'><a href='/Login/main.do' id='searchA'>로그인 하기</a></span>";
+		str += "	<span id='searchSpan'><a href='/team_Bling/Login/main.do' id='searchA'>로그인 하기</a></span>";
 		str += "</div>";
 		
 		
@@ -87,9 +86,9 @@ function phoneForm(){
 		str += "</div id='btnDiv'>";
 		
 		str += "<div id='searchDiv'>";
-		str += "	<span id='searchSpan'><a href='/Login/pwdFind.do' id='searchA'>비밀번호 찾기</a></span>";
+		str += "	<span id='searchSpan'><a href='/team_Bling/Login/pwdFind.do' id='searchA'>비밀번호 찾기</a></span>";
 		str += "	<span>｜</span>";
-		str += "	<span id='searchSpan'><a href='/Login/main.do' id='searchA'>로그인 하기</a></span>";
+		str += "	<span id='searchSpan'><a href='/team_Bling/Login/main.do' id='searchA'>로그인 하기</a></span>";
 		str += "</div>";
 		
 		
@@ -102,7 +101,7 @@ function idAjax(){
 	console.log(search);
 	
 	$.ajax({
-		url: "/Login/idSearch.do",
+		url: "{cPath}/Login/idSearch.do",
 		type: "POST",
 		data: search,
 		ContentType: "application/json; charset=utf-8",	//contentType : 보내는 데이터의 타입
@@ -123,9 +122,9 @@ function idAjax(){
 				str += "</div>";
 				
 				str += "<div id='searchDiv'>";
-				str += "	<span id='searchSpan'><a href='/Login/pwdFind.do' id='searchA'>비밀번호 찾기</a></span>";
+				str += "	<span id='searchSpan'><a href='/team_Bling/Login/pwdFind.do' id='searchA'>비밀번호 찾기</a></span>";
 				str += "	<span>｜</span>";
-				str += "	<span id='searchSpan'><a href='/Login/main.do' id='searchA'>로그인 하기</a></span>";
+				str += "	<span id='searchSpan'><a href='/team_Bling/Login/main.do' id='searchA'>로그인 하기</a></span>";
 				str += "</div>";
 				
 				document.getElementById("formDiv").innerHTML = str;

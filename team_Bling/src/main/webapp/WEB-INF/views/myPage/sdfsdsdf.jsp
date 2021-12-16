@@ -9,12 +9,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--  위의 3가지는 먼저 와야 합니다. -->
 	<title>커스터마이징</title>
- 	<script src="/js/jquery-3.6.0.min.js"></script>
- 	<script src="/js/bootstrap.bundle.js"></script>
  	<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
  	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="/css/bootstrap.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	<!-- IE10, 11 지원을 위한 es6-promise --> 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js"></script>
 
@@ -114,9 +110,9 @@
                 <td id="kind">
                     <div style="height: 800px;overflow: auto;">
                         목걸이 필수템들
-                        <a style="cursor:pointer;" onclick="javascript:types(1)"><img src="/resources/custom/체인.JPG" id="type"></a>
-                        <a style="cursor:pointer;" onclick="javascript:types(2)"><img src="/resources/custom/고리.jpg" id="type"></a>
-                        <a style="cursor:pointer;" onclick="javascript:types(3)"><img src="/resources/custom/장식.jpeg" id="type"></a>
+                        <a style="cursor:pointer;" onclick="javascript:types(1)"><img src="/team_Bling/resources/custom/체인.JPG" id="type"></a>
+                        <a style="cursor:pointer;" onclick="javascript:types(2)"><img src="/team_Bling/resources/custom/고리.jpg" id="type"></a>
+                        <a style="cursor:pointer;" onclick="javascript:types(3)"><img src="/team_Bling/resources/custom/장식.jpeg" id="type"></a>
                     </div>
                 </td>
             </tr>
@@ -179,7 +175,7 @@
             var str = "";
             
             $.ajax({
-            	url:"/Custom/customoption.do",
+            	url:"{cPath}/Custom/customoption.do",
             	type:"post",
             	data:{"type":type},
             	dataType:'json',
@@ -188,9 +184,9 @@
         			console.log(data[0])
             		for(var i=0;i<data.length;i++){
             			if(data[0].type == 1){
-            				str += "<a style='cursor:pointer;' onclick='main_option("+data[i].type+","+data[i].shape+")'><img src='/resources/custom/"+data[i].customimg+"' id='type'></a>";
+            				str += "<a style='cursor:pointer;' onclick='main_option("+data[i].type+","+data[i].shape+")'><img src='/team_Bling/resources/custom/"+data[i].customimg+"' id='type'></a>";
             			}else{
-            				str += "<a style='cursor:pointer;' onclick='options("+data[i].type+","+data[i].shape+")'><img src='/resources/custom/"+data[i].customimg+"' id='type'></a>";
+            				str += "<a style='cursor:pointer;' onclick='options("+data[i].type+","+data[i].shape+")'><img src='/team_Bling/resources/custom/"+data[i].customimg+"' id='type'></a>";
             			}
             		}
             		 $('#scroll').html(str);
@@ -205,7 +201,7 @@
     	   console.log(type);
     	   console.log(shape);
         	 $.ajax({
-             	url:"/Custom/customshape.do",
+             	url:"${cPath}/Custom/customshape.do",
              	type:"post",
              	data:{"type":type,"shape":shape},
              	dataType:'json',
@@ -213,7 +209,7 @@
              		console.log(data);
              		var str_chain = "";
              		//체인 고르면 이미지 나오게 함
-             		str_chain += "<img src='/resources/custom/"+data[0].customimg+"' class='type'>";
+             		str_chain += "<img src='/team_Bling/resources/custom/"+data[0].customimg+"' class='type'>";
                 	$('#maindiv').html(str_chain);
                 	//선택옵션 글 나오게함
                 	
@@ -245,14 +241,14 @@
         function options(type,shape){
 			if($(".chainprice").length){
 				$.ajax({
-	              	url:"/Custom/customshape.do",
+	              	url:"${cPath}/Custom/customshape.do",
 	              	type:"post",
 	              	data:{"type":type,"shape":shape},
 	              	dataType:'json',
 	              	success:function(data){
 	              		var str2 = "";
 	              		str2 += "";
-	              		str2 += "<img src='/resources/custom/"+data[0].customimg+"' id='img"+data[0].coidx+"' class='drag'>";
+	              		str2 += "<img src='/team_Bling/resources/custom/"+data[0].customimg+"' id='img"+data[0].coidx+"' class='drag'>";
 	                	$('#optiondiv').append(str2);
 	                	//선택옵션 글 나오게함
 	                	var str2_option = "";
@@ -368,7 +364,7 @@
     					data:{"imgSrc":myImg,"name":name,"countval":countval,
     						"total":total,"totalname":totalname},
     					dataType:"text",
-    					url:"/Custom/scrshot.do",
+    					url:"${cPath}/Custom/scrshot.do",
     					success:function(data){
     						console.log(data);
     					},error:function(a,b,c){

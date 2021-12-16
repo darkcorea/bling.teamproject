@@ -5,9 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
- 	<script src="/js/bootstrap.bundle.js"></script>
-	<link rel="stylesheet" href="/css/bootstrap.css">
+
 <style>
 
 .logo{
@@ -65,7 +63,7 @@ ul > li {
         <div class="d1">
         	<div class="d2">
         	<ul>
-        		<li class="lo"><img src="/resources/simage/logo1.png" alt="" class="logo"></li>
+        		<li class="lo"><img src="${cPath}/resources/simage/logo1.png" alt="" class="logo"></li>
         		<li class="company">
         			<div class="info">
         			<h5>회사 정보</h5>

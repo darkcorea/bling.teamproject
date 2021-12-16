@@ -8,11 +8,6 @@
 <head>
 <meta charset="UTF-8">
 <title>MyPage</title>
-	<!-- Bootstrap core CSS -->
-  		<link href="/resources/css/bootstrap.css" rel="stylesheet">
-  	<!-- Bootstrap core JavaScript -->
-  		<script src="/resources/js/jquery-3.6.0.min.js"></script>
-		<script src="/resources/js/bootstrap.bundle.js"></script>
 	<!-- SweetAlert2(alert,modal창) -->
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	
@@ -28,7 +23,7 @@
 		function reviewList(page,type,date1,date2){
 			console.log(page);
 			$.ajax({
-				url:"/Review/reviewlist.do",
+				url:"${cPath}/Review/reviewlist.do",
 				type:"POST",
 				data:{"page":page,"type":type,"date1":date1,"date2":date2},
 				dataType: 'json',
@@ -63,7 +58,7 @@
 						//str += list.ridx;
 						
 						str += "		<td id='prodImgTr'>";
-						str += "			<img id='rvImg' src='/resources/image/"+list.main+"' alt='제품 대표 사진'>";
+						str += "			<img id='rvImg' src='/team_Bling/resources/image/"+list.main+"' alt='제품 대표 사진'>";
 						str += "		</td>";
 						str += "		<td id='prodDataTr'>";
 						str += "			<div id='prodData'>";
@@ -105,13 +100,13 @@
 						//리뷰사진 개수에 따라 화면출력 조정
 						if(list.image1 != null && list.image2 != null){
 							str += "			<td id='rvImgTr'>";
-							str += "				<img id='rvImg' src='/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
-							str += "				<img id='rvImg2' src='/resources/review_img/"+list.image2+"' alt='리뷰사진 2번'>";
+							str += "				<img id='rvImg' src='/team_Bling/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
+							str += "				<img id='rvImg2' src='/team_Bling/resources/review_img/"+list.image2+"' alt='리뷰사진 2번'>";
 							str += "			</td>";
 						}
 						else if(list.image1 != null && list.image2 == null){
 							str += "			<td id='rvImgTr'>";
-							str += "				<img id='rvImg' src='/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
+							str += "				<img id='rvImg' src='/team_Bling/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
 							str += "			</td>";
 						}
 						else if(list.image1 == null && list.image2 == null){
@@ -252,7 +247,7 @@
 			console.log("delReview-ridx : "+ridx);
 			
 			$.ajax({
-				url: "/MyPage/delete.do",
+				url: "${cPath}/MyPage/delete.do",
 				type: "post",
 				data: {"ridx":ridx},
 				ContentType: "json",
@@ -608,7 +603,7 @@
 		}
 		
 		$.ajax({
-			url: "/Review/type.do",
+			url: "${cPath}/Review/type.do",
 			type: "post",
 			data: {"type":type,"date1":date1,"date2":date2},
 			success:function(data){
