@@ -198,8 +198,16 @@ a {text-decoration:none;}
   					<c:set var="date" value="${list.rdate}"/>
 					<td class="center"><c:out value="${fn:substring(date,0,10)}"/></td>
 					<td class="center">
-						<c:if test="${list.depth == 0 && list.state == 'N'}">						
-						<button class="btn btn-outline-primary" onclick="reply_fn(${list.qidx})">답글작성</button>
+						<c:if test="${list.depth == 0 && list.state == 'N'}">
+							<c:if test="${list.order_idx != '' && list.detail_idx == ''}">
+								<button class="btn btn-outline-primary" onclick="reply_fn('${list.qidx}','${list.category}','${list.order_idx}','0')">답글작성</button>
+							</c:if>
+							<c:if test="${list.detail_idx != ''  && list.order_idx == ''}">
+								<button class="btn btn-outline-primary" onclick="reply_fn('${list.qidx}','${list.category}','0','${list.detail_idx}')">답글작성</button>
+							</c:if>
+							<c:if test="${list.detail_idx == '' && list.order_idx == ''}">
+								<button class="btn btn-outline-primary" onclick="reply_fn('${list.qidx}','${list.category}','0','0')">답글작성</button>
+							</c:if>		
 						</c:if>
 						<c:if test="${list.depth == 1 && list.state == 'Y'}">						
 						<button class="btn btn-outline-success" onclick="modify_fn(${list.qidx})">수정</button>
@@ -223,7 +231,22 @@ a {text-decoration:none;}
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      	<div id="reply_write1" style="margin-left:135px;">
+      	<div id="reply_write1" style="margin-left:50px;">
+      	<form name="reply_question" id="reply_question">
+      	<table>
+      		<tr style="height:50px;">
+      			<td style="width:80px;">제목</td>
+      			<td><input type="text" name="title" maxlength="30" style="width:491px;">
+      				<input type="hidden" name="category" id="category">
+      				<input type="text" style="display:none;">
+      			</td>
+      		</tr>
+      		<tr>
+      			<td>문의답변</td>
+      			<td><textarea name="content" cols="60" rows="15"></textarea></td>
+      		</tr>
+      	</table>
+      	</form>
       	</div>
       </div>
       <div class="modal-footer" id="reply_write2">
@@ -247,7 +270,31 @@ function coll_fn(qidx){
 }
 
 // 답글 작성 버튼을 누르면
-function reply_fn(qidx){
+function reply_fn(qidx,category,order_idx,detail_idx){
+	
+	$("#reply_question")[0].reset();
+	$("#category").val(category);
+	
+	/*
+	$.ajax({
+		url:"/Ad_board/question_detail.do",
+		type:"POST",
+		data:{"qidx":qidx,"order_idx":order_idx,"detail_idx":detail_idx},
+		success:function(data){
+			if(order_idx == 0 && detail_idx == 0){
+				
+				
+			}else{
+				
+				
+			}
+			
+		},error:function(){
+			alert("답글작성 오류")
+		}
+	});
+	*/
+	
 	$("#reply_write").modal("show");
 	
 	
