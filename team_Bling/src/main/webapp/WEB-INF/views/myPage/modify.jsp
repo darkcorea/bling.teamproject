@@ -54,7 +54,6 @@
 							</tr>
 						</table>
 						<button type="button" class="btn btn-outline-primary" onClick="confirm()">확인</button>
-						<button type="button" class="btn btn-outline-primary" onClick="location.href='/MyPage/ssss.do'">커스터마이징</button>
 					</div>
 				</div>
 			</div>

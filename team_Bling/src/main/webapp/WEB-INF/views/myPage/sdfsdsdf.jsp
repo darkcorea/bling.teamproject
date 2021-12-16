@@ -19,7 +19,10 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js"></script>
 
 	<style type="text/css">
-		
+		section{
+			margin:auto;
+			width:1200px;
+		}
 		 #select{
               width:200px;
               height:1000px;
@@ -78,12 +81,19 @@
 		div:focus{
 			background-color: orange;
 		}
+		#mr{
+			margin-left:10px;
+		}
 	</style>
 </head>
 	
 <body>
+	<section>
         <table style="margin-right: auto;margin-left: auto;">
             <h2 style="text-align: center;">커스터마이징</h2>
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='/Custom/list.do'" style="float: right;" id="mr">커스터마이징 리스트</button>
+            <button type="button" class="btn btn-outline-warning" onclick="location.href='/'" style="float: right;">홈</button>
+            <br>
             <tr>
             <!-- 선택한옵션 -->
                 <td id="select" rowspan="2">
@@ -137,7 +147,8 @@
                 </td>
             </tr>
         </table>
-    </body>
+    </section>
+</body>
 
     <script>
     
@@ -370,6 +381,8 @@
     					dataType:"text",
     					url:"/Custom/scrshot.do",
     					success:function(data){
+    						alert("커스터마이징이 완료되었습니다.");
+    						location.href="/Custom/list.do";
     						console.log(data);
     					},error:function(a,b,c){
     						alert("error");
