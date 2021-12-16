@@ -173,7 +173,7 @@ public class Ad_BoardController {
 		
 		ad_boardService.insert(vo);
 		
-		return "redirect:/team_Bling/Ad_board/board.do?page=1&type=T";
+		return "redirect:/Ad_board/board.do?page=1&type=T";
 	}
 	
 	//에디터 이미지 서버, 스프링 폴더에 저장
@@ -321,7 +321,7 @@ public class Ad_BoardController {
 		System.out.println("사진파일 저장22222>>>>>>"+editimg);
 		
 		ad_boardService.modify(vo);
-		return "redirect:/team_Bling/Ad_board/detail.do?nidx="+vo.getNidx();
+		return "redirect:/Ad_board/detail.do?nidx="+vo.getNidx();
 	}
 	
 	/////////////////////////////////////////이벤트////////////////////////////////////////
@@ -434,7 +434,7 @@ public class Ad_BoardController {
 		
 		ad_boardService.event_insert(vo);
 		
-		return "redirect:/team_Bling/Ad_board/event.do";
+		return "redirect:/Ad_board/event.do";
 	}	
 	
 	//이벤트 detail

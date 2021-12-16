@@ -312,7 +312,7 @@ public class Ad_RegistController {
 		// 이미지 이름들읗 널어서 보냄
 		ad_registService.insertImg(vo);
 
-		return "redirect:/team_Bling/Ad_regist/list.do?page=1";
+		return "redirect:/Ad_regist/list.do?page=1";
 		}
 	
 		// 제품 이미지 수정
@@ -437,7 +437,7 @@ public class Ad_RegistController {
 			// 이미지 이름들읗 널어서 보냄
 			ad_registService.updateImg(vo);
 
-			return "redirect:/team_Bling/Ad_regist/modify.do?pidx="+pidx;
+			return "redirect:/Ad_regist/modify.do?pidx="+pidx;
 			}
 	
 	
