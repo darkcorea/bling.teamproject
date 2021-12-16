@@ -65,7 +65,7 @@ public class CustomController {
 	//커스터마이징하는 곳
     @RequestMapping(value="/ssss.do")
     public String ssss()throws Exception{
-    	return "myPage/sdfsdsdf";
+    	return "myPage/customizing";
     }
 	
 	@RequestMapping(value="/customoption.do")
