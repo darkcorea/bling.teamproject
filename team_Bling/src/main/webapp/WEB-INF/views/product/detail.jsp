@@ -10,7 +10,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>상품 상세페이지</title>
-<link rel="stylesheet" href="${cPath}/css/pro_detail.css">
+<link rel="stylesheet" href="/team_Bling/css/pro_detail.css">
 </head>
 <body>
 

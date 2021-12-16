@@ -12,7 +12,7 @@
 <!-- SweetAlert2(alert,modal창) -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--  스타일 분리 -->
-<link rel="stylesheet" href="{cPath}/css/deliveryMain.css">
+<link rel="stylesheet" href="/team_Bling/css/deliveryMain.css">
 </head>
 <body>
 <header>
@@ -80,7 +80,7 @@
 					</td>
 					<!-- 이미지 -->
 					<td>
-					<img src="{cPath}/resources/image/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
+					<img src="/team_Bling/resources/image/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
 					</td>
 					<!-- 상품명 -->
 					<td>
