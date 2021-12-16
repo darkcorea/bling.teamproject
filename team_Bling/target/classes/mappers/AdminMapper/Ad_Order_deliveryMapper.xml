@@ -83,6 +83,12 @@
 		WHERE o.order_idx=#{order_idx}
 	</update>
 	
+	<!-- 배송중(B)으로 바꿀 때 송장번호 입력하기 -->
+	<update id="invoice" parameterType="CombineVO">
+		UPDATE bg_delivery
+		SET invoice_num=#{invoice_num}
+		WHERE order_idx=#{order_idx}
+	</update>
 	
 	
 	<!-- 전체 배송 개수 -->

@@ -544,7 +544,7 @@
 	}
 	
 	
-		
+	/* 주문상태 및 송장입력 상위 함수 */
 	function deli(kind,statN,order_idx,page){
 		console.log("deli() 실행");
 		console.log("kind : "+kind);
@@ -575,55 +575,133 @@
 		}).then((result) => {
 			if (result.isConfirmed) {
 				if(kind=="B"){
-					Swal.fire({
-						icon: 'warning',
-						title: '주문번호 '+order_idx+'의 송장번호를 입력해주세요!',
-						input: 'text',
-						inputAttributes: {
-						    autocapitalize: 'off',
-						    minlength: 10,
-						    maxlength: 15,
-						    placeholder: '10~15자 사이로 입력해주세요.'
-						 },
-						showCancelButton: true,
-						confirmButtonText: '저장',
-						cancelButtonText: '취소'
-					}).then((result) => {
-						
-					});
-				}else{
-					let prodData = {
-							method: "post",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify({kind:kind, order_idx:order_idx})
-						}
-					
-					fetch('/Ad_order_delivery/prodStat.do', prodData)
-					.then((response) => {
-						if(!response.ok){
-							throw new Error('400 아니면 500 에러 발생');
-						}
-						
-						return response;
-					})
-					/* 
-						해당 fetch()의 response가 그냥 String이므로 	return response.json();가 아닌 그냥 response를 return함.
-						return response;가 아래의 .then((data)=>{})의 data에 들어간다.
-					*/
-					.then((data) => {
-						console.log("response=data : "+data);
-						console.log("deli()-stat : "+stat);
-						orderList(""+page+"",stat);
-					})
-					.catch(() => {
-						console.log('출고버튼 에러');
-					})
+					invoiceChange(kind,order_idx,page,stat);
+				}
+				else if(kind=="N" || kind=="Y" || kind=="A"){
+					invoiceDel(kind,order_idx,page,stat);
+				}
+				else{
+					statChange(kind,order_idx,page,stat);
 				}
 				
 			}
 		});
+	}
+	
+	/* 주문상태 변경 */
+	function statChange(kind,order_idx,page,stat){
+		
+		let prodData = {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({kind:kind, order_idx:order_idx})
+			}
+		
+		fetch('/Ad_order_delivery/prodStat.do', prodData)
+		.then((response) => {
+			if(!response.ok){
+				throw new Error('400 아니면 500 에러 발생');
+			}
+			
+			return response;
+		})
+		/* 
+			해당 fetch()의 response가 그냥 String이므로 	return response.json();가 아닌 그냥 response를 return함.
+			return response;가 아래의 .then((data)=>{})의 data에 들어간다.
+		*/
+		.then((data) => {
+			console.log("response=data : "+data);
+			console.log("deli()-stat : "+stat);
+			orderList(""+page+"",stat);
+		})
+		.catch(() => {
+			console.log('출고버튼 에러');
+		})
+	}
+	
+	/* 송장 입력 */
+	function invoiceChange(kind,order_idx,page,stat){
+		Swal.fire({
+			icon: 'warning',
+			title: '주문번호 '+order_idx+'의 송장번호를 입력해주세요!',
+			input: 'text',
+			inputAttributes: {
+			    autocapitalize: 'off',
+			    minlength: 10,
+			    maxlength: 15,
+			    placeholder: '10~15자 사이로 입력해주세요.'
+			 },
+			showCancelButton: true,
+			confirmButtonText: '저장',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			console.log("invoice_num : "+result.value);
+
+			
+			let invoice = {
+					method: "post",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({invoice_num:result.value, order_idx:order_idx})
+				}
+			
+			fetch('/Ad_order_delivery/invoice.do', invoice)
+			.then((response) => {
+				if(!response.ok){
+					throw new Error('400 아니면 500 에러 발생');
+				}
+				
+				return response;
+			})
+			/* 
+				해당 fetch()의 response가 그냥 String이므로 	return response.json();가 아닌 그냥 response를 return함.
+				return response;가 아래의 .then((data)=>{})의 data에 들어간다.
+			*/
+			.then((data) => {
+				console.log("response=data : "+data);
+				statChange(kind,order_idx,page,stat);
+			})
+			.catch(() => {
+				console.log('송장입력 에러');
+			})
+		});
+	}
+	
+	
+	/* 송장 삭제 */
+	function invoiceDel(kind,order_idx,page,stat){
+		let invoice_num = null;
+		
+		let invoice = {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({invoice_num:invoice_num, order_idx:order_idx})
+			}
+		
+		fetch('/Ad_order_delivery/invoice.do', invoice)
+		.then((response) => {
+			if(!response.ok){
+				throw new Error('400 아니면 500 에러 발생');
+			}
+			
+			return response;
+		})
+		/* 
+			해당 fetch()의 response가 그냥 String이므로 	return response.json();가 아닌 그냥 response를 return함.
+			return response;가 아래의 .then((data)=>{})의 data에 들어간다.
+		*/
+		.then((data) => {
+			console.log("response=data : "+data);
+			statChange(kind,order_idx,page,stat);
+		})
+		.catch(() => {
+			console.log('송장입력 에러');
+		})
 	}
 	
 	
