@@ -120,12 +120,14 @@
 			<!-- 집 모양 메인페이지로 이동  -->
 		   <a href="/team_Bling/"><i class="bi bi-house-fill"></i></a>
 		</div>
+		<c:if  test="${sessionScope.UserVO.id == null}">
 		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
 			<a id="header_notice1" href="/team_Bling/Login/main.do">LOGIN</a>
 		</div>
 		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
 			<a id="header_event1" href="/team_Bling/Join/normal.do">JOIN US</a>
 		</div>
+		</c:if>
 		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
 			<a id="header_event1" href="/team_Bling/Basket/cart.do" >CART
 	       <span class="badge bg-secondary rounded-pill" id="cart_count1"></span></a>
