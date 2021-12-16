@@ -56,7 +56,7 @@
 			height:700px;
 			/* z-index:1; */
 		}
-		.optionss{
+		.drag{
 			width:80px;
 			height:80px;
 		}
@@ -89,6 +89,8 @@
                 <td id="select" rowspan="2">
                 	<div id="zz">
 	                	<h4>선택한 상품들</h4>
+	                	<div id="cnt"> </div>
+	                	<input type="hidden" id="cntval">
 	                	<hr>
 	                	<div id="selectoption"> 
 	                		
@@ -124,20 +126,39 @@
                     <div style="height:200px;width: 800px; overflow: auto;" id="scroll">
                         
                     </div>
+                    <input type="hidden" id="totalname">
                 </td>
                 <td id="but">
-                    <button type="button" class="btnScreenShot" id="shot">커마저장</button>
+                	* 커스터마이징한 제품의 <br>이름을 지어주세요.
+                	<br><br>
+                	<input type="text" id="name">
+                	<br><br><hr>
+                    <button type="button" class="btn btn-warning btnScreenShot" id="shot">커스터마이징저장</button>
                 </td>
             </tr>
         </table>
     </body>
 
     <script>
+    
    /* $("#textarea").click(function(e){
 	  if(!$(e.target).hasClass("area")){
 		  alert("영역밖입니다.");
 	  } 
    }); */
+   var count = 0;
+   //옵션 카운트
+   function cnt(){
+	   count++;
+	   var str="";
+	   str += "선택한 옵션 개수 : "+count+"개";
+	   $('#cnt').html(str);
+	   document.getElementById("cntval").value = count;
+   }
+   
+   
+   
+   //글 선택시 
     function test(coidx){
     	//alert("테스트");
     	var imgname = document.getElementById(coidx);
@@ -146,7 +167,7 @@
     		"background-color":"blue"
     	});
     }
-   
+   //x표시 누르면 이미지 삭제
    function deleteimg(coidx){
 	   $("#img"+coidx).remove();
 	   $(".text"+coidx).remove();
@@ -190,6 +211,7 @@
              	dataType:'json',
              	success:function(data){
              		console.log(data);
+             		var str_chain = "";
              		//체인 고르면 이미지 나오게 함
              		str_chain += "<img src='/resources/custom/"+data[0].customimg+"' class='type'>";
                 	$('#maindiv').html(str_chain);
@@ -201,6 +223,7 @@
                     	str2_chain += "<div class='chainprice'><h5>"+data[0].name + "</h5>";
                     	str2_chain += data[0].price + "원<hr>";
                     	str2_chain += "<input type='hidden' id='chainprice' value='"+data[0].price+"'></div>";
+                    	str2_chain += "<input type = 'hidden' id='chainname' value='"+data[0].coidx+"'>";
                     	$('#selectoption').append(str2_chain);
                 		total(data[0].price);
                 	}else{
@@ -210,6 +233,7 @@
                     	str2_chain += "<div class='chainprice'><h5>"+data[0].name + "</h5>";
                     	str2_chain += data[0].price + "원<hr>";
                     	str2_chain += "<input type='hidden' id='chainprice' value='"+data[0].price+"'></div>";
+                    	str2_chain += "<input type = 'hidden' id='chainname' value='"+data[0].coidx+"'>";
                 		minus(chainprice,data[0].price);
                 		$('#selectoption').append(str2_chain);
                 	}
@@ -219,27 +243,34 @@
 /////////////////////////////////////////////제품 삭제시 총 금액도 제해야함.////////////////////////////////////////
         //장식품들 고르면 드래그 가능 이미지 나옴
         function options(type,shape){
-        	 $.ajax({
-              	url:"/Custom/customshape.do",
-              	type:"post",
-              	data:{"type":type,"shape":shape},
-              	dataType:'json',
-              	success:function(data){
-              		var str2 = "";
-              		str2 += "";
-              		str2 += "<img src='/resources/custom/"+data[0].customimg+"' id='img"+data[0].coidx+"' class='drag optionss'>";
-                	$('#optiondiv').append(str2);
-                	//선택옵션 글 나오게함
-                	var str2_option = "";
-                	str2_option += "<div id='textarea text"+data[0].coidx+"' onclick='test("+data[0].coidx+")' class='text"+data[0].coidx+"' tabindex='1' class='area'><h5>"+data[0].name + "&nbsp;";
-                	str2_option += "<i class='bi bi-x-lg' onclick='deleteimg("+data[0].coidx+")'></i></h5>";
-                	/*  */
-                	str2_option += data[0].price + "원";
-                	str2_option += "<input type='range' class='form-range' id='customRange1'><hr></div>";
-                	$('#selectoption').append(str2_option);
-                	total(data[0].price);
-              	}
-        	});
+			if($(".chainprice").length){
+				$.ajax({
+	              	url:"/Custom/customshape.do",
+	              	type:"post",
+	              	data:{"type":type,"shape":shape},
+	              	dataType:'json',
+	              	success:function(data){
+	              		var str2 = "";
+	              		str2 += "";
+	              		str2 += "<img src='/resources/custom/"+data[0].customimg+"' id='img"+data[0].coidx+"' class='drag'>";
+	                	$('#optiondiv').append(str2);
+	                	//선택옵션 글 나오게함
+	                	var str2_option = "";
+	                	str2_option += "<div id='textarea text"+data[0].coidx+"' onclick='test("+data[0].coidx+")' class='text"+data[0].coidx+"' tabindex='1' class='area'><h5>"+data[0].name + "&nbsp;";
+	                	str2_option += "<i class='bi bi-x-lg' onclick='deleteimg("+data[0].coidx+")'></i></h5>";
+	                	/*  */
+	                	str2_option += data[0].price + "원";
+	                	str2_option += "<input type='range' class='form-range' id='customRange1'><hr></div>";
+	                	str2_option += "<input type = 'hidden' id='optionname' value='"+data[0].coidx+"'>";
+	                	$('#selectoption').append(str2_option);
+	                	total(data[0].price);
+	                	cnt();
+	              	}
+	        	});
+			}else{
+				alert("체인을 먼저 선택해주세요");
+			}
+        	 
         }
         
        
@@ -252,6 +283,7 @@
         	$('#total').html(str3);
         }
         
+        //옵션빼기
         function minus(minustot,plustot){
         	var mp = minustot + plustot
         	var minusprice = $('#totalprice').val() - mp;
@@ -312,17 +344,31 @@
 			scrshot($("#capture"));
 		});
        function scrshot(target){
-    	   if(target != null $$ target.length > 0){
+    	   if(target != null && target.length > 0){
     		   var t = target[0];
     		   html2canvas(t).then(function(canvas){
     			   var myImg = canvas.toDataURL("image/png");
-    			   myImg = myImg.replace("'data:image/png;base64,","");
-    			 
+    			   
+    			   //제품 coidx 리스트 정렬
+    			   var list = new Array();
+    			   $("input[id=optionname]").each(function(index,item){
+    				   list.push($(item).val());
+    			   });
+    			   list.push(document.getElementById("chainname").value);
+    			   $("#totalname").val(list);
+    			   
+    			   myImg = myImg.replace("'data:image/png;base64,",""); //제품 사진 customimg
+    			   var name = document.getElementById("name").value; //제품이름 name
+    			   var countval = document.getElementById("cntval").value; //옵션개수(체인뺀) cntoption
+    			   var total = document.getElementById("totalprice").value //총가격 	price
+    			   var totalname = document.getElementById("totalname").value; //옵션 coidx sumcoidx
+    			   
     			   $.ajax({
     					type:"POST",
-    					data:{"imgSrc":myImg},
+    					data:{"imgSrc":myImg,"name":name,"countval":countval,
+    						"total":total,"totalname":totalname},
     					dataType:"text",
-    					url:contextPath+"/public/ImgSaveText.do",
+    					url:"/Custom/scrshot.do",
     					success:function(data){
     						console.log(data);
     					},error:function(a,b,c){
@@ -332,30 +378,6 @@
     		   });
     	   }
        }
-       /* $(function(){
-			$("#shot").on("click", function(){
-				// 캡쳐 라이브러리를 통해서 canvas 오브젝트를 받고 이미지 파일로 리턴한다.
-				html2canvas(document.querySelector("#capture")).then(canvas => {
-					saveAs(canvas.toDataURL('image/png'),"capture-test.png");
-				});
-			});
-			function saveAs(uri, filename) {
-				// 캡쳐된 파일을 이미지 파일로 내보낸다.
-				var link = document.createElement('a');
-				if (typeof link.download === 'string') {
-					link.href = uri;
-					link.download = filename;
-					document.body.appendChild(link);
-					link.click();
-					document.body.removeChild(link);
-				} else {
-					indow.open(uri);
-				}
-			}
-		}); */
-
-
-//스샷 파일을 db에 저장, 삭제버튼, 회전, 체인 바꿀때 추가 되는거, 제품 선택한거 db에 저장
        
     </script>
 </html>
