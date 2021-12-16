@@ -25,8 +25,8 @@
 <section>
 	<div class="title text_center">주문내역</div><br>
 	<div class="title text_center row">
-		<div class="col"><a href="/Delivery/main.do" class="title3"><span>주문내역조회</span></a></div>
-		<div class="col"><a href="/Delivery/main1.do" class="title2"><span>취소/반품/교환내역</span></a></div>
+		<div class="col"><a href="/Delivery/main.do" class="title2"><span>주문내역조회</span></a></div>
+		<div class="col"><a href="/Delivery/main1.do" class="title3"><span>취소/반품/교환내역</span></a></div>
 	</div>
 	<hr>
 	<div id="reviewList">
@@ -167,20 +167,14 @@
 						</c:if>
 						<!-- 입금이 완료 전이면-->
 						<c:if test="${list.deli_stat == 'N' && list.cancel == null}">
-							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'F')">취소</button>
+							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return_now(${list.order_idx})">취소</button>
 						</c:if>
 						<!-- 입금을 완료 하면-->
 						<c:if test="${list.deli_stat == 'Y' && list.cancel == null}">
-							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'F')">취소</button>
+							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return_now(${list.order_idx})">취소</button>
 						</c:if>
-						<!-- 배송 준비중이면 -->
-						<c:if test="${list.deli_stat == 'A' && list.cancel == null}">
-							<button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'F')">취소</button>
-						</c:if>
-						<!-- 배송 중이면 -->
-						<c:if test="${list.deli_stat == 'B' && list.refund == null && list.exchange == null && list.cancel == null}">
-							 <button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'D')">교환/반품</button>
-						</c:if>
+						<!-- 배송 준비중이면 아무것도 안나타남  -->
+						<!-- 배송 중이면 아무것도 안나타남-->
 						 
 						 <!-- 배송 완료가 되고-->
 						 <c:if test="${list.deli_stat == 'C'}">
@@ -192,7 +186,7 @@
 							 <!-- 배송완료 후 7일이 넘지 않았으면  -->
 							 <c:if test="${list.date_differ <= 7}">
 							 	<!-- 구매 확정 버튼을 누르지 않았다면 -->
-							 	<c:if test="${list.confirm_yn == 'N'}">
+							 	<c:if test="${list.confirm_yn == 'N' && list.refund == null && list.exchange == null && list.cancel == null}">
 							 	<button id="btn_25" class="btn btn-outline-secondary" onclick="confirm_fn(${list.order_idx})">구매확정</button>
 							 		<!-- 교환이 완료가 되었으면 -->
 							 		<c:if test="${list.exchange == 'Y'}">
@@ -206,7 +200,7 @@
 							 			<br><button id="btn_25" class="btn btn-outline-secondary" onclick="Return(${list.order_idx},'D')">교환/반품</button>
 							 		</c:if>
 							 		<!-- 리뷰를 쓰지 않았다면 -->
-							 		<c:if test="${list.ridx == null || list.ridx == 0}">
+							 		<c:if test="${list.ridx == null || list.ridx == 0 && list.exchange == null && list.refund == null}">
 							 			<!-- 구매한 옵션의 갯수가 1개라면 리뷰 1개 -->
 								 		<c:if test="${list.count == 1}">
 								 			<br><button id="btn_25" class="btn btn-outline-secondary" data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${list.detail_idx})'>리뷰쓰기</button>
@@ -758,6 +752,34 @@ $(document).ready(function() {
 				alert("리뷰 여러개 작성 오류");
 			}
 		});
+	}
+	
+	// 배송 전에 상품 취소 버튼을 누르면
+	function Return_now(order_idx){
+	
+	 if (confirm("주문한 상품을 취소하시겠습니까?") == true) {
+            
+		 $.ajax({
+				url: "/Delivery/return_now.do",
+				type: "post",
+				data: {"order_idx":order_idx},
+	            success: function(data){
+					if (data !=0 ){
+						// 가격단위 콤마 찍기
+						let milege = Number(data).toLocaleString();
+						alert("구매한상품을 취소 하셨습니다 /n 사용하신 마일리지 "+milege+"원이 적립되었습니다.");
+						location.reload();
+					}
+					alert("구매한 상품을 취소하셨습니다");
+					location.reload();
+	            },
+				error: function(){
+					alert("주문 취소 오류");
+				}
+			});
+        }
+
+		
 	}
 	
 	// 상품  교환, 반품, 취소  하기 버튼을 누르면

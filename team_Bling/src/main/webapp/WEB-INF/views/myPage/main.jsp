@@ -38,20 +38,53 @@
 				
 				//	\(backslash)를 붙이면 해당 문자로만 인식한다. -> \"는 문자열을 나타내는 큰따옴표의 역할만 할 뿐, 쿼리문을 구분짓는 역할은 하지 않는다.
 				str += "		<c:if test='${ro.deli_stat == \"N\"}'>";
-				str += "			<td id='td6'><span id='t6'>미결제</span></td>";
+				str += "			<c:if test='${ro.cancel == \"Y\"}'>";
+				str += "				<td id='td6'><span id='t6'>취소완료</span></td>";
+				str += "			</c:if>";
+				str += "			<c:if test='${ro.cancel==null && ro.refund==null && ro.exchange==null}'>";
+				str += "				<td id='td6'><span id='t6'>미결제</span></td>";
+				str += "			</c:if>";
 				str += "		</c:if>";
 				str += "		<c:if test='${ro.deli_stat == \"Y\"}'>";
-				str += "			<td id='td6'><span id='t6'>결제완료</span></td>";
+				str += "			<c:if test='${ro.cancel == \"Y\"}'>";
+				str += "				<td id='td6'><span id='t6'>취소완료</span></td>";
+				str += "			</c:if>";
+				str += "			<c:if test='${ro.cancel==null && ro.refund==null && ro.exchange==null}'>";
+				str += "				<td id='td6'><span id='t6'>결제완료</span></td>";
+				str += "			</c:if>";
 				str += "		</c:if>";
 				str += "		<c:if test='${ro.deli_stat == \"A\"}'>";
-				str += "			<td id='td6'><span id='t6'>상품준비중</span></td>";
+				str += "			<c:if test='${ro.cancel == \"N\"}'>";
+				str += "				<td id='td6'><span id='t6'>취소중</span></td>";
+				str += "			</c:if>";
+				str += "			<c:if test='${ro.cancel == \"Y\"}'>";
+				str += "				<td id='td6'><span id='t6'>취소완료</span></td>";
+				str += "			</c:if>";
+				str += "			<c:if test='${ro.cancel==null && ro.refund==null && ro.exchange==null}'>";
+				str += "				<td id='td6'><span id='t6'>상품준비중</span></td>";
+				str += "			</c:if>";
 				str += "		</c:if>";
 				str += "		<c:if test='${ro.deli_stat == \"B\"}'>";
 				str += "			<td id='td6'><span id='t6'>배송중</span></td>";
 				str += "		</c:if>";
 				str += "		<c:if test='${ro.deli_stat == \"C\"}'>";
-				str += "			<td id='td6'><span id='t6'>배송완료</span></td>";
+				str += "			<c:if test='${ro.refund == \"N\"}'>";
+				str += "				<td id='td6'><span id='t6'>환불중</span></td>";
+				str += "			</c:if>";
+				str += "			<c:if test='${ro.refund == \"Y\"}'>";
+				str += "				<td id='td6'><span id='t6'>환불완료</span></td>";
+				str += "			</c:if>";
+				str += "			<c:if test='${ro.exchange == \"N\"}'>";
+				str += "				<td id='td6'><span id='t6'>교환중</span></td>";
+				str += "			</c:if>";
+				str += "			<c:if test='${ro.exchange == \"Y\"}'>";
+				str += "				<td id='td6'><span id='t6'>교환완료</span></td>";
+				str += "			</c:if>";
+				str += "			<c:if test='${ro.cancel==null && ro.refund==null && ro.exchange==null}'>";
+				str += "				<td id='td6'><span id='t6'>배송완료</span></td>";
+				str += "			</c:if>";
 				str += "		</c:if>";
+				
 				
 				str += "		<c:if test='${ro.date_differ <= 7}'>";
 				str += "			<c:if test='${ro.contents != null}'>";
@@ -370,6 +403,12 @@
 			});
 		}
 		
+		function preview(){
+			previewImg1.src=URL.createObjectURL(event.target.files[0]);
+			previewImg2.src=URL.createObjectURL(event.target.files[1]);
+
+		}
+		
 		
 	</script>
 	
@@ -492,6 +531,20 @@
 			width: 465px;
 			height: 40px;
 			background-color: #CB7878;
+		}
+		#preview{
+			width: 465px;
+			height: 110px;
+			border: 1px dashed;
+			padding: 5px;
+		}
+		.previewD1,.previewD2{
+			display: inline-block;
+			position: relative;
+		}
+		.previewImg{
+			height: 100px;
+			margin-right: 5px;
 		}
 		#uploadBtn{
 			display: none;
@@ -792,7 +845,7 @@
 					<form id="pictureForm">
 						<div id="uploadDiv">
 						<!-- 파일을 업로드할 영역 -->
-							<input type="file" id="uploadBtn" name="uploadBtn" multiple accept=".jpg, .jpeg, .png" onchange="uploadFile()">
+							<input type="file" id="uploadBtn" name="uploadBtn" multiple accept=".jpg, .jpeg, .png" onchange="javascript:uploadFile();preview();">
 							<label for="uploadBtn" class="fileBtn btn">
 								<span id="fileBtnText">
 									<i class="bi bi-camera"></i>사진 첨부하기
@@ -801,6 +854,17 @@
 							<span id="fileName"></span>
 						</div>
 					</form>
+					<br>
+					<div id="preview">
+						<div class="previewD1">
+							<span class="minusB position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-</span>
+							<img class="previewImg" id="previewImg1" src="">
+						</div>
+						<div class="previewD2">
+							<span class="minusB position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-</span>
+							<img class="previewImg" id="previewImg2" src="">
+						</div>						
+					</div>
 				</div>
 				
 				<div class="modal-footer">

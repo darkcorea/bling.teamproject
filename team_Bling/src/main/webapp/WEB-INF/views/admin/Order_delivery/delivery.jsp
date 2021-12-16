@@ -165,138 +165,6 @@
 		/* 마우스 커서 */
 		
 		
-/* ---------------modal--------------- */
-		.title4{
-		text-decoration: none;
-		color: #CB7878;	
-		}	
-		.title4:hover{
-			color:#C4C4C4;
-		}
-		/* 클래스 붙이면 백그라운드 색상이 블링 색으로 */
-		.bling_color {
-			background-color: #CB7878;
-		}
-		/* 모달 버튼 가운데로 오기*/
-		#delivery_select2 {
-			justify-content: center;
-		}		
-		/* 모달 버튼 */
-		#modal_button1{
-		background-color: #CB7878;
-		}
-			
-		/* 모달 버튼 크기*/
-		#modal_button1{
-			width:120px;
-		}
-			
-		/* 모달 버튼 크기*/
-		#modal_button2{
-			width:120px;
-		}
-		/* 모달창에 나오는 상품 이미지 크기  */
-		.image_main{
-			width:80px;
-			height:80px;
-		}
-		.title {
-			font-size:25px;
-			font-weight:700;
-		}
-	
-	/* modal */
-		.modal {
-	        text-align: center;
-		}
-		/* 모달창 배경색 */
-		.modal-backdrop {
-			background-color: #000000 !important;
-			opacity: 0.3 !important;
-		}
-		.modal-dialog {
-	        text-align: left;
-	        vertical-align: middle;
-		}
-		.modal-header{
-			background-color: #CB7878;
-		}
-		.modal-title{
-			color: #ffffff;
-			font-size: 30px;
-			position: relative;
-			left: 175px;
-		}
-		#modalText1{
-			text-align: center;
-			font-weight: bold;
-			font-size: 20px;
-		}
-		#textArea1,#textArea2{
-			width: 465px;
-			height: 200px;
-			resize: none;
-			background-color: #C4C4C4;
-			opacity: 0.5;
-		}
-		#textArea::placeholder{
-			color: #000000;
-		}
-		#closeBtn{
-			width: 80px;
-			color: #000000;
-			background-color: #ffffff;
-			border: 2px solid #C4C4C4;
-			position: relative;
-			right: 150px;
-		}
-		#saveBtn{
-			width: 80px;
-			color: #ffffff;
-			background-color: #CB7878;
-			border: 2px solid #CB7878;
-			position: relative;
-			right: 150px;
-		}
-		#saveBtn:hover{
-			color: #CB7878;
-			background-color: #ffffff;
-			border: 2px solid #CB7878;
-		}
-		#delBtn{
-			width: 80px;
-			color: #ffffff;
-			background-color: #CB7878;
-			border: 2px solid #CB7878;
-			position: relative;
-			right: 150px;
-		}
-		#delBtn:hover{
-			color: #CB7878;
-			background-color: #ffffff;
-			border: 2px solid #CB7878;
-		}
-		#uploadDiv{
-			width: 465px;
-			height: 40px;
-			background-color: #CB7878;
-		}
-		#uploadBtn{
-			display: none;
-		}
-		.fileBtn{
-			width: 465px;
-			height: 40px;
-		}
-		#fileBtnText{
-			font-size: 18px;
-			color: #ffffff;
-		}
-		.bi-camera::before{
-			margin: 0px 10px 0px 0px;
-			font-size: 23px;
-		}
-/* ---------------modal--------------- */
 	</style>
 </head>
 <body>
@@ -304,29 +172,6 @@
 		<%@ include file="/WEB-INF/views/admin/ad_header.jsp" %><BR>
 	</header>
 	
-	<!-- 상품선택을 하면 나오는 모달창 -->
-	<div class="modal fade" id="delivery_select" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
-	    <div class="modal-content">
-	      <div class="modal-header bling_color">
-	        <h5 class="modal-title">구매한 상품 내역</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	      	<!-- 구매한 상품 내역 나오게 하기 -->
-	      	<div id="delivery_select1" style="margin-left:135px;">
-		      	<div style="margin-top:30px;">
-		      	<span class="title">결제금액 : </span><span class="title">300,000 원</span>
-		      	</div>
-	      	</div>
-	      </div>
-	      <div class="modal-footer" id="delivery_select2">
-	        <button type="button" class="btn btn-secondary" id="modal_button1" data-bs-dismiss="modal" data-bs-dismiss="modal">확인</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-
 	
 	<!-- 옆 nav 바 -->
 	<div class="d1">
@@ -553,27 +398,6 @@
 		});
 	}
 	
-	
-	
-	
-	
-	//리뷰가 존재할 때 경고창
-	function caution1(){
-		
-		Swal.fire({
-			icon: 'warning',
-			text: '리뷰가 존재합니다!',
-		});
-	}
-	
-	//배송완료일로부터 7일 초과시 경고창
-	function caution2(){
-		
-		Swal.fire({
-			icon: 'warning',
-			html: '구매확정된 상품입니다! <br> (배송완료일로부터 7일 초과)',
-		});
-	}
 	
 </script>
 </html>

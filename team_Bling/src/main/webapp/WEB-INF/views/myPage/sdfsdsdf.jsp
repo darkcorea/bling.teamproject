@@ -56,7 +56,7 @@
 			height:700px;
 			/* z-index:1; */
 		}
-		#optionss{
+		.optionss{
 			width:80px;
 			height:80px;
 		}
@@ -71,6 +71,12 @@
 			width:200px;
             height:1000px;
 			overflow-y:auto;
+		}
+		.bi-x-lg{
+			color: red;
+		}
+		div:focus{
+			background-color: orange;
 		}
 	</style>
 </head>
@@ -87,7 +93,6 @@
 	                	<div id="selectoption"> 
 	                		
 	                	</div>
-	                	<hr>
 	                	<div id="total">
 	                		
 	                	</div>
@@ -95,7 +100,7 @@
                 </td>
                  <!-- 커스터마이징 이미지 보이는 곳 -->
                 <td id="main">
-               		<div id="capture">
+               		<div id="capture" style="height:800px;width: 800px;">
 	                	<div style="position:relative">
 	                		<div style="position:absolute" id="optiondiv">
 	                		
@@ -128,6 +133,24 @@
     </body>
 
     <script>
+   /* $("#textarea").click(function(e){
+	  if(!$(e.target).hasClass("area")){
+		  alert("영역밖입니다.");
+	  } 
+   }); */
+    function test(coidx){
+    	//alert("테스트");
+    	var imgname = document.getElementById(coidx);
+    	console.log(coidx);
+    	$("#img"+coidx).css({
+    		"background-color":"blue"
+    	});
+    }
+   
+   function deleteimg(coidx){
+	   $("#img"+coidx).remove();
+	   $(".text"+coidx).remove();
+   }
     
     var sum = 0;
     //타입별 종류들
@@ -168,7 +191,6 @@
              	success:function(data){
              		console.log(data);
              		//체인 고르면 이미지 나오게 함
-             		var str_chain = "";
              		str_chain += "<img src='/resources/custom/"+data[0].customimg+"' class='type'>";
                 	$('#maindiv').html(str_chain);
                 	//선택옵션 글 나오게함
@@ -194,7 +216,7 @@
              	}
         	 });
         }
-        
+/////////////////////////////////////////////제품 삭제시 총 금액도 제해야함.////////////////////////////////////////
         //장식품들 고르면 드래그 가능 이미지 나옴
         function options(type,shape){
         	 $.ajax({
@@ -204,18 +226,23 @@
               	dataType:'json',
               	success:function(data){
               		var str2 = "";
-              		str2 += "<img src='/resources/custom/"+data[0].customimg+"' id='optionss' class='drag'>";
+              		str2 += "";
+              		str2 += "<img src='/resources/custom/"+data[0].customimg+"' id='img"+data[0].coidx+"' class='drag optionss'>";
                 	$('#optiondiv').append(str2);
                 	//선택옵션 글 나오게함
                 	var str2_option = "";
-                	str2_option += "<h5>"+data[0].name + "</h5>";
-                	str2_option += data[0].price + "원<hr>";
+                	str2_option += "<div id='textarea text"+data[0].coidx+"' onclick='test("+data[0].coidx+")' class='text"+data[0].coidx+"' tabindex='1' class='area'><h5>"+data[0].name + "&nbsp;";
+                	str2_option += "<i class='bi bi-x-lg' onclick='deleteimg("+data[0].coidx+")'></i></h5>";
+                	/*  */
+                	str2_option += data[0].price + "원";
+                	str2_option += "<input type='range' class='form-range' id='customRange1'><hr></div>";
                 	$('#selectoption').append(str2_option);
                 	total(data[0].price);
               	}
         	});
         }
         
+       
         //총 금액
         function total(price){
         	sum += price;
@@ -280,7 +307,32 @@
        dragobject.initialize()
        
        //스크린샷 https://samanoske.tistory.com/94
-       $(function(){
+       
+       $("#shot").on("click", function(){
+			scrshot($("#capture"));
+		});
+       function scrshot(target){
+    	   if(target != null $$ target.length > 0){
+    		   var t = target[0];
+    		   html2canvas(t).then(function(canvas){
+    			   var myImg = canvas.toDataURL("image/png");
+    			   myImg = myImg.replace("'data:image/png;base64,","");
+    			 
+    			   $.ajax({
+    					type:"POST",
+    					data:{"imgSrc":myImg},
+    					dataType:"text",
+    					url:contextPath+"/public/ImgSaveText.do",
+    					success:function(data){
+    						console.log(data);
+    					},error:function(a,b,c){
+    						alert("error");
+    					}
+    			   });
+    		   });
+    	   }
+       }
+       /* $(function(){
 			$("#shot").on("click", function(){
 				// 캡쳐 라이브러리를 통해서 canvas 오브젝트를 받고 이미지 파일로 리턴한다.
 				html2canvas(document.querySelector("#capture")).then(canvas => {
@@ -300,7 +352,7 @@
 					indow.open(uri);
 				}
 			}
-		});
+		}); */
 
 
 //스샷 파일을 db에 저장, 삭제버튼, 회전, 체인 바꿀때 추가 되는거, 제품 선택한거 db에 저장

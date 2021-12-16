@@ -65,8 +65,7 @@
 		    <ul class="dropdown-menu">
 		      <li><a class="dropdown-item" href="/Ad_order_delivery/order.do">주문 리스트</a></li>
 		      <li><a class="dropdown-item" href="/Ad_order_delivery/delivery.do">배송 리스트</a></li>
-		      <li><a class="dropdown-item" href="#">환불 접수</a></li>
-		      <li><a class="dropdown-item" href="#">교환 접수</a></li>
+		      <li><a class="dropdown-item" href="/Ad_order_delivery/return.do">취소/환불/교환</a></li>
 		    </ul>
 		  </li>
 		   <li class="nav-item dropdown">
@@ -89,7 +88,7 @@
 		    <ul class="dropdown-menu">
 		      <li><a class="dropdown-item" href="/Ad_board/question.do">문의 게시판</a></li>
 		      <li><a class="dropdown-item" href="/Ad_board/board.do?page=1&type=T">공지사항 게시판</a></li>
-		      <li><a class="dropdown-item" href="/Ad_board/event_regist.do">이벤트 게시판</a></li>
+		      <li><a class="dropdown-item" href="/Ad_board/event.do">이벤트 게시판</a></li>
 		      <li><a class="dropdown-item" href="#">리뷰 관리</a></li>
 		    </ul>
 		  </li>

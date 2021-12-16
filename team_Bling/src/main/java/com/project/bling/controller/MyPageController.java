@@ -1,20 +1,27 @@
 package com.project.bling.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
+import java.util.Base64.Decoder;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -40,7 +47,7 @@ public class MyPageController {
 	@Autowired
 	LoginService  loginService;
 	
-	String uploadPath = "D:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
+	String uploadPath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
     
     //커스터마이징
     @RequestMapping(value="/ssss.do")
@@ -423,30 +430,86 @@ public class MyPageController {
 		return "myPage/modify_fin";
 	}
 	
-/* 회원 탈퇴 */
+	/* 회원 탈퇴 */
 	//회원탈퇴
-	@RequestMapping(value="/deletes.do")
-	public String del(Model model, HttpSession session)throws Exception{
+	@RequestMapping(value="/deletemain.do")
+	public String delmain(Model model, HttpSession session)throws Exception{
 		//로그인시 세션에 저장된 회원정보 불러오기
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		//회원정보에서 회원번호만 선택
 		int midx = uv.getMidx();
-		
 		model.addAttribute("data",myPageService.confirm(midx));
-				
 		return "myPage/delete";
 	}
 	
-	@RequestMapping(value="/deletefin.do")
-	public String delfin(HttpSession session)throws Exception{
+	@RequestMapping(value="/deletequit.do")
+	@ResponseBody
+	public int del(HttpSession session,String pass)throws Exception{
+		
+		int confirm = 0;
 		//로그인시 세션에 저장된 회원정보 불러오기
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		//회원정보에서 회원번호만 선택
 		int midx = uv.getMidx();
-		loginService.logout(session);
-		myPageService.del(midx);
-		return "redirect:/";
+
+		String realpass = myPageService.delconfirm(midx);
+		
+		if(!realpass.equals(pass)) {
+			confirm = 0; //비번틀림
+		}else {
+			confirm = 1; //비번 맞음
+		}
+				
+		return confirm;
 	}
 	
+	@RequestMapping(value="/deletefin.do")
+	@ResponseBody
+	public int delfin(HttpSession session, String quitval)throws Exception{
+		//로그인시 세션에 저장된 회원정보 불러오기
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		//회원정보에서 회원번호만 선택
+		int midx = uv.getMidx();
+		CombineVO vo = new CombineVO();
+		vo.setMidx(midx);
+		vo.setComments(quitval);
+		loginService.logout(session);
+		myPageService.del(vo);
+		return 0;
+	}
 	
+	@ResponseBody
+	@RequestMapping(value = { "ImgSaveTest" }, method = RequestMethod.POST)
+	public ModelMap ImgSaveTest(@RequestParam HashMap<Object, Object> param, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+		ModelMap map = new ModelMap();
+		
+		String binaryData = request.getParameter("imgSrc");
+		FileOutputStream stream = null;
+		try{
+			System.out.println("binary file   "  + binaryData);
+			if(binaryData == null || binaryData.trim().equals("")) {
+			    throw new Exception();
+			}
+			binaryData = binaryData.replaceAll("data:image/png;base64,", "");
+			Decoder decoder = Base64.getDecoder();
+			byte[] file = decoder.decode(binaryData);
+			String fileName=  UUID.randomUUID().toString();
+			
+			stream = new FileOutputStream("E:/test2/"+fileName+".png");
+			stream.write(file);
+			stream.close();
+			System.out.println("캡처 저장");
+		    
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("에러 발생");
+		}finally{
+			if(stream != null) {
+				stream.close();
+			}
+		}
+		
+		map.addAttribute("resultMap", "");
+		return map;
+	}
 }
