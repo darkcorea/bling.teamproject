@@ -5,8 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
 
+<style>
 .logo{
 	 height:75px;
 	 width: 77px;
@@ -62,7 +62,7 @@ ul > li {
         <div class="d1">
         	<div class="d2">
         	<ul>
-        		<li class="lo"><img src="/team_Bling/resources/simage/logo1.png" alt="" class="logo"></li>
+        		<li class="lo"><img src="${cPath}/resources/simage/logo1.png" alt="" class="logo"></li>
         		<li class="company">
         			<div class="info">
         			<h5>회사 정보</h5>

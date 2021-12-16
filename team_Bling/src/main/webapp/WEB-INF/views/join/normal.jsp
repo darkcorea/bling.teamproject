@@ -8,18 +8,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>일반회원가입</title>
-		<!-- Bootstrap icon CSS -->
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 		<!-- Required meta tags -->
 	    <meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	    <!-- Bootstrap CSS -->
-  		<link href="/resources/css/bootstrap.css" rel="stylesheet">
-	  	<!-- Bootstrap core JavaScript -->
-  		<script src="/resources/js/jquery-3.6.0.min.js"></script>
-  		<script src="/resources/js/bootstrap.bundle.js"></script>
-  		
   		<!-- 주소 검색 api -->
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		
@@ -513,7 +505,7 @@
 				}else{
 					console.log(iddata);
 					 $.ajax({
-						url:"/Join/confirmid.do",
+						url:"${cPath}/Join/confirmid.do",
 						type:"POST",
 						data:{"iddata":iddata},
 						ContentType:"application/json",
@@ -540,7 +532,7 @@
 					alert("이메일을 입력해주세요.");
 				}else{
 					$.ajax({
-						url:"/Join/confirmemail.do",
+						url:"${cPath}/Join/confirmemail.do",
 						type:"POST",
 						data:{"emaildata":emaildata},
 						ContentType:"application/json",

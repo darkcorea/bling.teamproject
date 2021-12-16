@@ -11,12 +11,6 @@
 	<meta http-equiv="X-UA-Compatible" content ="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>product list</title>
-	<script src="/js/jquery-3.6.0.min.js"></script>
-	<script src="/js/bootstrap.bundle.js"></script>
-	<link rel="stylesheet" href="/css/bootstrap.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-	
-	
 	
 	<style>
 		/* 전반적인 크기에 관한 설정 */
@@ -82,8 +76,8 @@
 					<div class="col-12 col-md-6 col-lg-4 col-xl-4" id="prodCol">
 						<div id="img1">
 							<span class="product-badge badge badge-secondary bg-danger" style="position: absolute;">best</span>
-							<a href="/Product/detail.do?pidx=${best.pidx}" style="text-decoration:none">
-								<img class="img-fluid" src="/resources/image/${best.main }">
+							<a href="${cPath}/Product/detail.do?pidx=${best.pidx}" style="text-decoration:none">
+								<img class="img-fluid" src="${cPath}/resources/image/${best.main }">
 							</a>
 						</div>
 						<div>
@@ -101,7 +95,7 @@
 									<!-- 상품 이름 -->
 									<div>
 										<h3 class="text-base mb-0">
-											<a class="text-dark prodName" href="/Product/detail.do?pidx=${best.pidx}" style="text-decoration:none">${best.pname}</a>
+											<a class="text-dark prodName" href="${cPath}/Product/detail.do?pidx=${best.pidx}" style="text-decoration:none">${best.pname}</a>
 										</h3>
 									</div>
 									<!-- 가격 할인율이 0일 경우와 아닐 경우를 나눔 -->
@@ -125,7 +119,7 @@
 						$(document).ready(function(){
 							var pidx = ${best.pidx};
 							$.ajax({
-								url:"/Basket/checklike.do",
+								url:"${cPath}/Basket/checklike.do",
 								type:"POST",
 								data:{"pidx":pidx},
 								ContentType:"application/json",
@@ -177,7 +171,7 @@
 <script>
 	function like(pidx){
 		$.ajax({
-			url:"/Basket/checklike.do",
+			url:"${cPath}/Basket/checklike.do",
 			type:"POST",
 			data:{"pidx":pidx},
 			ContentType:"application/json",
@@ -214,7 +208,7 @@
 			dataType:'json',
 			data:{"page":page,"orderBy":orderBy,"kind":kind},
 			async: false,
-			url:"/Product/product_scroll.do",
+			url:"${cPath}/Product/product_scroll.do",
 			success:function(returnData){
 				var data = returnData.scroll;
 				var startnum = returnData.startnum;
@@ -231,8 +225,8 @@
 		           		for(i=0;i<data.length;i++){
 		   	            	html += "<div class='col-12 col-md-6 col-lg-4 col-xl-4' id='prodCol'>";
 		   	            	html += "<div id='img1'>";
-		   	            	html += "<a href='/Product/detail.do?pidx="+data[i].pidx+"' style='text-decoration:none'>";
-		   	            	html += "<img class='img-fluid' src='/resources/image/"+data[i].main+"'>";
+		   	            	html += "<a href='/team_Bling/Product/detail.do?pidx="+data[i].pidx+"' style='text-decoration:none'>";
+		   	            	html += "<img class='img-fluid' src='/team_Bling/resources/image/"+data[i].main+"'>";
 		   	            	html += "</a>";
 		   	            	html += "</div>";
 		   	            	html += "<div>";
@@ -247,7 +241,7 @@
 		   	            	html += "</div>";
 		   	            	html += "<div>";
 		   	            	html += "<h3 class='text-base mb-0'>";
-		   	            	html += "<a class='text-dark prodName' href='/Product/detail.do?pidx="+data[i].pidx+"' style='text-decoration:none'>"+data[i].pname+"</a>";
+		   	            	html += "<a class='text-dark prodName' href='/team_Bling/Product/detail.do?pidx="+data[i].pidx+"' style='text-decoration:none'>"+data[i].pname+"</a>";
 		   	            	html += "</h3>";
 		   	            	html += "</div>";
 		   	            	html += "<div id='totprice'>";
@@ -314,7 +308,7 @@
 			console.log(like);
 			console.log(pidx);
 			$.ajax({
-				url:"/Basket/like.do",
+				url:"${cPath}/Basket/like.do",
 				type:"POST",
 				data:{"yn":like,"pidx":pidx},
 				ContentType:"application/json",

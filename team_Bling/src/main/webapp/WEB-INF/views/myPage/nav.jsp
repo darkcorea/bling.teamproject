@@ -8,11 +8,6 @@
 <head>
 <meta charset="UTF-8">
 <title>MyPage</title>
-	<!-- Bootstrap core CSS -->
-  		<link href="/resources/css/bootstrap.css" rel="stylesheet">
-  	<!-- Bootstrap core JavaScript -->
-  		<script src="/resources/js/jquery-3.6.0.min.js"></script>
-		<script src="/resources/js/bootstrap.bundle.js"></script>
 	<!-- SweetAlert2(alert,modal창) -->
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	
@@ -61,7 +56,7 @@
 </head>
 <body>
 	<!-- nav바   -->
-	<h2><b><a id="myPageTitle" href="/MyPage/main.do?page=1">마이페이지</a></b></h2>
+	<h2><b><a id="myPageTitle" href="${cPath}/MyPage/main.do?page=1">마이페이지</a></b></h2>
 	<div id="basicInfo">
 		<div><b>${sessionScope.UserVO.id}</b>님</div>
 		<div>내 등급 : 
@@ -87,25 +82,25 @@
 	<div id="navMenu">
 		<div id="menuHead">쇼핑정보</div>
 		<div id="navSub">
-			<div class="pa_top"><a class="navA" href="/Delivery/main.do?page=1&kind=E">주문확인/배송조회</a></div>
-			<div class="pa_top"><a class="navA" href="/Basket/like1.do?kind=A">관심상품</a></div>
-			<div class="pa_top"><a class="navA" href="/Basket/cart.do">장바구니</a></div>
+			<div class="pa_top"><a class="navA" href="${cPath}/Delivery/main.do?page=1&kind=E">주문확인/배송조회</a></div>
+			<div class="pa_top"><a class="navA" href="${cPath}/Basket/like1.do?kind=A">관심상품</a></div>
+			<div class="pa_top"><a class="navA" href="${cPath}/Basket/cart.do">장바구니</a></div>
 		</div>
 	</div>
 	<div id="navMenu">
 		<div id="menuHead">나의 활동</div>
 		<div id="navSub">
-			<div class="pa_top"><a class="navA" href="/Review/myReview.do">나의 리뷰</a></div>
-			<div class="pa_top"><a class="navA" href="/Customer/my_qestion.do?page=1">나의 문의 내역</a></div>
+			<div class="pa_top"><a class="navA" href="${cPath}/Review/myReview.do">나의 리뷰</a></div>
+			<div class="pa_top"><a class="navA" href="${cPath}/Customer/my_qestion.do?page=1">나의 문의 내역</a></div>
 		</div>
 	</div>
 	<div>
 		<div id="menuHead">회원정보</div>
 		<div id="navSub">
 
-			<div class="pa_top"><a class="navA" href="/MyPage/modify.do">나의 정보/수정</a></div>
-			<div class="pa_top"><a class="navA" href="/Addr/main.do?page=1">배송지 목록</a></div>
-			<div class="pa_top"><a class="navA" href="/MyPage/deletemain.do">회원탈퇴</a></div>
+			<div class="pa_top"><a class="navA" href="${cPath}/MyPage/modify.do">나의 정보/수정</a></div>
+			<div class="pa_top"><a class="navA" href="${cPath}/Addr/main.do?page=1">배송지 목록</a></div>
+			<div class="pa_top"><a class="navA" href="${cPath}/MyPage/deletemain.do">회원탈퇴</a></div>
 		</div>
 	</div>
 </body>

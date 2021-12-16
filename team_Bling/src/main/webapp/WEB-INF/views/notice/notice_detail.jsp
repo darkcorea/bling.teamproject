@@ -10,10 +10,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>공지사항</title>
-	<script src="/js/jquery-3.6.0.min.js"></script>
-	<script src="/js/bootstrap.bundle.js"></script>
-	<link rel="stylesheet" href="/css/bootstrap.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	
 		<style>
 			/* 전반적인 크기에 관한 설정 */
@@ -62,7 +58,7 @@
 					<c:if test="${detail.imgfile != null}">
 					<tr>
 						<td colspan="2">
-							<a href="/Notice/fileDownLoad.do?fileName=${detail.imgfile}">
+							<a href="${cPath}/Notice/fileDownLoad.do?fileName=${detail.imgfile}">
 							파일 다운로드 : 
 							<i class="bi bi-file-earmark-arrow-down"></i>
 							${detail.imgfile}
@@ -73,7 +69,7 @@
 					
 				</table>
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-				  <button class="btn btn-outline-secondary" type="button" onclick="location.href='/Notice/notice_main.do?page=1&type=T'">목록가기</button>
+				  <button class="btn btn-outline-secondary" type="button" onclick="location.href='/team_Bling/Notice/notice_main.do?page=1&type=T'">목록가기</button>
 				</div>
 			</div>
 			<br>

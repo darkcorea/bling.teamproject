@@ -10,10 +10,6 @@
 		<meta http-equiv="X-UA-Compatible" content ="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>공지사항</title>
-		<script src="/js/jquery-3.6.0.min.js"></script>
-		<script src="/js/bootstrap.bundle.js"></script>
-		<link rel="stylesheet" href="/css/bootstrap.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	
 		<style>
 			/* 전반적인 크기에 관한 설정 */
@@ -86,7 +82,7 @@
 		
 		function list_fn(page){
 			$.ajax({
-				url:"/Notice/list.do",
+				url:"${cPath}/Notice/list.do",
 				type:"POST",
 				data:{"page":page},
 				dataType: 'json',
@@ -113,7 +109,7 @@
 					  		
 					  		str +="<tr bgcolor='#FFEDED'>";
 							str +="<th class='text-center'>중요</th>";
-							str +="<td><a href='/Notice/detail.do?nidx="+data.special[i].nidx+"' class='link-dark' style='text-decoration:none'>"+data.special[i].subject+"</a>";
+							str +="<td><a href='/team_Bling/Notice/detail.do?nidx="+data.special[i].nidx+"' class='link-dark' style='text-decoration:none'>"+data.special[i].subject+"</a>";
 									
 							//파일 있을시 파일아이콘 제목옆에 붙음
 							if(data.special[i].imgfile != null){
@@ -132,7 +128,7 @@
 					  	for(let i=0;i<data.firstpage.length;i++){
 					  		str +="<tr>";
 							str +="<th class='text-center'>"+(i+1)+"</th>";
-							str +="<td><a href='/Notice/detail.do?nidx="+data.firstpage[i].nidx+"' class='link-dark' style='text-decoration:none'>"+data.firstpage[i].subject+"</a>";
+							str +="<td><a href='/team_Bling/Notice/detail.do?nidx="+data.firstpage[i].nidx+"' class='link-dark' style='text-decoration:none'>"+data.firstpage[i].subject+"</a>";
 									
 							//파일 있을시 파일아이콘 제목옆에 붙음
 							if(data.firstpage[i].imgfile != null){
@@ -156,7 +152,7 @@
 				  			console.log(page);
 							str +="<tr>";
 							str +="<th class='text-center'>"+(pagenum + i-2)+"</th>";
-							str +="<td><a href='/Notice/detail.do?nidx="+data.totalList[i].nidx+"' class='link-dark' style='text-decoration:none'>"+data.totalList[i].subject+"</a>";
+							str +="<td><a href='/team_Bling/Notice/detail.do?nidx="+data.totalList[i].nidx+"' class='link-dark' style='text-decoration:none'>"+data.totalList[i].subject+"</a>";
 									
 							//파일 있을시 파일아이콘 제목옆에 붙음
 							if(data.totalList[i].imgfile != null){

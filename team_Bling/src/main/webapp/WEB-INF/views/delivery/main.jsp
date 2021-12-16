@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>주문내역 배송조회</title>
+<!-- SweetAlert2(alert,modal창) -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--  스타일 분리 -->
-<link rel="stylesheet" href="/team_Bling/css/deliveryMain.css">
+<link rel="stylesheet" href="{cPath}/css/deliveryMain.css">
 </head>
 <body>
 <header>
@@ -79,7 +80,7 @@
 					</td>
 					<!-- 이미지 -->
 					<td>
-					<img src="/team_Bling/resources/image/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
+					<img src="{cPath}/resources/image/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
 					</td>
 					<!-- 상품명 -->
 					<td>

@@ -3,9 +3,7 @@
 	pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
- 
     request.setCharacterEncoding("UTF-8");
- 
 %>
 <!DOCTYPE html>
 <html>
@@ -17,9 +15,6 @@
 <title>주문/결제하기</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-<script src="/js/jquery-3.6.0.min.js"></script>
- <script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
 
 <!-- 주소 검색 api -->
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -403,7 +398,7 @@
 		let midx= "${sessionScope.UserVO.midx}";
 		console.log(midx);
 		$.ajax({
-			url:"/Order/addr_select.do",
+			url:"${cPath}/Order/addr_select.do",
 			data:{"midx":midx},
 			dataType:"json",
 			type:"get",
@@ -469,7 +464,7 @@ function mileage(){
 	var formData = $("form[name=frm]").serialize();
 	console.log(formData);
 	$.ajax({
-		url:"/Order/mileageupdate.do",
+		url:"${cPath}/Order/mileageupdate.do",
 		type:"POST",
 		data:formData,
 		ContentType:"application/json",
@@ -518,7 +513,7 @@ function iamport(){
 				// 결제검증
 				$.ajax({
 					type:"post",
-					url:"/Order/"+rsp.imp_uid
+					url:"${cPath}/Order/"+rsp.imp_uid
 				}).done(function(data){
 						
 				// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
@@ -526,7 +521,7 @@ function iamport(){
 						var formData = $("form[name=frm]").serialize();
 						var msg = '결제가 완료되었습니다.';
 						 $.ajax({
-								url:"/Order/memberorderinsert.do",
+								url:"${cPath}/Order/memberorderinsert.do",
 								type:"POST",
 								data:formData,
 								ContentType:"application/json",
@@ -552,21 +547,21 @@ function iamport(){
 									formData3 =  $("form[name=frm]").serialize();
 									console.log(formData3);
 									 $.ajax({
-											url:"/Order/morderdetailinsert.do",
+											url:"${cPath}/Order/morderdetailinsert.do",
 											type:"POST",
 											data:formData2,
 											async: false,
 											ContentType:"application/json",
 											success:function(data){
 												$.ajax({
-													url:"/Basket/order_after_del.do",
+													url:"${cPath}/Basket/order_after_del.do",
 													type:"POST",
 													data:formData2,
 													async: false,
 													ContentType:"application/json",
 													success:function(data){
 														 $.ajax({
-																url:"/Order/stock_update.do",
+																url:"${cPath}/Order/stock_update.do",
 																type:"POST",
 																data:{"oidx":oidx, "stock":stock},
 																dataType:"json",
@@ -589,7 +584,7 @@ function iamport(){
 										});
 									}
 								$.ajax({
-									url:"/Order/delivery_insert.do",
+									url:"${cPath}/Order/delivery_insert.do",
 									type:"POST",
 									data:formData3,
 									ContentType:"application/json",
@@ -601,7 +596,7 @@ function iamport(){
 										alert("실행오류");
 									}
 								});
-								$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/MyPage/main.do?page=1'>주문내역 가기</a></div>");
+								$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/team_Bling/MyPage/main.do?page=1'>주문내역 가기</a></div>");
 								},
 								error:function(){
 									alert("실행오류");
@@ -641,7 +636,7 @@ function iamport(){
 			var formData = $("form[name=frm]").serialize();
 			var productname = $("#productname").val();
 			 $.ajax({
-					url:"/Order/memberorderinsert.do",
+					url:"${cPath}/Order/memberorderinsert.do",
 					type:"POST",
 					data:formData,
 					ContentType:"application/json",
@@ -667,21 +662,21 @@ function iamport(){
 						formData3 =  $("form[name=frm]").serialize();
 						console.log(formData3);
 						 $.ajax({
-								url:"/Order/morderdetailinsert.do",
+								url:"${cPath}/Order/morderdetailinsert.do",
 								type:"POST",
 								data:formData2,
 								async: false,
 								ContentType:"application/json",
 								success:function(data){
 									$.ajax({
-										url:"/Basket/order_after_del.do",
+										url:"${cPath}/Basket/order_after_del.do",
 										type:"POST",
 										data:formData2,
 										async: false,
 										ContentType:"application/json",
 										success:function(data){
 											 $.ajax({
-													url:"/Order/stock_update.do",
+													url:"${cPath}/Order/stock_update.do",
 													type:"POST",
 													data:{"oidx":oidx, "stock":stock},
 													dataType:"json",
@@ -704,7 +699,7 @@ function iamport(){
 							});
 						}
 					$.ajax({
-						url:"/Order/delivery_insert.do",
+						url:"${cPath}/Order/delivery_insert.do",
 						type:"POST",
 						data:formData3,
 						ContentType:"application/json",
@@ -715,7 +710,7 @@ function iamport(){
 							alert("실행오류");
 						}
 					});
-					$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/MyPage/main.do?page=1'>주문내역 가기</a></div>");
+					$("section").html("<div id='complete'>주문이 완료되었습니다<br><a id='mypage' href='/team_Bling/MyPage/main.do?page=1'>주문내역 가기</a></div>");
 					},
 					error:function(){
 						alert("실행오류");
@@ -731,7 +726,7 @@ $(document).ready(function(){
 	var grade = 0;
 	var price = ${tot_price};
 	$.ajax({
-		url:"/Order/select_midx.do",
+		url:"${cPath}/Order/select_midx.do",
 		type:"post",
 		data:{"midx":midx},
 		dataType:"json",
