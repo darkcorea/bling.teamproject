@@ -22,6 +22,7 @@ public class PageMaker {
 	private int start;	// 주희 전용 
 	private int end;
 	private String type;
+	private String grade;
 	
 	
 	public int getMidx() {
@@ -166,6 +167,12 @@ public class PageMaker {
 		}
 		String keyword3 = keyword2.trim();
 		return keyword3;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
 	}
 	
 }

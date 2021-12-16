@@ -15,6 +15,7 @@ public class Criteria {
 	private int last_price;
 	private String rdate1;
 	private String rdate2;
+	private String grade;
 	
 
 	public String getKind() {
@@ -76,6 +77,12 @@ public class Criteria {
 	}
 	public void setRdate2(String rdate2) {
 		this.rdate2 = rdate2;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
 	}
 	
 	

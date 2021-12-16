@@ -5,5 +5,28 @@
  
 <mapper namespace="com.project.bling.mapper.adminmapper.ad_userMapper">
 
+	<select id="userCount"  parameterType="String" resultType="int">
+		SELECT count(midx) as count
+		FROM bg_user
+		<if test='_parameter == "S"'> where grade='S'</if>
+		<if test='_parameter == "G"'> where grade='G'</if>
+		<if test='_parameter == "B"'> where grade='B'</if>
+	</select>
 
+	<select id="user_list" parameterType="PageMaker" resultType="UserVO">
+	select a.midx,a.uname,a.id,a.grade,a.mileage,a.rdate,a.rdate1,
+       sum(c.tot_price) as sum,
+       count(c.order_idx) as count
+		from bg_user a
+		left join bg_order c
+		on a.midx=c.midx
+		left join bg_delivery b on c.order_idx = b.order_idx
+		where (b.cancel = 'N' or  b.cancel is null) and (b.refund = 'N' or  b.refund is null )
+		<if test='grade == "S"'> and grade='S'</if>
+		<if test='grade == "G"'> and grade='G'</if>
+		<if test='grade == "B"'> and grade='B'</if>
+		group by a.midx
+		order by a.midx DESC
+		Limit #{startPost},#{scri.perPageNum}
+	</select>
 </mapper>
