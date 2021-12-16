@@ -110,8 +110,33 @@
 		 DELETE FROM bg_event WHERE eidx=#{eidx}
 	</delete>
 	
-	
+	<!-- 문의사항 리스트 -->
 	<select id="question_list" resultType="QuestionVO">
 		SELECT * FROM bg_question ORDER BY originqidx desc
 	</select>
+	
+	<!-- order_idx또는 detail_idx로 구매한 상품들 정보 가져 오기 -->
+  <select id="question_detail" parameterType="Order_detailVO" resultType="CombineVO">
+ 	SELECT bp.pidx, bo.recipient, bo.rphone, bo.addr1, bo.addr2, bp.pname, bi.main, bop.oname, 
+	  			bod.quantity, bo.payment, bo.tot_price,bo.zip_code,bo.order_idx, bod.detail_idx, a.deli_stat
+		FROM bg_order bo
+		JOIN bg_order_detail bod ON bo.order_idx = bod.order_idx
+		JOIN bg_option bop ON bod.oidx = bop.oidx
+		JOIn bg_product bp ON bp.pidx = bop.pidx
+		JOIN bg_image bi oN bi.pidx = bp.pidx
+	    JOIN bg_delivery a ON a.order_idx=bo.order_idx 
+	<if test="order_idx != 0">WHERE bo.order_idx=#{order_idx}</if>
+	<if test="detail_idx != 0">WHERE bod.detail_idx=#{detail_idx}</if>
+  </select>
+  
+  <!--  문의사항 답글 작성 -->
+  <insert id="question_write" parameterType="QuestionVO">
+  	INSERT INTO bg_question (midx,category,title,content,originqidx,depth,state)
+  	VALUES(#{midx},#{category},#{title},#{content},#{qidx},1,'Y')
+  </insert>
+  <!--문의 사항에 답글을 달고 기존 문의에는 답글 달았다는 표시 하기  -->
+  <update id="question_state" parameterType="QuestionVO">
+ 	 UPDATE bg_question SET state='Y' WHERE qidx=#{qidx}
+  </update>
+  
 </mapper>

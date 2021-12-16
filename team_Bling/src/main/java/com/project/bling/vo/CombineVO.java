@@ -81,6 +81,12 @@ public class CombineVO {
 	
 	
 	
+	public int getPayed_mileage() {
+		return payed_mileage;
+	}
+	public void setPayed_mileage(int payed_mileage) {
+		this.payed_mileage = payed_mileage;
+	}
 	public int getVisit() {
 		return visit;
 	}

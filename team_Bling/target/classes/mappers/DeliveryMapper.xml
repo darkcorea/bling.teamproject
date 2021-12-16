@@ -77,7 +77,9 @@
 		JOIn bg_product bp ON bp.pidx = bop.pidx
 		JOIN bg_image bi oN bi.pidx = bp.pidx
         LEFT OUTER JOIN  bg_review re ON re.DETAIL_IDX = bod.detail_idx
-		WHERE bo.order_idx=#{order_idx}
+		WHERE 
+		<if test="order_idx != null">bo.order_idx=#{order_idx}</if>
+		<if test="detail_idx != null">bod.detail_idx=#{detail_idx}</if>
 	  </select>
 	  
 	  <!-- 구매한 물품에 대한 교환/취소/반품 메세지 등록 -->

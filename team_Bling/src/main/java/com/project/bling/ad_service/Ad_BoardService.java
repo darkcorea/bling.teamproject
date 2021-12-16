@@ -3,8 +3,10 @@ package com.project.bling.ad_service;
 import java.util.List;
 
 import com.project.bling.domain.PageMaker;
+import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
+import com.project.bling.vo.Order_detailVO;
 import com.project.bling.vo.QuestionVO;
 
 public interface Ad_BoardService {
@@ -45,5 +47,7 @@ public interface Ad_BoardService {
 	/*---------------------------------------------------------*/
 	// 문의사항 리스트
 	List<QuestionVO> question_list()throws Exception;
+	List<CombineVO> question_detail(Order_detailVO ov)throws Exception;
+	void question_write(QuestionVO qv)throws Exception;
 	
 }

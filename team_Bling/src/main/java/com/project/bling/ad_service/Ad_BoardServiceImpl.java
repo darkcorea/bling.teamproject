@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.project.bling.ad_dao.Ad_BoardDAO;
 import com.project.bling.domain.PageMaker;
+import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
+import com.project.bling.vo.Order_detailVO;
 import com.project.bling.vo.QuestionVO;
 
 @Service("Ad_BoardService")
@@ -75,6 +77,18 @@ public class Ad_BoardServiceImpl implements Ad_BoardService{
 	@Override
 	public List<QuestionVO> question_list() throws Exception {
 		return ad_boardDAO.question_list();
+	}
+	
+	// 문의사항 상품정보 가져오기
+	@Override
+	public List<CombineVO> question_detail(Order_detailVO ov) throws Exception {
+		return ad_boardDAO.question_detail(ov);
+	}
+	
+	// 문의사항 답글 작성과 업데이트 원글 답변완료 달기
+	@Override
+	public void question_write(QuestionVO qv) throws Exception {
+		ad_boardDAO.question_write(qv);
 	}
 	
 	

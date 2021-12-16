@@ -28,8 +28,11 @@ import com.project.bling.ad_service.Ad_BoardService;
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.service.EventService;
+import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
+import com.project.bling.vo.Order_detailVO;
+import com.project.bling.vo.QuestionVO;
 
 @RequestMapping(value="/Ad_board")
 @Controller
@@ -505,6 +508,23 @@ public class Ad_BoardController {
 			ad_boardService.deleteArrEvent(eidx);
 			//return "admin/Board/board";
 		}
+		
+		// 문의 하기에 대한 자세한 상품 정보
+		@RequestMapping(value="/question_detail.do", method = RequestMethod.POST)
+		@ResponseBody
+		public List<CombineVO> question_detail(Order_detailVO ov)throws Exception{
+			return ad_boardService.question_detail(ov);
+		}
+		
+		// 문의사항 답글 작성과 업데이트 원글 답변완료 달기
+		@RequestMapping(value="/question_write.do", method = RequestMethod.POST)
+		@ResponseBody
+		public int question_write(QuestionVO qv)throws Exception{
+				ad_boardService.question_write(qv);
+			return 1;
+		}
+		
+		
 }
 
 
