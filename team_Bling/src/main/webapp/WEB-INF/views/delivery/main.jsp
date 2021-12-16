@@ -9,14 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>주문내역 배송조회</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<!-- SweetAlert2(alert,modal창) -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <!--  스타일 분리 -->
-<link rel="stylesheet" href="/css/deliveryMain.css">
+<link rel="stylesheet" href="/team_Bling/css/deliveryMain.css">
 </head>
 <body>
 <header>
@@ -84,7 +79,7 @@
 					</td>
 					<!-- 이미지 -->
 					<td>
-					<img src="/resources/image/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
+					<img src="/team_Bling/resources/image/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
 					</td>
 					<!-- 상품명 -->
 					<td>
@@ -522,7 +517,7 @@ $(document).ready(function() {
 					str += "</tr>";	
 					str += " <td style='width:150px;'>";
 					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"'>"
-					str += " <img class='image_main' src='/resources/image/"+data[i].main+"'></a>";	
+					str += " <img class='image_main' src='/team_Bling/resources/image/"+data[i].main+"'></a>";	
 					str += "</td>";	
 					str += "<td style='width:300px;'>";
 					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"' class='title4'>"
@@ -722,7 +717,7 @@ $(document).ready(function() {
 					str += "</tr>";
 					str += "<td style='width:150px;'>";
 					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[i].pidx+"'>"
-					str += "<img class='image_main' src='/resources/image/"+data[i].main+"'></a>";	
+					str += "<img class='image_main' src='/team_Bling/resources/image/"+data[i].main+"'></a>";	
 					str += "</td>";	
 					str += "<td style='width:300px;'>";	
 					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[i].pidx+"' class='title4'>"

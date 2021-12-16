@@ -8,11 +8,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>제품 문의 하기</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style>
 	section {
 		width:750px;
@@ -275,7 +270,7 @@ $(document).ready(function() {
 					str += "</div>";
 					str += "<div style='margin-bottom:10px;'>";
 					str += "<input class='margin-center' type='checkbox' name='detail_idx' value='"+data[0].detail_idx+"'>";
-					str += "<img class='image_main' src='/resources/image/"+data[0].main+"'>";
+					str += "<img class='image_main' src='/team_Bling/resources/image/"+data[0].main+"'>";
 					str += "<div class='product_names'><span style='color:#CB7878;'>"+data[0].pname+"</span><br><b>제품선택 : "+opName+"</b></div>";
 					str += "</div>";
 					
@@ -289,7 +284,7 @@ $(document).ready(function() {
 						if(date_one == date){
 							str += "<div style='margin-bottom:10px;'>";
 							str += "<input class='margin-center' type='checkbox' name='detail_idx' value='"+data[i].detail_idx+"'>";
-							str += "<img class='image_main' src='/resources/image/"+data[i].main+"'>";
+							str += "<img class='image_main' src='/team_Bling/resources/image/"+data[i].main+"'>";
 							str += "<div class='product_names'><span style='color:#CB7878;'>"+data[i].pname+"</span><br><b>제품선택 : "+opName+"</b></div>";
 							str += "</div>";
 						}else{
@@ -298,7 +293,7 @@ $(document).ready(function() {
 							str += "</div>";
 							str += "<div style='margin-bottom:10px;'>";
 							str += "<input class='margin-center' type='checkbox' name='detail_idx' value='"+data[i].detail_idx+"'>";
-							str += "<img class='image_main' src='/resources/image/"+data[i].main+"'>";
+							str += "<img class='image_main' src='/team_Bling/resources/image/"+data[i].main+"'>";
 							str += "<div class='product_names'><span style='color:#CB7878;'>"+data[i].pname+"</span><br><b>제품선택 : "+opName+"</b></div>";
 							str += "</div>";
 							date_one = date;

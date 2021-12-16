@@ -9,12 +9,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>비회원 주문 조회</title>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/bootstrap.bundle.js"></script>
-<!-- SweetAlert2(alert,modal창) -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
 <style>
 	/* 크기 */
 	section{

@@ -10,10 +10,6 @@
 	<meta http-equiv="X-UA-Compatible" content ="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>장바구니</title>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-	<script src="/js/jquery-3.6.0.min.js"></script>
-	<script src="/js/bootstrap.bundle.js"></script>
-	<link rel="stylesheet" href="/css/bootstrap.css">
 	
 	<style>
 		section {
@@ -178,7 +174,7 @@
 					str += "	<input type='hidden' name='pname' value='"+item.pname+"'>";
 					str += "	<input type='hidden' name='stock1' value='"+item.stock+"'>";
 					str += "	</td>";
-					str += "	<td><img class='img-fluid' src='/resources/image/"+item.main+"'></td>";
+					str += "	<td><img class='img-fluid' src='/team_Bling/resources/image/"+item.main+"'></td>";
 					str += "	<td><a class='deco' href='/team_Bling/Product/detail.do?pidx="+item.pidx+"'>"+item.pname+"</a>";
 					str += "		<p>옵션명 : "+item.oname+"</p>";
 					str += "	<input type='hidden' name='stock' value='"+item.stock+"' id='s_"+item.cart_idx+"'>";
