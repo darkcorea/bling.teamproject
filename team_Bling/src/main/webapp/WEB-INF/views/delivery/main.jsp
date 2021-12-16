@@ -25,8 +25,8 @@
 <section>
 	<div class="title text_center">주문내역</div><br>
 	<div class="title text_center row">
-		<div class="col"><a href="/Delivery/main.do" class="title2"><span>주문내역조회</span></a></div>
-		<div class="col"><a href="/Delivery/main1.do" class="title3"><span>취소/반품/교환내역</span></a></div>
+		<div class="col"><a href="/team_Bling/Delivery/main.do" class="title2"><span>주문내역조회</span></a></div>
+		<div class="col"><a href="/team_Bling/Delivery/main1.do" class="title3"><span>취소/반품/교환내역</span></a></div>
 	</div>
 	<hr>
 	<div id="reviewList">
@@ -242,7 +242,7 @@
 			<c:if test="${pm.prev == true}">
 			<li class='page-item'>
 			<c:set var="prev" value="${pm.startPage -1}"/>
-				<a class='page-link' aria-label='Previous' href="/Delivery/main.do?page=${prev}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
+				<a class='page-link' aria-label='Previous' href="/team_Bling/Delivery/main.do?page=${prev}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
 					<span aria-hidden='true' class='pointer' >&laquo;</span>
 				</a>
 			</li>
@@ -253,14 +253,14 @@
 			<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
 				<c:if test = "${pageNum == page}">
 				<li class="page-item active">	
-					<a class="page-link pointer" href="/Delivery/main.do?page=${pageNum}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
+					<a class="page-link pointer" href="/team_Bling/Delivery/main.do?page=${pageNum}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
 						<c:out value="${pageNum}"/>
 					</a>
 				</li>
 				</c:if>
 				<c:if test = "${pageNum != page}">
 				<li class="page-item">	
-					<a class="page-link pointer" href="/Delivery/main.do?page=${pageNum}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
+					<a class="page-link pointer" href="/team_Bling/Delivery/main.do?page=${pageNum}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
 						<c:out value="${pageNum}"/>
 					</a>
 				</li>
@@ -270,7 +270,7 @@
 			<!-- 뒤로 가기 버튼 , 키워드 유지하면서 이동하기 -->
 			<c:if test="${pm.next && pm.endPage > 0}">
 			<li class='page-item'>
-				<a class='page-link' aria-label='Next' href="/Delivery/main.do?page=${pm.endPage + 1}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
+				<a class='page-link' aria-label='Next' href="/team_Bling/Delivery/main.do?page=${pm.endPage + 1}&kind=${pm.scri.kind}&rdate1=${pm.scri.rdate1}&rdate2=${pm.scri.rdate2}">
 					<span aria-hidden='true' class='pointer'>&raquo;</span>
 				</a>
 			</li>
@@ -457,7 +457,7 @@ $(document).ready(function() {
 		if (!confirm("구매를 확정 하시겠습니까?")) {
 	     } else {
 	    	 $.ajax({
-	 			url:"/Delivery/confirm_fn.do",
+	 			url:"/team_Bling/Delivery/confirm_fn.do",
 	 			type:"POST",
 	 			data:{"order_idx":order_idx},
 	 			success:function(data){
@@ -477,7 +477,7 @@ $(document).ready(function() {
 	// 구매한 오더의 이미지나 상품명(옵션을 눌렀을 떄)
 	function order_list(order_idx){	
 		$.ajax({
-			url:"/Delivery/order_list.do",
+			url:"/team_Bling/Delivery/order_list.do",
 			type:"POST",
 			data:{"order_idx":order_idx},
 			async: false,
@@ -521,11 +521,11 @@ $(document).ready(function() {
 					str += "<table>";	
 					str += "</tr>";	
 					str += " <td style='width:150px;'>";
-					str += "<a href='/Product/detail.do?pidx="+data[0].pidx+"'>"
+					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"'>"
 					str += " <img class='image_main' src='/resources/image/"+data[i].main+"'></a>";	
 					str += "</td>";	
 					str += "<td style='width:300px;'>";
-					str += "<a href='/Product/detail.do?pidx="+data[0].pidx+"' class='title4'>"
+					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"' class='title4'>"
 					str += "<span><b>"+data[i].pname+"</b></span></a><br>";	
 					var oname = data[i].oname.split("+")[0]
 					str += " <span>"+oname+"</span>(수량: <span>"+data[i].quantity+"</span>)";	
@@ -552,7 +552,7 @@ $(document).ready(function() {
 	function detailIdx(detail_idx){
 	    $('#textArea1_cnt').html("(0 / 500)");
 		$.ajax({
-			url: "/MyPage/detailIdx.do",
+			url: "/team_Bling/MyPage/detailIdx.do",
 			type: "post",
 			data: "detail_idx="+detail_idx,
 			ContentType: "json",
@@ -569,7 +569,7 @@ $(document).ready(function() {
 	function detailIdx1(detail_idx){
 		
 		$.ajax({
-			url: "/MyPage/detailIdx.do",
+			url: "/team_Bling/MyPage/detailIdx.do",
 			type: "post",
 			data: "detail_idx="+detail_idx,
 			ContentType: "json",
@@ -609,7 +609,7 @@ $(document).ready(function() {
 		}
 		
 		$.ajax({
-			url: "/MyPage/reviewWrite.do",
+			url: "/team_Bling/MyPage/reviewWrite.do",
 			type: "post",
 			data: "contents="+contents+"&grade="+grade,
 			ContentType: "json",
@@ -646,7 +646,7 @@ $(document).ready(function() {
 		formData.append("image2", image2);
 		
 		$.ajax({
-			url: "/MyPage/upload.do",
+			url: "/team_Bling/MyPage/upload.do",
 			type: "post",
 			data: formData,
 		    dataType: "text",
@@ -709,7 +709,7 @@ $(document).ready(function() {
 	function review_writed(order_idx){
 		
 		$.ajax({
-			url: "/Delivery/order_list.do",
+			url: "/team_Bling/Delivery/order_list.do",
 			type: "post",
 			data: {"order_idx":order_idx},
             success: function(data){
@@ -721,11 +721,11 @@ $(document).ready(function() {
 					str += "<table>";	
 					str += "</tr>";
 					str += "<td style='width:150px;'>";
-					str += "<a href='/Product/detail.do?pidx="+data[i].pidx+"'>"
+					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[i].pidx+"'>"
 					str += "<img class='image_main' src='/resources/image/"+data[i].main+"'></a>";	
 					str += "</td>";	
 					str += "<td style='width:300px;'>";	
-					str += "<a href='/Product/detail.do?pidx="+data[i].pidx+"' class='title4'>"
+					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[i].pidx+"' class='title4'>"
 					str += "<span><b>"+data[i].pname+"</b></span></a><br>";	
 					var oname = data[i].oname.split("+")[0]
 					str += " <span>"+oname+"</span>(수량: <span>"+data[i].quantity+"</span>)";	
@@ -760,7 +760,7 @@ $(document).ready(function() {
 	 if (confirm("주문한 상품을 취소하시겠습니까?") == true) {
             
 		 $.ajax({
-				url: "/Delivery/return_now.do",
+				url: "/team_Bling/Delivery/return_now.do",
 				type: "post",
 				data: {"order_idx":order_idx},
 	            success: function(data){
@@ -814,7 +814,7 @@ $(document).ready(function() {
 	   }else {
 	       
 	       $.ajax({
-			url: "/Delivery/return_delivery.do",
+			url: "/team_Bling/Delivery/return_delivery.do",
 			type: "post",
 			data: {"order_idx":order_idx, "category":category,"content":content},
 			ContentType: "json",
@@ -851,7 +851,7 @@ $(document).ready(function() {
 		
 		frm.name = "frm";
 		frm.method = "post";
-		frm. action = "/Delivery/main.do";
+		frm. action = "/team_Bling/Delivery/main.do";
 		
 	    let input1 = document.createElement("input");
 		    input1.setAttribute("type","hidden");

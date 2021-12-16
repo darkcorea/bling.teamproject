@@ -100,9 +100,9 @@
 		 <table>
 		 <tr>
 			 <td style='width:150px;'> 
-				 <a href='/Product/detail.do?pidx=${list[0].pidx}'><img class='image_main' src='/resources/image/${list[0].main}'></a> 	
+				 <a href='/team_Bling/Product/detail.do?pidx=${list[0].pidx}'><img class='image_main' src='/resources/image/${list[0].main}'></a> 	
 			 </td> 	
-			 <td style='width:300px;'> <a href='/Product/detail.do?pidx=${list[0].pidx}' class='title4'>
+			 <td style='width:300px;'> <a href='/team_Bling/Product/detail.do?pidx=${list[0].pidx}' class='title4'>
 				 <span><b><c:out value="${list[0].pname}"/></b></span></a>
 				 <c:forEach items="${list}" var="option">
 				 <c:set var = "oname1" value ="${fn:split(option.oname, '+')[0]}" />

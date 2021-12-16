@@ -78,7 +78,7 @@
 <h2>고객센터</h2>
 <!-- 문의하기  텍스트와 검색버튼 -->
 <div class="research-question">
-<form name="frm" action="/Customer/main.do" method="post">
+<form name="frm" action="/team_Bling/Customer/main.do" method="post">
 <input type="text" name="keyword" id="research-text" placeholder="자주 묻는 질문 검색">&ensp;
 <input type="hidden" name="page" value="1">
 <input type="text" style="display:none;">
@@ -134,7 +134,7 @@
 		<c:if test="${pm.prev == true}">
 		<li class='page-item'>
 		<c:set var="prev" value="${pm.startPage -1}"/>
-			<a class='page-link' aria-label='Previous' href="/Customer/main.do?page=${prev}&keyword=${pm.scri.keyword}">
+			<a class='page-link' aria-label='Previous' href="/team_Bling/Customer/main.do?page=${prev}&keyword=${pm.scri.keyword}">
 				<span aria-hidden='true' class='pointer' >&laquo;</span>
 			</a>
 		</li>
@@ -145,14 +145,14 @@
 		<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
 			<c:if test = "${pageNum == page}">
 			<li class="page-item active">	
-				<a class="page-link pointer" href="/Customer/main.do?page=${pageNum}&keyword=${pm.scri.keyword}">
+				<a class="page-link pointer" href="/team_Bling/Customer/main.do?page=${pageNum}&keyword=${pm.scri.keyword}">
 					<c:out value="${pageNum}"/>
 				</a>
 			</li>
 			</c:if>
 			<c:if test = "${pageNum != page}">
 			<li class="page-item">	
-				<a class="page-link pointer" href="/Customer/main.do?page=${pageNum}&keyword=${pm.scri.keyword}">
+				<a class="page-link pointer" href="/team_Bling/Customer/main.do?page=${pageNum}&keyword=${pm.scri.keyword}">
 					<c:out value="${pageNum}"/>
 				</a>
 			</li>
@@ -162,14 +162,14 @@
 		<!-- 뒤로 가기 버튼 , 키워드 유지하면서 이동하기 -->
 		<c:if test="${pm.next && pm.endPage > 0}">
 		<li class='page-item'>
-			<a class='page-link' aria-label='Next' href="/Customer/main.do?page=${pm.endPage + 1}&keyword=${pm.scri.keyword}">
+			<a class='page-link' aria-label='Next' href="/team_Bling/Customer/main.do?page=${pm.endPage + 1}&keyword=${pm.scri.keyword}">
 				<span aria-hidden='true' class='pointer'>&raquo;</span>
 			</a>
 		</li>
 		</c:if>
 	</ul>
 </nav>
-<button type="button" class="btn btn-danger" id="question_btn" onclick="location.href='/Customer/question.do'">문의하기</button>
+<button type="button" class="btn btn-danger" id="question_btn" onclick="location.href='/team_Bling/Customer/question.do'">문의하기</button>
 
 </section><br><br><br>
 
