@@ -16,10 +16,9 @@
 				max-width:1008px;
 				margin:  0px auto;
 			}
-			/* img{
-				width:200px;
-				height:200px;
-			} */
+			.page-item{
+				padding:0;
+			}
 			
 		</style>
 	</head>
@@ -82,17 +81,11 @@
 				  	
 					//본문
 					if(data.length < 4){
-						str += threelist(str,0,data.list.length);
+						str += threelist(0,3,data);
 					}else if(3 < data.list.length < 7){
-						str += threelist(str,0,3,data);
-						str += threelist(str,3,data.list.length,data);
+						str += threelist(0,3,data);
+						str += threelist(3,6,data);
 					}
-					
-					/* else if(6 < data.list.length < 10){
-						threelist(0,3,data);
-						threelist(3,6,data);
-						threelist(6,data.list.length,data);
-					} */
 					
 					str+="<br>";
 					
@@ -142,17 +135,16 @@
 			for(let i=start ; i<end ; i++){
 				str+="<div class='card'>";
 				if(data.list[i] == null){
-					str+="<img src='...' class='card-img-top'>";
+					str+="<img src='/team_Bling/resources/usercustomizing/기본.JPG' class='card-img-top'>";
 					str+="<div class='card-body'>";
 					str+="<h5 class='card-title'>커스터마이징을 해보세요</h5>";
-					str+=" <p class='card-text'>커스터마이징</p>";
 				}else{
 					str+="<img src='/team_Bling/resources/usercustomizing/"+data.list[i].customimg+"' class='card-img-top'>";
 					str+="<div class='card-body'>";
 					str+="<h5 class='card-title'>"+data.list[i].name+"</h5>";
 					str+=" <p class='card-text'>"+data.list[i].price+"원</p>";
+					str+="<a href='#' class='btn btn-outline-dark'>장바구니에 담기</a>";
 				}
-				str+="<a href='#' class='btn btn-outline-dark'>장바구니에 담기</a>";
 				str+="</div>";
 				str+="</div>";
 			}
