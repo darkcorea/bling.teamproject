@@ -124,12 +124,12 @@
 			JOIN bg_delivery de ON de.order_idx = ord.order_idx
 			WHERE ord.midx=#{midx} and ( de.cancel is not null or de.refund is not null or de.exchange is not null)
 			
-			<if test='scri.kind == "B"'>AND DATE_FORMAT(qe.rdate,'%Y-%m-%d') = DATE_FORMAT(sysdate(),'%Y-%m-%d')</if>
-			<if test='scri.kind == "C"'><![CDATA[AND qe.rdate >= DATE_ADD(sysdate(), INTERVAL -1 WEEK )]]></if>
-			<if test='scri.kind == "D"'><![CDATA[AND qe.rdate >= DATE_ADD(sysdate(), INTERVAL -1 MONTH )]]></if>
-			<if test='scri.kind == "E"'><![CDATA[AND qe.rdate >= DATE_ADD(sysdate(), INTERVAL -3 MONTH )]]></if>
-			<if test='scri.kind == "F"'><![CDATA[AND qe.rdate >= DATE_ADD(sysdate(), INTERVAL -6 MONTH )]]></if>
-			<if test='scri.kind == "G"'>AND qe.rdate BETWEEN DATE_FORMAT(#{scri.rdate1},'%Y-%m-%d') AND DATE_FORMAT(#{scri.rdate2},'%Y-%m-%d')</if>
+			<if test='scri.kind == "B"'>AND DATE_FORMAT(de.rdate,'%Y-%m-%d') = DATE_FORMAT(sysdate(),'%Y-%m-%d')</if>
+			<if test='scri.kind == "C"'><![CDATA[AND de.rdate >= DATE_ADD(sysdate(), INTERVAL -1 WEEK )]]></if>
+			<if test='scri.kind == "D"'><![CDATA[AND de.rdate >= DATE_ADD(sysdate(), INTERVAL -1 MONTH )]]></if>
+			<if test='scri.kind == "E"'><![CDATA[AND de.rdate >= DATE_ADD(sysdate(), INTERVAL -3 MONTH )]]></if>
+			<if test='scri.kind == "F"'><![CDATA[AND de.rdate >= DATE_ADD(sysdate(), INTERVAL -6 MONTH )]]></if>
+			<if test='scri.kind == "G"'>AND de.rdate BETWEEN DATE_FORMAT(#{scri.rdate1},'%Y-%m-%d') AND DATE_FORMAT(#{scri.rdate2},'%Y-%m-%d')</if>
 			
 			ORDER BY ord.order_idx desc, od.detail_idx desc) A
         WHERE RNUM =1

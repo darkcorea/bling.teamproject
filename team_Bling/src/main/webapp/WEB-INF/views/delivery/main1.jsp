@@ -208,7 +208,7 @@
 					</td>
 					<!-- 이미지 -->
 					<td>
-					<img src="{cPath}/resources/image/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
+					<img src="/team_Bling/resources/image/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
 					</td>
 					<!-- 상품명 -->
 					<td>
