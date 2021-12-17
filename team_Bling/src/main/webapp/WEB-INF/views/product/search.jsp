@@ -309,7 +309,7 @@ function search_fn(){
 		
 		frm.name = "frm";
 		frm.method = "post";
-		frm. action = "/Product/search.do";
+		frm. action = "/team_Bling/Product/search.do";
 		
 		if (kind != null){
 			let input1 = document.createElement("input");
