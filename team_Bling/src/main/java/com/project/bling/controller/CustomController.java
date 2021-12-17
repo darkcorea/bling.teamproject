@@ -1,5 +1,6 @@
 package com.project.bling.controller;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Base64;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ import com.project.bling.vo.UserVO;
 public class CustomController {
 	
 	private static final String FILE_SERVER_PATH = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\usercustomizing\\";
+	private static final String FILE_SERVER_PATH1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\usercustomizing";
 	
 	@Autowired
 	CustomService customService;
@@ -86,6 +88,9 @@ public class CustomController {
 	@RequestMapping(value = "/scrshot.do", method = RequestMethod.POST)
 	public ModelMap ImgSaveTest(@RequestParam HashMap<Object, Object> param, final HttpServletRequest request, final HttpServletResponse response
 			,String name, int countval, int total, String totalname, HttpSession session) throws Exception {
+		
+		makeDir();
+		
 		ModelMap map = new ModelMap();
 		
 		String binaryData = request.getParameter("imgSrc");
@@ -130,5 +135,21 @@ public class CustomController {
 		
 		map.addAttribute("resultMap", "");
 		return map;
+	}
+	
+	
+	 public void makeDir() {
+        // 폴더를 만들 디렉토리 경로(Window 기반)
+        File makeFolder = new File(FILE_SERVER_PATH1);
+        // folderPath의 디렉토리가 존재하지 않을경우 디렉토리 생성.
+        if(!makeFolder.exists()) {
+            // 폴더를 생성합니다.
+            makeFolder.mkdirs(); 
+            System.out.println("폴더를 생성합니다.");
+            // 정성적으로 폴더 생성시 true를 반환합니다.
+            System.out.println("폴더가 존재하는지 체크 true/false : "+makeFolder.exists());
+        } else {
+            System.out.println("이미 해당 폴더가 존재합니다.");
+        }
 	}
 }

@@ -156,9 +156,9 @@
     </section>
 </body>
     <script>
-	function rangedeg(coidx,deg){
+	/* function rangedeg(coidx,deg){
     	document.getElementById("img"+coidx).rotate(deg);
-    }
+    } */
    /* $("#textarea").click(function(e){
 	  if(!$(e.target).hasClass("area")){
 		  alert("영역밖입니다.");
@@ -274,7 +274,8 @@
 	                	str2_option += "<i class='bi bi-x-lg' onclick='deleteimg("+data[0].coidx+")'></i></h5>";
 	                	/*  */
 	                	str2_option += data[0].price + "원";
-	                	str2_option += "<input type='range' value='0' min='0' max='360' class='form-range' id='customRange"+data[0].coidx+"'oninput='rangedeg("+data[0].coidx+",this.value);'><hr></div>";
+	                	str2_option += "<input type='range' value='0' min='0' max='360' class='form-range' id='customRange"+data[0].coidx+"' oninput='document.getElementById('value999')'><hr></div>";
+	                	str2_option += "<span id='value999'></span>"
 	                	str2_option += "<input type = 'hidden' id='optionname' value='"+data[0].coidx+"'>";
 	                	$('#selectoption').append(str2_option);
 	                	total(data[0].price);
