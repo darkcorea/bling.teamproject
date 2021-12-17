@@ -30,6 +30,32 @@ public class Ad_RegistController {
 	
 	String path = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image\\";
 	String spath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage\\";
+	String path1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image";
+	String spath1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage";
+
+	// 폴더 없으면 폴더 생성
+    public void makeDir() {
+        File makeFolder = new File(path1);
+        File makeFolder1 = new File(spath1);
+ 
+        // folderPath의 디렉토리가 존재하지 않을경우 디렉토리 생성.
+        if(!makeFolder.exists()) {
+            // 폴더를 생성합니다.
+            makeFolder.mkdirs(); 
+            System.out.println("폴더를 생성합니다.");
+            // 정성적으로 폴더 생성시 true를 반환합니다.
+            System.out.println("폴더가 존재하는지 체크 true/false : "+makeFolder.exists());
+        }else if(!makeFolder1.exists()){
+            // 폴더를 생성합니다.
+            makeFolder1.mkdirs(); 
+            System.out.println("폴더를 생성합니다.");
+            // 정성적으로 폴더 생성시 true를 반환합니다.
+            System.out.println("폴더가 존재하는지 체크 true/false : "+makeFolder1.exists());  	
+        }else {
+            System.out.println("이미 해당 폴더가 존재합니다.");
+        }
+    }
+
 	
 	/* 파일이름를 입력하면 파일을 삭제하는 메소드 image폴더*/
 	public void imageDel(String name) {
@@ -200,7 +226,10 @@ public class Ad_RegistController {
 		// 파일을 올리지 않았을 경우 이름은 null값이 나옴
 		// request.getFile("이름")이 null 값이면 오류가 발생한다. MultipartFile에 넣을 떄 오류 발생
 		// 제품 이미지 절대경로 위치, 각 검퓨터 마다 다름
-
+		
+		// 폴더 생성 메소드
+		makeDir();
+		
 		// 제품번호
 		int pidx = Integer.parseInt(request.getParameter("pidx"));
 		// 이름을 바꿔주는 메소드를 사용하기 위해서 필요함
@@ -319,6 +348,9 @@ public class Ad_RegistController {
 		// 중복코드가 많다. 리펙토링 해야 한다. (리펙토링 1차 진행)
 		@RequestMapping(value = "/modifyImg.do", method = RequestMethod.POST)
 		public String modifyImg(MultipartHttpServletRequest request) throws Exception {
+			
+			// 폴더 생성 메소드
+			makeDir();
 			
 			// 제품번호
 			int pidx = Integer.parseInt(request.getParameter("pidx"));

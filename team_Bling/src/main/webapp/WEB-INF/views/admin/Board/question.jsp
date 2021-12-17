@@ -247,7 +247,7 @@ a {text-decoration:none;}
       	<table>
       		<tr style="height:50px;">
       			<td style="width:80px;">제목</td>
-      			<td><input type="text" name="title" maxlength="30" style="width:474px;" id="title_write">
+      			<td><input type="text" name="title" maxlength="30" style="width:400px;" id="title_write">
       				<input type="hidden" name="category" id="category">
       				<input type="hidden" name="qidx" id="qidx_add">
       				<input type="hidden" name="midx" id="midx_add">
