@@ -110,6 +110,15 @@
 		 DELETE FROM bg_event WHERE eidx=#{eidx}
 	</delete>
 	
+	
+	<!-- 			문의사항		     -->
+	
+	<!-- 문의 사항 카운트 -->
+	<select id="questio_count" parameterType="PageMaker" resultType="int">
+		SELECT count(*) FROM bg_question WHERE qidx
+	</select>
+	
+	
 	<!-- 문의사항 리스트 -->
 	<select id="question_list" resultType="QuestionVO">
 		SELECT * FROM bg_question ORDER BY originqidx desc, depth asc

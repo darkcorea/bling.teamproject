@@ -467,8 +467,10 @@ function reply_modify5(){
 			alert("답글 수정 오류");
 		}
 	});
-	
 }
+
+
+
 
 
 </script>
