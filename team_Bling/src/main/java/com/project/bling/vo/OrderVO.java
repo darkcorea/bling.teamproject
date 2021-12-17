@@ -26,9 +26,16 @@ public class OrderVO {
 	private String oname;
 	private int addmileage;
 	private int payed_mileage;
+	private int cuidx;
 	
 	
 	
+	public int getCuidx() {
+		return cuidx;
+	}
+	public void setCuidx(int cuidx) {
+		this.cuidx = cuidx;
+	}
 	public int getAddmileage() {
 		return addmileage;
 	}

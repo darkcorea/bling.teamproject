@@ -87,5 +87,9 @@ public class BasketDAO {
 		return sqlSession.selectList(bm+"checklike1", midx);
 	}
 	
+	//커스텀 장바구니 등록
+	public void custominsert(OrderVO vo)throws Exception{
+		sqlSession.insert(bm+"custominsert",vo);
+	}
 	
 }

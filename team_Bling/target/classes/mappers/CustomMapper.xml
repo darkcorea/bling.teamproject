@@ -29,6 +29,7 @@
 	<select id="listajax" parameterType="PageMaker" resultType="CustomVO">
 		select *
 		from bg_custom_user
+		where midx = #{midx}
 		order by cuidx desc
 		Limit #{startPost}, #{scri.perPageNum}	
 	</select>

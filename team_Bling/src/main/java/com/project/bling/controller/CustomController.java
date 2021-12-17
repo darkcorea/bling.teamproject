@@ -50,13 +50,16 @@ public class CustomController {
 	//리스트페이징
 	@RequestMapping(value="/listajax.do")
 	@ResponseBody
-	public Map<String,Object> list(int page)throws Exception{
+	public Map<String,Object> list(int page, HttpSession session)throws Exception{
+		UserVO vo = (UserVO)session.getAttribute("UserVO");
+		int midx = vo.getMidx();
 		int count = 0;
 		count = customService.howmany();
 		Criteria sc = new Criteria();
 		sc.setPerPageNum(6);
 		sc.setPage(page);
 		PageMaker pm = new PageMaker();
+		pm.setMidx(midx);
 		pm.setScri(sc);
 		pm.setTotalCount(count);
 		Map<String, Object> list = new HashMap<String, Object>();

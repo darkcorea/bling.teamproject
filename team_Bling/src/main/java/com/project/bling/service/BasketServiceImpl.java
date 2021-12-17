@@ -105,6 +105,12 @@ public class BasketServiceImpl implements BasketService {
 	public List<LikeVO> checklike1(int midx) throws Exception {
 		return basketDAO.checklike1(midx);
 	}
+
+	//커스텀 장바구니 등록
+	@Override
+	public void custominsert(OrderVO vo) throws Exception {
+		basketDAO.custominsert(vo);
+	}
 	
 	
 }
