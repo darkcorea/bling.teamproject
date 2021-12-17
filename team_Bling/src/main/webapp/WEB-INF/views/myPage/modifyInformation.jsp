@@ -230,14 +230,14 @@
 		                   <input type="hidden" value="${ban.midx }" name="midx"/>
 		                    <div class="rows h" id="liner">
 		                        <label for="password">비밀번호 변경<span class="red">*</span></label>
-		                        <input type="password" class="impor imporz" name="pwd" id="password" placeholder="비밀번호를 입력하세요.">
+		                        <input type="password" class="impor imporz" name="pwd" id="password" placeholder="비밀번호를 입력하세요." value="${data.pwd }">
 		                        <span class="check"></span>
 		                        <div  id="checkpwd">(영문 대소문자/숫자/특수문자 모두 조합,8~16자)</div>
 		                    </div>
 		                    
 		                    <div class="rows h" id="liner">
 		                        <label for="passwordre">비밀번호 확인<span class="red">*</span></label>
-		                        <input type="password" class="impor imporz" name="passwordre" id="passwordre" placeholder="비밀번호를 다시 입력하세요.">
+		                        <input type="password" class="impor imporz" name="passwordre" id="passwordre" placeholder="비밀번호를 다시 입력하세요." value="${data.pwd }">
 		                        <span class="check"></span>
 		                    </div>
 		                    
@@ -274,7 +274,7 @@
 		
 		                    <div class="rows h d-grid gap-2 col-6 mx-auto" id="formbtn">
 		                    	<input type="submit" class="btn btn-primary " value="수정하기">
-								<button type="button" class="btn btn-secondary" id="btn2" onclick="location.href='/'">취소하기</button>
+								<button type="button" class="btn btn-secondary" id="btn2" onclick="location.href='/team_Bling/MyPage/main.do?page=1'">취소하기</button>
 		                    </div>
 					 	
 					 	</form>

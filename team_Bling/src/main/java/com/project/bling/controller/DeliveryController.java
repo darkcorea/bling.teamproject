@@ -16,7 +16,6 @@ import com.project.bling.domain.PageMaker;
 import com.project.bling.service.DeliveryService;
 import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.NonorderVO;
-import com.project.bling.vo.OrderVO;
 import com.project.bling.vo.QuestionVO;
 import com.project.bling.vo.UserVO;
 
@@ -129,7 +128,7 @@ public class DeliveryController {
 		return 1;
 	}
 	
-	// 마이페이지 주문내역 중에 취소반푼교환내역
+	// 마이페이지 주문내역 중에 취소반품교환내역
 	@RequestMapping(value="/main1.do")
 	public String delivery1(Locale locale, Model model, HttpSession session, Criteria cs) throws Exception {
 		

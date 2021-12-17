@@ -328,8 +328,8 @@
 				data: "contents="+contents+"&grade="+grade,
 				ContentType: "json",
 				success: function(data){
-					console.log("리뷰작성 성공");
-					console.log(grade);
+					$("#staticBackdrop1").modal("hide");
+					alert("리뷰가 작성되었습니다.");
 					window.location.replace("/team_Bling/MyPage/main.do?page=1");
 				},
 				error: function(){

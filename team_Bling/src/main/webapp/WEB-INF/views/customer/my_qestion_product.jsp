@@ -147,7 +147,7 @@
 									<i class='bi bi-arrow-return-right'></i>
 								</span>
 							</c:if>
-							<c:if  test="${list.show_yn == 'Y'}">
+							<c:if  test="${list.show_yn == 'N'}">
 								<span>
 									<i class='bi bi-file-lock'></i>
 								</span>

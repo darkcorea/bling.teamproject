@@ -112,7 +112,7 @@
 						
 						frm.name = "frm";
 						frm.method = "post";
-						frm. action = "/Delivery/non_main.do";
+						frm. action = "/team_Bling/Delivery/non_main.do";
 						
 					    let input = document.createElement("input");
 					    input.setAttribute("type","hidden");

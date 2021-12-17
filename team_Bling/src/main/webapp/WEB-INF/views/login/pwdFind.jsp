@@ -46,9 +46,9 @@
 		str += "</div id='btnDiv'>";
 		
 		str += "<div id='searchDiv'>";
-		str += "	<span id='searchSpan'><a href='/Login/idFind.do' id='searchA'>아이디 찾기</a></span>";
+		str += "	<span id='searchSpan'><a href='/team_Bling/Login/idFind.do' id='searchA'>아이디 찾기</a></span>";
 		str += "	<span>｜</span>";
-		str += "	<span id='searchSpan'><a href='/Login/main.do' id='searchA'>로그인 하기</a></span>";
+		str += "	<span id='searchSpan'><a href='/team_Bling/Login/main.do' id='searchA'>로그인 하기</a></span>";
 		str += "</div>";
 		
 		
@@ -95,9 +95,9 @@
 		str += "</div id='btnDiv'>";
 		
 		str += "<div id='searchDiv'>";
-		str += "	<span id='searchSpan'><a href='/Login/idFind.do' id='searchA'>아이디 찾기</a></span>";
+		str += "	<span id='searchSpan'><a href='/team_Bling/Login/idFind.do' id='searchA'>아이디 찾기</a></span>";
 		str += "	<span>｜</span>";
-		str += "	<span id='searchSpan'><a href='/Login/main.do' id='searchA'>로그인 하기</a></span>";
+		str += "	<span id='searchSpan'><a href='/team_Bling/Login/main.do' id='searchA'>로그인 하기</a></span>";
 		str += "</div>";
 		
 		

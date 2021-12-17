@@ -33,7 +33,7 @@
 					<div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
 						<h2>개인 정보 수정이 완료되었습니다.</h2>
 						<hr/>
-						<button type="button" class="btn btn-outline-primary" onClick="location.href='/'">홈으로 가기</button>
+						<button type="button" class="btn btn-outline-primary" onClick="location.href='/team_Bling/'">홈으로 가기</button>
 					</div>
 				</div>
 			</div>
