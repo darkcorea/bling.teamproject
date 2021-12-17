@@ -86,11 +86,8 @@
 	
 /* -------------------------- article css -------------------------- */
 	/* --------------------onload로 화면 출력-------------------- */
-		#noneReview{
+		#noneRv{
 			text-align: center;
-		}
-		#noneTd{
-			width: 756px;
 		}
 		#reviewTr{
 			width: 100%;
@@ -364,7 +361,7 @@
 	            
 			  	if(data.reviewList.length == 0){
 			  		str += "<br>";
-			  		str += "<tr id='noneReview'><td id='noneTd' colspan='5'>기간내 등록된 리뷰가 없습니다.</td></tr>";
+			  		str += "<div id='noneRv'><span>기간내 등록된 리뷰가 없습니다.</span></div>";
 			  	}else{
 			  		str += "<table id='reviewTable'>"
 			  		for(var a = 0 ; a < data.reviewList.length ; a++){
@@ -455,7 +452,7 @@
 				  	
 				  	//console.log(prev);
 				  	if(pm.prev == true){
-				  	    str += "<a class='page-link' aria-label='Previous' onclick='reviewList("+prev+",\""+type+"\")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
+				  	    str += "<a class='page-link' aria-label='Previous' onclick='reviewList("+prev+",\""+type+"\",\""+date1+"\",\""+date2+"\")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
 				  	}
 				  	
 				  	str += "	</li>";
@@ -464,16 +461,16 @@
 				  	
 				  	for (let k = pm.startPage; k<=pm.endPage; k++ ){
 				  		 if(page == k){
-				  			str += "<li class='page-item active'><a class='page-link pointer' onclick='reviewList("+k+",\""+type+"\")'>"+k+"</a></li>";    
+				  			str += "<li class='page-item active'><a class='page-link pointer' onclick='reviewList("+k+",\""+type+"\",\""+date1+"\",\""+date2+"\")'>"+k+"</a></li>";    
 				  		 }else{
-				  			str += "<li class='page-item'><a class='page-link pointer' onclick='reviewList("+k+",\""+type+"\")'>"+k+"</a></li>";    
+				  			str += "<li class='page-item'><a class='page-link pointer' onclick='reviewList("+k+",\""+type+"\",\""+date1+"\",\""+date2+"\")'>"+k+"</a></li>";    
 				  		 }
 				  	 }
 				  	 
 				  	 str += "	<li class='page-item'>";
 				  	
 				  	 if(pm.next && pm.endPage > 0){
-				  	     str += "<a class='page-link' aria-label='Next' onclick='reviewList("+next+",\""+type+"\")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
+				  	     str += "<a class='page-link' aria-label='Next' onclick='reviewList("+next+",\""+type+"\",\""+date1+"\",\""+date2+"\")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
 				  	 }
 				  	 
 				  	 str += "	</li>";
@@ -583,7 +580,7 @@
 				}).then((result) => {
 					  /* Read more about isConfirmed, isDenied below */
 					  if (result.isConfirmed) {
-						   window.location.replace("/Review/myReview.do");
+						   window.location.replace("/team_Bling/Review/myReview.do");
 					  } else if (result.isDenied) {
 				   }
 				});

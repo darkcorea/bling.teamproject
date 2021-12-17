@@ -236,13 +236,30 @@ public class MyPageController {
 					
 					result = "true";
 				}
-			
 				
 		}
-		else if(image1 == null) {
-			System.out.println("등록된 파일이 없습니다.");
-			
-			result = "false";
+				
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/cancel.do")
+	public String uploadCancel(int num, HttpSession session) throws Exception {
+		String result = "";
+		
+		// 세션 변수 개별 삭제
+		// 다른 리뷰 작성 시 사진 없이 작성할 수 있기 때문에 세션에 image 정보를 지워줘야 한다.
+		if(num==1) {
+			session.removeAttribute("imageName1");
+			session.removeAttribute("imageData1");
+			result="pic1";
+			System.out.println("마이페이지 컨트롤러-session.getAttribute(\"imageData1\") 삭제 확인 : "+session.getAttribute("imageData1"));
+		}else if(num==2) {
+			session.removeAttribute("imageName2");
+			session.removeAttribute("imageData2");
+			result="pic2";
+			System.out.println("마이페이지 컨트롤러-session.getAttribute(\"imageData2\") 삭제 확인: "+session.getAttribute("imageData2"));
 		}
 		
 		

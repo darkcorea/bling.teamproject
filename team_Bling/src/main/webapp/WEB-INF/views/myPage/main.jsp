@@ -18,14 +18,14 @@
 			var str = "";
 			
 			if(${recentOrder == []}){
-				str += "<td colspan='7'><span id='noneOrder'>최근 주문내역이 없습니다.</span></td>";
+				str += "<tr><td colspan='7'><span id='noneOrder'>최근 주문내역이 없습니다.</span></td></tr>";
 			} else{
 				str += "<c:forEach items='${recentOrder}' var='ro'>";
 				
-				str += "	<tr>";
+				str += "	<tr id='tableRow'>";
 				str += "		<td id='td1'><span id='t1'>${ro.rdate}</span></td>";
 				str += "		<td id='td2'><span id='t2'>${ro.order_idx}</span></td>";
-				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/team_Bling/Product/detail.do?pidx=${ro.pidx}'>${ro.pname} / ${ro.oname}</a></span></td>";
+				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/team_Bling/Product/detail.do?pidx=${ro.pidx}'>${ro.pname} <br> ${ro.oname}</a></span></td>";
 				str += "		<td id='td4'><span id='t4'><fmt:formatNumber value='${(ro.saleprice+ro.addprice)*ro.quantitySum}' pattern='#,###' />원</span></td>";
 				str += "		<td id='td5'><span id='t5'>${ro.quantitySum}</span></td>";
 				
@@ -82,6 +82,9 @@
 				str += "		<c:if test='${ro.date_differ <= 7}'>";
 				str += "			<c:if test='${ro.contents != null}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite2' data-bs-toggle='modal' data-bs-target='#staticBackdrop2' onclick='reviewDetail(${ro.ridx})' value='리뷰 확인' readonly></span></td>";
+				str += "			</c:if>";
+				str += "			<c:if test='${ro.contents == null && ro.deli_stat != \"C\"}'>";
+				str += "				<td id='td7'></td>";
 				str += "			</c:if>";
 				str += "			<c:if test='${ro.contents == null && ro.deli_stat == \"C\"}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite1' data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${ro.detail_idx})' value='리뷰 작성' readonly></span></td>";
@@ -325,12 +328,18 @@
 			$.ajax({
 				url: "/team_Bling/MyPage/reviewWrite.do",
 				type: "post",
-				data: "contents="+contents+"&grade="+grade,
-				ContentType: "json",
+				data: {"contents":contents,"grade":grade},
 				success: function(data){
 					$("#staticBackdrop1").modal("hide");
-					alert("리뷰가 작성되었습니다.");
-					window.location.replace("/team_Bling/MyPage/main.do?page=1");
+					Swal.fire({
+						icon: 'info',
+						title: '리뷰가 작성되었습니다.'
+					}).then((result) => {
+						if(result.isConfirmed){
+							window.location.replace("/team_Bling/MyPage/main.do?page=1");
+						}else if (result.isDenied) {
+						}
+					});
 				},
 				error: function(){
 					console.log("!!!!!리뷰작성 에러!!!!!");
@@ -396,14 +405,53 @@
 			});
 		}
 		
+		//업로드할 사진 thumbnail
+		//id속성.src=~ 는 되는데 class속성.src=~는 적용되지 않았음
 		function preview(){
-			previewImg1.src=URL.createObjectURL(event.target.files[0]);
-			previewImg2.src=URL.createObjectURL(event.target.files[1]);
+			let pic = event.target.files;
 			
-			$(".minusB").css("display","unset");
+			if(pic.length==1){
+				previewImg1.src=URL.createObjectURL(pic[0]);
+				$("#badge1").css("display","unset");
+			}
+			else if(pic.length==2){
+				previewImg1.src=URL.createObjectURL(pic[0]);
+				previewImg2.src=URL.createObjectURL(pic[1]);
+				
+				$("#badge1,#badge2").css("display","unset");
+			}
+			
 			
 		}
-		
+
+		function delPreview(number){
+			let num = number;
+			
+			if(num==1){
+				$("#previewImg1").attr("src","");
+				$("#badge1").css("display","none");
+			}else if(num==2){
+				$("#previewImg2").attr("src","");
+				$("#badge2").css("display","none");
+			}
+			
+			$.ajax({
+				url: "/team_Bling/MyPage/cancel.do",
+				type: "post",
+				data: {"num":num},
+				success:function(data){
+					if(data=="pic1"){
+						console.log("썸네일 1번 삭제 성공");
+					}else if(data=="pic2"){
+						console.log("썸네일 2번 삭제 성공");
+					}
+				},
+				error:function(){
+					console.log("썸네일 삭제 에러");
+				}
+			});
+			
+		}
 		
 	</script>
 	
@@ -543,6 +591,9 @@
 		}
 		#badge1,#badge2{
 			display: none;
+			transform: translate(80px,0px);
+			color: red;
+			cursor: pointer;
 		}
 		#uploadBtn{
 			display: none;
@@ -657,6 +708,9 @@
 		#noneOrder{
 			position: relative;
 			left: 280px;
+		}
+		#tableRow{
+			border-bottom: 1px solid black;
 		}
 		#t1,#t4{
 			width: 100px;
@@ -855,11 +909,11 @@
 					<br>
 					<div id="preview">
 						<div class="previewD1">
-							<span id="badge1" class="minusB position-absolute top-0 start-100 badge rounded-pill bg-danger">-</span>
+							<i id="badge1" class="bi bi-dash-circle position-absolute" onclick="delPreview(1)"></i>
 							<img class="previewImg" id="previewImg1" src="">
 						</div>
 						<div class="previewD2">
-							<span id="badge2" class="minusB position-absolute top-0 start-100 badge rounded-pill bg-danger">-</span>
+							<i id="badge2" class="bi bi-dash-circle position-absolute" onclick="delPreview(2)"></i>
 							<img class="previewImg" id="previewImg2" src="">
 						</div>						
 					</div>
