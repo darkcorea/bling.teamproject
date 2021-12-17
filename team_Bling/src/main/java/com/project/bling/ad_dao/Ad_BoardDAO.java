@@ -91,6 +91,17 @@ public class Ad_BoardDAO {
 		sqlSession.update(ps+"question_state",qv);
 	}
 	
+	// 작성한 답글 가져 오기 수정
+	public QuestionVO question_modify(int qidx)throws Exception{
+		return sqlSession.selectOne(ps+"question_modify", qidx);
+	}
+	
+	// 답글 수정 하기
+	public void question_modify1(QuestionVO qv)throws Exception{
+		sqlSession.update(ps+"question_modify1", qv);
+	}
+	
+	
 	
 	
 }

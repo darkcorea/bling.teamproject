@@ -49,5 +49,7 @@ public interface Ad_BoardService {
 	List<QuestionVO> question_list()throws Exception;
 	List<CombineVO> question_detail(Order_detailVO ov)throws Exception;
 	void question_write(QuestionVO qv)throws Exception;
+	QuestionVO question_modify(int qidx)throws Exception;
+	void question_modify1(QuestionVO qv)throws Exception;
 	
 }

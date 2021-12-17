@@ -139,4 +139,13 @@
  	 UPDATE bg_question SET state='Y' WHERE qidx=#{qidx}
   </update>
   
+  <!-- 작성한 답글 가져오기, 수정  -->
+  <select id="question_modify" parameterType="int" resultType="QuestionVO">
+  	SELECT * FROM bg_question WHERE qidx=#{qidx}
+  </select>
+  
+  <update id="question_modify1" parameterType="QuestionVO">
+  	UPDATE bg_question SET title=#{title}, content=#{content} WHERE qidx=#{qidx}
+  </update>
+  
 </mapper>
