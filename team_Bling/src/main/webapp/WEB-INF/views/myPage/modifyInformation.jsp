@@ -78,131 +78,7 @@
 			
 			}
 		</style>
-		<script>
-		$(document).ready(function(){
-			//회원가입시 생기는 유효성검사
-			$(".impor").blur(function(){
-				var checkPwd = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-				var checkName = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g;
-				var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/g;
-				var checkPhone = /^[0-9]{10,11}/g;
-				$(this).siblings(".check").text("").hide();
-				var value = $(this).val();
-				if(value==""){
-					$(this).siblings(".check").text("*필수").css("color","red").show();
-				}else{
-					var id = $(this).attr("id");
-					if(id == "password"){
-						var test = checkPwd.test(value);
-						if(!test){
-							$(this).siblings(".check").text("*형식오류").css("color","red").show();
-						}
-					}else if(id == "passwordre"){
-						if(value != $("input[id=password]").val()){
-							$(this).siblings(".check").text("*비밀번호 불일치").css("color","red").show();
-						}
-					}else if(id == "name"){
-						var test = checkName.test(value);
-						if(!test){
-							$(this).siblings(".check").text("*형식오류").css("color","red").show();
-						}
-					}else if(id == "email"){
-						var test = checkEmail.test(value);
-						if(!test){
-							$(this).siblings(".check").text("*형식오류").css("color","red").show();
-						}
-					}else if(id == "phone"){
-						var test = checkPhone.test(value);
-						console.log(test+"1");
-						if(!test){
-							$(this).siblings(".check").text("*형식오류").css("color","red").show();
-						}
-					}
-				}
-			});
-			
-			
-			//가입하기 버튼 누를시
-			$("form").submit(function(){
-				var checkPwd = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-				var checkName = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g;
-				var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/g;
-				var checkPhone = /^[0-9]{10,11}/g;
-				var check=true; //유효성검사
-				var check3=true; //중복검사
-				var first;
-				//유효성검사
-				$(".impor").each(function(index){
-					var value = $(this).val();
-					$(this).siblings(".check").text("").hide();
-					if(value==""){
-						$(this).siblings(".check").text("*필수").css("color","red").show();
-						check = false;
-						if(first===undefined){
-							first = index;
-						}
-					}else{
-						var id = $(this).attr("id");
-						if(id == "password"){
-							var test = checkPwd.test(value);
-							if(!test){
-								$(this).siblings(".check").text("*형식오류").css("color","red").show();
-								check = false;
-							}
-						}else if(id == "passwordre"){
-							if(value != $("input[id=password]").val()){
-								$(this).siblings(".check").text("*비밀번호 불일치").css("color","red").show();
-							}
-						}else if(id == "name"){
-							var test = checkName.test(value);
-							if(!test){
-								$(this).siblings(".check").text("*형식오류").css("color","red").show();
-								check = false;
-							}
-						}else if(id == "email"){
-							var test = checkEmail.test(value);
-							if(!test){
-								$(this).siblings(".check").text("*형식오류").css("color","red").show();
-								check = false;
-							}
-						}else if(id == "phone"){
-							var test = checkPhone.test(value);
-							if(!test){
-								$(this).siblings(".check").text("*형식오류").css("color","red").show();
-								check = false;
-							}
-						}
-					}
-					
-				}); 
-				//유효성검사
-				if(check==false){
-					alert('필수란을 형식에 맞게 작성해주세요');
-				}
-				
-				//아이디, 이메일 중복확인
-				for(var b=1;b<3;b++){
-					var yess = $("#"+"repeat"+b).val();
-					if(yess=='N'){
-						check3 = false;
-						alert('이메일 중복확인을 해주세요');
-					}
-				}
-				
-				//필수동의란 && 유효성검사 && 중복확인
-				var checkall;
-				checkall = check&&check3;
-				console.log(checkall);
-				
-				 //$("#joincomplete").modal();
-				//회원가입완료
-				if(checkall==true){
-					alert('개인정보가 수정되었습니다');
-				}
-				 return checkall;
-				});
-		}); 
-		</script>
+		
 	</head>
 	<body>
 		<header>
@@ -291,11 +167,136 @@
 		
 	</body>
 	
-	
-	
-	
 	<script>
 			
+	$(document).ready(function(){
+		//회원가입시 생기는 유효성검사
+		$(".impor").blur(function(){
+			var checkPwd = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+			var checkName = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g;
+			var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/g;
+			var checkPhone = /^[0-9]{10,11}/g;
+			$(this).siblings(".check").text("").hide();
+			var value = $(this).val();
+			if(value==""){
+				$(this).siblings(".check").text("*필수").css("color","red").show();
+			}else{
+				var id = $(this).attr("id");
+				if(id == "password"){
+					var test = checkPwd.test(value);
+					if(!test){
+						$(this).siblings(".check").text("*형식오류").css("color","red").show();
+					}
+				}else if(id == "passwordre"){
+					if(value != $("input[id=password]").val()){
+						$(this).siblings(".check").text("*비밀번호 불일치").css("color","red").show();
+					}
+				}else if(id == "name"){
+					var test = checkName.test(value);
+					if(!test){
+						$(this).siblings(".check").text("*형식오류").css("color","red").show();
+					}
+				}else if(id == "email"){
+					var test = checkEmail.test(value);
+					if(!test){
+						$(this).siblings(".check").text("*형식오류").css("color","red").show();
+					}
+				}else if(id == "phone"){
+					var test = checkPhone.test(value);
+					console.log(test+"1");
+					if(!test){
+						$(this).siblings(".check").text("*형식오류").css("color","red").show();
+					}
+				}
+			}
+		});
+		
+		
+		//가입하기 버튼 누를시
+		$("form").submit(function(){
+			var checkPwd = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+			var checkName = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g;
+			var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/g;
+			var checkPhone = /^[0-9]{10,11}/g;
+			var check=true; //유효성검사
+			var check3=true; //중복검사
+			var first;
+			//유효성검사
+			$(".impor").each(function(index){
+				var value = $(this).val();
+				$(this).siblings(".check").text("").hide();
+				if(value==""){
+					$(this).siblings(".check").text("*필수").css("color","red").show();
+					check = false;
+					if(first===undefined){
+						first = index;
+					}
+				}else{
+					var id = $(this).attr("id");
+					if(id == "password"){
+						var test = checkPwd.test(value);
+						if(!test){
+							$(this).siblings(".check").text("*형식오류").css("color","red").show();
+							check = false;
+						}
+					}else if(id == "passwordre"){
+						if(value != $("input[id=password]").val()){
+							$(this).siblings(".check").text("*비밀번호 불일치").css("color","red").show();
+						}
+					}else if(id == "name"){
+						var test = checkName.test(value);
+						if(!test){
+							$(this).siblings(".check").text("*형식오류").css("color","red").show();
+							check = false;
+						}
+					}else if(id == "email"){
+						var test = checkEmail.test(value);
+						if(!test){
+							$(this).siblings(".check").text("*형식오류").css("color","red").show();
+							check = false;
+						}
+					}else if(id == "phone"){
+						var test = checkPhone.test(value);
+						if(!test){
+							$(this).siblings(".check").text("*형식오류").css("color","red").show();
+							check = false;
+						}
+					}
+				}
+				
+			}); 
+			//유효성검사
+			if(check==false){
+				alert('필수란을 형식에 맞게 작성해주세요');
+			}
+			
+			//아이디, 이메일 중복확인
+			for(var b=1;b<3;b++){
+				var yess = $("#"+"repeat"+b).val();
+				if(yess=='N'){
+					check3 = false;
+					alert('이메일 중복확인을 해주세요');
+				}
+			}
+			
+			//필수동의란 && 유효성검사 && 중복확인
+			var checkall;
+			checkall = check&&check3;
+			console.log(checkall);
+			
+			 //$("#joincomplete").modal();
+			//회원가입완료
+			if(checkall==true){
+				alert('개인정보가 수정되었습니다');
+			}
+			 return checkall;
+			});
+	}); 
+
+
+	
+	
+	
 			function confirm(){
 				var emaildata = document.getElementById('email').value;
 				var reemail = document.getElementById('reemail').value;
