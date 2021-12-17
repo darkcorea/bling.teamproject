@@ -28,10 +28,20 @@ public class Ad_RegistController {
 	@Autowired
 	Ad_RegistService ad_registService;
 	
+	// 테스트 경로
 	String path = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image\\";
 	String spath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage\\";
 	String path1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image";
 	String spath1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage";
+	
+	/*
+	// 서버 올리는 경로
+	String path = "C:\\tomcat\\webapps\\team_Bling\\resources\\image\\";
+	String spath = "C:\\tomcat\\webapps\\team_Bling\\resources\\simage\\";
+	String path1 = "C:\\tomcat\\webapps\\team_Bling\\resources\\image";
+	String spath1 = "C:\\tomcat\\webapps\\team_Bling\\resources\\simage";
+	*/
+	
 
 	// 폴더 없으면 폴더 생성
     public void makeDir() {

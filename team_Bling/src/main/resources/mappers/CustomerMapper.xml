@@ -118,7 +118,7 @@
 			    t1.*
 				FROM bg_question t1,
 			    (SELECT @rownum:=0) tmp
-			    WHERE midx =#{midx} ORDER BY originqidx asc)sub
+			    WHERE midx =#{midx} ORDER BY originqidx desc)sub
 			    Limit #{startPost},#{scri.perPageNum}
 							   
 	</select>
@@ -163,7 +163,7 @@
                        LEFT JOIN bg_product T2 ON (T2 .pidx = T1. pidx)
                        JOIN ( SELECT @rownum := 0) R
                        where midx =#{midx}) AS A
-                  order by originpqidx asc) AS B
+                  order by originpqidx desc) AS B
   					Limit #{startPost},#{scri.perPageNum}
 	</select>
 	

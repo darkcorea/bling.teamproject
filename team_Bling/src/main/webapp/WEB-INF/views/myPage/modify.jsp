@@ -64,7 +64,12 @@
 			var pass = document.getElementById("pass").value;
 			var real = document.getElementById("that").value;
 			
-			if(pass == real){
+			// 비밀번호를 불러와서 히든으로 하다니 왜 그랬어? ㅜㅜ
+					
+			if(pass == ""){
+				alert("비밀번호를 입력하세요.");
+				document.getElementById("pass").focus();
+			}else if(pass == real){
 				location.href="${cPath}/MyPage/modifyInformation.do";
 			}else{
 				alert("비밀번호가 틀렸습니다.");

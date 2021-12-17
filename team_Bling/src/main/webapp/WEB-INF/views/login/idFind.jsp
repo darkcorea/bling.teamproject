@@ -101,7 +101,7 @@ function idAjax(){
 	console.log(search);
 	
 	$.ajax({
-		url: "{cPath}/Login/idSearch.do",
+		url: "/team_Bling/Login/idSearch.do",
 		type: "POST",
 		data: search,
 		ContentType: "application/json; charset=utf-8",	//contentType : 보내는 데이터의 타입

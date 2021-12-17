@@ -148,11 +148,11 @@
 							onclick="location.href='{cPath}/Order/nonorder.do'" value="비회원으로 구매하기" style="display:none;">
 						</div>
 						<div id="searchDiv">
-							<span id="searchSpan"><a href="{cPath}/Login/idFind.do" id="searchA">아이디 찾기</a></span>
+							<span id="searchSpan"><a href="/team_Bling/Login/idFind.do" id="searchA">아이디 찾기</a></span>
 							<span>｜</span>
-							<span id="searchSpan"><a href="{cPath}/Login/pwdFind.do" id="searchA">비밀번호 찾기</a></span>
+							<span id="searchSpan"><a href="/team_Bling/Login/pwdFind.do" id="searchA">비밀번호 찾기</a></span>
 							<span>｜</span>
-							<span id="searchSpan"><a href="{cPath}/Delivery/nonDelivery.do" id="searchA">비회원 주문조회</a></span>
+							<span id="searchSpan"><a href="/team_Bling/Delivery/nonDelivery.do" id="searchA">비회원 주문조회</a></span>
 						</div>
 					</form>
 				</div>
