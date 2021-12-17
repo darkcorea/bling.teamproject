@@ -156,14 +156,7 @@
     </section>
 </body>
     <script>
-	/* function rangedeg(coidx,deg){
-    	document.getElementById("img"+coidx).rotate(deg);
-    } */
-   /* $("#textarea").click(function(e){
-	  if(!$(e.target).hasClass("area")){
-		  alert("영역밖입니다.");
-	  } 
-   }); */
+	
    var count = 0;
    //옵션 카운트
    function cnt(){
@@ -173,7 +166,6 @@
 	   $('#cnt').html(str);
 	   document.getElementById("cntval").value = count;
    }
-   
    
    
    //글 선택시 
@@ -274,7 +266,7 @@
 	                	str2_option += "<i class='bi bi-x-lg' onclick='deleteimg("+data[0].coidx+")'></i></h5>";
 	                	/*  */
 	                	str2_option += data[0].price + "원";
-	                	str2_option += "<input type='range' value='0' min='0' max='360' class='form-range' id='customRange"+data[0].coidx+"' oninput='document.getElementById('value999')'><hr></div>";
+	                	str2_option += "<input type='range' value='0' min='0' max='360' class='form-range' id='customRange"+data[0].coidx+"' oninput='range(this.value,"+data[0].coidx+")'><hr></div>";
 	                	str2_option += "<span id='value999'></span>"
 	                	str2_option += "<input type = 'hidden' id='optionname' value='"+data[0].coidx+"'>";
 	                	$('#selectoption').append(str2_option);
@@ -288,27 +280,11 @@
         	 
         }
         
-      /*   function showslidervalue(value){
-        	var number = document.getElementById("slider_value");
-        	number.innerHTML = value;
-        } */
+        //이미지회전
+        function range(degree,coidx){
+			$("#img"+coidx).css({'transform':'rotate('+degree+'deg)'});
+        }
         
-        
-       // var rangeslider = function(){
-        	//var range = $('.form-range').val();
-        	//console.log(range);
-        	//rotates(range);
-        	/* range.on('input',function(){
-        		showslidervalue(this.value);
-        	}); */
-        //};
-        
-        //rangeslider();
-        //회전
-       // function rotates(range){
-       // 	 $("#img").rotate(range);
-      //  }
-       
        
         //총 금액
         function total(price){
