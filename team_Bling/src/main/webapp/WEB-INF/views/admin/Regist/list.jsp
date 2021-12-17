@@ -14,32 +14,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>관리자 상품 리스트</title>
 
-<script>
-$(document).ready(function () {
-	
-    var currentPosition = parseInt($(".quickmenu").css("top")); 
-    
-    $(window).scroll(function() {
-    	var position = $(window).scrollTop(); 
-    $(".quickmenu").stop().animate({"top":position+currentPosition+"px"},1000); 
-    });
-});
-
-
-</script>
 
 <style>
 	section {
 		max-width:1008px;
 		margin:  5px auto;
 	}
-		
-	.quickmenu {position:absolute;width:120px;height:500px;top:20%;margin-top:-50px;left:50px;background:#cb7878;padding:20px;}
-	.quickmenu ul {position:relative;float:left;width:100%;display:inline-block;*display:inline;}
-	.quickmenu ul li {float:left;width:100%;text-align:center;display:inline-block;*display:inline;}
-	.quickmenu ul li a {position:relative;float:left;width:100%;height:50px;line-height:30px;text-align:center;color:#fff;font-size:12pt;}
-	.quickmenu ul li a:hover {color:#000;}
-	.quickmenu ul li:last-child {border-bottom:0;}
 	
 	.line{border-bottom:1px solid gray;}
 	
@@ -85,13 +65,6 @@ $(document).ready(function () {
 	</header>
 	<section>
 	<div class="container">
-		<div class="quickmenu">
-			  <ul>
-			    <li><a href="/team_Bling/Ad_regist/list.do?page=1">리스트</a></li>
-			    <li><a href="/team_Bling/Ad_regist/regist.do">상품 등록</a></li>
-			    <li><a href="#">품절상품</a></li> 
-			  </ul>
-		</div>
 		
 		<div style="text-align:center;">
 		<span class="title">상품 리스트&ensp;</span>
