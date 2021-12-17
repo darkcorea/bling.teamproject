@@ -21,7 +21,7 @@ public class Ad_UserController {
 	@RequestMapping(value="/userList.do")
 	public String userList(Locale locale, Model model,int page,String grade) throws Exception {
 		
-		
+		ad_userService.update_grade();
 		
 		Criteria sc = new Criteria();
 		sc.setPerPageNum(20);

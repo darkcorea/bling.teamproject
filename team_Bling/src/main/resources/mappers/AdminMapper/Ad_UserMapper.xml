@@ -28,4 +28,53 @@
 		order by a.midx DESC
 		Limit #{startPost},#{scri.perPageNum}
 	</select>
+	
+	<update id="update_grade_G">
+	<![CDATA[ 	UPDATE bg_user C,
+		(select a.midx,a.grade,
+		       sum(c.tot_price) as sum
+				from bg_user a
+				left join bg_order c
+				on a.midx=c.midx
+				left join bg_delivery b on c.order_idx = b.order_idx
+				where (b.cancel = 'N' or  b.cancel is null) and (b.refund = 'N' or  b.refund is null )
+				and c.rdate BETWEEN DATE_ADD(NOW(), INTERVAL -1 MONTH ) AND NOW()
+				group by a.midx having sum >= 500000) A
+		set C.grade = 'G' where C.midx=A.midx
+		]]>
+	</update>
+	
+	<update id="update_grade_S">
+		<![CDATA[ 
+		UPDATE bg_user C,
+		(select a.midx,a.grade,
+		       sum(c.tot_price) as sum
+				from bg_user a
+				left join bg_order c
+				on a.midx=c.midx
+				left join bg_delivery b on c.order_idx = b.order_idx
+				where (b.cancel = 'N' or  b.cancel is null) and (b.refund = 'N' or  b.refund is null )
+				and c.rdate BETWEEN DATE_ADD(NOW(), INTERVAL -1 MONTH ) AND NOW()
+				group by a.midx having sum >= 200000 AND sum < 500000) A
+		set C.grade='S' where C.midx=A.midx
+		]]>
+	</update>
+	
+	<update id="update_grade_B">
+	<![CDATA[ 
+		UPDATE bg_user C,
+		(select a.midx,a.grade,
+		       sum(c.tot_price) as sum
+				from bg_user a
+				left join bg_order c
+				on a.midx=c.midx
+				left join bg_delivery b on c.order_idx = b.order_idx
+				where (b.cancel = 'N' or  b.cancel is null) and (b.refund = 'N' or  b.refund is null )
+				and c.rdate BETWEEN DATE_ADD(NOW(), INTERVAL -1 MONTH ) AND NOW()
+				group by a.midx having sum >= 500000) A
+		set C.grade = 'G' where C.midx=A.midx
+		]]>
+		
+	</update>
+	
 </mapper>

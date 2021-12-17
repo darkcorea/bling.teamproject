@@ -25,4 +25,10 @@ public class Ad_UserDAO {
 		
 		return sqlSession.selectList(ps+"user_list",pm);
 	}
+	
+	public void update_grade() throws Exception {
+		sqlSession.update(ps+"update_grade_G");
+		sqlSession.update(ps+"update_grade_S");
+		sqlSession.update(ps+"update_grade_B");
+	}
 }

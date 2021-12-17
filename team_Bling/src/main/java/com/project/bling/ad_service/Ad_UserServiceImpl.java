@@ -26,4 +26,10 @@ public class Ad_UserServiceImpl implements Ad_UserService{
 		return ad_userDAO.user_list(pm);
 	}
 
+	@Override
+	public void update_grade() throws Exception {
+		ad_userDAO.update_grade();
+		
+	}
+
 }
