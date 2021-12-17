@@ -151,7 +151,7 @@
 		function confirm(){
 			var pass = document.getElementById("pass").value;
 			$.ajax({
-				url:"{cPath}/MyPage/deletequit.do",
+				url:"/team_Bling/MyPage/deletequit.do",
 				type:"post",
 				data:{"pass":pass},
 				dataType:"json",
@@ -181,13 +181,13 @@
 				quitval = document.getElementById("quit6why").value
 			}
 			$.ajax({
-				url:"{cPath}/MyPage/deletefin.do",
+				url:"/team_Bling/MyPage/deletefin.do",
 				type:"post",
 				data:{"quitval":quitval},
 				dataType:"json",
 				success:function(data){
 					alert("탈퇴되었습니다.")
-					window.location.href = "/";
+					window.location.href = "/team_Bling/";
 				},error:function(){
 					alert("탈퇴사유오류!");
 				}
