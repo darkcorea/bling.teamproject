@@ -52,6 +52,12 @@ public class Ad_BoardController {
 	private static final String FILE_SERVER_PATH1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice";
 	private static final String FILE_SERVER_PATH4 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\event";
 	
+	//private static final String FILE_SERVER_PATH = "C:\\tomcat\\webapps\\team_Bling\\src\\main\\webapp\\resources\\notice\\";
+	//private static final String FILE_SERVER_PATH2 = "C:\\tomcat\\webapps\\team_Bling\\src\\main\\webapp\\resources\\event\\";
+	
+	//private static final String FILE_SERVER_PATH1 = "C:\\tomcat\\webapps\\team_Bling\\src\\main\\webapp\\resources\\notice";
+	//private static final String FILE_SERVER_PATH4 = "C:\\tomcat\\webapps\\team_Bling\\src\\main\\webapp\\resources\\event";
+	
 	//공지사항 게시글리스트메인
 	@RequestMapping(value = "/board.do")
 	public String board(Locale locale, Model model,int page,String type) throws Exception {
