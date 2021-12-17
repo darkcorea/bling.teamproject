@@ -46,17 +46,17 @@ public class Ad_BoardController {
 	/////////////////////////////////////공지사항///////////////////////////////////////
 	
 	//공지사항 파일, 이미지 저장 경로
-	//private static final String FILE_SERVER_PATH = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice\\";
-	//private static final String FILE_SERVER_PATH2 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\event\\";
+	private static final String FILE_SERVER_PATH = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice\\";
+	private static final String FILE_SERVER_PATH2 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\event\\";
 	
-	//private static final String FILE_SERVER_PATH1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice";
-	//private static final String FILE_SERVER_PATH4 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\event";
+	private static final String FILE_SERVER_PATH1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice";
+	private static final String FILE_SERVER_PATH4 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\event";
 	
-	private static final String FILE_SERVER_PATH = "C:\\tomcat\\webapps\\team_Bling\\resources\\notice\\";
-	private static final String FILE_SERVER_PATH2 = "C:\\tomcat\\webapps\\team_Bling\\resources\\event\\";
+	//private static final String FILE_SERVER_PATH = "C:\\tomcat\\webapps\\team_Bling\\resources\\notice\\";
+	//private static final String FILE_SERVER_PATH2 = "C:\\tomcat\\webapps\\team_Bling\\resources\\event\\";
 	
-	private static final String FILE_SERVER_PATH1 = "C:\\tomcat\\webapps\\team_Bling\\resources\\notice";
-	private static final String FILE_SERVER_PATH4 = "C:\\tomcat\\webapps\\team_Bling\\resources\\event";
+	//private static final String FILE_SERVER_PATH1 = "C:\\tomcat\\webapps\\team_Bling\\resources\\notice";
+	//private static final String FILE_SERVER_PATH4 = "C:\\tomcat\\webapps\\team_Bling\\resources\\event";
 	
 	//공지사항 게시글리스트메인
 	@RequestMapping(value = "/board.do")

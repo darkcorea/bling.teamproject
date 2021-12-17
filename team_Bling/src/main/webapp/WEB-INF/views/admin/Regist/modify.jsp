@@ -16,6 +16,13 @@
 		display: block;
 	}
 
+	.quickmenu {position:absolute;width:120px;height:500px;top:20%;margin-top:-50px;left:50px;background:#cb7878;padding:20px;}
+	.quickmenu ul {position:relative;float:left;width:100%;display:inline-block;*display:inline;}
+	.quickmenu ul li {float:left;width:100%;text-align:center;display:inline-block;*display:inline;}
+	.quickmenu ul li a {position:relative;float:left;width:100%;height:50px;line-height:30px;text-align:center;color:#fff;font-size:12pt;}
+	.quickmenu ul li a:hover {color:#000;}
+	.quickmenu ul li:last-child {border-bottom:0;}
+	
 	/* 버튼 */
 	.t {background-color:#cb7878;}
 	
@@ -82,6 +89,14 @@
 <section>
 	
 	<div class="container">
+		<!-- 옆 nav 바 -->	
+		<div class="quickmenu">
+			  <ul>
+			    <li><a href="/team_Bling/Ad_regist/list.do?page=1">리스트</a></li>
+			    <li><a href="/team_Bling/Ad_regist/regist.do">상품 등록</a></li>
+			    <li><a href="#">품절상품</a></li> 
+			  </ul>
+		</div>
 		
 		<!-- 상품수정 테이블 -->
 		<h2>상품 수정</h2><br>
