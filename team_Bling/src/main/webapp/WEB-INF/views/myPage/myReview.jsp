@@ -11,269 +11,6 @@
 	<!-- SweetAlert2(alert,modal창) -->
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	
-	
-	<script>
-		var page = 1;
-		if(page == null) {page=1};
-	
-		$(function(){
-			reviewList(1);
-	     });
-	
-		function reviewList(page,type,date1,date2){
-			console.log(page);
-			$.ajax({
-				url:"/team_Bling/Review/reviewlist.do",
-				type:"POST",
-				data:{"page":page,"type":type,"date1":date1,"date2":date2},
-				dataType: 'json',
-				success:function(data){
-					let pm = data.pm;
-					let prev = parseInt(pm.startPage - 1) ;
-				  	let next = parseInt(pm.endPage + 1) ; 
-				  	
-				  	let str = "";
-				  	console.log(data);
-				  	console.log(data.reviewList);
-				  	
-				    //var page = data.page;
-                    //var pagenum = (page-1) * 5;
-                    
-				  	if(data.reviewList.length == 0){
-				  		str += "<br>";
-				  		str += "<tr id='noneReview'><td id='noneTd' colspan='5'>기간내 등록된 리뷰가 없습니다.</td></tr>";
-				  	}else{
-				  		str += "<table id='reviewTable'>"
-				  		for(var a = 0 ; a < data.reviewList.length ; a++){
-				  			var list = data.reviewList[a];
-				  			var oname = list.oname.split("+")[0];
-				  		
-						str += "	<tr id='reviewTr'>";
-						/*
-						1번부터 오름차순 번호기입
-						str += a+1+pagenum;
-						*/
-						
-						//사진 옆에 ridx
-						//str += list.ridx;
-						
-						str += "		<td id='prodImgTr'>";
-						str += "			<img id='rvImg' src='/team_Bling/resources/image/"+list.main+"' alt='제품 대표 사진'>";
-						str += "		</td>";
-						str += "		<td id='prodDataTr'>";
-						str += "			<div id='prodData'>";
-						str += 					list.pname+"<br>";
-						str += "				<span id='textColor'>[옵션] "+oname+"</span><br>";
-						str += "				<span id='textColor'>[수량] "+list.quantity+"개</span>";
-						str += "			</div>";
-						str += "		</td>";
-						
-						str += "		<td id='reviewDataTr'>";
-						str += "			<div id='reviewData'>";
-												/* star_rating */
-						str += "				<div class='rating'>";
-						
-						
-						// grade에 따른 별점 출력
-						for(var b = 5; b > 0;b--){
-							if(b == list.grade){
-								str += "			<input type='radio' name='rating "+a+"' id='"+b+"' value='"+b+"' class='star' onclick='return(false)' checked>";
-								str += "				<label for='"+b+"'>☆</label>";
-							}
-							else{
-								str += "			<input type='radio' name='rating' id='"+b+"' value='"+b+"' class='star' onclick='return(false)'>";
-								str += "				<label for='"+b+"'>☆</label>";
-							}
-						}
-						
-						str += "				</div>";
-							
-						str += "				<div id='reviewContents"+list.ridx+"'>";
-													/* 리뷰 contents 출력하기 / 3줄 이상 더보기 적용 */
-						str += 						list.contents;
-						str += "				</div>";
-						str += "				<div id='review_btn"+list.ridx+"'></div>";
-						str += "			</div>";
-						str += "		</td>";
-						
-						
-						//리뷰사진 개수에 따라 화면출력 조정
-						if(list.image1 != null && list.image2 != null){
-							str += "			<td id='rvImgTr'>";
-							str += "				<img id='rvImg' src='/team_Bling/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
-							str += "				<img id='rvImg2' src='/team_Bling/resources/review_img/"+list.image2+"' alt='리뷰사진 2번'>";
-							str += "			</td>";
-						}
-						else if(list.image1 != null && list.image2 == null){
-							str += "			<td id='rvImgTr'>";
-							str += "				<img id='rvImg' src='/team_Bling/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
-							str += "			</td>";
-						}
-						else if(list.image1 == null && list.image2 == null){
-							str += "			<td id='rvImgTr'></td>";
-						}	
-						
-						
-						str += "		<td id='deleteBtn'>";
-						str += "			<button class='btn' id='delBtn' onclick='delQ("+list.ridx+")'>삭제하기</button>";
-						str += "		</td>";
-						str += "	</tr>";
-				  		}
-				  		
-				  		str += "</table>";
-				  		
-				  		str += "<br><br><br>";
-				  		
-				  		
-						// 페이징 할 수 있는 번호 나오는 곳 뿌려 주기
-					  	str += "	<nav aria-label='Page navigation'>";
-					  	str += "	<ul class='pagination justify-content-center'>";
-					  	str += "	<li class='page-item'>";
-					  	
-					  	//console.log(prev);
-					  	if(pm.prev == true){
-					  	    str += "<a class='page-link' aria-label='Previous' onclick='reviewList("+prev+")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
-					  	}
-					  	
-					  	str += "	</li>";
-					  	let startPage = parseInt(pm.startPage);
-					  	let endPage = parseInt(pm.endPage);
-					  	
-					  	for (let k = pm.startPage; k<=pm.endPage; k++ ){
-					  		 if(page == k){
-					  			str += "<li class='page-item active'><a class='page-link pointer' onclick='reviewList("+k+")'>"+k+"</a></li>";    
-					  		 }else{
-					  			str += "<li class='page-item'><a class='page-link pointer' onclick='reviewList("+k+")'>"+k+"</a></li>";    
-					  		 }
-					  	 }
-					  	 
-					  	 str += "	<li class='page-item'>";
-					  	
-					  	 if(pm.next && pm.endPage > 0){
-					  	     str += "<a class='page-link' aria-label='Next' onclick='reviewList("+next+")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
-					  	 }
-					  	 
-					  	 str += "	</li>";
-					  	 str += "	</ul>";
-					  	 str += "	</nav>";
-					  	 
-					  	//날짜 화면출력
-					  	/* let date1 = data.date.rdate1;
-					  	console.log(date1);
-					  	let date2 = data.date.rdate2;
-					  	document.querySelector("input[id='date1']").value = date1;
-					  	document.querySelector("input[id='date2']").value = date2; */
-					  	
-						
-					}
-					document.getElementById("formTable").innerHTML = str;
-					
-					// 리뷰가 길면 자르고 더보기 버튼을 추가하고 그렇지 않으면 그대로 둔다.
-					// .offsetHeight >90  보여지는 부분이 90px를 넘어가면, 보여지는 높이 조절하기 어려움 clientHeight
-					// .length >= 100  텍스트 길이가 100보다 크거나 같으면
-					// .split('\n').length; 줄바꿈이 되었을 때 줄바꿈 안하면 소용이 없음
-					// word-break: keep-all; 한글일 경우 띄어쓰기 기준으로 줄바꿈 해줌 스타일로 적용
-				  	for (let m=0; m<data.reviewList.length ; m++){
-				  	let ridx = data.reviewList[m].ridx;
-				  	let re = $("#reviewContents"+ridx);
-				  	let re_txt = $("#reviewContents"+ridx).text();
-				    let re_height = document.getElementById("reviewContents"+ridx).clientHeight;
-				 	
-				    console.log(re_height);
-				    let re_html = $("#reviewContents"+ridx).html();
-				    let re_txt_short = re_txt.substring(0,30)+"...";
-				  	
-				 	// 더보기 버튼 추가 void(0)는 이동을 하지 않고 그곳에서 만 움직이겠다는 뜻
-				    let btn_more = $('<a href="javascript:void(0)" class="more" style="text-decoration:none;">더보기</a>');
-				    $("#review_btn"+ridx).append(btn_more);
-				    
-				 	// 텍스트 길이가 길면 자르고 길이가 짧으면 더보기 버튼을 감춘다.
-				   		if(re_height >= 50){
-					  		re.html(re_txt_short);
-				                
-				    	}else {
-				            btn_more.hide()
-				    	}
-				 	
-				 	// 더보기 버튼 클릭할 때 작동하는 function 만들기
-			   		btn_more.click(toggle_content);
-				      
-			            function toggle_content(){
-			                if($(this).hasClass('short')){
-			                    // 접기 상태
-			                    $(this).text('더보기');
-			                    re.html(re_txt_short); // 텍스트 자르기
-			                    $(this).removeClass('short');
-			                }else{
-			                    // 더보기 상태
-			                    $(this).text('접기');
-			                    re.html(re_html); // 텍스트 크기 원상복귀
-			                    $(this).addClass('short');
-			                }
-			          	}
-			            
-				  	}
-				  	
-				  	
-				},error:function(){
-					alert("리스트 불러오기 에러!")
-				}
-			}); 
-		}
-		
-			/*
-				${reviewList}는 배열이기 때문에 ${reviewList == null}로 조건은 설정하면 적용되지 않는다.
-				if(${reviewList == []})와 같이 빈 배열로 조건을 설정하면 적용된다.
-			*/
-		
-		
-		function delQ(ridx){
-			console.log("dqlQ-ridx : "+ridx);
-			
-			Swal.fire({
-				icon: 'question',
-				text: '작성하신 리뷰를 정말 삭제하시겠습니까?',
-				showCancelButton: true
-			}).then((result) => {
-				  /* Read more about isConfirmed, isDenied below */
-				  if (result.isConfirmed) {
-				    delReview(ridx);
-				  } else if (result.isDenied) {
-			   }
-			});
-		}
-		
-		function delReview(ridx){
-			console.log("delReview-ridx : "+ridx);
-			
-			$.ajax({
-				url: "${cPath}/MyPage/delete.do",
-				type: "post",
-				data: {"ridx":ridx},
-				ContentType: "json",
-				success:function(){
-					console.log("리뷰삭제 성공");
-					Swal.fire('리뷰가 삭제되었습니다!', '', 'success');
-					Swal.fire({
-						icon: 'success',
-						text: '리뷰가 삭제되었습니다!',
-					}).then((result) => {
-						  /* Read more about isConfirmed, isDenied below */
-						  if (result.isConfirmed) {
-							   window.location.replace("/Review/myReview.do");
-						  } else if (result.isDenied) {
-					   }
-					});
-				},
-				error:function(){
-					console.log("리뷰삭제 에러");
-				}
-			});
-		}
-		
-		
-	</script>
-	
 	<style>
 		section{
 			max-width:1008px;
@@ -590,6 +327,265 @@
 </body>
 
 <script>
+	var page = 1;
+	if(page == null) {page=1};
+	
+	$(function(){
+		reviewList(1);
+	 });
+	
+	function reviewList(page,type,date1,date2){
+		console.log(page);
+		$.ajax({
+			url:"/team_Bling/Review/reviewlist.do",
+			type:"POST",
+			data:{"page":page,"type":type,"date1":date1,"date2":date2},
+			dataType: 'json',
+			success:function(data){
+				let pm = data.pm;
+				let prev = parseInt(pm.startPage - 1) ;
+			  	let next = parseInt(pm.endPage + 1) ; 
+			  	
+			  	let str = "";
+			  	console.log(data);
+			  	console.log(data.reviewList);
+			  	
+			    //var page = data.page;
+	            //var pagenum = (page-1) * 5;
+	            
+			  	if(data.reviewList.length == 0){
+			  		str += "<br>";
+			  		str += "<tr id='noneReview'><td id='noneTd' colspan='5'>기간내 등록된 리뷰가 없습니다.</td></tr>";
+			  	}else{
+			  		str += "<table id='reviewTable'>"
+			  		for(var a = 0 ; a < data.reviewList.length ; a++){
+			  			var list = data.reviewList[a];
+			  			var oname = list.oname.split("+")[0];
+			  		
+					str += "	<tr id='reviewTr'>";
+					/*
+					1번부터 오름차순 번호기입
+					str += a+1+pagenum;
+					*/
+					
+					//사진 옆에 ridx
+					//str += list.ridx;
+					
+					str += "		<td id='prodImgTr'>";
+					str += "			<img id='rvImg' src='/team_Bling/resources/image/"+list.main+"' alt='제품 대표 사진'>";
+					str += "		</td>";
+					str += "		<td id='prodDataTr'>";
+					str += "			<div id='prodData'>";
+					str += 					list.pname+"<br>";
+					str += "				<span id='textColor'>[옵션] "+oname+"</span><br>";
+					str += "				<span id='textColor'>[수량] "+list.quantity+"개</span>";
+					str += "			</div>";
+					str += "		</td>";
+					
+					str += "		<td id='reviewDataTr'>";
+					str += "			<div id='reviewData'>";
+											/* star_rating */
+					str += "				<div class='rating'>";
+					
+					
+					// grade에 따른 별점 출력
+					for(var b = 5; b > 0;b--){
+						if(b == list.grade){
+							str += "			<input type='radio' name='rating "+a+"' id='"+b+"' value='"+b+"' class='star' onclick='return(false)' checked>";
+							str += "				<label for='"+b+"'>☆</label>";
+						}
+						else{
+							str += "			<input type='radio' name='rating' id='"+b+"' value='"+b+"' class='star' onclick='return(false)'>";
+							str += "				<label for='"+b+"'>☆</label>";
+						}
+					}
+					
+					str += "				</div>";
+						
+					str += "				<div id='reviewContents"+list.ridx+"'>";
+												/* 리뷰 contents 출력하기 / 3줄 이상 더보기 적용 */
+					str += 						list.contents;
+					str += "				</div>";
+					str += "				<div id='review_btn"+list.ridx+"'></div>";
+					str += "			</div>";
+					str += "		</td>";
+					
+					
+					//리뷰사진 개수에 따라 화면출력 조정
+					if(list.image1 != null && list.image2 != null){
+						str += "			<td id='rvImgTr'>";
+						str += "				<img id='rvImg' src='/team_Bling/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
+						str += "				<img id='rvImg2' src='/team_Bling/resources/review_img/"+list.image2+"' alt='리뷰사진 2번'>";
+						str += "			</td>";
+					}
+					else if(list.image1 != null && list.image2 == null){
+						str += "			<td id='rvImgTr'>";
+						str += "				<img id='rvImg' src='/team_Bling/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
+						str += "			</td>";
+					}
+					else if(list.image1 == null && list.image2 == null){
+						str += "			<td id='rvImgTr'></td>";
+					}	
+					
+					
+					str += "		<td id='deleteBtn'>";
+					str += "			<button class='btn' id='delBtn' onclick='delQ("+list.ridx+")'>삭제하기</button>";
+					str += "		</td>";
+					str += "	</tr>";
+			  		}
+			  		
+			  		str += "</table>";
+			  		
+			  		str += "<br><br><br>";
+			  		
+			  		
+					// 페이징 할 수 있는 번호 나오는 곳 뿌려 주기
+				  	str += "	<nav aria-label='Page navigation'>";
+				  	str += "	<ul class='pagination justify-content-center'>";
+				  	str += "	<li class='page-item'>";
+				  	
+				  	//console.log(prev);
+				  	if(pm.prev == true){
+				  	    str += "<a class='page-link' aria-label='Previous' onclick='reviewList("+prev+")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
+				  	}
+				  	
+				  	str += "	</li>";
+				  	let startPage = parseInt(pm.startPage);
+				  	let endPage = parseInt(pm.endPage);
+				  	
+				  	for (let k = pm.startPage; k<=pm.endPage; k++ ){
+				  		 if(page == k){
+				  			str += "<li class='page-item active'><a class='page-link pointer' onclick='reviewList("+k+")'>"+k+"</a></li>";    
+				  		 }else{
+				  			str += "<li class='page-item'><a class='page-link pointer' onclick='reviewList("+k+")'>"+k+"</a></li>";    
+				  		 }
+				  	 }
+				  	 
+				  	 str += "	<li class='page-item'>";
+				  	
+				  	 if(pm.next && pm.endPage > 0){
+				  	     str += "<a class='page-link' aria-label='Next' onclick='reviewList("+next+")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
+				  	 }
+				  	 
+				  	 str += "	</li>";
+				  	 str += "	</ul>";
+				  	 str += "	</nav>";
+				  	 
+				  	//날짜 화면출력
+				  	/* let date1 = data.date.rdate1;
+				  	console.log(date1);
+				  	let date2 = data.date.rdate2;
+				  	document.querySelector("input[id='date1']").value = date1;
+				  	document.querySelector("input[id='date2']").value = date2; */
+				  	
+					
+				}
+				document.getElementById("formTable").innerHTML = str;
+				
+				// 리뷰가 길면 자르고 더보기 버튼을 추가하고 그렇지 않으면 그대로 둔다.
+				// .offsetHeight >90  보여지는 부분이 90px를 넘어가면, 보여지는 높이 조절하기 어려움 clientHeight
+				// .length >= 100  텍스트 길이가 100보다 크거나 같으면
+				// .split('\n').length; 줄바꿈이 되었을 때 줄바꿈 안하면 소용이 없음
+				// word-break: keep-all; 한글일 경우 띄어쓰기 기준으로 줄바꿈 해줌 스타일로 적용
+			  	for (let m=0; m<data.reviewList.length ; m++){
+			  	let ridx = data.reviewList[m].ridx;
+			  	let re = $("#reviewContents"+ridx);
+			  	let re_txt = $("#reviewContents"+ridx).text();
+			    let re_height = document.getElementById("reviewContents"+ridx).clientHeight;
+			 	
+			    console.log(re_height);
+			    let re_html = $("#reviewContents"+ridx).html();
+			    let re_txt_short = re_txt.substring(0,30)+"...";
+			  	
+			 	// 더보기 버튼 추가 void(0)는 이동을 하지 않고 그곳에서 만 움직이겠다는 뜻
+			    let btn_more = $('<a href="javascript:void(0)" class="more" style="text-decoration:none;">더보기</a>');
+			    $("#review_btn"+ridx).append(btn_more);
+			    
+			 	// 텍스트 길이가 길면 자르고 길이가 짧으면 더보기 버튼을 감춘다.
+			   		if(re_height >= 50){
+				  		re.html(re_txt_short);
+			                
+			    	}else {
+			            btn_more.hide()
+			    	}
+			 	
+			 	// 더보기 버튼 클릭할 때 작동하는 function 만들기
+		   		btn_more.click(toggle_content);
+			      
+		            function toggle_content(){
+		                if($(this).hasClass('short')){
+		                    // 접기 상태
+		                    $(this).text('더보기');
+		                    re.html(re_txt_short); // 텍스트 자르기
+		                    $(this).removeClass('short');
+		                }else{
+		                    // 더보기 상태
+		                    $(this).text('접기');
+		                    re.html(re_html); // 텍스트 크기 원상복귀
+		                    $(this).addClass('short');
+		                }
+		          	}
+		            
+			  	}
+			  	
+			  	
+			},error:function(){
+				alert("리스트 불러오기 에러!")
+			}
+		}); 
+	}
+	
+		/*
+			${reviewList}는 배열이기 때문에 ${reviewList == null}로 조건은 설정하면 적용되지 않는다.
+			if(${reviewList == []})와 같이 빈 배열로 조건을 설정하면 적용된다.
+		*/
+	
+	
+	function delQ(ridx){
+		console.log("dqlQ-ridx : "+ridx);
+		
+		Swal.fire({
+			icon: 'question',
+			text: '작성하신 리뷰를 정말 삭제하시겠습니까?',
+			showCancelButton: true
+		}).then((result) => {
+			  /* Read more about isConfirmed, isDenied below */
+			  if (result.isConfirmed) {
+			    delReview(ridx);
+			  } else if (result.isDenied) {
+		   }
+		});
+	}
+	
+	function delReview(ridx){
+		console.log("delReview-ridx : "+ridx);
+		
+		$.ajax({
+			url: "${cPath}/MyPage/delete.do",
+			type: "post",
+			data: {"ridx":ridx},
+			ContentType: "json",
+			success:function(){
+				console.log("리뷰삭제 성공");
+				Swal.fire('리뷰가 삭제되었습니다!', '', 'success');
+				Swal.fire({
+					icon: 'success',
+					text: '리뷰가 삭제되었습니다!',
+				}).then((result) => {
+					  /* Read more about isConfirmed, isDenied below */
+					  if (result.isConfirmed) {
+						   window.location.replace("/Review/myReview.do");
+					  } else if (result.isDenied) {
+				   }
+				});
+			},
+			error:function(){
+				console.log("리뷰삭제 에러");
+			}
+		});
+	}
+
+
 	function day_fn(type){
 		
 		let date1 = "아무거나";

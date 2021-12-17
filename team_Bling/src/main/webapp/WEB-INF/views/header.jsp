@@ -11,16 +11,16 @@
 	<c:set var="cPath" value="${pageContext.request.contextPath}"/>
 	
 	<!-- jQuery -->
-  	<script src="${cPath}/js/jquery-3.6.0.min.js"></script>
+  	<script src="/team_Bling/js/jquery-3.6.0.min.js"></script>
   	<!-- bootstrap js -->
- 	<script src="${cPath}/js/bootstrap.bundle.js"></script>
+ 	<script src="/team_Bling/js/bootstrap.bundle.js"></script>
  	<!-- bootstrap css -->
- 	<link rel="stylesheet" href="${cPath}/css/bootstrap.css">
+ 	<link rel="stylesheet" href="/team_Bling/css/bootstrap.css">
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		
   	<!-- Bootsrap icon(cart, heart) -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-  	<link rel="stylesheet" href="${cPath}/css/header.css">
+  	<link rel="stylesheet" href="/team_Bling/css/header.css">
 </head>
 <body>
 		<!-- header -->

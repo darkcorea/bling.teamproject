@@ -50,6 +50,22 @@ public class MyPageController {
 	String uploadPath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
     
 	
+	// 폴더 생성
+	public void makeDir() {
+
+        File makeFolder = new File(uploadPath);
+        // folderPath의 디렉토리가 존재하지 않을경우 디렉토리 생성.
+        if(!makeFolder.exists()) {
+            // 폴더를 생성합니다.
+            makeFolder.mkdirs(); 
+            System.out.println("폴더를 생성합니다.");
+            // 정성적으로 폴더 생성시 true를 반환합니다.
+            System.out.println("폴더가 존재하는지 체크 true/false : "+makeFolder.exists());  
+        } else {
+            System.out.println("이미 해당 폴더가 존재합니다.");
+        }
+    }
+	
 	//MyPage 메인페이지 -> 실행시 바로 화면에 최근 주문 정보 출력
 	@RequestMapping(value="/main.do")
 	public String main(Locale locale, Model model, CombineVO vo, HttpSession session, int page) throws Exception {
@@ -153,6 +169,8 @@ public class MyPageController {
 	@ResponseBody
 	@RequestMapping(value="/upload.do", method=RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = "text/html; charset=utf-8")
 	public String upload(MultipartHttpServletRequest request, HttpSession session) throws Exception {
+		
+		
 		String result = "";
 		
 		MultipartFile image1 = request.getFile("image1");
@@ -247,6 +265,9 @@ public class MyPageController {
 		//System.out.println("마이페이지 컨트롤러>>>>>image2 : "+vo.getImage2());
 		
 		
+		// 폴더생성
+		makeDir();
+		
 		//위의 detailIdx 메소드에서 session에 저장한 detail_idx를 불러와서 CombineVo에 저장한다.
 		int detail_idx = (Integer)session.getAttribute("detailIdx");
 		vo.setDetail_idx(detail_idx);
@@ -328,8 +349,8 @@ public class MyPageController {
 	public Map<String, Object> reviewDetail(int ridx, HttpSession session) throws Exception {
 		System.out.println("마이페이지 컨트롤러-ridx : "+ridx);
 		
-		String prodImg = "/resources/image/";
-		String rvImg = "/resources/review_img/";
+		String prodImg = "/team_Bling/resources/image/";
+		String rvImg = "/team_Bling/resources/review_img/";
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("rvData", myPageService.reviewDetail(ridx));

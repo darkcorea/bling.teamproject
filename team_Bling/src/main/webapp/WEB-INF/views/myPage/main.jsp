@@ -22,10 +22,10 @@
 			} else{
 				str += "<c:forEach items='${recentOrder}' var='ro'>";
 				
-				str += "	<tr id='tableRow'>";
+				str += "	<tr>";
 				str += "		<td id='td1'><span id='t1'>${ro.rdate}</span></td>";
 				str += "		<td id='td2'><span id='t2'>${ro.order_idx}</span></td>";
-				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/team_Bling/Product/detail.do?pidx=${ro.pidx}'>${ro.pname} <br> ${ro.oname}</a></span></td>";
+				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/team_Bling/Product/detail.do?pidx=${ro.pidx}'>${ro.pname} / ${ro.oname}</a></span></td>";
 				str += "		<td id='td4'><span id='t4'><fmt:formatNumber value='${(ro.saleprice+ro.addprice)*ro.quantitySum}' pattern='#,###' />원</span></td>";
 				str += "		<td id='td5'><span id='t5'>${ro.quantitySum}</span></td>";
 				
@@ -83,9 +83,6 @@
 				str += "			<c:if test='${ro.contents != null}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite2' data-bs-toggle='modal' data-bs-target='#staticBackdrop2' onclick='reviewDetail(${ro.ridx})' value='리뷰 확인' readonly></span></td>";
 				str += "			</c:if>";
-				str += "			<c:if test='${ro.contents == null && ro.deli_stat != \"C\"}'>";
-				str += "				<td id='td7'><span id='t7'></span></td>";
-				str += "			</c:if>";
 				str += "			<c:if test='${ro.contents == null && ro.deli_stat == \"C\"}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite1' data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${ro.detail_idx})' value='리뷰 작성' readonly></span></td>";
 				str += "			</c:if>";
@@ -111,7 +108,7 @@
 			//console.log(event.currentTarget.value);
 			
 			$.ajax({
-				url: "{cPath}/MyPage/detailIdx.do",
+				url: "/team_Bling/MyPage/detailIdx.do",
 				type: "post",
 				data: "detail_idx="+detail_idx,
 				ContentType: "json",
@@ -128,7 +125,7 @@
 		
 		function reviewDetail(ridx){
 			$.ajax({
-				url: "{cPath}/MyPage/reviewDetail.do",
+				url: "/team_Bling/MyPage/reviewDetail.do",
 				type: "post",
 				data: "ridx="+ridx,
 				ContentType: "json",
@@ -213,7 +210,7 @@
 			formData.append("image2", image2);
 			
 			$.ajax({
-				url: "{cPath}/MyPage/upload.do",
+				url: "/team_Bling/MyPage/upload.do",
 				type: "post",
 				data: formData,
 				// processData: true=> get방식, false => post방식
@@ -326,14 +323,14 @@
 			
 			
 			$.ajax({
-				url: "{cPath}/MyPage/reviewWrite.do",
+				url: "/team_Bling/MyPage/reviewWrite.do",
 				type: "post",
 				data: "contents="+contents+"&grade="+grade,
 				ContentType: "json",
 				success: function(data){
 					console.log("리뷰작성 성공");
 					console.log(grade);
-					window.location.replace("/MyPage/main.do?page=1");
+					window.location.replace("/team_Bling/MyPage/main.do?page=1");
 				},
 				error: function(){
 					console.log("!!!!!리뷰작성 에러!!!!!");
@@ -375,7 +372,7 @@
 			console.log("delReview-ridx : "+ridx);
 			
 			$.ajax({
-				url: "{cPath}/MyPage/delete.do",
+				url: "/team_Bling/MyPage/delete.do",
 				type: "post",
 				data: {"ridx":ridx},
 				ContentType: "json",
@@ -402,7 +399,9 @@
 		function preview(){
 			previewImg1.src=URL.createObjectURL(event.target.files[0]);
 			previewImg2.src=URL.createObjectURL(event.target.files[1]);
-
+			
+			$(".minusB").css("display","unset");
+			
 		}
 		
 		
@@ -542,6 +541,9 @@
 			height: 100px;
 			margin-right: 5px;
 		}
+		#badge1,#badge2{
+			display: none;
+		}
 		#uploadBtn{
 			display: none;
 		}
@@ -655,10 +657,6 @@
 		#noneOrder{
 			position: relative;
 			left: 280px;
-		}
-		#tableRow{
-			border-bottom: 1px solid black;
-			width: 710px;
 		}
 		#t1,#t4{
 			width: 100px;
@@ -857,11 +855,11 @@
 					<br>
 					<div id="preview">
 						<div class="previewD1">
-							<span class="minusB position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-</span>
+							<span id="badge1" class="minusB position-absolute top-0 start-100 badge rounded-pill bg-danger">-</span>
 							<img class="previewImg" id="previewImg1" src="">
 						</div>
 						<div class="previewD2">
-							<span class="minusB position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-</span>
+							<span id="badge2" class="minusB position-absolute top-0 start-100 badge rounded-pill bg-danger">-</span>
 							<img class="previewImg" id="previewImg2" src="">
 						</div>						
 					</div>
@@ -1041,7 +1039,7 @@
 								<c:if test="${pm.prev == true}">
 								<li class='page-item'>
 								<c:set var="prev" value="${pm.startPage -1}"/>
-									<a class='page-link' aria-label='Previous' href="/team_Bling/MyPage/main.do?page=${prev}">
+									<a class='page-link' aria-label='Previous' href="${cPath}/MyPage/main.do?page=${prev}">
 										<span aria-hidden='true' class='pointer' >&laquo;</span>
 									</a>
 								</li>
@@ -1052,14 +1050,14 @@
 								<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
 									<c:if test = "${pageNum == page}">
 									<li class="page-item active">	
-										<a class="page-link pointer" href="/team_Bling/MyPage/main.do?page=${pageNum}">
+										<a class="page-link pointer" href="${cPath}/MyPage/main.do?page=${pageNum}">
 											<c:out value="${pageNum}"/>
 										</a>
 									</li>
 									</c:if>
 									<c:if test = "${pageNum != page}">
 									<li class="page-item">	
-										<a class="page-link pointer" href="/team_Bling/MyPage/main.do?page=${pageNum}">
+										<a class="page-link pointer" href="${cPath}/MyPage/main.do?page=${pageNum}">
 											<c:out value="${pageNum}"/>
 										</a>
 									</li>
@@ -1069,7 +1067,7 @@
 								<!-- 뒤로 가기 버튼 , 키워드 유지하면서 이동하기 -->
 								<c:if test="${pm.next && pm.endPage > 0}">
 								<li class='page-item'>
-									<a class='page-link' aria-label='Next' href="/team_Bling/MyPage/main.do?page=${pm.endPage + 1}">
+									<a class='page-link' aria-label='Next' href="${cPath}/MyPage/main.do?page=${pm.endPage + 1}">
 										<span aria-hidden='true' class='pointer'>&raquo;</span>
 									</a>
 								</li>
