@@ -57,12 +57,12 @@
 		justify-content: center;
 	}		
 	/* 모달 버튼 */
-	#modal_button1, .bling_color{
+	#modal_button1, .bling_color, #modal_button3{
 		background-color: #CB7878;
 	}
 		
 	/* 모달 버튼 크기*/
-	#modal_button1, #modal_button2{
+	#modal_button1, #modal_button2,#modal_button3, #modal_button4{
 		width:120px;
 	}
 	/* 모달창에 나오는 상품 이미지 크기  */
@@ -102,6 +102,7 @@
 	<option>교환신청</option>
 	<option>반품신청</option>
 	<option>취소신청</option>
+	<option>답변 미완료</option>
 	</select>
 	</div>
 	<br>
@@ -250,6 +251,45 @@
     </div>
   </div>
 </div>
+
+<!--  답글 수정 모달창 -->
+<!-- 답글 작성 모달창 -->
+<div class="modal fade" id="reply_modify" data-bs-backdrop="static"  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bling_color">
+        <h5 class="modal-title">답글수정</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      	<div id="reply_modify1" style="margin-left:50px;">
+      	<form name="reply_modify" id="reply_question">
+      	<table>
+      		<tr style="height:50px;">
+      			<td style="width:80px;">제목</td>
+      			<td><input type="text" name="title" maxlength="30" style="width:400px;" id="title_modify">
+        				<input type="hidden" name="qidx" id="qidx_modify">
+      	      				<input type="text" style="display:none;">
+      			</td>
+      		</tr>
+      		<tr>
+      			<td>문의답변</td>
+      			<td><textarea name="content" cols="60" rows="10"  id="content_modify"></textarea></td>
+      		</tr>
+      	</table>
+      	</form>
+      	</div>
+      	<div id="delivery1">
+      	
+      	</div>
+      </div>
+      <div class="modal-footer" id="reply_modify2">
+        <button type="button" class="btn btn-secondary" id="modal_button3" onclick="reply_modify5()">수정완료</button>
+        <button type="button" class="btn btn-secondary" id="modal_button4" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 
 <script>
@@ -389,8 +429,46 @@ function reply_write(){
     } 
 }
 
+// 작성한 답변 수정하는 모달창 열기
+function modify_fn(qidx){
+	// 리뷰 작성 에이작스
+	$.ajax({
+		url:"/team_Bling/Ad_board/question_modify.do",
+		type:"POST",
+		data:{"qidx":qidx},
+		success:function(data){
+			
+			$("#qidx_modify").val(data.qidx);
+			$("#title_modify").val(data.title);
+			
+			$("#content_modify").val(data.content);
+			
+			 $("#reply_modify").modal("show");
+		},error:function(){
+			alert("답글작성 모달창열기 오류");
+		}
+	});
+}
 
-
+// 답변하기 수정
+function reply_modify5(){
+	
+	let formData = $("form[name=reply_modify]").serialize();
+	
+	$.ajax({
+		url:"/team_Bling/Ad_board/question_modify1.do",
+		type:"POST",
+		data:formData,
+		success:function(data){
+			 $("#reply_modify").modal("hide");
+			 alert("답글 수정이 완료 되었습니다.");
+			 location.reload();
+		},error:function(){
+			alert("답글 수정 오류");
+		}
+	});
+	
+}
 
 
 </script>
