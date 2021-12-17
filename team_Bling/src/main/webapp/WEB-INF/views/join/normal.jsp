@@ -260,7 +260,7 @@
 			 	<div class="text-center fs-1 mb-3 mt-3">
 			 		회원가입
 			 	</div>
-				<form name="frm" action="/Join/value.do" method="post" id="frm_write">
+				<form name="frm" action="/team_Bling/Join/value.do" method="post" id="frm_write">
 				
 <!-- 동의란 -->
 					<div class="d-grid gap-2 col-6 mx-auto "  onclick="check(1)" style="cursor:pointer;">

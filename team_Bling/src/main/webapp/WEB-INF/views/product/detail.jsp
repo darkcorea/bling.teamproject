@@ -981,7 +981,7 @@
 
 	      frm.name = 'frm';
 	      frm.method = 'post';
-	      frm.action = '/Order/nonorder.do';
+	      frm.action = '/team_Bling/Order/nonorder.do';
 	      
 	      var input1 = document.createElement("input");
 	      var input2 = document.createElement("input");
@@ -1041,7 +1041,7 @@
 	      var frm = document.createElement("form");
 	      frm.name = 'frm';
 	      frm.method = 'post';
-	      frm.action = '/Order/memberorder.do';
+	      frm.action = '/team_Bling/Order/memberorder.do';
 	      
 	      var input1 = document.createElement("input");
 	     

@@ -220,7 +220,7 @@
 						<div class="text-center fs-3 mb-3 mt-3">
 					 		나의 정보 수정
 					 	</div>
-					 	<form name="frm" action="/MyPage/remodify.do" method="post" id="frm_write">
+					 	<form name="frm" action="/team_Bling/MyPage/remodify.do" method="post" id="frm_write">
 					 		
 					 		<c:set var="ban" value="${data }"/>
 					 		<div class="rows h" id="liner">
