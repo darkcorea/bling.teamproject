@@ -10,11 +10,13 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -153,7 +155,7 @@ public class Ad_BoardController {
 	
 	//공지사항 내용 db에 등록
 	@RequestMapping(value="/confirm.do")
-	public String confirm(NoticeVO vo,HttpServletRequest request,MultipartFile file) throws Exception{
+	public String confirm(NoticeVO vo,HttpServletRequest request,MultipartFile file, HttpSession session) throws Exception{
 		
 		makeDir1();
 		
@@ -179,6 +181,12 @@ public class Ad_BoardController {
 			
 			// 파일 저장
 			file.transferTo(new File(FILE_SERVER_PATH + FileName));
+			
+			String imageName = (String)session.getAttribute("imageName");
+			byte[] imageData = (byte[])session.getAttribute("imageData");
+			File target1 = new File(FILE_SERVER_PATH, imageName);
+			FileCopyUtils.copy(imageData, target1);
+			
 		}else {
 			FileName = null;
 		}
@@ -193,9 +201,7 @@ public class Ad_BoardController {
 	//에디터 이미지 서버, 스프링 폴더에 저장
 	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
-	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request,NoticeVO vo )  {
-		
-		makeDir1();
+	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request,NoticeVO vo,HttpSession session )  {
 		
 		JsonObject jsonObject = new JsonObject();
 		
@@ -216,9 +222,13 @@ public class Ad_BoardController {
 			
 			
 			//이게 에이작스여서 저장버튼 안눌러도 사진이 저장됨. 이걸 어떻게 해야할지 생각해야함....
-			File f = new File(FILE_SERVER_PATH+savedFileName); 
-			multipartFile.transferTo(f); //스프링 폴더 파일 저장
+			//File f = new File(FILE_SERVER_PATH+savedFileName); 
+			//multipartFile.transferTo(f); //스프링 폴더 파일 저장
 			
+			byte[] imageData = multipartFile.getBytes();
+			
+			session.setAttribute("imageName", savedFileName);
+			session.setAttribute("imageData", imageData);
 			
 			// url에 경로 저장
 			jsonObject.addProperty("url", "/resources/notice/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
@@ -231,7 +241,8 @@ public class Ad_BoardController {
 			e.printStackTrace();
 		}
 		String a = jsonObject.toString();
-		
+		System.out.println("////////////////////////////////");
+		System.out.println(a);
 		return a;
 	}
 	

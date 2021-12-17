@@ -20,6 +20,10 @@
  	<!-- bootstrap css -->
  	<link rel="stylesheet" href="/team_Bling/css/bootstrap.css">
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ 	<!-- bootstrap 아이콘 -->
+ 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+ 	
+ 	
 	<style type="text/css">
 		section{
 			margin:auto;
@@ -80,11 +84,11 @@
 		.bi-x-lg{
 			color: red;
 		}
-		div:focus{
-			background-color: orange;
-		}
 		#mr{
 			margin-left:10px;
+		}
+		body{
+			background-color: #FBECEC;
 		}
 	</style>
 	
@@ -153,41 +157,18 @@
                 </td>
             </tr>
         </table>
+        
+        <br><br><br><br><br>
     </section>
 </body>
     <script>
 	
    var count = 0;
-   //옵션 카운트
-   function cnt(){
-	   count++;
-	   var str="";
-	   str += "선택한 옵션 개수 : "+count+"개";
-	   $('#cnt').html(str);
-	   document.getElementById("cntval").value = count;
-   }
+   var sum = 0;
    
-   
-   //글 선택시 
-    function test(coidx){
-    	//alert("테스트");
-    	var imgname = document.getElementById(coidx);
-    	console.log(coidx);
-    	$("#img"+coidx).css({
-    		"background-color":"blue"
-    	});
-    }
-   //x표시 누르면 이미지 삭제
-   function deleteimg(coidx){
-	   $("#img"+coidx).remove();
-	   $(".text"+coidx).remove();
-   }
-    
-    var sum = 0;
     //타입별 종류들
         function types(type){
             var str = "";
-            
             $.ajax({
             	url:"/team_Bling/Custom/customoption.do",
             	type:"post",
@@ -209,7 +190,7 @@
             	}
             });
         }
-        ////////////////////////////////////////////////가격스크롤/////////////////////////////////////////////
+        
        //체인 고르기
         function main_option(type,shape){
     	   console.log(type);
@@ -235,7 +216,7 @@
                 	
                 	var str2_chain = "";
                 	str2_chain += "<div class='chainpricename'><h5>"+data[0].name + "</h5>";
-                	str2_chain += data[0].price + "원<hr>";
+                	str2_chain += data[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원<hr>";
                 	str2_chain += "<input type='hidden' id='chainprice' value='"+data[0].price+"'></div>";
                 	str2_chain += "<input type = 'hidden' id='chainname' value='"+data[0].coidx+"'>";
                 	
@@ -246,8 +227,8 @@
         }
         
         
-/////////////////////////////////////////////제품 삭제시 총 금액도 제해야함.////////////////////////////////////////
         //장식품들 고르면 드래그 가능 이미지 나옴
+        var number = 0;
         function options(type,shape){
 			if($(".chainpricename").length){
 				$.ajax({
@@ -258,20 +239,21 @@
 	              	success:function(data){
 	              		var str2 = "";
 	              		str2 += "";
-	              		str2 += "<img src='/team_Bling/resources/custom/"+data[0].customimg+"' id='img"+data[0].coidx+"' class='drag'>";
+	              		str2 += "<img src='/team_Bling/resources/custom/"+data[0].customimg+"' id='number"+number+"' class='drag' onmouseover='over("+number+")' onmouseout='out("+number+")'>";
 	                	$('#optiondiv').append(str2);
 	                	//선택옵션 글 나오게함
 	                	var str2_option = "";
-	                	str2_option += "<div id='textarea text"+data[0].coidx+"' onclick='test("+data[0].coidx+")' class='text"+data[0].coidx+"' tabindex='1' class='area'><h5>"+data[0].name + "&nbsp;";
-	                	str2_option += "<i class='bi bi-x-lg' onclick='deleteimg("+data[0].coidx+")'></i></h5>";
-	                	/*  */
-	                	str2_option += data[0].price + "원";
-	                	str2_option += "<input type='range' value='0' min='0' max='360' class='form-range' id='customRange"+data[0].coidx+"' oninput='range(this.value,"+data[0].coidx+")'><hr></div>";
+	                	str2_option += "<div id='textarea text"+data[0].coidx+"' onmouseover='over("+number+")' onmouseout='out("+number+")' class='divnumber"+number+"' tabindex='1' class='area'><h5>"+data[0].name + "&nbsp;";
+	                	str2_option += "<i class='bi bi-x-lg' onclick='deleteimg("+number+")'></i></h5>";
+	                	str2_option += data[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원";
+	                	str2_option += "<input type='range' value='0' min='0' max='360' class='form-range' id='customRange"+data[0].coidx+"' oninput='range(this.value,"+number+")'><hr></div>";
 	                	str2_option += "<span id='value999'></span>"
 	                	str2_option += "<input type = 'hidden' id='optionname' value='"+data[0].coidx+"'>";
+	                	str2_option += "<input type = 'hidden' id='optionprice"+number+"' value='"+data[0].price+"'>";
 	                	$('#selectoption').append(str2_option);
 	                	total(data[0].price);
 	                	cnt();
+	                	number++;
 	              	}
 	        	});
 			}else{
@@ -281,29 +263,73 @@
         }
         
         //이미지회전
-        function range(degree,coidx){
-			$("#img"+coidx).css({'transform':'rotate('+degree+'deg)'});
+        function range(degree,number){
+			$("#number"+number).css({'transform':'rotate('+degree+'deg)'});
+        }
+        
+        //글선택시
+        function over(number){
+        	$(".divnumber"+number).css({"background-color":"orange"});
+        	$("#number"+number).css({"border":"blue 1px solid"});
+        }
+        
+        //글 선택 안할시
+        function out(number){
+        	$(".divnumber"+number).css({"background-color":"transparent"});
+        	$("#number"+number).css({"border":"none"});
         }
         
        
+        //x표시 누르면 이미지 삭제
+        function deleteimg(number){
+     	   $("#number"+number).remove();
+     	   $(".divnumber"+number).remove();
+     	   minuscnt();
+     	   minus(number);
+        }
+        
+        ////////////옵션개수/////////
+        //옵션 카운트
+        function cnt(){
+     	   count++;
+     	   var str="";
+     	   str += "선택한 옵션 개수 : "+count+"개";
+     	   $('#cnt').html(str);
+     	   document.getElementById("cntval").value = count;
+        }
+        
+        //옵션 뺄때 개수 빼기
+        function minuscnt(){
+        	var cnt = 0;
+        	cnt = document.getElementById("cntval").value;
+        	cnt--;
+        	var str = "";
+        	str += "선택한 옵션 개수 : "+cnt+"개";
+        	$('#cnt').html(str);
+        	document.getElementById("cntval").value = cnt;
+        }
+		////////////총가격/////////
+        //옵션빼기
+        function minus(number){
+        	var str3 = "";
+        	var tot = $('#totalprice').val();
+        	var minusprice = $('#optionprice'+number).val();
+        	var totprice = tot-minusprice;
+        	str3 += "<h5>총 금액 : "+totprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원</h5>";
+        	str3 += "<input type='hidden' id='totalprice' value='"+totprice+"'>";
+        	$('#total').html(str3);
+        }
+        
         //총 금액
         function total(price){
         	sum += price;
         	var str3 = "";
-        	str3 += "<h5>총 금액 : "+sum+"원</h5>";
+        	str3 += "<h5>총 금액 : "+sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"원</h5>";
         	str3 += "<input type='hidden' id='totalprice' value='"+sum+"'>";
         	$('#total').html(str3);
         }
         
         
-        //옵션빼기
-        function minus(minustot,plustot){
-        	var str3 = "";
-        	var minusprice = $('#totalprice').val() - minustot + plustot;
-        	str3 += "<h5>총 금액 : "+minusprice+"원</h5>";
-        	str3 += "<input type='hidden' id='totalprice' value='"+minusprice+"'>";
-        	$('#total').html(str3);
-        }
         
         //드래그 객체
         var dragobject={
