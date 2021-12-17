@@ -38,7 +38,8 @@ public interface BasketService {
 	void likeDel(LikeVO vo) throws Exception;
 	void like_del_ch(List<Integer> list) throws Exception ;
 	List<LikeVO> checklike1(int midx) throws Exception;
-	
+	//커스텀 장바구니 등록을 위한 oidx찾기
+	int customoidx(int cuidx) throws Exception;
 	//커스텀 장바구니 등록
 	void custominsert(OrderVO vo)throws Exception;
 }

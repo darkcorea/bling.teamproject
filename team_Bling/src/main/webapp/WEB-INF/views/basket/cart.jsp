@@ -174,7 +174,7 @@
 					str += "	<input type='hidden' name='pname' value='"+item.pname+"'>";
 					str += "	<input type='hidden' name='stock1' value='"+item.stock+"'>";
 					str += "	</td>";
-					if(item.pidx == 173){
+					if(item.cuidx != null){
 						str += "	<td><img class='img-fluid' src='/team_Bling/resources/usercustomizing/"+item.main+"'></td>";
 					}else{
 						str += "	<td><img class='img-fluid' src='/team_Bling/resources/image/"+item.main+"'></td>";

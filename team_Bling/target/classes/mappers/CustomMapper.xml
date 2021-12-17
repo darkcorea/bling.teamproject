@@ -16,6 +16,9 @@
 		insert into bg_custom_user
 			(sumcoidx, cntoption, customimg, price, midx, name)
 		values(#{sumcoidx},#{cntoption},#{customimg},#{price},#{midx},#{name})
+		<selectKey resultType="int" keyProperty="cuidx" order="AFTER">
+		SELECT MAX(cuidx) FROM BG_custom_user WHERE 1=1
+		</selectKey>
 	</insert>
 	
 	<!-- 커스텀 개수 -->
