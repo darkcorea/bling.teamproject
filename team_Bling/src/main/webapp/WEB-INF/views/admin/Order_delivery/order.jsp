@@ -16,13 +16,6 @@
 		div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
 		a {text-decoration:none;}
 		
-		.quickmenu {position:absolute;width:120px;height:500px;top:20%;margin-top:-50px;left:50px;background:#cb7878;padding:20px;}
-		.quickmenu ul {position:relative;float:left;width:100%;display:inline-block;*display:inline;}
-		.quickmenu ul li {float:left;width:100%;text-align:center;display:inline-block;*display:inline;}
-		.quickmenu ul li a {position:relative;float:left;width:100%;height:50px;line-height:30px;text-align:center;color:#fff;font-size:12pt;}
-		.quickmenu ul li a:hover {color:#000;}
-		.quickmenu ul li:last-child {border-bottom:0;}
-		
 		.content {position:relative;min-height:1000px;}
 		
 		#subTitle{
@@ -327,19 +320,6 @@
 	      </div>
 	    </div>
 	  </div>
-	</div>
-
-	
-	<!-- 옆 nav 바 -->
-	<div class="d1">
-		<div class="quickmenu">
-			  <ul>
-			 	<li><a href="/team_Bling/Ad_board/question.do">문의게시판</a></li>
-			    <li><a href="/team_Bling/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
-			    <li><a href="/team_Bling/Ad_board/event.do">이벤트</a></li>
-			    <li><a href="#">리뷰관리</a></li> 
-			  </ul>
-		</div>
 	</div>
 	
 	<!-- 본문 -->
@@ -792,13 +772,6 @@
 			icon: 'warning',
 			html: '구매확정된 상품입니다! <br> (배송완료일로부터 7일 초과)',
 		});
-	}
-	
-	//기본적으로 input의 type이 text일땐, maxlength를 지정해주면 최대 글자 수를 지정을 할 수 있지만 number는 그렇지가 않습니다.
-	function maxLengthCheck(object){
-	    if (object.value.length > object.maxLength){
-	      object.value = object.value.slice(0, object.maxLength);
-	    }    
 	}
 	
 </script>

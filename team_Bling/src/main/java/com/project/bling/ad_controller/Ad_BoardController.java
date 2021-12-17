@@ -539,6 +539,22 @@ public class Ad_BoardController {
 			return 1;
 		}
 		
+		// 작성한 답글 가져 오기 수정
+		@RequestMapping(value="/question_modify.do", method = RequestMethod.POST)
+		@ResponseBody
+		public QuestionVO question_modify(int qidx)throws Exception{
+			return ad_boardService.question_modify(qidx);
+		}
+		
+		// 답글 수정 하기
+		@RequestMapping(value="/question_modify1.do", method = RequestMethod.POST)
+		@ResponseBody
+		public int question_modify1(QuestionVO qv)throws Exception{
+			ad_boardService.question_modify1(qv);
+			return 1;
+		}
+
+		
 	public void makeDir1() {
         // 폴더를 만들 디렉토리 경로(Window 기반)
         File makeFolder = new File(FILE_SERVER_PATH1);

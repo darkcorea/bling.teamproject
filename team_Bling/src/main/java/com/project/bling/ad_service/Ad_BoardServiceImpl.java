@@ -90,6 +90,18 @@ public class Ad_BoardServiceImpl implements Ad_BoardService{
 	public void question_write(QuestionVO qv) throws Exception {
 		ad_boardDAO.question_write(qv);
 	}
+
+	// 작성한 답글 가져 오기 수정
+	@Override
+	public QuestionVO question_modify(int qidx) throws Exception {
+		return ad_boardDAO.question_modify(qidx);
+	}
+	
+	// 답글 수정하기
+	@Override
+	public void question_modify1(QuestionVO qv) throws Exception {
+		ad_boardDAO.question_modify1(qv);
+	}
 	
 	
 	

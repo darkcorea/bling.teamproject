@@ -13,8 +13,7 @@ public interface ReviewService {
 	List<CombineVO> reviewProduct_1(PageMaker pm) throws Exception;
 	List<CombineVO> reviewProduct_2(PageMaker pm) throws Exception;
 	//myPage reviewList
-	public List<CombineVO> reviewList(CombineVO vo) throws Exception;
 	public List<CombineVO> reviewPaging(PageMaker pm) throws Exception;
-	public int reviewCnt(int midx) throws Exception;
+	public int reviewCnt(PageMaker pm) throws Exception;
 
 }
