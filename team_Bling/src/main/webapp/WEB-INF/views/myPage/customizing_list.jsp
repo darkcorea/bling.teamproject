@@ -143,7 +143,7 @@
 					str+="<div class='card-body'>";
 					str+="<h5 class='card-title'>"+data.list[i].name+"</h5>";
 					str+=" <p class='card-text'>"+data.list[i].price+"원</p>";
-					str+="<a href='#' class='btn btn-outline-dark'>장바구니에 담기</a>";
+					str+="<a href='/team_Bling/Basket/custominsert.do?cuidx="+data.list[i].cuidx+"' class='btn btn-outline-dark'>장바구니에 담기</a>";
 				}
 				str+="</div>";
 				str+="</div>";

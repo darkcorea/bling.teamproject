@@ -174,7 +174,11 @@
 					str += "	<input type='hidden' name='pname' value='"+item.pname+"'>";
 					str += "	<input type='hidden' name='stock1' value='"+item.stock+"'>";
 					str += "	</td>";
-					str += "	<td><img class='img-fluid' src='/team_Bling/resources/image/"+item.main+"'></td>";
+					if(item.pidx == 173){
+						str += "	<td><img class='img-fluid' src='/team_Bling/resources/usercustomizing/"+item.main+"'></td>";
+					}else{
+						str += "	<td><img class='img-fluid' src='/team_Bling/resources/image/"+item.main+"'></td>";
+					}
 					str += "	<td><a class='deco' href='/team_Bling/Product/detail.do?pidx="+item.pidx+"'>"+item.pname+"</a>";
 					str += "		<p>옵션명 : "+item.oname+"</p>";
 					str += "	<input type='hidden' name='stock' value='"+item.stock+"' id='s_"+item.cart_idx+"'>";
