@@ -47,7 +47,11 @@ public class MyPageController {
 	@Autowired
 	LoginService  loginService;
 	
-	String uploadPath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
+	// 학원
+	//String uploadPath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
+	
+	// 서버 올리는 용
+	String uploadPath = "C:\\tomcat\\webapps\\team_Bling\\resources\\review_img";
     
 	
 	// 폴더 생성
