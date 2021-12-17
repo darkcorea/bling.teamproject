@@ -27,14 +27,17 @@
 		.quickmenu ul li:last-child {border-bottom:0;}
 		
 		.content {position:relative;min-height:1000px;}
-		th,td{
+		td{
+			text-align:center;
+		}
+		.center{
 			text-align:center;
 		}
 		table{
 			border-top:solid 1px black;
 			
 		}
-		tr{
+		.line{
 		border-bottom:solid 1px #C4C4C4;
 		}
 		#info{
@@ -64,11 +67,11 @@
 			<h1 class="text-center">회원 리스트</h1>
 			<br>
 			<table>
-				<tr>
-					<th style='width:100px;'>번호</th>
-					<th style='width:140px;'>아이디</th>
-					<th style='width:140px;'>이름</th>
-					<th>
+				<tr class="line">
+					<th class="center" style='width:100px;'>번호</th>
+					<th class="center" style='width:140px;'>아이디</th>
+					<th class="center" style='width:140px;'>이름</th>
+					<th class="center">
 						<select name="grade" id="grade" onchange="location.href=this.value">
 							<option value="/team_Bling/Ad_user/userList.do?page=1&grade=A">모든 등급</option>
 							<option value="/team_Bling/Ad_user/userList.do?page=1&grade=B">브론즈(B)</option>
@@ -76,16 +79,16 @@
 							<option value="/team_Bling/Ad_user/userList.do?page=1&grade=G">골드(G)</option>
 						</select>
 					</th>
-					<th style='width:110px;'>마일리지</th>
-					<th style='width:110px;'>주문금액</th>
-					<th style='width:140px;'>회원가입일</th>
-					<th style='width:140px;'>최종로그인</th>
+					<th class="center" style='width:110px;'>마일리지</th>
+					<th class="center" style='width:110px;'>주문금액</th>
+					<th class="center" style='width:140px;'>회원가입일</th>
+					<th class="center" style='width:140px;'>최종로그인</th>
 					
 				</tr>
 				<c:set var="page1" value="${pm.scri.page}"/>
 				<c:set var="num" value="${total-((page1-1)*20)}" />
 				<c:forEach items="${list}" var="list" >
-					<tr>
+					<tr class="line">
 						<td><c:out value="${num}"/></td>
 						<c:set var="num" value="${num - 1}" />
 					

@@ -9,4 +9,5 @@ public interface Ad_UserService {
 
 	public int userCount(String grade) throws Exception;
 	public List<UserVO> user_list(PageMaker pm) throws Exception;
+	public void update_grade() throws Exception;
 }
