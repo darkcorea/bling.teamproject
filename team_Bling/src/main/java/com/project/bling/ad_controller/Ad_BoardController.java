@@ -49,6 +49,9 @@ public class Ad_BoardController {
 	private static final String FILE_SERVER_PATH = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice\\";
 	private static final String FILE_SERVER_PATH2 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\event\\";
 	
+	private static final String FILE_SERVER_PATH1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notice";
+	private static final String FILE_SERVER_PATH4 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\event";
+	
 	//공지사항 게시글리스트메인
 	@RequestMapping(value = "/board.do")
 	public String board(Locale locale, Model model,int page,String type) throws Exception {
@@ -146,6 +149,8 @@ public class Ad_BoardController {
 	@RequestMapping(value="/confirm.do")
 	public String confirm(NoticeVO vo,HttpServletRequest request,MultipartFile file) throws Exception{
 		
+		makeDir1();
+		
 		String FileName=null;
 		
 		String orifileName = file.getOriginalFilename();
@@ -183,6 +188,8 @@ public class Ad_BoardController {
 	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request,NoticeVO vo )  {
+		
+		makeDir1();
 		
 		JsonObject jsonObject = new JsonObject();
 		
@@ -404,6 +411,8 @@ public class Ad_BoardController {
 	@RequestMapping(value="/event_regist_all.do", method = RequestMethod.POST)
 	public String event_regist_all(MultipartHttpServletRequest request ) throws Exception{
 		
+		makeDir2();
+		
 		EventVO vo = new EventVO();
 		vo.setSubject(request.getParameter("subject"));
 		vo.setContents(request.getParameter("contents"));
@@ -524,7 +533,35 @@ public class Ad_BoardController {
 			return 1;
 		}
 		
-		
+	public void makeDir1() {
+        // 폴더를 만들 디렉토리 경로(Window 기반)
+        File makeFolder = new File(FILE_SERVER_PATH1);
+        // folderPath의 디렉토리가 존재하지 않을경우 디렉토리 생성.
+        if(!makeFolder.exists()) {
+            // 폴더를 생성합니다.
+            makeFolder.mkdirs(); 
+            System.out.println("폴더를 생성합니다.");
+            // 정성적으로 폴더 생성시 true를 반환합니다.
+            System.out.println("폴더가 존재하는지 체크 true/false : "+makeFolder.exists());
+        } else {
+            System.out.println("이미 해당 폴더가 존재합니다.");
+        }
+	}
+	
+	public void makeDir2() {
+        // 폴더를 만들 디렉토리 경로(Window 기반)
+        File makeFolder = new File(FILE_SERVER_PATH4);
+        // folderPath의 디렉토리가 존재하지 않을경우 디렉토리 생성.
+        if(!makeFolder.exists()) {
+            // 폴더를 생성합니다.
+            makeFolder.mkdirs(); 
+            System.out.println("폴더를 생성합니다.");
+            // 정성적으로 폴더 생성시 true를 반환합니다.
+            System.out.println("폴더가 존재하는지 체크 true/false : "+makeFolder.exists());
+        } else {
+            System.out.println("이미 해당 폴더가 존재합니다.");
+        }
+	}
 }
 
 
