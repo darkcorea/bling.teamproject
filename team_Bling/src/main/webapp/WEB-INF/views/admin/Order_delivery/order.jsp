@@ -774,12 +774,5 @@
 		});
 	}
 	
-	//기본적으로 input의 type이 text일땐, maxlength를 지정해주면 최대 글자 수를 지정을 할 수 있지만 number는 그렇지가 않습니다.
-	function maxLengthCheck(object){
-	    if (object.value.length > object.maxLength){
-	      object.value = object.value.slice(0, object.maxLength);
-	    }    
-	}
-	
 </script>
 </html>

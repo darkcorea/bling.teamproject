@@ -45,76 +45,19 @@
         Limit #{startPost},#{scri.perPageNum}
 	</select>
 	
-	<!-- 페이징 적용전 리뷰 리스트 -->
-	<select id="reviewList" resultType="CombineVO">
-	<![CDATA[
-		WITH pi
-		     AS(
-		        SELECT p.pidx,
-		               p.pname,
-		               i.main
-		        FROM bg_product p
-		        INNER JOIN bg_image i
-		        ON p.pidx=i.pidx
-		     ),
-		     opOodR
-		     AS(
-		        SELECT op.pidx,
-		               op.oidx,
-		               op.oname,
-		               o.midx,
-		               o.rdate,
-		               od.quantity,
-		               r.ridx,
-		               r.contents,
-		               r.image1,
-		               r.image2,
-		               r.grade
-		        FROM bg_order_detail od
-		        
-		        RIGHT OUTER JOIN bg_option op
-		        ON od.oidx=op.oidx
-		        
-		        RIGHT OUTER JOIN bg_order o
-		        ON od.order_idx=o.order_idx
-		        
-		        INNER JOIN bg_review r
-		        ON od.detail_idx=r.detail_idx
-		     )
-		SELECT opOodR.ridx,
-		       pi.main,
-		       pi.pname,
-		       opOodR.oname,
-		       opOodR.quantity,
-		       opOodR.contents,
-		       opOodR.image1,
-		       opOodR.image2,
-		       opOodR.grade,
-		       opOodR.rdate
-		FROM pi
-		LEFT OUTER JOIN opOodR
-		ON pi.pidx=opOodR.pidx
-		WHERE opOodR.midx=#{midx}
-		]]>
-		<if test='kind == "A"'><![CDATA[AND opOodR.rdate >= to_char(sysdate)]]></if>
-		<if test='kind == "B"'><![CDATA[AND opOodR.rdate >= to_char(add_months(sysdate,-1))]]></if>
-		<if test='kind == "C"'><![CDATA[AND opOodR.rdate >= to_char(add_months(sysdate,-3))]]></if>
-		<if test='kind == "D"'><![CDATA[AND opOodR.rdate >= to_char(add_months(sysdate,-6))]]></if>
-		<if test='kind == "E"'><![CDATA[AND opOodR.rdate >= to_char(sysdate-365)]]></if>
-		<if test='kind == "F"'><![CDATA[AND opOodR.rdate >= to_char(sysdate-(365*3))]]></if>
-		<if test='kind == "G"'>AND opOodR.rdate BETWEEN TO_DATE(#{rdate1},'YYYY-MM-DD') AND TO_DATE(#{rdate2},'YYYY-MM-DD')</if>
-		
-		<![CDATA[
-		ORDER BY opOodR.ridx
-		DESC
-		]]>
-	</select>
 	
-	
-	<select id="reviewCnt" resultType="int">
+	<select id="reviewCnt" parameterType="PageMaker" resultType="int">
 		SELECT count(ridx)
 		FROM bg_review
 		WHERE midx=#{midx}
+		<if test='kind == "A"'>AND date(rdate) = curdate()</if>
+		<if test='kind == "B"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -1 MONTH)]]></if>
+		<if test='kind == "C"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -3 MONTH)]]></if>
+		<if test='kind == "D"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -6 MONTH)]]></if>
+		<if test='kind == "E"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -1 YEAR)]]></if>
+		<if test='kind == "F"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -3 YEAR)]]></if>
+		<if test='kind == "G"'>AND rdate BETWEEN DATE_FORMAT(#{scri.rdate1},'%Y-%m-%d') AND DATE_FORMAT(#{scri.rdate2},'%Y-%m-%d 23:59:59:59')</if>
+		
 	</select>
 	
 	<!-- 페이징 적용 리뷰 리스트(DB View(=rv_Paging) 사용) -->
@@ -122,13 +65,13 @@
 		SELECT * from rv_Paging
 		WHERE midx=#{midx}
 		
-			<if test='kind == "A"'><![CDATA[AND DATE_FORMAT(rdate,'%Y-%m-%d') = DATE_FORMAT(sysdate(),'%Y-%m-%d')]]></if>
-			<if test='kind == "B"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -1 MONTH)]]></if>
-			<if test='kind == "C"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -3 MONTH)]]></if>
-			<if test='kind == "D"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -6 MONTH)]]></if>
-			<if test='kind == "E"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -1 YEAR)]]></if>
-			<if test='kind == "F"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -3 YEAR)]]></if>
-			<if test='kind == "G"'>AND rdate BETWEEN DATE_FORMAT(#{scri.rdate1},'%Y-%m-%d') AND DATE_FORMAT(#{scri.rdate2},'%Y-%m-%d')</if>
+		<if test='kind == "A"'>AND date(rdate) = curdate()</if>
+		<if test='kind == "B"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -1 MONTH)]]></if>
+		<if test='kind == "C"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -3 MONTH)]]></if>
+		<if test='kind == "D"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -6 MONTH)]]></if>
+		<if test='kind == "E"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -1 YEAR)]]></if>
+		<if test='kind == "F"'><![CDATA[AND rdate >= date_add(sysdate(),INTERVAL -3 YEAR)]]></if>
+		<if test='kind == "G"'>AND rdate BETWEEN DATE_FORMAT(#{scri.rdate1},'%Y-%m-%d') AND DATE_FORMAT(#{scri.rdate2},'%Y-%m-%d 23:59:59:59')</if>
 		
 		Limit #{startPost},#{scri.perPageNum}
 	</select>

@@ -43,14 +43,6 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	
 	//myPage reviewList
-	@Override
-	public List<CombineVO> reviewList(CombineVO vo) throws Exception {
-		//System.out.println("마이페이지 서비스-구매일1 : "+vo.getRdate1());
-		//System.out.println("마이페이지 서비스-구매일1 : "+vo.getRdate2());
-		//System.out.println("마이페이지 서비스-midx : "+vo.getMidx());
-		return reviewDAO.reviewList(vo);
-	}
-
 
 	@Override
 	public List<CombineVO> reviewPaging(PageMaker pm) throws Exception {
@@ -60,9 +52,9 @@ public class ReviewServiceImpl implements ReviewService {
 
 
 	@Override
-	public int reviewCnt(int midx) throws Exception {
+	public int reviewCnt(PageMaker pm) throws Exception {
 
-		return reviewDAO.reviewCnt(midx);
+		return reviewDAO.reviewCnt(pm);
 	}
 	
 	
