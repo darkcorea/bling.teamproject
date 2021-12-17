@@ -334,13 +334,21 @@
 		reviewList(1);
 	 });
 	
-	function reviewList(page,type,date1,date2){
-		console.log(page);
+	function reviewList(pageN,typeN,date1N,date2N){
+		let page = pageN;
+		let type = typeN;
+		let date1 = date1N;
+		let date2 = date2N;
+		
+		console.log("reviewList() page : "+page);
+		console.log("reviewList() type : "+type);
+		console.log("reviewList() date1 : "+date1);
+		console.log("reviewList() date2 : "+date2);
+		
 		$.ajax({
 			url:"/team_Bling/Review/reviewlist.do",
 			type:"POST",
 			data:{"page":page,"type":type,"date1":date1,"date2":date2},
-			dataType: 'json',
 			success:function(data){
 				let pm = data.pm;
 				let prev = parseInt(pm.startPage - 1) ;
@@ -349,6 +357,7 @@
 			  	let str = "";
 			  	console.log(data);
 			  	console.log(data.reviewList);
+			  	console.log("통신 후 type : "+type);
 			  	
 			    //var page = data.page;
 	            //var pagenum = (page-1) * 5;
@@ -439,14 +448,14 @@
 			  		str += "<br><br><br>";
 			  		
 			  		
-					// 페이징 할 수 있는 번호 나오는 곳 뿌려 주기
+			  	// 페이징 할 수 있는 번호 나오는 곳 뿌려 주기
 				  	str += "	<nav aria-label='Page navigation'>";
 				  	str += "	<ul class='pagination justify-content-center'>";
 				  	str += "	<li class='page-item'>";
 				  	
 				  	//console.log(prev);
 				  	if(pm.prev == true){
-				  	    str += "<a class='page-link' aria-label='Previous' onclick='reviewList("+prev+")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
+				  	    str += "<a class='page-link' aria-label='Previous' onclick='reviewList("+prev+",\""+type+"\")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
 				  	}
 				  	
 				  	str += "	</li>";
@@ -455,16 +464,16 @@
 				  	
 				  	for (let k = pm.startPage; k<=pm.endPage; k++ ){
 				  		 if(page == k){
-				  			str += "<li class='page-item active'><a class='page-link pointer' onclick='reviewList("+k+")'>"+k+"</a></li>";    
+				  			str += "<li class='page-item active'><a class='page-link pointer' onclick='reviewList("+k+",\""+type+"\")'>"+k+"</a></li>";    
 				  		 }else{
-				  			str += "<li class='page-item'><a class='page-link pointer' onclick='reviewList("+k+")'>"+k+"</a></li>";    
+				  			str += "<li class='page-item'><a class='page-link pointer' onclick='reviewList("+k+",\""+type+"\")'>"+k+"</a></li>";    
 				  		 }
 				  	 }
 				  	 
 				  	 str += "	<li class='page-item'>";
 				  	
 				  	 if(pm.next && pm.endPage > 0){
-				  	     str += "<a class='page-link' aria-label='Next' onclick='reviewList("+next+")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
+				  	     str += "<a class='page-link' aria-label='Next' onclick='reviewList("+next+",\""+type+"\")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
 				  	 }
 				  	 
 				  	 str += "	</li>";
@@ -603,21 +612,23 @@
 			type: "post",
 			data: {"type":type,"date1":date1,"date2":date2},
 			success:function(data){
+				date1 = data.date1;
+				date2 = data.date2;
 				
 				console.log(data);
-				console.log("dfsfsdfds"+data.date1);
-				console.log("dfsfsdfds"+data.date2);
+				console.log("day_fn() date1 : "+date1);
+				console.log("day_fn() date2 : "+date2);
 				
-				document.querySelector("input[id='date1']").value = data.date1;
-				document.querySelector("input[id='date2']").value = data.date2;
+				document.querySelector("input[id='date1']").value = date1;
+				document.querySelector("input[id='date2']").value = date2;
 				
+				reviewList(1,type,date1,date2);
 			},
 			error:function(){
 				alert("실패");
 			}
 		});
 		
-		reviewList(1,type,date1,date2);
 	}
 </script>
 </html>

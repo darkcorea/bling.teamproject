@@ -40,17 +40,6 @@ public class ReviewDAO {
 		return sqlSession.selectList(rm + "reviewProduct_2", pm);
 	}
 	
-	// myPage reviewList
-	public List<CombineVO> reviewList(CombineVO vo) throws Exception {
-		//System.out.println("마이페이지 DAO-rdate1 : "+vo.getRdate1());
-		//System.out.println("마이페이지 DAO-rdate2 : "+vo.getRdate2());
-		
-		List<CombineVO> reviewList = sqlSession.selectList(rm+"reviewList", vo);
-		
-		//System.out.println("마이페이지 DAO-reviewList : "+reviewList);
-		//System.out.println("마이페이지 DAO-인덱스0 제품이름 : "+reviewList.get(0).getPname());
-		return reviewList;
-	}
 	
 	public List<CombineVO> reviewPaging(PageMaker pm) throws Exception {
 		
@@ -60,8 +49,8 @@ public class ReviewDAO {
 	}
 	
 	// midx로 리뷰 총 개수 가져오기
-	public int reviewCnt(int midx) throws Exception{
-		return sqlSession.selectOne(rm+"reviewCnt", midx);
+	public int reviewCnt(PageMaker pm) throws Exception{
+		return sqlSession.selectOne(rm+"reviewCnt", pm);
 	}
 	
 }

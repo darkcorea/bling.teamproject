@@ -92,44 +92,48 @@ public class ReviewController {
 	@RequestMapping(value="/reviewlist.do")
 	@ResponseBody
 	public Map<String, Object> reviewlist(CombineVO vo, int page, HttpSession session,String type,String date1,String date2) throws Exception {
+		System.out.println("reviewlist() page : "+page);
+		System.out.println("reviewlist() type : "+type);
+		System.out.println("reviewlist() date1 : "+date1);
+		System.out.println("reviewlist() date2 : "+date2);
 		
-		// 로그인이 풀렸을 떄 대비해서 넣음
-				
-			
-			//session의 midx를 CombineVO에 저장
-			UserVO uv = (UserVO)session.getAttribute("UserVO");
-			int midx = uv.getMidx();
-			vo.setMidx(midx);
-			
-			// midx에 대한 리뷰 개수
-			int reviewCount = reviewService.reviewCnt(midx);
-			// 가져오는 페이지 수 5
-			Criteria sc = new Criteria();
-			sc.setPerPageNum(5);
-			sc.setPage(page);
-			
-			// 페이징 하기 위해서 필요한 값들 넣음
-			PageMaker pm = new PageMaker();
-			pm.setScri(sc);
-			pm.setMidx(midx);	//PageMaker 필드 수정 안 하려고 pidx필드에 그냥 midx setter주입
-			pm.setTotalCount(reviewCount);
-			pm.setType(type);
-			pm.setKind(type);
-			sc.setRdate1(date1);
-			sc.setRdate2(date2);
-			
-			Map<String, Object> review_list = new HashMap<String, Object>();
-			
-			review_list.put("reviewList", reviewService.reviewPaging(pm));
-			review_list.put("pm", pm);
-			review_list.put("page",page);
-			
-			System.out.println(">>>>page : "+page);
-			System.out.println(">>>>pagenum : "+sc.getPerPageNum());
-			System.out.println(">>>>+pm.startPost : "+pm.getStartPost());
-			System.out.println(">>>>+pm.lastPost : "+pm.getLastPost());
-			
-			return review_list;
+		//session의 midx를 CombineVO에 저장
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		int midx = uv.getMidx();
+		vo.setMidx(midx);
+		
+		// 가져오는 페이지 수 5
+		Criteria sc = new Criteria();
+		sc.setPerPageNum(5);
+		sc.setPage(page);
+		
+		// 페이징 하기 위해서 필요한 값들 넣음
+		sc.setRdate1(date1);
+		sc.setRdate2(date2);
+		
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		pm.setMidx(midx);	//PageMaker 필드 수정 안 하려고 pidx필드에 그냥 midx setter주입
+		pm.setType(type);
+		pm.setKind(type);
+		// midx에 대한 리뷰 개수
+		int reviewCount = reviewService.reviewCnt(pm);
+		System.out.println("reviewlist() count : "+reviewCount);
+		pm.setTotalCount(reviewCount);
+		
+		
+		Map<String, Object> review_list = new HashMap<String, Object>();
+		
+		review_list.put("reviewList", reviewService.reviewPaging(pm));
+		review_list.put("pm", pm);
+		review_list.put("page",page);
+		
+		System.out.println(">>>>page : "+page);
+		System.out.println(">>>>pagenum : "+sc.getPerPageNum());
+		System.out.println(">>>>+pm.startPost : "+pm.getStartPost());
+		System.out.println(">>>>+pm.lastPost : "+pm.getLastPost());
+		
+		return review_list;
 	}
 	
 	@ResponseBody
