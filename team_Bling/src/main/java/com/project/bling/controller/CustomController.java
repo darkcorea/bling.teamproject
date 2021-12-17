@@ -23,10 +23,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.bling.ad_service.Ad_RegistService;
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.service.CustomService;
 import com.project.bling.vo.CustomVO;
+import com.project.bling.vo.ImageVO;
+import com.project.bling.vo.OptionVO;
+import com.project.bling.vo.ProductVO;
 import com.project.bling.vo.UserVO;
 
 @RequestMapping(value="/Custom")
@@ -40,6 +44,8 @@ public class CustomController {
 	
 	@Autowired
 	CustomService customService;
+	@Autowired
+	Ad_RegistService ad_registService;
 	
 	//커스터마이징 리스트
 	@RequestMapping(value="/list.do")
@@ -119,6 +125,11 @@ public class CustomController {
 			UserVO uv = (UserVO)session.getAttribute("UserVO");
 			int midx = uv.getMidx();
 			
+			
+			
+			
+			
+			
 			CustomVO vo = new CustomVO();
 			vo.setName(name);
 			vo.setCntoption(countval);
@@ -128,6 +139,41 @@ public class CustomController {
 			vo.setMidx(midx);
 			
 			customService.insertdb(vo);
+			
+			int cuidx = vo.getCuidx();
+			
+			ProductVO pv = new ProductVO();
+			pv.setPname(name);
+			pv.setKind("Z");//커스텀은 kind가 z이다.
+			pv.setPrice(total);
+			pv.setDiscount(0);
+			pv.setCuidx(cuidx);
+			pv.setSaleprice(total);
+			
+			ad_registService.insert(pv);
+			int pidx = pv.getPidx();
+			
+			OptionVO op = new OptionVO();
+			op.setColor("커스텀");
+			op.setTexture("써지컬스틸");
+			op.setSizes("커스텀");
+			op.setStock(999);
+			op.setAddprice(0);
+			op.setPidx(pidx);
+			op.setOname(totalname);
+			
+			ad_registService.insertOpt(op);
+			
+			ImageVO io = new ImageVO();
+			io.setPidx(pidx);
+			io.setMain(fileName+".png");
+			io.setShowing1(fileName+".png");
+			
+			ad_registService.insertImg(io);
+			
+			
+			
+			
 		    
 		}catch(Exception e){
 			e.printStackTrace();

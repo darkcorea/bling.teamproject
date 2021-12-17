@@ -185,12 +185,16 @@ public class BasketController {
 	//커스텀 장바구니 등록
 	@RequestMapping(value="/custominsert.do")
 	public String custominsert(HttpSession session, int cuidx)throws Exception{
+		System.out.println("+++++++++++++++++++++++++++++++++++"+cuidx);
 		UserVO vo = (UserVO)session.getAttribute("UserVO");
 		int midx = vo.getMidx();
+		int oidx = basketService.customoidx(cuidx);
 		OrderVO oo = new OrderVO();
 		oo.setMidx(midx);
-		oo.setCuidx(cuidx);
-		basketService.custominsert(oo);
+		oo.setOidx(oidx);
+		oo.setQuantity(1);
+		
+		basketService.cartinsert(oo);
 		
 		return "basket/cart";
 	}

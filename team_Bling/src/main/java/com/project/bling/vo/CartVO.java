@@ -14,7 +14,14 @@ public class CartVO {
 	private int price;
 	private int saleprice;
 	private int stock;
+	private int cuidx;
 	
+	public int getCuidx() {
+		return cuidx;
+	}
+	public void setCuidx(int cuidx) {
+		this.cuidx = cuidx;
+	}
 	public int getCart_idx() {
 		return cart_idx;
 	}

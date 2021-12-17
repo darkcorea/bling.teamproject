@@ -62,6 +62,7 @@
 			FROM oro
 			RIGHT OUTER JOIN pi
 			ON oro.pidx=pi.pidx
+			where kind not like 'z'
 			GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
 			ORDER BY sum(oro.quantity) DESC
 			Limit #{start},9
@@ -73,6 +74,7 @@
 			FROM oro
 			RIGHT OUTER JOIN pi
 			ON oro.pidx=pi.pidx
+			where kind not like 'z'
 			GROUP BY pi.pidx,pi.main,pi.kind,pi.pname,pi.discount,pi.saleprice,pi.price,pi.rdate
 			ORDER BY pi.rdate DESC
 			Limit #{start},9

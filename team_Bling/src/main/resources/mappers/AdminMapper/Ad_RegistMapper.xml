@@ -18,13 +18,14 @@
 	
 	<!-- 관리자 제품 등록 -->
 	<insert id="productInsert" parameterType="ProductVO">
-	INSERT INTO BG_PRODUCT(pname, kind, price, discount, saleprice)
-	VALUES( #{pname}, #{kind}, #{price}, #{discount}, #{saleprice})
+	INSERT INTO BG_PRODUCT(pname, kind, price, discount, saleprice,cuidx)
+	VALUES( #{pname}, #{kind}, #{price}, #{discount}, #{saleprice},#{cuidx, jdbcType=VARCHAR})
 	
 	<selectKey resultType="int" keyProperty="pidx" order="AFTER">
 	SELECT MAX(pidx) FROM BG_PRODUCT WHERE 1=1
 	</selectKey>
 	</insert>
+
 	
 	<!-- 관리자 옵션 등록 -->
 	<insert id="optionInsert" parameterType="OptionVO">
@@ -65,7 +66,7 @@
 	
 	<!-- 관리자 제품 정보 불러오기 -->
 	<select id="list" parameterType="PageMaker" resultType="CombineVO">
-	SELECT * FROM bg_product pr JOIN bg_image im ON im.pidx = pr.pidx WHERE 1=1 
+	SELECT * FROM bg_product pr JOIN bg_image im ON im.pidx = pr.pidx where kind not like 'z'
 		<if test='kind == "R"'> AND kind='R'</if>
 		<if test='kind == "E"'> AND kind='E'</if>
 		<if test='kind == "N"'> AND kind='N'</if>

@@ -87,6 +87,11 @@ public class BasketDAO {
 		return sqlSession.selectList(bm+"checklike1", midx);
 	}
 	
+	//커스텀 장바구니 등록을 위한 oidx찾기
+	public int customoidx(int cuidx)throws Exception{
+		return sqlSession.selectOne(bm+"customoidx",cuidx);
+	}
+	
 	//커스텀 장바구니 등록
 	public void custominsert(OrderVO vo)throws Exception{
 		sqlSession.insert(bm+"custominsert",vo);

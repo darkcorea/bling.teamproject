@@ -106,11 +106,19 @@ public class BasketServiceImpl implements BasketService {
 		return basketDAO.checklike1(midx);
 	}
 
+	//커스텀 장바구니 등록을 위한 oidx 찾기
+	@Override
+	public int customoidx(int cuidx) throws Exception {
+		return basketDAO.customoidx(cuidx);
+	}
+		
 	//커스텀 장바구니 등록
 	@Override
 	public void custominsert(OrderVO vo) throws Exception {
 		basketDAO.custominsert(vo);
 	}
+	
+	
 	
 	
 }

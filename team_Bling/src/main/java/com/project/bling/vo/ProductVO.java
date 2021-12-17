@@ -10,8 +10,15 @@ public class ProductVO {
 	private int discount;
 	private int saleprice;
 	private String saleyn;
+	private int cuidx;
 	
 	
+	public int getCuidx() {
+		return cuidx;
+	}
+	public void setCuidx(int cuidx) {
+		this.cuidx = cuidx;
+	}
 	public int getPidx() {
 		return pidx;
 	}
