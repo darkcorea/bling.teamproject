@@ -294,7 +294,7 @@
 			<br><br>
 		</div>
 		<div id="btndiv">
-		<input type="button" class="btn btn-secondary btns" value="결제하기" onclick="iamport(); mileage();">
+		<input type="button" class="btn btn-secondary btns" value="결제하기" onclick="iamport();">
 		</div>
 		<div id="form2"></div>
 		<br><br>
@@ -590,7 +590,7 @@ function iamport(){
 									ContentType:"application/json",
 									async: false,
 									success:function(data){
-										
+										mileage();
 									},
 									error:function(){
 										alert("실행오류");
@@ -705,6 +705,7 @@ function iamport(){
 						ContentType:"application/json",
 						async: false,
 						success:function(data){
+							mileage();
 						},
 						error:function(){
 							alert("실행오류");
@@ -785,27 +786,28 @@ $(document).ready(function(){
 	
 	$("input[name='payed_mileage']").on("change keyup paste", function(){
 		var value = $(this).val();
+		var value1 = parseInt(value);
 		 var mile = $("#mileage").val();
-		 var m = parseInt(mile);
 		 var mile1 = $("#mileage1").val();
+		 var m = parseInt(mile1);
 		 var totalprice1 = $("#tot_price1").val();
 		 var tot = parseInt(totalprice1);
 		 var total = $("#tot_price").val();
 		 var totalprice = parseInt(total);
-		 var result = mile-value;
-		 var result1 = totalprice-value;
+		 var result = mile1-value1;
+		 var result1 = totalprice1-value1;
 		if(value == ""){
 			$(".mile").val("");
 	    	 $("#mileage").val(mile1);
 	    	 $("#tot_price").val(totalprice1);
 	    	 $(".total").text(tot.toLocaleString()+"원");
-		}else if(value > m){
+		}else if(value1 > m){
 			 alert("내 적립금보다 큽니다");
 				$(".mile").val("");
 				$("#mileage").val(mile1);
 		    	 $("#tot_price").val(totalprice1);
 		    	 $(".total").text(tot.toLocaleString()+"원");
-		}else if(value > totalprice){
+		}else if(value1 > totalprice){
 			 alert("총 결제 금액보다 큽니다");
 				$(".mile").val("");
 				$("#mileage").val(mile1);
