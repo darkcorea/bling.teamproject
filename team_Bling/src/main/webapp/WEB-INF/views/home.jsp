@@ -60,6 +60,10 @@
 	#botCarouselBtn{
 		background-color: #CB7878;
 	}
+	/* 클래스 추가하면 가져다 대면 손모양 나옴*/
+	.pointer {
+		cursor: pointer;
+	}
 </style>
 </head>
 
@@ -164,7 +168,7 @@
 									<span class="text-black-50" id="review"><c:out value="${best.reviewCount}"/></span>
 									<!-- heart icon -->
 									<span>
-										<i class="bi bi-suit-heart emptyHeart${best.pidx}" onclick="heart(${best.pidx})"></i>
+										<i class="bi bi-suit-heart pointer emptyHeart${best.pidx}" onclick="heart(${best.pidx})"></i>
 									</span>
 								</div>
 								<!-- 상품 이름 -->
@@ -215,7 +219,7 @@
 									<span class="text-black-50">리뷰 </span><span id="review"><c:out value="${newProd.reviewCount}"/></span>
 									<!-- heart icon -->
 									<span>
-										<i class="bi bi-suit-heart emptyHeart${newProd.pidx}" onclick="heart(${newProd.pidx})"></i>
+										<i class="bi bi-suit-heart pointer emptyHeart${newProd.pidx}" onclick="heart(${newProd.pidx})"></i>
 									</span>
 								</div>
 								<div>
@@ -263,7 +267,7 @@
 									<span class="text-black-50">리뷰 </span><span id="review"><c:out value="${ring.reviewCount}"/></span>
 									<!-- heart icon -->
 									<span>
-										<i class="bi bi-suit-heart emptyHeart${ring.pidx}" onclick="heart(${ring.pidx})"></i>
+										<i class="bi bi-suit-heart pointer emptyHeart${ring.pidx}" onclick="heart(${ring.pidx})"></i>
 									</span>
 								</div>
 								<div>
@@ -321,7 +325,7 @@
 									<span class="text-black-50">리뷰 </span><span id="review"><c:out value="${neck.reviewCount}"/></span>
 									<!-- heart icon -->
 									<span>
-										<i class="bi bi-suit-heart emptyHeart${neck.pidx}" onclick="heart(${neck.pidx})"></i>
+										<i class="bi bi-suit-heart pointer emptyHeart${neck.pidx}" onclick="heart(${neck.pidx})"></i>
 									</span>
 								</div>
 								<div>
@@ -369,7 +373,7 @@
 									<span class="text-black-50">리뷰 </span><span id="review"><c:out value="${ear.reviewCount}"/></span>
 									<!-- heart icon -->
 									<span>
-										<i class="bi bi-suit-heart emptyHeart${ear.pidx}" onclick="heart(${ear.pidx})"></i>
+										<i class="bi bi-suit-heart pointer emptyHeart${ear.pidx}" onclick="heart(${ear.pidx})"></i>
 									</span>
 								</div>
 								<div>
@@ -417,7 +421,7 @@
 									<span class="text-black-50">리뷰 </span><span id="review"><c:out value="${brac.reviewCount}"/></span>
 									<!-- heart icon -->
 									<span>
-										<i class="bi bi-suit-heart emptyHeart${brac.pidx}" onclick="heart(${brac.pidx})"></i>
+										<i class="bi bi-suit-heart pointer emptyHeart${brac.pidx}" onclick="heart(${brac.pidx})"></i>
 									</span>
 								</div>
 								<div>
@@ -463,7 +467,7 @@
  			ContentType:"application/json",
  			success:function(data){  
  			    for(let i =0; i<data.length; i++){
- 					$(".emptyHeart"+data[i].pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+data[i].pidx);
+ 					$(".emptyHeart"+data[i].pidx).attr("class","bi bi-suit-heart-fill pointer emptyHeart"+data[i].pidx);
  			    }	
  			},error:function(){
  				alert("관심상품존재찾기 에러!")
@@ -482,12 +486,12 @@
 			if(uid==""){
 				alert("로그인하셔야합니다.");
 			}else{
-				if($(".emptyHeart"+pidx).hasClass("bi bi-suit-heart-fill")==true){
+				if($(".emptyHeart"+pidx).hasClass("bi bi-suit-heart-fill pointer")==true){
 				    alert("관심 상품을 취소하셨습니다.");
-					$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart emptyHeart"+pidx);
+					$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart pointer emptyHeart"+pidx);
 					like = 0;
 				}else{
-					$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
+					$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill pointer emptyHeart"+pidx);
 					alert("관심 상품에 담았습니다");
 					like = 1;
 				}

@@ -66,7 +66,10 @@
 	#text_1{
 	height: 29px;
 	}
-			
+	/* 클래스 추가하면 가져다 대면 손모양 나옴*/
+	.pointer {
+		cursor: pointer;
+	}		
 </style>
 </head>
 <body>
@@ -187,7 +190,7 @@
 							<span class="text-black-50" id="review"><c:out value="${list.reviewCount}"/></span>
 							<!-- heart icon -->
 							<span>
-								<i class="bi bi-suit-heart emptyHeart${list.pidx}" onclick="heart(${list.pidx})"></i>
+								<i class="bi bi-suit-heart pointer emptyHeart${list.pidx}" onclick="heart(${list.pidx})"></i>
 							</span>
 						</div>
 						<!-- 상품 이름 -->
@@ -239,12 +242,12 @@ function heart(pidx){
 	if(uid==""){
 		alert("로그인하셔야합니다.");
 	}else{
-		if($(".emptyHeart"+pidx).hasClass("bi bi-suit-heart-fill")==true){
+		if($(".emptyHeart"+pidx).hasClass("bi bi-suit-heart-fill pointer")==true){
 		    alert("관심 상품을 취소하셨습니다.");
-			$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart emptyHeart"+pidx);
+			$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart pointer emptyHeart"+pidx);
 			like = 0;
 		}else{
-			$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
+			$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill pointer emptyHeart"+pidx);
 			alert("관심 상품에 담았습니다");
 			like = 1;
 		}
@@ -273,7 +276,7 @@ function like_do(){
 			ContentType:"application/json",
 			success:function(data){  
 			    for(let i =0; i<data.length; i++){
-					$(".emptyHeart"+data[i].pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+data[i].pidx);
+					$(".emptyHeart"+data[i].pidx).attr("class","bi bi-suit-heart-fill pointer emptyHeart"+data[i].pidx);
 			    }	
 			},error:function(){
 				alert("관심상품존재찾기 에러!")

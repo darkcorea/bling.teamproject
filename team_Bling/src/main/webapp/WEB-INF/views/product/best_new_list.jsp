@@ -41,6 +41,10 @@
 	#text_1{
 			height: 29px;
 	}
+	/* 클래스 추가하면 가져다 대면 손모양 나옴*/
+	.pointer {
+		cursor: pointer;
+	}
 </style>
 </head>
 <body>
@@ -83,7 +87,7 @@
 				success:function(data){
 					if(data == ""){
 					}else{
-						$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
+						$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill pointer emptyHeart"+pidx);
 					}
 				},error:function(){
 					alert("관심상품존재찾기 에러!")
@@ -155,7 +159,7 @@
 			   	            	html += "<span class='text-black-50'>리뷰 </span>";
 			   	            	html += "<span class='text-black-50' id='review'>"+data[i].reviewCount+"</span>";
 			   	            	html += "<span>";
-			   	            	html += "<i class='bi bi-suit-heart emptyHeart"+data[i].pidx+"' onclick='heart("+data[i].pidx+")'></i>";
+			   	            	html += "<i class='bi bi-suit-heart pointer emptyHeart"+data[i].pidx+"' onclick='heart("+data[i].pidx+")'></i>";
 			   	            	html += "</span>";
 			   	            	html += "</div>";
 			   	            	html += "<div>";
@@ -200,12 +204,12 @@
 			if(uid==""){
 				alert("로그인하셔야합니다.");
 			}else{
-				if($(".emptyHeart"+pidx).hasClass("bi bi-suit-heart-fill")==true){
+				if($(".emptyHeart"+pidx).hasClass("bi bi-suit-heart-fill pointer")==true){
 				    alert("관심 상품을 취소하셨습니다.");
-					$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart emptyHeart"+pidx);
+					$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart pointer emptyHeart"+pidx);
 					like = 0;
 				}else{
-					$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill emptyHeart"+pidx);
+					$(".emptyHeart"+pidx).attr("class","bi bi-suit-heart-fill pointer emptyHeart"+pidx);
 					alert("관심 상품에 담았습니다");
 					like = 1;
 				}

@@ -124,14 +124,14 @@
 							<div class="btn-two">
 								<button type="button" class="btn btn-danger" onclick="nonorder()">비회원 바로구매</button>
 								<button type="button" class="btn btn-light" onclick="location.href='${cPath}/Basket/cart.do'">장바구니</button>
-								&ensp;<i class="bi bi-suit-heart" id="heart" onclick="heart(${detail.pidx})"></i>	
+								&ensp;<i class="bi bi-suit-heart pointer" id="heart" onclick="heart(${detail.pidx})"></i>	
 							</div>
 						</c:when>
 						<c:otherwise>
 							<div class="btn-two">
 								<button type="button" class="btn btn-danger" onclick="memberorder()">바로구매</button>
 								<button type="button" class="btn btn-light" onclick="cart()">장바구니</button>
-								&ensp;<i class="bi bi-suit-heart" id="heart" onclick="heart(${detail.pidx})"></i>	
+								&ensp;<i class="bi bi-suit-heart pointer" id="heart" onclick="heart(${detail.pidx})"></i>	
 							</div>
 						</c:otherwise>
 					</c:choose>	
@@ -901,7 +901,7 @@
 			success:function(data){
 				if(data == ""){
 				}else{
-					$("#heart").attr("class","bi bi-suit-heart-fill");
+					$("#heart").attr("class","bi bi-suit-heart-fill pointer");
 				}
 			},error:function(){
 				alert("관심상품존재찾기 에러!")
@@ -918,12 +918,12 @@
 		if(uid==""){
 			alert("로그인하셔야합니다.");
 		}else{
-			if($("#heart").hasClass("bi bi-suit-heart-fill")==true){
+			if($("#heart").hasClass("bi bi-suit-heart-fill pointer")==true){
 			    alert("관심 상품을 취소하셨습니다.");
-				$("#heart").attr("class","bi bi-suit-heart");
+				$("#heart").attr("class","bi bi-suit-heart pointer");
 				like = 0;
 			}else{
-				$("#heart").attr("class","bi bi-suit-heart-fill");
+				$("#heart").attr("class","bi bi-suit-heart-fill pointer");
 				alert("관심 상품에 담았습니다");
 				like = 1;
 			}
