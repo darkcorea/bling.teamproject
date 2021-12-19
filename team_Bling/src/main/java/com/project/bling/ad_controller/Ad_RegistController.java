@@ -138,13 +138,6 @@ public class Ad_RegistController {
 		
 		return "admin/Regist/list";
 	}
-	
-	
-	@RequestMapping(value = "/view.do")
-	public String detail(Locale locale, Model model) throws Exception {
-		
-		return "admin/Regist/view";
-	}
 
 	// 제품 등록페이지 이동
 	@RequestMapping(value = "/regist.do", method = RequestMethod.GET)
@@ -483,5 +476,31 @@ public class Ad_RegistController {
 			return "redirect:/Ad_regist/modify.do?pidx="+pidx;
 			}
 	
+		
+	// 리스트 페이지 이동
+	@RequestMapping(value = "/stop.do")
+	public String stop(Locale locale, Model model, Criteria sc) throws Exception {
+		// 페이징에 필요한 값 넣기
+		sc.setPerPageNum(10);
+		
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		pm.setType(sc.getKind());
+		String type = sc.getKind();
+		
+		// 물건 총 갯수 구하기
+		int product_count = ad_registService.product_count1(type);
+		pm.setTotalCount(product_count);
+		
+		// 페이징된 리스트와 필요한 값 페이지로 보내기
+		model.addAttribute("pm", pm);
+		model.addAttribute("list", ad_registService.list(pm));
+		model.addAttribute("count", product_count);
+		
+		// 옵션 정보 페이지로 보내기
+		model.addAttribute("oblist", ad_registService.oblist());
+		
+		return "admin/Regist/stop";
+	}
 	
 }

@@ -90,8 +90,6 @@
 
 <section>
 
-<!--여기서부터 본문-->
-<div id="">
 	<!-- 상단 내용 -->
 	<div class="center">
 	<span class="title1">문의 게시판</span>&nbsp;
@@ -113,6 +111,14 @@
 	</div><br>	
 	
 	<!-- 문의 테이블  -->
+	<c:if test="${fn:length(list) == 0}">
+	<div class="center title">
+		<br>모든 문의에 답변을 달았습니다.
+	</div>
+	</c:if>
+	
+	<!-- 문의 테이블  -->
+	<c:if test="${fn:length(list) != 0}">
   	<div>
   		<table class="table">
   			<thead class="center">
@@ -254,8 +260,8 @@
 			</ul>
 		</nav>
 	</div>
+	</c:if>
 
-</div>
 
 </section>
 

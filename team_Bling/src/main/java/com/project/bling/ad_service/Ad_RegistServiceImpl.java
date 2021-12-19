@@ -24,6 +24,12 @@ public class Ad_RegistServiceImpl implements Ad_RegistService{
 		return ad_registDAO.product_count(kind);
 	}
 	
+	// 상품 총 갯수
+	@Override
+	public int product_count1(String kind) throws Exception {
+		return ad_registDAO.product_count1(kind);
+	}
+	
 	// 제품 등록
 	@Override
 	public void insert(ProductVO vo) throws Exception {

@@ -8,11 +8,21 @@
 
 	<!-- 제품 총 갯수 -->
 	<select id="product_count" parameterType="String" resultType="int">
-		SELECT count(*) FROM bg_product WHERE kind not like 'z'
+		SELECT count(*) FROM bg_product WHERE kind not like 'z' AND saleyn='Y'
 		<if test=' _parameter == "R"'> AND kind='R'</if>
 		<if test=' _parameter == "E"'> AND kind='E'</if>
 		<if test=' _parameter == "N"'> AND kind='N'</if>
-		<if test=' _parameter == "B"'> AND kind='B'</if>	
+		<if test=' _parameter == "B"'> AND kind='B'</if>
+
+	</select>
+	
+	<!-- 제품 총 갯수 -->
+	<select id="product_count1" parameterType="String" resultType="int">
+		SELECT count(*) FROM bg_product WHERE kind not like 'z' AND saleyn='N'
+		<if test=' _parameter == "R"'> AND kind='R'</if>
+		<if test=' _parameter == "E"'> AND kind='E'</if>
+		<if test=' _parameter == "N"'> AND kind='N'</if>
+		<if test=' _parameter == "B"'> AND kind='B'</if>
 	</select>
 	
 	
@@ -67,10 +77,16 @@
 	<!-- 관리자 제품 정보 불러오기 -->
 	<select id="list" parameterType="PageMaker" resultType="CombineVO">
 	SELECT * FROM bg_product pr JOIN bg_image im ON im.pidx = pr.pidx where kind not like 'z'
-		<if test='kind == "R"'> AND kind='R'</if>
-		<if test='kind == "E"'> AND kind='E'</if>
-		<if test='kind == "N"'> AND kind='N'</if>
-		<if test='kind == "B"'> AND kind='B'</if>
+		<if test='kind == "A"'> AND saleyn='Y'</if>
+		<if test='kind == "R"'> AND saleyn='Y' AND kind='R'</if>
+		<if test='kind == "E"'> AND saleyn='Y' AND kind='E'</if>
+		<if test='kind == "N"'> AND saleyn='Y' AND kind='N'</if>
+		<if test='kind == "B"'> AND saleyn='Y' AND kind='B'</if>
+		<if test='type == "A"'> AND saleyn='N'</if>
+		<if test='type == "R"'>AND saleyn='N' AND kind='R'</if>
+		<if test='type == "E"'>AND saleyn='N' AND kind='E'</if>
+		<if test='type == "N"'>AND saleyn='N' AND kind='N'</if>
+		<if test='type == "B"'>AND saleyn='N' AND kind='B'</if>
 	ORDER BY pr.pidx desc
 	Limit #{startPost},#{scri.perPageNum}
 	</select>

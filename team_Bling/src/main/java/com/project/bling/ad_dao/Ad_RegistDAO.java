@@ -40,6 +40,11 @@ public class Ad_RegistDAO {
 		return sqlSession.selectOne(am+"product_count", kind);
 	}
 	
+	// 제품 총 갯수
+	public int product_count1(String kind) throws Exception {
+		return sqlSession.selectOne(am+"product_count1", kind);
+	}
+	
 	// 제품 정보 불러오기 
 	public List<CombineVO> list(PageMaker pm) throws Exception{
 		return sqlSession.selectList(am+"list", pm);
