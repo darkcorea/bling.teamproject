@@ -48,10 +48,10 @@ public class MyPageController {
 	LoginService  loginService;
 	
 	// 학원
-	//String uploadPath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
+	String uploadPath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
 	
 	// 서버 올리는 용
-	String uploadPath = "C:\\tomcat\\webapps\\team_Bling\\resources\\review_img";
+	//String uploadPath = "C:\\tomcat\\webapps\\team_Bling\\resources\\review_img";
     
 	
 	// 폴더 생성
@@ -176,11 +176,26 @@ public class MyPageController {
 		
 		
 		String result = "";
+		MultipartFile image1 = null;
+		MultipartFile image2 = null;
 		
-		MultipartFile image1 = request.getFile("image1");
-		MultipartFile image2 = request.getFile("image2");
-		System.out.println("마이페이지 컨트롤러-upload.do-image1 : "+image1);
-		System.out.println("마이페이지 컨트롤러-upload.do-image2 : "+image2);
+		String sessionImageName1 = (String)session.getAttribute("imageName1");
+		System.out.println("세션 imageName1 확인 : "+sessionImageName1);
+		
+		if(sessionImageName1 == null) {
+			image1 = request.getFile("image1");
+			image2 = request.getFile("image2");
+			System.out.println("sessionImageName1 == null일 때 실행");
+			System.out.println("마이페이지 컨트롤러-upload.do-image1 : "+image1);
+			System.out.println("마이페이지 컨트롤러-upload.do-image2 : "+image2);
+		}else if(sessionImageName1 != null) {
+			image2 = request.getFile("image1");
+			System.out.println("sessionImageName1 != null일 때 실행");
+			System.out.println("마이페이지 컨트롤러-upload.do-image1 : "+image1);
+			System.out.println("마이페이지 컨트롤러-upload.do-image2 : "+image2);
+		}
+		
+		
 
 		
 		if(image1 != null && image2 != null) {
@@ -236,7 +251,26 @@ public class MyPageController {
 					
 					result = "true";
 				}
-				
+		}else if(image1 == null && image2 != null) {
+			String imageName2 = image2.getOriginalFilename();
+			System.out.println("마이페이지 컨트롤러-upload.do-imageName2 : "+imageName2);
+			
+			String formatName2 = imageName2.substring(imageName2.lastIndexOf(".")+1);
+			System.out.println("자른 확장자 2 : "+formatName2);
+			boolean fileExtension2 = extensionCheck(formatName2);
+			
+				if(fileExtension2 == false) {
+					result = "false";
+				}
+				else{
+					byte[] imageData2 = image2.getBytes();
+					System.out.println("마이페이지 컨트롤러-upload.do-imageData2 : "+imageData2);
+					
+					session.setAttribute("imageName2", imageName2);
+					session.setAttribute("imageData2", imageData2);
+					
+					result = "true";
+				}
 		}
 				
 		
@@ -255,10 +289,20 @@ public class MyPageController {
 			session.removeAttribute("imageData1");
 			result="pic1";
 			System.out.println("마이페이지 컨트롤러-session.getAttribute(\"imageData1\") 삭제 확인 : "+session.getAttribute("imageData1"));
+			System.out.println("마이페이지 컨트롤러-session.getAttribute(\"imageData2\") 삭제 확인 : "+session.getAttribute("imageData2"));
 		}else if(num==2) {
 			session.removeAttribute("imageName2");
 			session.removeAttribute("imageData2");
 			result="pic2";
+			System.out.println("마이페이지 컨트롤러-session.getAttribute(\"imageData1\") 삭제 확인 : "+session.getAttribute("imageData1"));
+			System.out.println("마이페이지 컨트롤러-session.getAttribute(\"imageData2\") 삭제 확인 : "+session.getAttribute("imageData2"));
+		}else if(num==0) {
+			session.removeAttribute("imageName1");
+			session.removeAttribute("imageData1");
+			session.removeAttribute("imageName2");
+			session.removeAttribute("imageData2");
+			result="all";
+			System.out.println("마이페이지 컨트롤러-session.getAttribute(\"imageData1\") 삭제 확인 : "+session.getAttribute("imageData1"));
 			System.out.println("마이페이지 컨트롤러-session.getAttribute(\"imageData2\") 삭제 확인: "+session.getAttribute("imageData2"));
 		}
 		
@@ -341,6 +385,14 @@ public class MyPageController {
             System.out.println("마이페이지 컨트롤러-저장할 파일경로 target1 : "+target1);
         	FileCopyUtils.copy(imageData1, target1);
         	vo.setImage1(savedName1);
+			myPageService.reviewWrite1(vo);
+		}else if(imageName1 == null && imageName2 != null) {
+        	System.out.println("저장할 이미지 파일은 1개입니다.");
+        	// 파일 경로(servlet-context에 지정된 업로드경로), 변형한 파일명을 받아 파일 객체 생성
+            File target2 = new File(uploadPath, savedName2);
+            System.out.println("마이페이지 컨트롤러-저장할 파일경로 target1 : "+target2);
+        	FileCopyUtils.copy(imageData2, target2);
+        	vo.setImage1(savedName2);
 			myPageService.reviewWrite1(vo);
 		}
 		else if(imageName1 == null && imageName2 == null) {
