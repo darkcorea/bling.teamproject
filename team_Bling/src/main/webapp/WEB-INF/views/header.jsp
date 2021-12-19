@@ -52,7 +52,7 @@
 							<c:when test="${sessionScope.UserVO.id == null}">
 								<a href="/team_Bling/Join/normal.do" id="hearderMemberJoin">회원가입</a>
 								<span>｜</span>
-								<a href="/team_Bling/${path}/Login/main.do" id="headerLogin">로그인</a>
+								<a href="/team_Bling/Login/main.do" id="headerLogin">로그인</a>
 							</c:when>
 							<c:otherwise>
 								<div>
@@ -175,7 +175,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="logout_btn_no">아니요</button>
-        <button type="button" class="btn btn-primary"  id="logout_btn" onclick="location.href='/team_Bling/${path}/Login/logout.do'" >예</button>
+        <button type="button" class="btn btn-primary"  id="logout_btn" onclick="location.href='/team_Bling/Login/logout.do'" >예</button>
       </div>
     </div>
   </div>

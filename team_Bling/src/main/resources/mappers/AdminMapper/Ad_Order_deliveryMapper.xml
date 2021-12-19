@@ -121,4 +121,39 @@
 		DESC
 		LIMIT #{startPost},#{scri.perPageNum}
 	</select>
+	
+	<!-- 전체 취소/환불/교환 개수 -->
+	<select id="returnCnt" resultType="int" parameterType="Criteria">
+		SELECT 
+		<if test='kind=="all"'>count(didx),didx</if>
+		<if test='kind=="C"'>count(cancel)</if>
+		<if test='kind=="R"'>count(refund)</if>
+		<if test='kind=="E"'>count(exchange)</if>
+		FROM bg_delivery
+	</select>
+	
+	<!-- 취소/환불/교환 -->
+	<select id="returnList" resultType="CombineVO" parameterType="PageMaker">
+		SELECT o.order_idx,
+			   d.didx,
+		       u.uname,
+		       DATE_FORMAT(o.rdate,'%Y-%m-%d') AS 'rdate',
+		       d.send_day,
+		       d.deli_com,
+		       d.deli_stat,
+		       d.cancel,
+		       d.refund,
+		       d.exchange
+		FROM bg_order o
+		LEFT OUTER JOIN bg_delivery d
+		ON o.order_idx=d.order_idx
+		
+		INNER JOIN bg_user u
+		ON o.midx=u.midx
+		
+		<if test='scri.kind!="all"'>WHERE d.cancel=#{scri.kind}</if>
+		ORDER BY o.order_idx
+		DESC
+		LIMIT #{startPost},#{scri.perPageNum}
+	</select>
 </mapper>

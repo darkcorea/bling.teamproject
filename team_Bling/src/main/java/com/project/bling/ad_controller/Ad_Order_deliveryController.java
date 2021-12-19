@@ -157,5 +157,42 @@ public class Ad_Order_deliveryController {
 		return "admin/Order_delivery/return";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/returnList.do")
+	public Map<String, Object> returnList(Criteria sc) throws Exception {
+		System.out.println("관리자 return 컨트롤러 : returnList 실행");
+		
+		System.out.println("관리자 return 컨트롤러-page : "+sc.getPage());
+		System.out.println("관리자 return 컨트롤러-kind : "+sc.getKind());
+		
+		PageMaker pm = new PageMaker();
+		
+		
+		// 취소/환불/교환 개수
+		int returnCnt = ad_order_deliveryService.returnCnt(sc);
+		System.out.println("관리자 return 컨트롤러-주문개수 : "+returnCnt);
+		
+		//페이징 정보1(page 정보는 매개변수 sc에 담겨있다)
+		sc.setPerPageNum(10);
+		
+		//페이징 정보2
+		pm.setScri(sc);
+		pm.setStart(0);
+		pm.setTotalCount(returnCnt);
+		
+		System.out.println("관리자 return 컨트롤러-page : "+pm.getScri().getPage());
+		System.out.println("관리자 return 컨트롤러-perPageNum : "+pm.getScri().getPerPageNum());
+		System.out.println("관리자 return 컨트롤러-startPage : "+pm.getStartPage());
+		System.out.println("관리자 return 컨트롤러-endPage : "+pm.getEndPage());
+		
+		
+		//"orderList" key에 주문 리스트들(List<CombineVO>), "pm" key에 페이징 정보들을 Map에 담는다.
+		Map<String, Object> back = new HashMap<String, Object>();
+		back.put("returnList", ad_order_deliveryService.returnList(pm));
+		back.put("pm", pm);
+		
+		//ajax로 화면 로딩시 출력할 데이터들을 return
+		return back;
+	}
 /* ------------------------------return------------------------------ */
 }

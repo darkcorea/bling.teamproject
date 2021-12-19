@@ -46,6 +46,15 @@ public class Ad_Order_deliveryServiceImpl implements Ad_Order_deliveryService {
 	public List<CombineVO> deliveryList(PageMaker pm) throws Exception {
 		return ad_order_deliveryDAO.deliveryList(pm);
 	}
-	
+
+	@Override
+	public int returnCnt(Criteria sc) throws Exception {
+		return ad_order_deliveryDAO.returnCnt(sc);
+	}
+
+	@Override
+	public List<CombineVO> returnList(PageMaker pm) throws Exception {
+		return ad_order_deliveryDAO.returnList(pm);
+	}
 	
 }

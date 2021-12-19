@@ -40,4 +40,11 @@ public class Ad_Order_deliveryDAO {
 	public List<CombineVO> deliveryList(PageMaker pm) throws Exception {
 		return sqlSession.selectList(ps+"deliveryList", pm);
 	}
+	
+	public int returnCnt(Criteria sc) throws Exception {
+		return sqlSession.selectOne(ps+"returnCnt", sc);
+	}
+	public List<CombineVO> returnList(PageMaker pm) throws Exception {
+		return sqlSession.selectList(ps+"returnList", pm);
+	}
 }
