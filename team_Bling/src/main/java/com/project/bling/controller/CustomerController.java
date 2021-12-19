@@ -84,7 +84,7 @@ public class CustomerController {
 	@RequestMapping(value="/question_write.do")
 	public String question_write(Locale locale, Model model, QuestionVO qv) throws Exception {
 			customerService.question_write(qv);
-		return "redirect:/Customer/main.do?page=1";
+		return "redirect:/Customer/my_qestion.do?page=1";
 	}
 	
 	
