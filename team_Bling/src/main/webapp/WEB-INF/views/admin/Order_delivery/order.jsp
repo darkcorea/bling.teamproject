@@ -37,7 +37,7 @@
 		}
 		#th3{
 			text-align: center;
-			width: 90px;
+			width: 120px;
 		}
 		#th4{
 			text-align: center;
@@ -71,7 +71,7 @@
 			width: 120px;
 		}
 		.td3{
-			width: 90px;
+			width: 120px;
 			padding-left: 15px;
 		}
 		.td4{

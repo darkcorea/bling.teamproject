@@ -27,6 +27,7 @@
 		}
 		.tableRow{
 			border-bottom: 1px solid black;
+			height: 50.5px;
 		}
 		#th1{
 			text-align: center;
@@ -42,7 +43,7 @@
 		}
 		#th4{
 			text-align: center;
-			width: 70px;
+			width: 120px;
 		}
 		#th5{
 			text-align: center;
@@ -54,7 +55,7 @@
 		}
 		#th7{
 			text-align: center;
-			width: 120px;
+			width: 140px;
 		}
 		.td{
 			text-align: center;
@@ -73,7 +74,7 @@
 			width: 150px;
 		}
 		.td4{
-			width: 70px;
+			width: 120px;
 		}
 		.td5{
 			text-align: center;
@@ -127,24 +128,17 @@
 		/* dropdown 메뉴 */
 		.prodBtn{
 			width: 140px;
+			height: 38px;
+			margin-top: 6px;
 		}
 		.btn-warning{
-			color: #ffffff;
+			color: #ffffff !important;
 		}
 		.btn-warning:hover{
 			color: #ffffff;
 		}
 		.btn-warning:focus-within{
 			color: #ffffff;
-		}
-		.dropdown-menu{
-			width: 120px;
-			min-width: unset;
-		}
-		.prodStat{
-			width: 10px;
-			margin-left: 10px;
-			display: inline;
 		}
 		/* dropdown 메뉴 */
 		/* 마우스 커서 */
@@ -250,15 +244,15 @@
 						}
 						
 						if(dl[i].deli_stat == "N"){
-							str += "	<td class='td td7'>결제대기(N)</td>";	
+							str += "	<td class='td td7 btn btn-secondary prodBtn'>결제대기(N)</td>";	
 						}else if(dl[i].deli_stat == "Y"){
-							str += "	<td class='td td7'>결제완료(Y)</td>";	
+							str += "	<td class='td td7 btn btn-success prodBtn'>결제완료(Y)</td>";	
 						}else if(dl[i].deli_stat == "A"){
-							str += "	<td class='td td7'>상품중비중(A)</td>";	
+							str += "	<td class='td td7 btn btn-primary prodBtn'>상품중비중(A)</td>";	
 						}else if(dl[i].deli_stat == "B"){
-							str += "	<td class='td td7'>배송중(B)</td>";	
+							str += "	<td class='td td7 btn btn-warning prodBtn'>배송중(B)</td>";	
 						}else if(dl[i].deli_stat == "C"){
-							str += "	<td class='td td7'>배송완료(C)</td>";	
+							str += "	<td class='td td7 btn btn-danger prodBtn'>배송완료(C)</td>";	
 						}
 						
 						str += "</tr>";

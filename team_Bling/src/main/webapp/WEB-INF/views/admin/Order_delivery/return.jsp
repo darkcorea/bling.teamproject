@@ -27,6 +27,7 @@
 		}
 		.tableRow{
 			border-bottom: 1px solid black;
+			height: 50.5px;
 		}
 		#th1{
 			text-align: center;
@@ -38,11 +39,11 @@
 		}
 		#th3{
 			text-align: center;
-			width: 150px;
+			width: 120px;
 		}
 		#th4{
 			text-align: center;
-			width: 70px;
+			width: 110px;
 		}
 		#th5{
 			text-align: center;
@@ -74,10 +75,11 @@
 		}
 		.td3{
 			text-align: center;
-			width: 150px;
+			width: 120px;
 		}
 		.td4{
-			width: 70px;
+			text-align: center;
+			width: 110px;
 		}
 		.td5{
 			text-align: center;
@@ -184,11 +186,11 @@
 				<th id="th6">배송완료일</th>
 				<th id="th7">주문상태</th>
 				<th id="th8">취소/반품/교환
-					<select id="deliStat" onchange="deliveryList(1,this.value)">
+					<select id="deliStat" onchange="returnList(1,this.value)">
 						<option value="all">전체선택</option>
-						<option value="N">취소</option>
-						<option value="Y">반품</option>
-						<option value="A">교환</option>
+						<option value="C">취소</option>
+						<option value="R">환불</option>
+						<option value="E">교환</option>
 					</select>
 				</th>
 			</tr>
@@ -205,12 +207,12 @@
 	if(page == null) {page=1};
 
 	$(function(){
-		deliveryList(1,"all");
+		returnList(1,"all");
      });
 	
-	function deliveryList(page,kind){
+	function returnList(page,kind){
 		$.ajax({
-			url: "${cPath}/Ad_order_delivery/deliveryList.do",
+			url: "${cPath}/Ad_order_delivery/returnList.do",
 			type: "post",
 			data: {"page":page,"kind":kind},
 			success: function(data){
@@ -218,7 +220,7 @@
 				
 				let str = "";
 				
-				let dl = data.deliveryList;
+				let rl = data.returnList;
 				
 				let pm = data.pm;
 				let prev = parseInt(pm.startPage - 1) ;
@@ -227,46 +229,44 @@
 			  	
 			  	str += "<table>";
 			  	
-			  	if(dl.length == 0){
-			  		str += "<tr><td colspan='7' id='noneList'><div id='noneDiv'>해당 조건의 배송이 존재하지 않습니다.</div></td></tr>";
+			  	if(rl.length == 0){
+			  		str += "<tr><td colspan='7' id='noneList'><div id='noneDiv'>해당 조건의 주문이 존재하지 않습니다.</div></td></tr>";
 			  	}
-			  	else if(dl.length != 0){
+			  	else if(rl.length != 0){
 				
-					for(let i=0; dl.length > i; i++){
+					for(let i=0; rl.length > i; i++){
 						str += "<tr class='tableRow'>";
-						str += "	<td class='td td1'>"+dl[i].didx+"</td>";
-						str += "	<td class='td td2'>"+dl[i].order_idx+"</td>";
+						str += "	<td class='td td1'>"+rl[i].order_idx+"</td>";
+						str += "	<td class='td td2'>"+rl[i].didx+"</td>";
+						str += "	<td class='td3'>"+rl[i].uname+"</td>";							
+						str += "	<td class='td4'>"+rl[i].rdate+"</td>";
 						
-						if(dl[i].invoice_num == null){
-							str += "	<td class='td3'></td>";
-						}else if(dl[i].invoice_num != null){
-							str += "	<td class='td3'>"+dl[i].invoice_num+"</td>";							
-						}
-						
-						str += "	<td class='td4'>"+dl[i].uname+"</td>";
-						
-						if(dl[i].send_day == null){
+						if(rl[i].send_day == null){
 							str += "	<td class='td5'></td>";
-						}else if(dl[i].send_day != null){
-							str += "	<td class='td td5'>"+dl[i].send_day+"</td>";						
+						}else if(rl[i].send_day != null){
+							str += "	<td class='td td5'>"+rl[i].send_day+"</td>";						
 						}
 						
-						if(dl[i].deli_com == null){
+						if(rl[i].deli_com == null){
 							str += "	<td class='td6'></td>";
-						}else if(dl[i].deli_com != null){
-							str += "	<td class='td td6'>"+dl[i].deli_com+"</td>";						
+						}else if(rl[i].deli_com != null){
+							str += "	<td class='td td6'>"+rl[i].deli_com+"</td>";						
 						}
 						
-						if(dl[i].deli_stat == "N"){
+						if(rl[i].deli_stat == "N"){
 							str += "	<td class='td td7'>결제대기(N)</td>";	
-						}else if(dl[i].deli_stat == "Y"){
+						}else if(rl[i].deli_stat == "Y"){
 							str += "	<td class='td td7'>결제완료(Y)</td>";	
-						}else if(dl[i].deli_stat == "A"){
+						}else if(rl[i].deli_stat == "A"){
 							str += "	<td class='td td7'>상품중비중(A)</td>";	
-						}else if(dl[i].deli_stat == "B"){
+						}else if(rl[i].deli_stat == "B"){
 							str += "	<td class='td td7'>배송중(B)</td>";	
-						}else if(dl[i].deli_stat == "C"){
+						}else if(rl[i].deli_stat == "C"){
 							str += "	<td class='td td7'>배송완료(C)</td>";	
+						}
+						
+						if((rl[i].deli_stat=="N" || rl[i].deli_stat=="Y") && (rl[i].cancel==null && rl[i].refund==null && rl[i].exchange==null)){
+							str += "	<td class='td td8'>취소가능</td>";
 						}
 						
 						str += "</tr>";
@@ -285,7 +285,7 @@
 			  	
 			  	//console.log(prev);
 			  	if(pm.prev == true){
-			  	    str += "<a class='page-link' aria-label='Previous' onclick='deliveryList("+prev+",\""+kind+"\")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
+			  	    str += "<a class='page-link' aria-label='Previous' onclick='returnList("+prev+",\""+kind+"\")'><span aria-hidden='true' class='pointer' >&laquo;</span></a>";
 			  	}
 			  	
 			  	str += "	</li>";
@@ -294,16 +294,16 @@
 			  	
 			  	for (let k = pm.startPage; k<=pm.endPage; k++ ){
 			  		 if(page == k){
-			  			str += "<li class='page-item active'><a class='page-link pointer' onclick='deliveryList("+k+",\""+kind+"\")'>"+k+"</a></li>";    
+			  			str += "<li class='page-item active'><a class='page-link pointer' onclick='returnList("+k+",\""+kind+"\")'>"+k+"</a></li>";    
 			  		 }else{
-			  			str += "<li class='page-item'><a class='page-link pointer' onclick='deliveryList("+k+",\""+kind+"\")'>"+k+"</a></li>";    
+			  			str += "<li class='page-item'><a class='page-link pointer' onclick='returnList("+k+",\""+kind+"\")'>"+k+"</a></li>";    
 			  		 }
 			  	 }
 			  	 
 			  	 str += "	<li class='page-item'>";
 			  	
 			  	 if(pm.next && pm.endPage > 0){
-			  	     str += "<a class='page-link' aria-label='Next' onclick='deliveryList("+next+",\""+kind+"\")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
+			  	     str += "<a class='page-link' aria-label='Next' onclick='returnList("+next+",\""+kind+"\")'><span aria-hidden='true' class='pointer'>&raquo;</span></a>";
 			  	 }
 			  	 
 			  	 str += "	</li>";
@@ -314,7 +314,7 @@
 				$("#ajaxTable").html(str);	
 			},
 			error: function(){
-				console.log("deliveryList() 에러발생");
+				console.log("returnList() 에러발생");
 			}
 		});
 	}
