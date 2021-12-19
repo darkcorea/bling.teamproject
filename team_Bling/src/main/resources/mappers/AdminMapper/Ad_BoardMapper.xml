@@ -169,8 +169,56 @@
   	SELECT * FROM bg_question WHERE qidx=#{qidx}
   </select>
   
+  <!-- 작성한 답글 수정 -->
   <update id="question_modify1" parameterType="QuestionVO">
   	UPDATE bg_question SET title=#{title}, content=#{content} WHERE qidx=#{qidx}
   </update>
+  
+  <!-- 상문 문의 사항 카운트 -->
+	<select id="question_product_count" parameterType="PageMaker" resultType="int">
+		SELECT count(*) FROM bg_product_question WHERE pqidx
+		<if test='kind == "R"'> AND kind='R'</if>
+		<if test='kind == "E"'> AND kind='E'</if>
+		<if test='kind == "N"'> AND kind='N'</if>
+		<if test='kind == "B"'> AND kind='B'</if>
+		<if test='kind == "Z"'> AND state='N'</if>
+	</select>
+  
+  <!-- 상문 문의 리스트 -->
+  <select id="question_product_list" parameterType="PageMaker" resultType="Product_QuestionVO">
+  	select * from bg_product_question WHERE 1=1
+  	<if test='kind == "R"'> AND kind='R'</if>
+	<if test='kind == "E"'> AND kind='E'</if>
+	<if test='kind == "N"'> AND kind='N'</if>
+	<if test='kind == "B"'> AND kind='B'</if>
+	<if test='kind == "Z"'> AND state='N'</if>
+  	ORDER BY originpqidx desc, depth asc
+  	Limit #{startPost},#{scri.perPageNum}
+  </select>
+  
+  <!-- 문의한 상품에 대한 정보 가져오기 -->
+  <select id="product_detail" parameterType="int" resultType="CombineVO">
+  	SELECT a.pname, a.saleprice, a.kind, b.main, c.oname, c.stock, c.addprice, a.pidx
+  	FROM bg_product a
+	JOIN bg_image b ON a.pidx=b.pidx
+	JOIN bg_option c ON a.pidx=c.pidx
+	WHERE a.pidx= #{pidx}
+  </select>
+  
+  <!--  제품 문의사항 답글 작성 -->
+  <insert id="question_product_write" parameterType="Product_QuestionVO">
+  	INSERT INTO bg_product_question (midx,pidx,title,comments,originpqidx,show_yn,kind,depth,state)
+  	VALUES(#{midx},#{pidx},#{title},#{comments},#{pqidx},#{show_yn},#{kind},1,'Y')
+  </insert>
+  <!--제품 문의 사항에 답글을 달고 기존 문의에는 답글 달았다는 표시 하기  -->
+  <update id="question_product_state" parameterType="Product_QuestionVO">
+ 	 UPDATE bg_product_question SET state='Y' WHERE pqidx=#{pqidx}
+  </update>
+  
+  <!-- 제품 문의 답글 수정 -->
+  <update id="question_product_modify" parameterType="Product_QuestionVO">
+  	UPDATE bg_product_question SET title=#{title}, comments=#{comments} WHERE pqidx=#{pqidx}
+  </update>
+  
   
 </mapper>

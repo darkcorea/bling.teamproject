@@ -14,6 +14,7 @@ public class CombineVO {
 	private int oidx;
 	private String oname;
 	private int addprice;
+	private int stock;
 	// review
 	private int ridx;
 	private int grade;
@@ -81,6 +82,12 @@ public class CombineVO {
 	
 	
 	
+	public int getStock() {
+		return stock;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
 	public int getPayed_mileage() {
 		return payed_mileage;
 	}

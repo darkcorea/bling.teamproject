@@ -7,6 +7,7 @@ import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
 import com.project.bling.vo.Order_detailVO;
+import com.project.bling.vo.Product_QuestionVO;
 import com.project.bling.vo.QuestionVO;
 
 public interface Ad_BoardService {
@@ -52,5 +53,10 @@ public interface Ad_BoardService {
 	void question_write(QuestionVO qv)throws Exception;
 	QuestionVO question_modify(int qidx)throws Exception;
 	void question_modify1(QuestionVO qv)throws Exception;
+	int question_product_count(PageMaker pm)throws Exception;
+	List<Product_QuestionVO> question_product_list(PageMaker pm)throws Exception;
+	List<CombineVO> product_detail(int pidx)throws Exception;
+	void question_product_write(Product_QuestionVO pv)throws Exception;
+	void question_product_modify(Product_QuestionVO pv)throws Exception;
 	
 }

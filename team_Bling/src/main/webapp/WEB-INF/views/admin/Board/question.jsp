@@ -109,7 +109,7 @@
 	<br>
 	<div class="title center row">
 		<div class="col"><a href="/team_Bling/Ad_board/question.do" class="title2"><span>일반문의</span></a></div>
-		<div class="col"><a href="/team_Bling/Ad_board/question.do" class="title3"><span>제품문의</span></a></div>
+		<div class="col"><a href="/team_Bling/Ad_board/question_product.do" class="title3"><span>제품문의</span></a></div>
 	</div><br>	
 	
 	<!-- 문의 테이블  -->
@@ -173,7 +173,7 @@
 							<div class="accordion-item" style="border:0;">
 								<div class="accordion-header" id="heading${list.qidx}">
 						     		<span onclick="coll_fn(${list.qidx})" id="coll${list.qidx}" class="pointer">
-						        		&nbsp;<i class='bi bi-arrow-return-right bolder'></i>&nbsp;<span style="color:#1a7ed5;"><b><c:out value="${list.title}"/></b></span>
+						        		&nbsp;&nbsp;<i class='bi bi-arrow-return-right bolder'></i>&nbsp;&nbsp;<span style="color:#1a7ed5;"><b><c:out value="${list.title}"/></b></span>
 						      		</span>
 						    	</div>
 						    	<div id="collapse${list.qidx}" class="accordion-collapse collapse">
@@ -299,7 +299,6 @@
   </div>
 </div>
 
-<!--  답글 수정 모달창 -->
 <!-- 답글 작성 모달창 -->
 <div class="modal fade" id="reply_modify" data-bs-backdrop="static"  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
@@ -354,6 +353,7 @@ function coll_fn(qidx){
 function reply_fn(midx,qidx,category,order_idx,detail_idx){
 	
 	$("#reply_question")[0].reset();
+	$("#title_write").val("문의 답변입니다.");
 	$("#midx_add").val(midx);
 	$("#qidx_add").val(qidx);
 	$("#category").val(category);
@@ -422,7 +422,7 @@ function reply_fn(midx,qidx,category,order_idx,detail_idx){
 						str += "</tr>";	
 						str += " <td style='width:150px;'>";
 						str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"'>"
-						str += " <img class='image_main' src='/team_Bling/resources/image/"+data[i].main+"'></a>";	
+						str += "<img class='image_main img-thumbnail' src='/team_Bling/resources/image/"+data[i].main+"'></a>";	
 						str += "</td>";	
 						str += "<td style='width:300px;'>";
 						str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"' class='title4'>"
@@ -448,7 +448,7 @@ function reply_fn(midx,qidx,category,order_idx,detail_idx){
 	}
 }
 
-// 리뷰 작성
+// 답글 작성
 function reply_write(){
     
     let formData = $("form[name=reply_question]").serialize();
@@ -460,7 +460,7 @@ function reply_write(){
     }else if(content ==""){
 		alert("내용을 입력하세요");
     }else{
-		// 리뷰 작성 에이작스
+		// 답글 작성 에이작스
 		$.ajax({
 			url:"/team_Bling/Ad_board/question_write.do",
 			type:"POST",

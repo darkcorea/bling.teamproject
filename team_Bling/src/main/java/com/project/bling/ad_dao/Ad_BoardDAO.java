@@ -11,6 +11,7 @@ import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
 import com.project.bling.vo.Order_detailVO;
+import com.project.bling.vo.Product_QuestionVO;
 import com.project.bling.vo.QuestionVO;
 
 @Repository
@@ -108,7 +109,30 @@ public class Ad_BoardDAO {
 		sqlSession.update(ps+"question_modify1", qv);
 	}
 	
+	//제품 문의 사항 갯수
+	public int question_product_count(PageMaker pm)throws Exception{
+		return sqlSession.selectOne(ps+"question_product_count", pm);
+	}
 	
+	// 제품 문의 사항 리스트
+	public List<Product_QuestionVO> question_product_list(PageMaker pm)throws Exception{
+		return sqlSession.selectList(ps+"question_product_list", pm);
+	}
 	
+	// 문의한 상품에 대한 정보 가져오기
+	public List<CombineVO> product_detail(int pidx)throws Exception{
+		return sqlSession.selectList(ps+"product_detail", pidx);
+	}
+	
+	// 제품 문의사항 답글 작성과 업데이트 원글 답변완료 달기
+	public void question_product_write(Product_QuestionVO pv) throws Exception {
+		sqlSession.insert(ps+"question_product_write", pv);
+		sqlSession.update(ps+"question_product_state", pv);
+	}
+	
+	// 제품 문의 사항 답글 수정하기
+	public void question_product_modify(Product_QuestionVO pv)throws Exception{
+		sqlSession.update(ps+"question_product_modify", pv);
+	}
 	
 }
