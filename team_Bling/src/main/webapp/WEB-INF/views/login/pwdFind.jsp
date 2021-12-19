@@ -108,10 +108,10 @@
 //아이디,이름,email/phone 일치시 바로 임시 비밀번호 발급 -> 비밀번호 변경하게 유도 -> 이메일 발송은 계정 정보를 입력해야함
 	function pwdAjax(){
 		var search = $("form[name=frm]").serialize();
-		console.log(search);
+		//console.log(search);
 		
 		$.ajax({
-			url : "{cPath}/Login/pwdSearch.do",
+			url : "/team_Bling/Login/pwdSearch.do",
 			type : "post",
 			data : search,
 			ContentType : "application/json",
