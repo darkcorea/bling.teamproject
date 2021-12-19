@@ -28,8 +28,8 @@
 	 
 	 <!-- 상문 문의 하기 내용 등록 -->
 	<insert id="product_write" parameterType="Product_QuestionVO" >
-		INSERT INTO bg_product_question (pqidx, originpqidx, midx, pidx, title, comments, show_yn,  rdate) 
-		VALUES (#{pqidx}, #{pqidx}, #{midx}, #{pidx}, #{title}, #{comments}, #{show_yn}, now())
+		INSERT INTO bg_product_question (pqidx, originpqidx, midx, pidx, title, comments, show_yn,  rdate, kind) 
+		VALUES (#{pqidx}, #{pqidx}, #{midx}, #{pidx}, #{title}, #{comments}, #{show_yn}, now(), #{kind})
 		
 		<selectKey resultType="int" keyProperty="pqidx" order="BEFORE">
           SELECT MAX(pqidx)+1 FROM bg_product_question

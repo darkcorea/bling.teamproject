@@ -79,7 +79,7 @@
 		   <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" aria-current="page" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" id="admin_regist">상품 관리</a>
 		    <ul class="dropdown-menu">
-		      <li><a class="dropdown-item" href="/team_Bling/Ad_regist/list.do?page=1&kind=G">상품 리스트</a></li>
+		      <li><a class="dropdown-item" href="/team_Bling/Ad_regist/list.do?page=1&kind=A">상품 리스트</a></li>
 		      <li><a class="dropdown-item" href="/team_Bling/Ad_regist/regist.do">상품 등록</a></li>
 		      <li><a class="dropdown-item" href="#">품절 상품</a></li>
 		    </ul>
@@ -94,7 +94,7 @@
 		     <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" id="admin_board">게시판 관리</a>
 		    <ul class="dropdown-menu">
-		      <li><a class="dropdown-item" href="/team_Bling/Ad_board/question.do?page=1&kind=A">문의 게시판</a></li>
+		      <li><a class="dropdown-item" href="/team_Bling/Ad_board/question.do?page=1&kind=H">문의 게시판</a></li>
 		      <li><a class="dropdown-item" href="/team_Bling/Ad_board/board.do?page=1&type=T">공지사항 게시판</a></li>
 		      <li><a class="dropdown-item" href="/team_Bling/Ad_board/event.do">이벤트 게시판</a></li>
 		      <li><a class="dropdown-item" href="#">리뷰 관리</a></li>

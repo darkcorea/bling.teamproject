@@ -11,6 +11,7 @@ import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
 import com.project.bling.vo.Order_detailVO;
+import com.project.bling.vo.Product_QuestionVO;
 import com.project.bling.vo.QuestionVO;
 
 @Service("Ad_BoardService")
@@ -83,7 +84,7 @@ public class Ad_BoardServiceImpl implements Ad_BoardService{
 		return ad_boardDAO.question_count(pm);
 	}
 	
-	// 문의사할 리스트
+	// 문의사항 리스트
 	@Override
 	public List<QuestionVO> question_list(PageMaker pm) throws Exception {
 		return ad_boardDAO.question_list(pm);
@@ -111,6 +112,36 @@ public class Ad_BoardServiceImpl implements Ad_BoardService{
 	@Override
 	public void question_modify1(QuestionVO qv) throws Exception {
 		ad_boardDAO.question_modify1(qv);
+	}
+	
+	// 제품 문의 사항 총 갯수
+	@Override
+	public int question_product_count(PageMaker pm) throws Exception {
+		return ad_boardDAO.question_product_count(pm);
+	}
+		
+	// 제품 문의 사항 리스트
+	@Override
+	public List<Product_QuestionVO> question_product_list(PageMaker pm)throws Exception {
+		return ad_boardDAO.question_product_list(pm);
+	}
+	
+	// 문의한 상품에 대한 정보 가져오기
+	@Override
+	public List<CombineVO> product_detail(int pidx) throws Exception {
+		return ad_boardDAO.product_detail(pidx);
+	}
+	
+	// 제품 문의사항 답글 작성과 업데이트 원글 답변완료 달기
+	@Override
+	public void question_product_write(Product_QuestionVO pv) throws Exception {
+		ad_boardDAO.question_product_write(pv);
+	}
+	
+	// 제품 문의사항 답글 수정하기
+	@Override
+	public void question_product_modify(Product_QuestionVO pv) throws Exception {
+		ad_boardDAO.question_product_modify(pv);		
 	}
 
 	

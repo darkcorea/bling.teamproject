@@ -92,7 +92,8 @@
 			<option value="N">비공개</option>
 			</select>		
 			<input type="hidden" name="pidx" value="${pidx}">
-			<input type="hidden" name="midx" value="${sessionScope.UserVO.midx}">			
+			<input type="hidden" name="kind" value="${kind}">
+			<input type="hidden" name="midx" value="${sessionScope.UserVO.midx}">		
 			</td>
 		</tr>
 	</table>

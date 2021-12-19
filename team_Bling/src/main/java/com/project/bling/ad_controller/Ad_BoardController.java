@@ -34,6 +34,7 @@ import com.project.bling.vo.CombineVO;
 import com.project.bling.vo.EventVO;
 import com.project.bling.vo.NoticeVO;
 import com.project.bling.vo.Order_detailVO;
+import com.project.bling.vo.Product_QuestionVO;
 import com.project.bling.vo.QuestionVO;
 
 @RequestMapping(value="/Ad_board")
@@ -576,8 +577,50 @@ public class Ad_BoardController {
 		ad_boardService.question_modify1(qv);
 		return 1;
 	}
-
+	
+	// 관리자 제품 문의하기 게시판 이동
+	@RequestMapping(value="/question_product.do")
+	public String question_product(Locale locale,Model model,Criteria cs) throws Exception{
 		
+		cs.setPerPageNum(20);
+		
+		PageMaker pm = new PageMaker();
+		pm.setScri(cs);
+		pm.setKind(cs.getKind());
+		
+		int question_product_count = ad_boardService.question_product_count(pm);
+		pm.setTotalCount(question_product_count);
+		
+		model.addAttribute("pm", pm);
+		model.addAttribute("list", ad_boardService.question_product_list(pm));
+		return "admin/Board/question_product";
+	}
+	
+	// 문의한 상품에 대한 정보 가져오기
+	@RequestMapping(value="/product_detail.do", method = RequestMethod.POST)
+	@ResponseBody
+	public List<CombineVO> product_detail(int pidx)throws Exception{
+		return ad_boardService.product_detail(pidx);
+	}
+	
+	// 제품 문의사항 답글 작성과 업데이트 원글 답변완료 달기
+	@RequestMapping(value="/question_product_write.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int question_product_write(Product_QuestionVO pv)throws Exception{
+			ad_boardService.question_product_write(pv);
+		return 1;
+	}
+	
+	// 제품 문의 답글 수정 하기
+	@RequestMapping(value="/question_product_modify.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int question_product_modify(Product_QuestionVO pv)throws Exception{
+		ad_boardService.question_product_modify(pv);
+		return 1;
+	}
+	
+	
+	
 	public void makeDir1() {
         // 폴더를 만들 디렉토리 경로(Window 기반)
         File makeFolder = new File(FILE_SERVER_PATH1);

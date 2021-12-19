@@ -718,6 +718,7 @@
   	  function question_Fn(page){
   	    
   	      let pidx =  <c:out value="${detail.pidx}"/>;
+  	      let kind =  "<c:out value='${detail.kind}'/>";
   	      if (page == null){page = 1};
   	      
   	      $.ajax({
@@ -775,14 +776,14 @@
   			  	if (question[i].depth == 1) {
     			  	str += "<div class='accordion-header' id='heading"+question[i].pqidx+"'>";
 	    			  	if(question[i].show_yn == 'Y'){
-	      			  		str += "<span id='coll"+question[i].pqidx+"' onclick='coll_fn("+question[i].pqidx+")' class='pointer'><i class='bi bi-arrow-return-right'></i>"+question[i].title+"</span>";
+	      			  		str += "<span id='coll"+question[i].pqidx+"' onclick='coll_fn("+question[i].pqidx+")' class='pointer'>&nbsp;&nbsp;<i class='bi bi-arrow-return-right'></i>&nbsp;"+question[i].title+"</span>";
 		      			  	str += "</div>";
 		      			  	str += "<div id='collapse"+question[i].pqidx+"' class='accordion-collapse collapse'>";
 		      			  	str += "<div class='accordion-body'>"+question[i].comments+"</div>";
 		      			  	str += "</div>";
 	    			  	}
 	    			  	if(question[i].show_yn == 'N'){
-	      			  		str += "<span id='coll"+question[i].pqidx+"'><i class='bi bi-arrow-return-right'></i><i class='bi bi-file-lock'></i>&nbsp;"+question[i].title+"</span>";
+	      			  		str += "<span id='coll"+question[i].pqidx+"'>&nbsp;&nbsp;<i class='bi bi-arrow-return-right'></i><i class='bi bi-file-lock'></i>&nbsp;"+question[i].title+"</span>";
 	         			  	str += "</div>";
 			  			  	str += "<div id='collapse"+question[i].pqidx+"' class='accordion-collapse collapse'>";
 	          			  	str += "<div class='accordion-body' id='coll_body"+question[i].pqidx+"'></div>";
@@ -800,7 +801,7 @@
   		  	 }
   		  	 str += "</tbody>"
   		  	 str += "</table>";
-  		  	 str += "<button type='button' class='btn btn-danger' id='btn-question' onclick='location.href=\"/team_Bling/Customer/product.do?pidx="+pidx+"\"'>상품문의하기</button><br><br>";
+  		  	 str += "<button type='button' class='btn btn-danger' id='btn-question' onclick='location.href=\"/team_Bling/Customer/product.do?pidx="+pidx+"&kind="+kind+"\"'>상품문의하기</button><br><br>";
   		  	 
   		  	 // 페이징 할 수 있는 번호 나오는 곳 뿌려 주기
   		  	 str += "<nav aria-label='Page navigation'>";

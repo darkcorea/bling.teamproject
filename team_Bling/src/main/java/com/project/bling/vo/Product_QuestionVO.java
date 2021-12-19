@@ -11,9 +11,16 @@ public class Product_QuestionVO {
 	private String show_yn;
 	private String rdate;
 	private String state;
+	private String kind;
 	
 	
 	
+	public String getKind() {
+		return kind;
+	}
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
 	public String getShow_yn() {
 		return show_yn;
 	}
