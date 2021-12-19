@@ -234,7 +234,7 @@
     						title: '지정된 이미지 파일이 아닙니다!',
     						text: 'jpg, jpeg, png 파일만 선택 가능합니다.',
     					});
-                		pictureReset();
+                		delPreview(0);
                 	}
                 }
 			});
@@ -276,6 +276,7 @@
 				});
 				console.log("내용을 입력해주세요.");
 				modalReset();
+				delPreview(0);
 			}
 			
 			console.log("contentsCheck()에서 return값 : "+contents);
@@ -322,6 +323,7 @@
 				});
 				console.log("별점을 선택해주세요.");
 				modalReset();
+				delPreview(0);
 			}
 			
 			
@@ -353,12 +355,9 @@
 			//document.getElementById("uploadBtn").value = "";
 			//$("#modalForm")[0].reset();
 			document.querySelector("form[id='modalForm']").reset();
-			document.querySelector("form[id='pictureForm']").reset();
 		}
 		
-		function pictureReset(){
-			document.querySelector("form[id='pictureForm']").reset();
-		}
+		
 		
 		
 		function delQ(){
@@ -411,16 +410,38 @@
 			let pic = event.target.files;
 			
 			if(pic.length==1){
-				previewImg1.src=URL.createObjectURL(pic[0]);
-				$("#badge1").css("display","unset");
+				if($("#previewImg1").attr("src") == ""){
+					console.log("preview()-사진1");
+					previewImg1.src=URL.createObjectURL(pic[0]);
+					//메모리 누수(?)가 있을 수 있으므로 이미지 로드 후 삭제
+					previewImg1.onload = function(){
+						URL.revokeObjectURL(this.src);
+					}
+					$("#badge1").css("display","unset");
+				}else if($("#previewImg1").attr("src") != ""){
+					console.log("preview()-사진2");
+					previewImg2.src=URL.createObjectURL(pic[0]);
+					previewImg2.onload = function(){
+						URL.revokeObjectURL(this.src);
+					}
+					$("#badge2").css("display","unset");
+				}
+				//URL.revokeObjectURL(previewImg1.src);		blob 객체 image 주소 제거
+				//URL.revokeObjectURL($("#previewImg1").attr("src"));	위와 동일하게 blob 객체 image 주소 제거 가능
 			}
 			else if(pic.length==2){
 				previewImg1.src=URL.createObjectURL(pic[0]);
 				previewImg2.src=URL.createObjectURL(pic[1]);
 				
 				$("#badge1,#badge2").css("display","unset");
+				
+				previewImg1.onload = function(){
+					URL.revokeObjectURL(this.src);
+				}
+				previewImg2.onload = function(){
+					URL.revokeObjectURL(this.src);
+				}
 			}
-			
 			
 		}
 
@@ -431,6 +452,11 @@
 				$("#previewImg1").attr("src","");
 				$("#badge1").css("display","none");
 			}else if(num==2){
+				$("#previewImg2").attr("src","");
+				$("#badge2").css("display","none");
+			}else if(num==0){
+				$("#previewImg1").attr("src","");
+				$("#badge1").css("display","none");
 				$("#previewImg2").attr("src","");
 				$("#badge2").css("display","none");
 			}
@@ -444,6 +470,8 @@
 						console.log("썸네일 1번 삭제 성공");
 					}else if(data=="pic2"){
 						console.log("썸네일 2번 삭제 성공");
+					}else if(data=="all"){
+						console.log("썸네일 모두 삭제 성공");
 					}
 				},
 				error:function(){
@@ -871,7 +899,7 @@
 			
 				<div class="modal-header">
 					<h5 class="modal-title" id="staticBackdropLabel">리뷰 작성</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="modalReset()"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="javascript:modalReset();delPreview(0);"></button>
 				</div>
 				
 				<div class="modal-body">
@@ -920,8 +948,8 @@
 				</div>
 				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal" onclick="modalReset()">닫기</button>
-					<button type="button" class="btn btn-primary" id="saveBtn" data-bs-dismiss="modal" onclick="javascript:reviewWrite(); modalReset();">저장</button>
+					<button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal" onclick="javascript:modalReset();delPreview(0);">닫기</button>
+					<button type="button" class="btn btn-primary" id="saveBtn" data-bs-dismiss="modal" onclick="javascript:reviewWrite(); modalReset();delPreview(0);">저장</button>
 				</div>
 				
 			</div>
@@ -935,7 +963,7 @@
 			
 				<div class="modal-header">
 					<h5 class="modal-title" id="staticBackdropLabel">리뷰 확인</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="modalReset()"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="javascript:modalReset();delPreview(0);"></button>
 				</div>
 				
 				<div class="modal-body">
