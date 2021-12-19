@@ -114,14 +114,30 @@
 	<!-- 			문의사항		     -->
 	
 	<!-- 문의 사항 카운트 -->
-	<select id="questio_count" parameterType="PageMaker" resultType="int">
+	<select id="question_count" parameterType="PageMaker" resultType="int">
 		SELECT count(*) FROM bg_question WHERE qidx
+		<if test='kind == "A"'> AND category='A'</if>
+		<if test='kind == "B"'> AND category='B'</if>
+		<if test='kind == "C"'> AND category='C'</if>
+		<if test='kind == "D"'> AND category='D'</if>
+		<if test='kind == "E"'> AND category='E'</if>
+		<if test='kind == "F"'> AND category='F'</if>
+		<if test='kind == "G"'> AND state='N'</if>
 	</select>
 	
 	
 	<!-- 문의사항 리스트 -->
-	<select id="question_list" resultType="QuestionVO">
-		SELECT * FROM bg_question ORDER BY originqidx desc, depth asc
+	<select id="question_list" resultType="QuestionVO" parameterType="PageMaker">
+		SELECT * FROM bg_question WHERE 1=1
+		<if test='kind == "A"'> AND category='A'</if>
+		<if test='kind == "B"'> AND category='B'</if>
+		<if test='kind == "C"'> AND category='C'</if>
+		<if test='kind == "D"'> AND category='D'</if>
+		<if test='kind == "E"'> AND category='E'</if>
+		<if test='kind == "F"'> AND category='F'</if>
+		<if test='kind == "G"'> AND state='N'</if>
+		ORDER BY originqidx desc, depth asc
+		Limit #{startPost},#{scri.perPageNum}
 	</select>
 	
 	<!-- order_idx또는 detail_idx로 구매한 상품들 정보 가져 오기 -->
