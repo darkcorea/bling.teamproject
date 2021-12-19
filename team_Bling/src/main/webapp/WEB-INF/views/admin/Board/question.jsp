@@ -95,14 +95,15 @@
 	<!-- 상단 내용 -->
 	<div class="center">
 	<span class="title1">문의 게시판</span>&nbsp;
-	<select>
-	<option>배송문의</option>
-	<option>교환/환불/취소문의</option>
-	<option>기타문의</option>
-	<option>교환신청</option>
-	<option>반품신청</option>
-	<option>취소신청</option>
-	<option>답변 미완료</option>
+	<select name="kind" id="kind" onchange="location.href=this.value">
+	<option value="/team_Bling/Ad_board/question.do?page=1&kind=H">모든 문의</option>
+	<option value="/team_Bling/Ad_board/question.do?page=1&kind=A">배송문의</option>
+	<option value="/team_Bling/Ad_board/question.do?page=1&kind=B">교환/환불/취소문의</option>
+	<option value="/team_Bling/Ad_board/question.do?page=1&kind=C">기타문의</option>
+	<option value="/team_Bling/Ad_board/question.do?page=1&kind=D">교환신청</option>
+	<option value="/team_Bling/Ad_board/question.do?page=1&kind=E">반품신청</option>
+	<option value="/team_Bling/Ad_board/question.do?page=1&kind=F">취소신청</option>
+	<option value="/team_Bling/Ad_board/question.do?page=1&kind=G">답변 미완료</option>
 	</select>
 	</div>
 	<br>
@@ -207,7 +208,53 @@
   			</c:forEach>
   			</tbody>
   		</table>
-  	</div>
+  	</div><br><br>
+  	
+  	<!-- 페이징 바 뿌려주기 -->
+	<div>
+		<nav aria-label="Page navigation">
+			<ul class="pagination justify-content-center">
+				<!-- 앞으로  가기 버튼 , 키워드 유지하면서 이동하기 -->
+				<c:if test="${pm.prev == true}">
+				<li class='page-item'>
+				<c:set var="prev" value="${pm.startPage -1}"/>
+					<a class='page-link' aria-label='Previous' href="/team_Bling/Ad_board/question.do?page=${prev}&kind=${pm.kind}">
+						<span aria-hidden='true' class='pointer' >&laquo;</span>
+					</a>
+				</li>
+				</c:if>
+				
+				<!-- 페이징 번호, 키워드 유지하면서 이동 하기  -->
+				<c:set var="page" value="${pm.scri.page}"/>
+				<c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
+					<c:if test = "${pageNum == page}">
+					<li class="page-item active">	
+						<a class="page-link pointer" href="/team_Bling/Ad_board/question.do?page=${pageNum}&kind=${pm.kind}">
+							<c:out value="${pageNum}"/>
+						</a>
+					</li>
+					</c:if>
+					<c:if test = "${pageNum != page}">
+					<li class="page-item">	
+						<a class="page-link pointer" href="/team_Bling/Ad_board/question.do?page=${pageNum}&kind=${pm.kind}">
+							<c:out value="${pageNum}"/>
+						</a>
+					</li>
+					</c:if>
+				</c:forEach>
+				
+				<!-- 뒤로 가기 버튼 , 키워드 유지하면서 이동하기 -->
+				<c:if test="${pm.next && pm.endPage > 0}">
+				<li class='page-item'>
+					<a class='page-link' aria-label='Next' href="/team_Bling/Ad_board/question.do?page=${pm.endPage + 1}&kind=${pm.kind}">
+						<span aria-hidden='true' class='pointer'>&raquo;</span>
+					</a>
+				</li>
+				</c:if>
+			</ul>
+		</nav>
+	</div>
+
 </div>
 
 </section>
@@ -469,7 +516,35 @@ function reply_modify5(){
 	});
 }
 
-
+//셀렉트 박스 선택
+function proselected(){
+	let kind = "<c:out value='${pm.kind}'/>";
+	if(kind == "A"){
+	    $("#kind option:eq(1)").attr("selected", "selected");
+	}
+	if(kind == "B"){
+	    $("#kind option:eq(2)").attr("selected", "selected");
+	}
+	if(kind == "C"){
+	    $("#kind option:eq(3)").attr("selected", "selected");
+	}
+	if(kind == "D"){
+	    $("#kind option:eq(4)").attr("selected", "selected");
+	}
+	if(kind == "E"){
+	    $("#kind option:eq(5)").attr("selected", "selected");
+	}
+	if(kind == "F"){
+	    $("#kind option:eq(6)").attr("selected", "selected");
+	}
+	if(kind == "G"){
+	    $("#kind option:eq(7)").attr("selected", "selected");
+	}
+	if(kind == "H"){
+	    $("#kind option:eq(0)").attr("selected", "selected");
+	}
+}
+proselected();
 
 
 

@@ -46,7 +46,8 @@ public interface Ad_BoardService {
 	
 	/*---------------------------------------------------------*/
 	// 문의사항 리스트
-	List<QuestionVO> question_list()throws Exception;
+	int question_count(PageMaker pm)throws Exception;
+	List<QuestionVO> question_list(PageMaker pm)throws Exception;
 	List<CombineVO> question_detail(Order_detailVO ov)throws Exception;
 	void question_write(QuestionVO qv)throws Exception;
 	QuestionVO question_modify(int qidx)throws Exception;

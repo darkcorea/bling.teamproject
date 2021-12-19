@@ -73,10 +73,20 @@ public class Ad_BoardServiceImpl implements Ad_BoardService{
 		ad_boardDAO.deleteArrEvent(eidx);
 	}
 	
+
+	
+	/*		문의 사항		 */
+	
+	// 문의 사항 총 갯수
+	@Override
+	public int question_count(PageMaker pm) throws Exception {
+		return ad_boardDAO.question_count(pm);
+	}
+	
 	// 문의사할 리스트
 	@Override
-	public List<QuestionVO> question_list() throws Exception {
-		return ad_boardDAO.question_list();
+	public List<QuestionVO> question_list(PageMaker pm) throws Exception {
+		return ad_boardDAO.question_list(pm);
 	}
 	
 	// 문의사항 상품정보 가져오기
@@ -102,6 +112,8 @@ public class Ad_BoardServiceImpl implements Ad_BoardService{
 	public void question_modify1(QuestionVO qv) throws Exception {
 		ad_boardDAO.question_modify1(qv);
 	}
+
+	
 	
 	
 	

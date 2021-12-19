@@ -499,71 +499,83 @@ public class Ad_BoardController {
 			ad_boardService.deleteArrEvent(checkbox.get(i));
 		}
 	}
+			
+	//이벤트 detail 삭제
+	@RequestMapping(value="/event_detail_del.do")
+	@ResponseBody
+	public void event_detail_del(Locale locale,Model model,int eidx)throws Exception{
 		
-	
+		EventVO vo = eventService.detail(eidx);
+		
+		//파일삭제(수정누르면 바로 파일 삭제)
+		String files = vo.getImage();
+		File deletefile = new File(FILE_SERVER_PATH + files);
+		if(deletefile.exists()) {
+			deletefile.delete();
+		}
+		
+		//사진파일 삭제
+		String imges = vo.getBanner();
+		File deleteimg = new File(FILE_SERVER_PATH + imges);
+		if(deleteimg.exists()) {
+			deleteimg.delete();
+		}
+		
+		ad_boardService.deleteArrEvent(eidx);
+		//return "admin/Board/board";
+	}
+		
+		
+		
 	/*       	 문의 사항          		   */
 	// 관리자 문의하기 게시판 이동
 	@RequestMapping(value="/question.do")
-	public String question(Locale locale,Model model) throws Exception{
+	public String question(Locale locale,Model model,Criteria cs) throws Exception{
 		
-		model.addAttribute("list", ad_boardService.question_list());
+		cs.setPerPageNum(20);
+		
+		PageMaker pm = new PageMaker();
+		pm.setScri(cs);
+		pm.setKind(cs.getKind());
+		int question_count = ad_boardService.question_count(pm);
+		
+		pm.setTotalCount(question_count);
+		
+		model.addAttribute("pm", pm);
+		model.addAttribute("list", ad_boardService.question_list(pm));
+		
 		return "admin/Board/question";
 	}
 	
-	//이벤트 detail 삭제
-		@RequestMapping(value="/event_detail_del.do")
-		@ResponseBody
-		public void event_detail_del(Locale locale,Model model,int eidx)throws Exception{
-			
-			EventVO vo = eventService.detail(eidx);
-			
-			//파일삭제(수정누르면 바로 파일 삭제)
-			String files = vo.getImage();
-			File deletefile = new File(FILE_SERVER_PATH + files);
-			if(deletefile.exists()) {
-				deletefile.delete();
-			}
-			
-			//사진파일 삭제
-			String imges = vo.getBanner();
-			File deleteimg = new File(FILE_SERVER_PATH + imges);
-			if(deleteimg.exists()) {
-				deleteimg.delete();
-			}
-			
-			ad_boardService.deleteArrEvent(eidx);
-			//return "admin/Board/board";
-		}
-		
-		// 문의 하기에 대한 자세한 상품 정보
-		@RequestMapping(value="/question_detail.do", method = RequestMethod.POST)
-		@ResponseBody
-		public List<CombineVO> question_detail(Order_detailVO ov)throws Exception{
-			return ad_boardService.question_detail(ov);
-		}
-		
-		// 문의사항 답글 작성과 업데이트 원글 답변완료 달기
-		@RequestMapping(value="/question_write.do", method = RequestMethod.POST)
-		@ResponseBody
-		public int question_write(QuestionVO qv)throws Exception{
-				ad_boardService.question_write(qv);
-			return 1;
-		}
-		
-		// 작성한 답글 가져 오기 수정
-		@RequestMapping(value="/question_modify.do", method = RequestMethod.POST)
-		@ResponseBody
-		public QuestionVO question_modify(int qidx)throws Exception{
-			return ad_boardService.question_modify(qidx);
-		}
-		
-		// 답글 수정 하기
-		@RequestMapping(value="/question_modify1.do", method = RequestMethod.POST)
-		@ResponseBody
-		public int question_modify1(QuestionVO qv)throws Exception{
-			ad_boardService.question_modify1(qv);
-			return 1;
-		}
+	// 문의 하기에 대한 자세한 상품 정보
+	@RequestMapping(value="/question_detail.do", method = RequestMethod.POST)
+	@ResponseBody
+	public List<CombineVO> question_detail(Order_detailVO ov)throws Exception{
+		return ad_boardService.question_detail(ov);
+	}
+	
+	// 문의사항 답글 작성과 업데이트 원글 답변완료 달기
+	@RequestMapping(value="/question_write.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int question_write(QuestionVO qv)throws Exception{
+			ad_boardService.question_write(qv);
+		return 1;
+	}
+	
+	// 작성한 답글 가져 오기 수정
+	@RequestMapping(value="/question_modify.do", method = RequestMethod.POST)
+	@ResponseBody
+	public QuestionVO question_modify(int qidx)throws Exception{
+		return ad_boardService.question_modify(qidx);
+	}
+	
+	// 답글 수정 하기
+	@RequestMapping(value="/question_modify1.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int question_modify1(QuestionVO qv)throws Exception{
+		ad_boardService.question_modify1(qv);
+		return 1;
+	}
 
 		
 	public void makeDir1() {

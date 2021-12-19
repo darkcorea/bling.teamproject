@@ -75,9 +75,16 @@ public class Ad_BoardDAO {
 		sqlSession.delete(ps+"deleteArrEvent",eidx);
 	}
 	
+	/*            문의 사항          */
+	
+	//문의 사항 갯수
+	public int question_count(PageMaker pm)throws Exception{
+		return sqlSession.selectOne(ps+"question_count", pm);
+	}
+	
 	//문의 사항 리스트
-	public List<QuestionVO> question_list()throws Exception{
-		return sqlSession.selectList(ps+"question_list");
+	public List<QuestionVO> question_list(PageMaker pm)throws Exception{
+		return sqlSession.selectList(ps+"question_list", pm);
 	}
 	
 	// 문의 사항 상품 정보 가져오기
