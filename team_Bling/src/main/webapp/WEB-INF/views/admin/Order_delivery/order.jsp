@@ -135,7 +135,7 @@
 			width: 140px;
 		}
 		.btn-warning{
-			color: #ffffff;
+			color: #ffffff !important;
 		}
 		.btn-warning:hover{
 			color: #ffffff;
@@ -148,9 +148,9 @@
 			min-width: unset;
 		}
 		.prodStat{
-			width: 10px;
+			width: 10px !important;
 			margin-left: 10px;
-			display: inline;
+			display: inline !important;
 		}
 		/* dropdown 메뉴 */
 		/* 마우스 커서 */
@@ -159,6 +159,12 @@
 		}
 		/* 마우스 커서 */
 		
+	/* input:number 화살표 없애기 */
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button {
+		  -webkit-appearance: none;
+		}
+	/* input:number 화살표 없애기 */
 		
 /* ---------------modal--------------- */
 		.title4{
@@ -602,50 +608,67 @@
 		Swal.fire({
 			icon: 'warning',
 			title: '주문번호 '+order_idx+'의 송장번호를 입력해주세요!',
-			input: 'text',
+			input: 'number',
 			inputAttributes: {
-			    autocapitalize: 'off',
-			    minlength: 10,
-			    maxlength: 15,
-			    placeholder: '10~15자 사이로 입력해주세요.'
-			 },
+				minlength: '10',
+				maxlength: '15',
+			    placeholder: '10~15자 사이로 입력해주세요.',
+			    onblur: 'minLengthCheck(this)',
+			    oninput: 'maxLengthCheck(this)'
+			},
 			showCancelButton: true,
 			confirmButtonText: '저장',
 			cancelButtonText: '취소'
 		}).then((result) => {
-			console.log("invoice_num : "+result.value);
+			if(result.isConfirmed){
+				console.log("invoice_num : "+result.value);
 
-			
-			let invoice = {
-					method: "post",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({invoice_num:result.value, order_idx:order_idx})
-				}
-			
-			fetch('/team_Bling/Ad_order_delivery/invoice.do', invoice)
-			.then((response) => {
-				if(!response.ok){
-					throw new Error('400 아니면 500 에러 발생');
-				}
 				
-				return response;
-			})
-			/* 
-				해당 fetch()의 response가 그냥 String이므로 	return response.json();가 아닌 그냥 response를 return함.
-				return response;가 아래의 .then((data)=>{})의 data에 들어간다.
-			*/
-			.then((data) => {
-				console.log("response=data : "+data);
-				statChange(kind,order_idx,page,stat);
-			})
-			.catch(() => {
-				console.log('송장입력 에러');
-			})
+				let invoice = {
+						method: "post",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({invoice_num:result.value, order_idx:order_idx})
+					}
+				
+				fetch('/team_Bling/Ad_order_delivery/invoice.do', invoice)
+				.then((response) => {
+					if(!response.ok){
+						throw new Error('400 아니면 500 에러 발생');
+					}
+					
+					return response;
+				})
+				/* 
+					해당 fetch()의 response가 그냥 String이므로 	return response.json();가 아닌 그냥 response를 return함.
+					return response;가 아래의 .then((data)=>{})의 data에 들어간다.
+				*/
+				.then((data) => {
+					console.log("response=data : "+data);
+					statChange(kind,order_idx,page,stat);
+				})
+				.catch(() => {
+					console.log('송장입력 에러');
+				})
+			}else if(result.isDenied){
+				
+			}
+			
 		});
 	}
 	
+	function minLengthCheck(number){
+		if(number.value.length < number.minLength) {
+			number.value = number.value.slice(number.minLength+1, number.maxLength);
+		}
+	}
+	
+	function maxLengthCheck(number){
+		if (number.value.length > number.maxLength) {
+			number.value = number.value.slice(0, number.maxLength);
+		}
+	}
 	
 	/* 송장 삭제 */
 	function invoiceDel(kind,order_idx,page,stat){
