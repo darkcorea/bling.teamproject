@@ -140,7 +140,7 @@
 	<select id="detailProduct" parameterType="int" resultType="ProductVO">
 		SELECT pidx, pname, kind, price, saleprice, discount
 		FROM bg_product
-		WHERE pidx = #{pidx} AND saleyn='Y'
+		WHERE pidx = #{pidx} AND saleyn='Y' AND kind not like 'z'
 	</select>
 	
 	<!-- 상품 옵션 -->
@@ -201,7 +201,7 @@
 	FROM oro
 	RIGHT OUTER JOIN pi
 	ON oro.pidx=pi.pidx
-	where 1=1
+	where kind not like 'z'
 	]]>
 	
 		<if test="scri.keyword != null ">AND pi.pname LIKE CONCAT('%',#{scri.keyword},'%')</if>
