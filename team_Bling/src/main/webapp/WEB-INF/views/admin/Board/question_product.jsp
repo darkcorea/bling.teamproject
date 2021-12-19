@@ -95,8 +95,15 @@
 		<div class="col"><a href="/team_Bling/Ad_board/question_product.do" class="title2"><span>제품문의</span></a></div>
 	</div><br>
 	
+	<!-- 문의 테이블  -->
+	<c:if test="${fn:length(list) == 0}">
+	<div class="center title">
+		<br>모든 문의에 답변을 달았습니다.
+	</div>
+	</c:if>
 	
 	<!-- 문의 테이블  -->
+	<c:if test="${fn:length(list) != 0}">
   	<div>
   		<table class="table">
   			<thead class="center">
@@ -238,7 +245,7 @@
 			</ul>
 		</nav>
 	</div>
-  	
+  	</c:if>
 </section>
 
 <!-- 답글 작성 모달창 -->

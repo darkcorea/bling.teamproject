@@ -24,7 +24,6 @@
 	.line{border-bottom:1px solid gray;}
 	
 	th,td{text-align:center;}
-
 	
 	/* 제목 */
 	.title {
@@ -56,6 +55,9 @@
 	.btn-white {
 		border:1px solid #CCCCCC;
 	}
+	.center {
+		text-align:center;
+	}
 </style>
 </head>
 <body>
@@ -81,7 +83,7 @@
 		
 			<div>
 			<table>
-				<tr class="line">
+				<tr class="line center">
 					<th>제품번호</th>
 					<th>이미지</th>
 					<th>상품종류</th>
