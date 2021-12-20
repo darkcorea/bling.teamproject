@@ -120,17 +120,15 @@
 			<!-- 집 모양 메인페이지로 이동  -->
 		   <a href="/team_Bling/"><i class="bi bi-house-fill"></i></a>
 		</div>
-		<c:if  test="${sessionScope.UserVO.id == null}">
-		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
-			<a id="header_notice1" href="/team_Bling/Login/main.do">LOGIN</a>
-		</div>
-		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
-			<a id="header_event1" href="/team_Bling/Join/normal.do">JOIN US</a>
-		</div>
-		</c:if>
-		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
-			<a id="header_event1" href="/team_Bling/Basket/cart.do" >CART
+		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu" >
+			<a id="header_notice1"  href="/team_Bling/Basket/cart.do" >CART
 	       <span class="badge bg-secondary rounded-pill" id="cart_count1"></span></a>
+		</div>
+		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu" >
+			<a id="header_notice13" href="/team_Bling/Login/main.do">LOGIN</a>
+		</div>
+		<div class="col-lg-1 col-md-2 col-sm-2 col-2 scmenu">
+			<a id="header_event13" href="/team_Bling/Join/normal.do">JOIN US</a>
 		</div>
 		<div class="col-lg-2 col-md-4 col-sm-3 col-3 scmenu cust">
 		   <a id="customerCenter1" href="/team_Bling/Customer/main.do?page=1">고객센터</a>
@@ -246,6 +244,14 @@ function cart_count_fn(){
 	}	
 }
 cart_count_fn();
+
+function headerShowFn(){
+	let midx = "<c:out value='${sessionScope.UserVO.midx}'/>";
+	if(midx != null && midx != ""){
+		 document.getElementById("header_event13").style.visibility = "hidden";
+		 document.getElementById("header_notice13").style.visibility = "hidden";
+	}
+} headerShowFn();
 
 
 /* 검색어를 입력하고 검색 버튼을 눌렀을 떄 */

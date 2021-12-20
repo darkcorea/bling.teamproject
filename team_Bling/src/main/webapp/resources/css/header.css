@@ -25,11 +25,11 @@ header{
 	text-decoration-line: none;
 	color: #000000;
 }
-#header_notice1,#header_event1,#customerCenter1{
+#header_event13, #header_notice13, #header_notice1,#header_event1,#customerCenter1{
 	text-decoration-line: none;
 	color: #fff;
 }
-#header_notice1:hover,#header_event1:hover,#customerCenter1:hover{
+#header_event13:hover, #header_notice13:hover, #header_notice1:hover,#header_event1:hover,#customerCenter1:hover{
 	text-decoration-line: none;
 	color: #000000;
 }
