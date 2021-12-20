@@ -63,10 +63,14 @@
 	
 	<select id="select_midx" parameterType="int" resultType="UserVO">
 	<![CDATA[
-		SELECT a.email,a.phone,a.grade,a.mileage,b.addr1,b.addr2,b.zip_code,b.name,b.rphone FROM BG_USER a
-		join bg_address_list b
-		on a.midx=b.midx
-		 WHERE b.MIDX=#{midx} and b.basic_addr=1
+		SELECT email,phone,grade,mileage FROM BG_USER WHERE MIDX=#{midx}
+	]]>
+	</select>
+	
+	<select id="select_basic_addr" parameterType="int" resultType="UserVO">
+	<![CDATA[
+		 SELECT ZIP_CODE,ADDR1,ADDR2,RPHONE,NAME,basic_addr FROM bg_address_list
+ 		WHERE MIDX=#{midx} order by basic_addr desc
 	]]>
 	</select>
 	
