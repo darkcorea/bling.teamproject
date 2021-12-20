@@ -32,10 +32,18 @@
 	<select id="listajax" parameterType="PageMaker" resultType="CustomVO">
 		select *
 		from bg_custom_user
-		where midx = #{midx}
+		where midx = #{midx} and delyn = "판매"
 		order by cuidx desc
 		Limit #{startPost}, #{scri.perPageNum}	
 	</select>
+	
+	<!-- 커스텀 삭제 -->
+	<update id="dellist" parameterType="int">
+		update bg_custom_user
+		set
+		delyn = "삭제"
+		where cuidx = #{cuidx}
+	</update>
 </mapper>
   
   
