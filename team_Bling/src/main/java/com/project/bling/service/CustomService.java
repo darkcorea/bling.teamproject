@@ -14,4 +14,6 @@ public interface CustomService {
 	int howmany() throws Exception;
 	//리스트
 	List<CustomVO> listajax(PageMaker pm) throws Exception;
+	//삭제
+	void dellist(int cuidx)throws Exception;
 }

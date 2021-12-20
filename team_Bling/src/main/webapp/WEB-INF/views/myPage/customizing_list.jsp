@@ -144,12 +144,30 @@
 					str+="<h5 class='card-title'>"+data.list[i].name+"</h5>";
 					str+=" <p class='card-text'>"+data.list[i].price+"원</p>";
 					str+="<a href='/team_Bling/Basket/custominsert.do?cuidx="+data.list[i].cuidx+"' class='btn btn-outline-dark'>장바구니에 담기</a>";
+					str+="<button type='button' class='btn btn-outline-danger' onclick='del("+data.list[i].cuidx+")'>삭제하기</a>";
 				}
 				str+="</div>";
 				str+="</div>";
 			}
 			str+="</div>";
 			return str;
+		}
+		
+		function del(cuidx){
+			if(confirm("정말 삭제하시겠습니까?") == true){
+				$.ajax({
+					url:"${cPath}/Custom/del.do",
+					type:"POST",
+					data:{"cuidx":cuidx},
+					dataType:'json',
+					success:function(data){
+						alert("삭제되었습니다.");
+					},error:function(data){
+					}
+				});
+			}else{
+				return false;
+			}
 		}
 	</script>
 </html>

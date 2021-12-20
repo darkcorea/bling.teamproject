@@ -40,4 +40,9 @@ public class CustomServiceImpl implements CustomService{
 	public List<CustomVO> listajax(PageMaker pm) throws Exception {
 		return customDAO.listajax(pm);
 	}
+
+	@Override
+	public void dellist(int cuidx) throws Exception {
+		customDAO.dellist(cuidx);
+	}
 }

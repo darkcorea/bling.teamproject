@@ -37,7 +37,11 @@ public class CustomDAO {
 	
 	//리스트
 	public List<CustomVO> listajax(PageMaker pm) throws Exception{	
-	
 		return sqlSession.selectList(cm+"listajax",pm);
+	}
+	
+	//삭제
+	public void dellist(int cuidx) throws Exception{
+		sqlSession.update(cm+"dellist",cuidx);
 	}
 }

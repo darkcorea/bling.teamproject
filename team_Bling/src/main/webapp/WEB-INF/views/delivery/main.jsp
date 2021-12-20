@@ -80,7 +80,12 @@
 					</td>
 					<!-- 이미지 -->
 					<td>
-					<img src="/team_Bling/resources/image/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
+					<c:if test="${list.cuidx == 0 }">
+						<img src="/team_Bling/resources/image/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
+					</c:if>
+					<c:if test="${list.cuidx != 0 }">
+						<img src="/team_Bling/resources/usercustomizing/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
+					</c:if>
 					</td>
 					<!-- 상품명 -->
 					<td>

@@ -32,6 +32,7 @@
 			,SUM(od.quantity) OVER(PARTITION BY ord.order_idx) AS quantitySum
 		    ,TIMESTAMPDIFF(DAY, de.deli_com, now()) AS date_differ
 		    ,ROW_NUMBER() OVER(PARTITION BY ord.order_idx ORDER BY ord.order_idx asc )AS RNUM
+		    ,pr.cuidx as cuidx
 			FROM bg_order_detail od
 			JOIN bg_order ord ON ord.order_idx = od.order_idx
 			JOIN bg_option op ON op.oidx = od.oidx

@@ -125,11 +125,6 @@ public class CustomController {
 			UserVO uv = (UserVO)session.getAttribute("UserVO");
 			int midx = uv.getMidx();
 			
-			
-			
-			
-			
-			
 			CustomVO vo = new CustomVO();
 			vo.setName(name);
 			vo.setCntoption(countval);
@@ -170,10 +165,6 @@ public class CustomController {
 			io.setShowing1(fileName+".png");
 			
 			ad_registService.insertImg(io);
-			
-			
-			
-			
 		    
 		}catch(Exception e){
 			e.printStackTrace();
@@ -188,6 +179,13 @@ public class CustomController {
 		return map;
 	}
 	
+	@RequestMapping(value="/del.do")
+	@ResponseBody
+	public int dellist(int cuidx)throws Exception{
+		customService.dellist(cuidx);
+		int a = 1;
+		return a;
+	}
 	
 	 public void makeDir() {
         // 폴더를 만들 디렉토리 경로(Window 기반)
