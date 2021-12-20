@@ -95,20 +95,6 @@
 			position: relative;
 			right: 50px;
 		}
-		#deliN{
-			width: 64px;
-			cursor: pointer;
-			text-align: center;
-		}
-		#deliY{
-			width: 64px;
-			cursor: pointer;
-			text-align: center;
-			border: none;
-			border-radius: 5px;
-			background-color: red;
-			color: #ffffff;
-		}
 		#pname{
 			font-weight: bold;
 			color: #1a7ed5;
@@ -125,11 +111,12 @@
 			top: 20px;
 		}
 		
-		/* dropdown 메뉴 */
+		/* button 메뉴 */
 		.prodBtn{
 			width: 140px;
 			height: 38px;
 			margin-top: 6px;
+			cursor: default !important;
 		}
 		.btn-warning{
 			color: #ffffff !important;
@@ -140,7 +127,7 @@
 		.btn-warning:focus-within{
 			color: #ffffff;
 		}
-		/* dropdown 메뉴 */
+		/* button 메뉴 */
 		/* 마우스 커서 */
 		.pointer{
 			cursor: pointer;
@@ -170,9 +157,6 @@
 				<th id="th7">배송상태
 					<select id="deliStat" onchange="deliveryList(1,this.value)">
 						<option value="all">전체선택</option>
-						<option value="N">결제대기(N)</option>
-						<option value="Y">결제완료(Y)</option>
-						<option value="A">상품준비중(A)</option>
 						<option value="B">배송중(B)</option>
 						<option value="C">배송완료(C)</option>
 					</select>
@@ -243,13 +227,7 @@
 							str += "	<td class='td td6'>"+dl[i].deli_com+"</td>";						
 						}
 						
-						if(dl[i].deli_stat == "N"){
-							str += "	<td class='td td7 btn btn-secondary prodBtn'>결제대기(N)</td>";	
-						}else if(dl[i].deli_stat == "Y"){
-							str += "	<td class='td td7 btn btn-success prodBtn'>결제완료(Y)</td>";	
-						}else if(dl[i].deli_stat == "A"){
-							str += "	<td class='td td7 btn btn-primary prodBtn'>상품중비중(A)</td>";	
-						}else if(dl[i].deli_stat == "B"){
+						if(dl[i].deli_stat == "B"){
 							str += "	<td class='td td7 btn btn-warning prodBtn'>배송중(B)</td>";	
 						}else if(dl[i].deli_stat == "C"){
 							str += "	<td class='td td7 btn btn-danger prodBtn'>배송완료(C)</td>";	

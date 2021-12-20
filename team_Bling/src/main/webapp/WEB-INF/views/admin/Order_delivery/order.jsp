@@ -134,6 +134,10 @@
 		.prodBtn{
 			width: 140px;
 		}
+		.prodBtnN{
+			width: 140px;
+			cursor: default !important;
+		}
 		.btn-warning{
 			color: #ffffff !important;
 		}
@@ -432,31 +436,57 @@
 					
 					
 					if(ol[i].deli_stat == "N"){
-						str += "	<button type='button' class='btn btn-secondary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
-						str += "		결제대기(N)";
+						if(ol[i].cancel!=null || ol[i].refund!=null || ol[i].exchange!=null){
+							str += "	<button type='button' class='btn btn-secondary prodBtnN'>";
+							str += "		결제대기(N)";
+						}else{
+							str += "	<button type='button' class='btn btn-secondary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+							str += "		결제대기(N)";
+						}
 					}else if(ol[i].deli_stat == "Y"){
-						str += "	<button type='button' class='btn btn-success dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
-						str += "		결제완료(Y)";
+						if(ol[i].cancel!=null || ol[i].refund!=null || ol[i].exchange!=null){
+							str += "	<button type='button' class='btn btn-success prodBtnN'>";
+							str += "		결제완료(Y)";
+						}else{
+							str += "	<button type='button' class='btn btn-success dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+							str += "		결제완료(Y)";
+						}
 					}else if(ol[i].deli_stat == "A"){
-						str += "	<button type='button' class='btn btn-primary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
-						str += "		상품준비중(A)";
+						if(ol[i].cancel!=null || ol[i].refund!=null || ol[i].exchange!=null){
+							str += "	<button type='button' class='btn btn-primary prodBtnN'>";
+							str += "		상품준비중(A)";
+						}else{
+							str += "	<button type='button' class='btn btn-primary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+							str += "		상품준비중(A)";
+						}
 					}else if(ol[i].deli_stat == "B"){
-						str += "	<button type='button' class='btn btn-warning dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
-						str += "		배송중(B)";
+						if(ol[i].cancel!=null || ol[i].refund!=null || ol[i].exchange!=null){
+							str += "	<button type='button' class='btn btn-warning prodBtnN'>";
+							str += "		배송중(B)";
+						}else{
+							str += "	<button type='button' class='btn btn-warning dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+							str += "		배송중(B)";
+						}
 					}else if(ol[i].deli_stat == "C"){
-						if(ol[i].date_differ<=7){
-							if(ol[i].ridx == 0){
-								str += "	<button type='button' class='btn btn-danger dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
-								str += "		배송완료(C)";
-							}else if(ol[i].ridx != 0){
-								str += "	<button type='button' class='btn btn-danger prodBtn' onclick='caution1()'>";
+						if(ol[i].cancel!=null || ol[i].refund!=null || ol[i].exchange!=null){
+							str += "	<button type='button' class='btn btn-danger prodBtnN'>";
+							str += "		배송완료(C)";
+						}else{
+							if(ol[i].date_differ<=7){
+								if(ol[i].ridx == 0){
+									str += "	<button type='button' class='btn btn-danger dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+									str += "		배송완료(C)";
+								}else if(ol[i].ridx != 0){
+									str += "	<button type='button' class='btn btn-danger prodBtn' onclick='caution1()'>";
+									str += "		배송완료(C)";
+								}
+							}else if(ol[i].date_differ>7){
+								str += "	<button type='button' class='btn btn-danger prodBtn' onclick='caution2()'>";
 								str += "		배송완료(C)";
 							}
-						}else if(ol[i].date_differ>7){
-							str += "	<button type='button' class='btn btn-danger prodBtn' onclick='caution2()'>";
-							str += "		배송완료(C)";
 						}
 					}
+					
 				
 					str += "	</button>";
 					str += "	<ul class='dropdown-menu'>";
