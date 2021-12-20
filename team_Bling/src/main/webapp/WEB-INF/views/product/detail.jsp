@@ -307,8 +307,8 @@
 		$(".form-select").change(function(){
 			
 			// 선택된 셀렉트 박스의 text값과 value값 읽어오기
-		    let opName = $(this).children('option:selected').text();
-			
+		    let opName = $(this).children('option:selected').text().trim();
+			console.log(opName);
 			// 선택된 옵션에서 odxi와 stock값 분리하기 
 		    let opvalue = $(this).children('option:selected').val();
 		    let oidx = opvalue.split(",")[0];
@@ -346,7 +346,7 @@
 			    str += "<div class='option_box' id='option_box" +oidx+ "'>";
 			    str += "<table class='option_tb'>";
 			    str += "<tr>";
-			    str += "<td class='font12 option_tb1'>" +opName+ "</td>";
+			    str += "<td class='font12 option_tb1'>"+opName+"</td>";
 			    str += "<td class='option_tb2'>";
 			    str += "<input type='button' class='btn btn-light p-0 size27 align-middle' onclick='count(\"minus\"," +oidx+ "," +produt_price+ "," +stock+ ")' value='-'/>";
 				str += "<span id='add_option"+oidx+"'> 1 </span>"
@@ -1078,7 +1078,8 @@
 		var oname1 = $(".option_tb1").text();
 		var oname = oname1.trim();
 		let midx = "${sessionScope.UserVO.midx}";
-		//console.log("oname>>>>>>>"+oname);
+		console.log("oname>>>>>>>"+oname);
+		console.log("oname1>>>>>>>"+oname1);
 		if(option == ""){
 			alert("옵션을 선택하세요");
 		}
@@ -1103,7 +1104,7 @@
 	      let jsonData = JSON.stringify(List);
 	      let Json = JSON.parse(jsonData);
 	   		//console.log(Json);
-				
+		var abc = "";		
 		var str = "";
 		var formData2 = "";
 		for(let i =0 ; i<Json.length ; i++){
@@ -1128,11 +1129,10 @@
 					async: false,
 					ContentType:"application/json",
 					success:function(data){
-						if(data=="save"){
-							alert("장바구니에 담겼습니다");
-							location.reload();
+						if(data == "save"){
+							abc = data;
 						}else{
-							alert(data+' 상품이 장바구니에 존재합니다');
+							abc = data;
 						}
 					},
 					error:function(){
@@ -1140,6 +1140,13 @@
 					}
 				});
 			}
+			if( abc == "save"){
+				alert("장바구니에 담겼습니다");
+				location.reload();
+			}else{
+				alert(abc + "상품이 장바구니에 존재합니다");
+			}
+		
 		}
 	}
 	

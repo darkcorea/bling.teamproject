@@ -73,15 +73,14 @@ public class BasketController {
 		
 		
 		String abc = null;
-		System.out.println("midx>>>>>>>>"+vo.getMidx());
 		int count = basketService.cartdouble_check(vo);
-		System.out.println("count>>>>>>>>>"+count);
-		String oname = vo.getOname();
+		String oname = vo.getOname().trim();
 		if(count == 0) {
 			basketService.cartinsert(vo);
 			abc = "save";
 		}else {
 			abc = oname;
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>"+abc);
 		}
 		return abc;
 	}

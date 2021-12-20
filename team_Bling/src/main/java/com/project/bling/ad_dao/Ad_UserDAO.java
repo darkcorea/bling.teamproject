@@ -31,4 +31,9 @@ public class Ad_UserDAO {
 		sqlSession.update(ps+"update_grade_S");
 		sqlSession.update(ps+"update_grade_B");
 	}
+	
+	public List<UserVO> secession_list() throws Exception {
+		
+		return sqlSession.selectList(ps+"secession_list");
+	}
 }

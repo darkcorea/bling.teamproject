@@ -16,17 +16,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원 관리</title>
 	<style>
-		div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
-		a {text-decoration:none;}
 		
-		.quickmenu {position:absolute;width:120px;height:500px;top:20%;margin-top:-50px;left:50px;background:#cb7878;padding:20px;}
-		.quickmenu ul {position:relative;float:left;width:100%;display:inline-block;*display:inline;}
-		.quickmenu ul li {float:left;width:100%;text-align:center;display:inline-block;*display:inline;}
-		.quickmenu ul li a {position:relative;float:left;width:100%;height:50px;line-height:30px;text-align:center;color:#fff;font-size:12pt;}
-		.quickmenu ul li a:hover {color:#000;}
-		.quickmenu ul li:last-child {border-bottom:0;}
-		
-		.content {position:relative;min-height:1000px;}
 		td{
 			text-align:center;
 		}
@@ -44,7 +34,10 @@
 			font-size:8pt;
 			color:#cd2828;
 		}
-		
+		.title{
+			text-align:center;
+			font-size: 30px;
+		}
 	</style>
 </head>
 	<body>
@@ -52,20 +45,13 @@
 		<header>
 			<%@ include file="/WEB-INF/views/admin/ad_header.jsp" %><BR>
 		</header>
-	<!-- 옆 nav 바 -->
-		<div class="d1">
-			<div class="quickmenu">
-				  <ul>
-				 	<li><a>회원리스트</a></li>
-				    <li><a href="#">탈퇴회원 리스트</a></li> 
-				  </ul>
-			</div>
-		</div>
+	
 	
 	<!--여기서부터 본문-->
 		<div>
-			<h1 class="text-center">회원 리스트</h1>
 			<br>
+			<div class="title">회원 리스트</div>
+			<br><br>
 			<table>
 				<tr class="line">
 					<th class="center" style='width:100px;'>번호</th>
