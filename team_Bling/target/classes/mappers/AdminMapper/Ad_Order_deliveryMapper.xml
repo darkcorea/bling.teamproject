@@ -95,8 +95,9 @@
 	<select id="deliveryCnt" resultType="int" parameterType="Criteria">
 		SELECT count(didx)
 		FROM bg_delivery
-		<if test='kind=="all"'>WHERE didx</if>
-		<if test='kind!="all"'>WHERE deli_stat=#{kind}</if> 
+		<if test='kind=="all"'>WHERE deli_stat='B' OR deli_stat='C'</if>
+		<if test='kind=="B"'>WHERE deli_stat=#{kind}</if>
+		<if test='kind=="C"'>WHERE deli_stat=#{kind}</if>
 	</select>
 	
 	<!-- 전체 배송 리스트(didx 내림차순) -->
@@ -115,8 +116,9 @@
 		INNER JOIN bg_user u
 		ON o.midx=u.midx
 		
-		
-		<if test='scri.kind!="all"'>WHERE d.deli_stat=#{scri.kind}</if> 
+		<if test='scri.kind=="all"'>WHERE d.deli_stat='B' OR d.deli_stat='C'</if>
+		<if test='scri.kind=="B"'>WHERE d.deli_stat=#{scri.kind}</if>
+		<if test='scri.kind=="C"'>WHERE d.deli_stat=#{scri.kind}</if>
 		ORDER BY d.didx
 		DESC
 		LIMIT #{startPost},#{scri.perPageNum}
