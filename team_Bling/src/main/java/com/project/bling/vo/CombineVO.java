@@ -58,6 +58,7 @@ public class CombineVO {
 	private String payment;
 	private String zip_code;
 	private String rphone;
+	private int cuidx;
 	// like
 	private int interest_idx;
 	// 임의로 정한 
@@ -81,7 +82,12 @@ public class CombineVO {
 	private int attention;
 	
 	
-	
+	public int getCuidx() {
+		return cuidx;
+	}
+	public void setCuidx(int cuidx) {
+		this.cuidx = cuidx;
+	}
 	public int getStock() {
 		return stock;
 	}

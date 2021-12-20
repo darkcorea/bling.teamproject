@@ -156,21 +156,21 @@ public class Ad_BoardController {
 	
 	//공지사항 내용 db에 등록
 	@RequestMapping(value="/confirm.do")
-	public String confirm(NoticeVO vo,HttpServletRequest request,MultipartFile file, HttpSession session) throws Exception{
+	public String confirm(NoticeVO vo,HttpServletRequest request,MultipartFile file) throws Exception{
 		
-		makeDir1();
+		//makeDir1();
 		
 		String FileName=null;
 		
 		String orifileName = file.getOriginalFilename();
 		
-		//System.out.println(">>>>!!!>>>>"+orifileName);
+		System.out.println(">>>>!!!>>>>"+orifileName);
 		// 파일 업로드 
 		
 		if(orifileName != "") {
 			// 기존 파일 이름을 받고 확장자 저장
 			String ext = orifileName.substring(orifileName.lastIndexOf(".")+1);
-			//System.out.println(">>>>!!!>>>>"+ext);
+			System.out.println(">>>>!!!>>>>"+ext);
 			
 			// 이름 값 변경을 위한 설정 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmmssSSS");
@@ -178,15 +178,15 @@ public class Ad_BoardController {
 			
 			// 파일 이름 변경
 			FileName = sdf.format(System.currentTimeMillis()) + "_" + rand +"."+ ext;
-			//System.out.println(">>>>>>>>>>>"+FileName);
+			System.out.println(">>>>>>>>>>>"+FileName);
 			
 			// 파일 저장
 			file.transferTo(new File(FILE_SERVER_PATH + FileName));
 			
-			String imageName = (String)session.getAttribute("imageName");
-			byte[] imageData = (byte[])session.getAttribute("imageData");
-			File target1 = new File(FILE_SERVER_PATH, imageName);
-			FileCopyUtils.copy(imageData, target1);
+			//String imageName = (String)session.getAttribute("imageName");
+			//byte[] imageData = (byte[])session.getAttribute("imageData");
+			//File target1 = new File(FILE_SERVER_PATH, imageName);
+			//FileCopyUtils.copy(imageData, target1);
 			
 		}else {
 			FileName = null;
@@ -222,14 +222,13 @@ public class Ad_BoardController {
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//톰캣 파일 저장
 			
 			
-			//이게 에이작스여서 저장버튼 안눌러도 사진이 저장됨. 이걸 어떻게 해야할지 생각해야함....
-			//File f = new File(FILE_SERVER_PATH+savedFileName); 
-			//multipartFile.transferTo(f); //스프링 폴더 파일 저장
+			File f = new File(FILE_SERVER_PATH+savedFileName); 
+			multipartFile.transferTo(f); //스프링 폴더 파일 저장
 			
-			byte[] imageData = multipartFile.getBytes();
+			//byte[] imageData = multipartFile.getBytes();
 			
-			session.setAttribute("imageName", savedFileName);
-			session.setAttribute("imageData", imageData);
+			//session.setAttribute("imageName", savedFileName);
+			//session.setAttribute("imageData", imageData);
 			
 			// url에 경로 저장
 			jsonObject.addProperty("url", "/resources/notice/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
@@ -242,8 +241,6 @@ public class Ad_BoardController {
 			e.printStackTrace();
 		}
 		String a = jsonObject.toString();
-		System.out.println("////////////////////////////////");
-		System.out.println(a);
 		return a;
 	}
 	
@@ -294,63 +291,63 @@ public class Ad_BoardController {
 	}
 	
 	//공지사항 수정
-	@RequestMapping(value="/bf_modify.do")
-	public String ad_modify(Locale locale, Model model,int nidx) throws Exception {
-		model.addAttribute("modify",ad_boardService.detail(nidx));
-		return "admin/Board/notice_modify";
-	}
-	
-	@RequestMapping(value="/af_modify.do")
-	public String af_modify(Model model,NoticeVO vo,HttpServletRequest request,MultipartFile file) throws Exception{
-		
-		//파일삭제(수정누르면 바로 파일 삭제)
-		String files = vo.getImgfile();
-		File deletefile = new File(FILE_SERVER_PATH + files);
-		if(deletefile.exists()) {
-			deletefile.delete();
+		@RequestMapping(value="/bf_modify.do")
+		public String ad_modify(Locale locale, Model model,int nidx) throws Exception {
+			model.addAttribute("modify",ad_boardService.detail(nidx));
+			return "admin/Board/notice_modify";
 		}
 		
-		//사진파일 삭제
-		String imges = vo.getImges();
-		File deleteimg = new File(FILE_SERVER_PATH + imges);
-		if(deleteimg.exists()) {
-			deleteimg.delete();
+		@RequestMapping(value="/af_modify.do")
+		public String af_modify(Model model,NoticeVO vo,HttpServletRequest request,MultipartFile file) throws Exception{
+			System.out.println("/////////////////////////여기여기");
+			//파일삭제(수정누르면 바로 파일 삭제)
+			String files = vo.getImgfile();
+			File deletefile = new File(FILE_SERVER_PATH + files);
+			if(deletefile.exists()) {
+				deletefile.delete();
+			}
+			
+			//사진파일 삭제
+			String imges = vo.getImges();
+			File deleteimg = new File(FILE_SERVER_PATH + imges);
+			if(deleteimg.exists()) {
+				deleteimg.delete();
+			}
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+			System.out.println("사진파일 삭제>>>>>>"+imges);
+			System.out.println("삭제중>>>>"+deleteimg);
+			
+			// 파일 업로드 
+			String FileName=null;
+			String orifileName = file.getOriginalFilename();
+			
+			if(orifileName != "") {
+				// 기존 파일 이름을 받고 확장자 저장
+				String ext = orifileName.substring(orifileName.lastIndexOf(".")+1);
+				
+				// 이름 값 변경을 위한 설정 
+				SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmmssSSS");
+				int rand = (int)(Math.random()*1000);
+				
+				// 파일 이름 변경
+				FileName = sdf.format(System.currentTimeMillis()) + "_" + rand +"."+ ext;
+				
+				// 파일 저장
+				file.transferTo(new File(FILE_SERVER_PATH + FileName));
+			}else {
+				FileName = null;
+			}
+			
+			vo.setImgfile(FileName);
+			
+			String editimg = vo.getEdit();
+			vo.setImges(editimg);
+			
+			System.out.println("사진파일 저장22222>>>>>>"+editimg);
+			
+			ad_boardService.modify(vo);
+			return "redirect:/Ad_board/detail.do?nidx="+vo.getNidx();
 		}
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-		System.out.println("사진파일 삭제>>>>>>"+imges);
-		System.out.println("삭제중>>>>"+deleteimg);
-		
-		// 파일 업로드 
-		String FileName=null;
-		String orifileName = file.getOriginalFilename();
-		
-		if(orifileName != "") {
-			// 기존 파일 이름을 받고 확장자 저장
-			String ext = orifileName.substring(orifileName.lastIndexOf(".")+1);
-			
-			// 이름 값 변경을 위한 설정 
-			SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmmssSSS");
-			int rand = (int)(Math.random()*1000);
-			
-			// 파일 이름 변경
-			FileName = sdf.format(System.currentTimeMillis()) + "_" + rand +"."+ ext;
-			
-			// 파일 저장
-			file.transferTo(new File(FILE_SERVER_PATH + FileName));
-		}else {
-			FileName = null;
-		}
-		
-		vo.setImgfile(FileName);
-		
-		String editimg = vo.getEdit();
-		vo.setImges(editimg);
-		
-		System.out.println("사진파일 저장22222>>>>>>"+editimg);
-		
-		ad_boardService.modify(vo);
-		return "redirect:/Ad_board/detail.do?nidx="+vo.getNidx();
-	}
 	
 	/////////////////////////////////////////이벤트////////////////////////////////////////
 	/* 이름을 입력하면 이름을 변경해 주는 메소드 */

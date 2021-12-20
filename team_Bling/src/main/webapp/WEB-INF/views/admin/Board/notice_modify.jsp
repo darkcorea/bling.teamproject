@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -10,20 +7,48 @@
 	<meta http-equiv="X-UA-Compatible" content ="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>공지사항수정</title>
+	<script src="/team_Bling/js/jquery-3.6.0.min.js"></script>
+	<script src="/team_Bling/js/bootstrap.bundle.js"></script>
 	<script src="/team_Bling/js/summernote/summernote-lite.js"></script>
 	<script src="/team_Bling/js/summernote/lang/summernote-ko-KR.js"></script>
+	
 	<link rel="stylesheet" href="/team_Bling/css/summernote/summernote-lite.css">
+	<link rel="stylesheet" href="/team_Bling/css/bootstrap.css">
+		<style>
+			div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
+			a {text-decoration:none;}
+			
+			.quickmenu {position:absolute;width:120px;height:500px;top:20%;margin-top:-50px;left:50px;background:#cb7878;padding:20px;}
+			.quickmenu ul {position:relative;float:left;width:100%;display:inline-block;*display:inline;}
+			.quickmenu ul li {float:left;width:100%;text-align:center;display:inline-block;*display:inline;}
+			.quickmenu ul li a {position:relative;float:left;width:100%;height:50px;line-height:30px;text-align:center;color:#fff;font-size:12pt;}
+			.quickmenu ul li a:hover {color:#000;}
+			.quickmenu ul li:last-child {border-bottom:0;}
+			
+			.content {position:relative;min-height:1000px;}
+			
+		</style>
 	</head>
 	<body>
 		<header>
-			<%@ include file="/WEB-INF/views/admin/ad_header.jsp" %><BR>
+			<%@ include file="/WEB-INF/views/admin/notice_header.jsp" %><BR>
 		</header>
-		
+		<!-- 옆 nav 바 -->
+      <div class="d1">
+         <div class="quickmenu">
+              <ul>
+                <li><a href="/team_Bling/Ad_board/question.do">문의게시판</a></li>
+                <li><a href="/team_Bling/Ad_board/board.do?page=1&type=T">공지&문의</a></li>
+                <li><a href="/team_Bling/Ad_board/event.do">이벤트</a></li>
+                <li><a href="#">리뷰관리</a></li> 
+              </ul>
+         </div>
+      </div>
 	<!-- 공지사항 등록 -->
 		
 		<h2 class="text-center">공지사항 수정</h2> <br>
 	
-		<form method="post" action="/Ad_board/af_modify.do" id="frm_write" enctype="multipart/form-data">
+		<form method="post" action="/team_Bling/Ad_board/af_modify.do" id="frm_write" enctype="multipart/form-data">
 			<table class="table">
 				<tr>
 					<th class="head">제목</th>
@@ -100,7 +125,19 @@
 		
 	</body>
 	<script>
-		
+		$("form").submit(function(){
+			var check = true;
+			var type = $('input:radio[name=type]').is(':checked');
+			if(type == false){
+				alert("type을 선택해주세요.");
+				check = false;
+			}else if($("#subject").val() == null || $("#subject").val() == ""){
+				alert("제목을 적어주세요");
+				check = false;
+			}
+			return check;
+		});
+	
 		$(document).ready(function(){
 			var setting = {
 		            height : 300,
@@ -161,7 +198,7 @@
 				enctype : 'multipart/form-data',
 				processData : false,
 				success : function(data) {
-					$(el).summernote('editor.insertImage', data.url);
+					$(el).summernote('editor.insertImage', "/team_Bling"+data.url);
 					$('input[name=edit]').attr('value',data.imges);
 				}
 			});

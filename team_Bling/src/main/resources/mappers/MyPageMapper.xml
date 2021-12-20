@@ -44,7 +44,8 @@
 	               p.pidx,
 	               op.oname,
 	               op.addprice,
-	               op.oidx
+	               op.oidx,
+	               p.cuidx
 	        FROM bg_product p
 	        INNER JOIN bg_option op
 	        ON p.pidx=op.pidx 
@@ -92,7 +93,8 @@
 	       oOdDr.refund,
 	       oOdDr.exchange,
 	       oOdDr.ridx,
-	       oOdDr.contents
+	       oOdDr.contents,
+	       po.cuidx
 	FROM oOdDr
 	
 	INNER JOIN po
