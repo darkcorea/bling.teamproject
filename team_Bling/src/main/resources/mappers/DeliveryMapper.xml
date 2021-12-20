@@ -71,7 +71,7 @@
 	  <!-- order_idx로 구매한 상품들 정보 가져 오기 -->
 	  <select id="order_list" parameterType="int" resultType="CombineVO">
 	 	SELECT bp.pidx, bo.recipient, bo.rphone, bo.addr1, bo.addr2, bp.pname, bi.main, bop.oname, 
-	  			bod.quantity, bo.payment, bo.tot_price,bo.zip_code,bo.order_idx, re.ridx, bod.detail_idx
+	  			bod.quantity, bo.payment, bo.tot_price,bo.zip_code,bo.order_idx, re.ridx, bod.detail_idx,bp.cuidx
 		FROM bg_order bo
 		JOIN bg_order_detail bod ON bo.order_idx = bod.order_idx
 		JOIN bg_option bop ON bod.oidx = bop.oidx
