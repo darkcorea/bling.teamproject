@@ -32,7 +32,7 @@ public class ReviewController {
 	ReviewService reviewService;
 	
     String uploadPath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
-	
+    //String uploadPath = "C:\\tomcat\\webapps\\team_Bling\\src\\main\\webapp\\resources\\review_img";
 	
 	
 	@RequestMapping(value="/main.do")
