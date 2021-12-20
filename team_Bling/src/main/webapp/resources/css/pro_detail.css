@@ -156,8 +156,6 @@ section {
 /* 상세정보, 후기, 상품문의, 구매가이드  */
 .detail-nav-1 {
 	margin: 20px;
-	border: #CB7878 solid;
-	border-width: 0 0 10px 0;
 }
 
 /* 상세정보 이미지 가운데로 */
