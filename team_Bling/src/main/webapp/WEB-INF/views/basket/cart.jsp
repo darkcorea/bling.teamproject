@@ -174,7 +174,6 @@
 					str += "	<input type='hidden' name='pname' value='"+item.pname+"'>";
 					str += "	<input type='hidden' name='stock1' value='"+item.stock+"'>";
 					str += "	</td>";
-					console.log(item.cuidx);
 					if(item.cuidx != 0){
 						str += "	<td><img class='img-fluid' src='/team_Bling/resources/usercustomizing/"+item.main+"'></td>";
 					}else{
