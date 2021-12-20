@@ -586,7 +586,7 @@ $(document).ready(function() {
 		$("#staticBackdrop1").modal("show");
 	}
 	
-	// 모달 쓰기 
+	// 리뷰 쓰기 
 	function reviewWrite(){
 
 		let starRating = document.querySelector("input[name='rating']:checked");
@@ -615,6 +615,7 @@ $(document).ready(function() {
 			data: "contents="+contents+"&grade="+grade,
 			ContentType: "json",
 			success: function(data){
+				$("#staticBackdrop1").modal("hide");
 				alert("리뷰가 작성되었습니다.");
 				location.reload();
 				
