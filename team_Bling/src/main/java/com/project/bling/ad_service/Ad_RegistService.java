@@ -15,6 +15,8 @@ public interface Ad_RegistService {
 	List<CombineVO> list(PageMaker pm) throws Exception;
 	int product_count(String kind) throws Exception;
 	int product_count1(String kind) throws Exception;
+	int sold_out_count() throws Exception;
+	List<CombineVO> sold_out_list(PageMaker pm) throws Exception;
 	List<OptionVO> oblist() throws Exception;
 	ProductVO product(int pidx) throws Exception;
 	void updatePro(ProductVO vo) throws Exception;

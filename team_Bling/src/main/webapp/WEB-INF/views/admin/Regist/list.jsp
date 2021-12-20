@@ -76,6 +76,7 @@
 			<option value="/team_Bling/Ad_regist/list.do?page=1&kind=E">귀걸이</option>
 			<option value="/team_Bling/Ad_regist/list.do?page=1&kind=N">목걸이</option>
 			<option value="/team_Bling/Ad_regist/list.do?page=1&kind=B">팔찌</option>
+			<option value="/team_Bling/Ad_regist/list.do?page=1&kind=Z">제품부족상품</option>
 		</select>
 		<span> 상품 갯수 : <c:out value="${count}" />개</span>
 		</div>
@@ -238,6 +239,9 @@ function proselected(){
 	}
 	if(kind == "B"){
 		$("#kind option:eq(4)").attr("selected", "selected");
+	}
+	if(kind == "Z"){
+		$("#kind option:eq(5)").attr("selected", "selected");
 	}
 }
 proselected();

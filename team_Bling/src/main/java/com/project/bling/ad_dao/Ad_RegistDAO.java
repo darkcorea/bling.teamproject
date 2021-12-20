@@ -44,12 +44,12 @@ public class Ad_RegistDAO {
 	public int product_count1(String kind) throws Exception {
 		return sqlSession.selectOne(am+"product_count1", kind);
 	}
-	
 	// 제품 정보 불러오기 
 	public List<CombineVO> list(PageMaker pm) throws Exception{
 		return sqlSession.selectList(am+"list", pm);
 	}
 	
+
 	// 상품 옵션 불러오기
 	public List<OptionVO> oblist() throws Exception {
 		return sqlSession.selectList(am+"oblist");
@@ -93,6 +93,14 @@ public class Ad_RegistDAO {
 	// 제품 이미지 수정
 	public void updateImg(ImageVO vo) throws Exception {
 		sqlSession.update(am+"updateImg", vo);
+	}
+	// 옵션이 20개 미만 제품
+	public int sold_out_count() throws Exception {
+		return sqlSession.selectOne(am+"sold_out_count");
+	}
+	// 옵션이 20개 미만 제품
+	public List<CombineVO> sold_out_list(PageMaker pm) throws Exception{
+		return sqlSession.selectList(am+"sold_out_list", pm);
 	}
 	
 }
