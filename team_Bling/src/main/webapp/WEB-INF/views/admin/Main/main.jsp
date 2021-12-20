@@ -97,7 +97,7 @@
 									상품문의
 								</td>
 								<td id="dd">
-									<c:out value="${proq }" />건
+									<a href="/team_Bling/Ad_board/question_product.do?page=1&kind=Z"><c:out value="${proq }" /></a>건
 								</td>
 							</tr>
 							<tr>
@@ -105,7 +105,7 @@
 									1:1문의
 								</td>
 								<td id="dd">
-									<c:out value="${priq }"/>건
+									<a href="/team_Bling/Ad_board/question.do?page=1&kind=G"><c:out value="${priq }"/></a>건
 								</td>
 							</tr>
 						</table>
