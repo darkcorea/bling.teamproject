@@ -208,7 +208,12 @@
 					</td>
 					<!-- 이미지 -->
 					<td>
-					<img src="{cPath}/resources/image/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
+					<c:if test="${list.cuidx == 0 }">
+						<img src="/team_Bling/resources/image/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
+					</c:if>
+					<c:if test="${list.cuidx != 0 }">
+						<img src="/team_Bling/resources/usercustomizing/${list.main}" class="img-thumbnail img pointer" onclick="order_list(${list.order_idx})">
+					</c:if>
 					</td>
 					<!-- 상품명 -->
 					<td>
@@ -374,12 +379,23 @@
 					str += "<table>";	
 					str += "</tr>";	
 					str += " <td style='width:150px;'>";
-					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"'>"
-					str += " <img class='image_main' src='/team_Bling/resources/image/"+data[i].main+"'></a>";	
-					str += "</td>";	
-					str += "<td style='width:300px;'>";
-					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"' class='title4'>"
-					str += "<span><b>"+data[i].pname+"</b></span></a><br>";	
+					
+					if(data[i].cuidx == 0){
+						str += "<a href='/team_Bling/Product/detail.do?pidx="+data[i].pidx+"'>"
+						str += " <img class='image_main' src='/team_Bling/resources/image/"+data[i].main+"'></a>";	
+						str += "</td>";	
+						str += "<td style='width:300px;'>";
+						str += "<a href='/team_Bling/Product/detail.do?pidx="+data[i].pidx+"' class='title4'>";
+						str += "<span><b>"+data[i].pname+"</b></span></a><br>";	
+					}else if(data[i].cuidx != 0 || data[i].cuidx != null){
+						str += "<a href='/team_Bling/Custom/list.do'>"
+						str += " <img class='image_main' src='/team_Bling/resources/usercustomizing/"+data[i].main+"'></a>";
+						str += "</td>";	
+						str += "<td style='width:300px;'>";
+						str += "<a href='/team_Bling/Custom/list.do'>";
+						str += "<span><b>"+data[i].pname+"</b></span></a><br>"
+					}
+					
 					var oname = data[i].oname.split("+")[0]
 					str += " <span>"+oname+"</span>(수량: <span>"+data[i].quantity+"</span>)";	
 					str += "</td>";	

@@ -162,6 +162,7 @@
 					dataType:'json',
 					success:function(data){
 						alert("삭제되었습니다.");
+						location.reload();
 					},error:function(data){
 					}
 				});
