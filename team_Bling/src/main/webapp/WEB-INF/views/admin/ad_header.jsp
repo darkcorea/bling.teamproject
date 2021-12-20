@@ -101,12 +101,9 @@
 		      <li><a class="dropdown-item" href="/team_Bling/Ad_board/question.do?page=1&kind=H">문의 게시판</a></li>
 		      <li><a class="dropdown-item" href="/team_Bling/Ad_board/board.do?page=1&type=T">공지사항 게시판</a></li>
 		      <li><a class="dropdown-item" href="/team_Bling/Ad_board/event.do">이벤트 게시판</a></li>
-		      <li><a class="dropdown-item" href="/team_Bling/Ad_board/review.do?page=1">리뷰 관리</a></li>
+		      <li><a class="dropdown-item" href="/team_Bling/Ad_board/review.do?page=1">리뷰 게시판</a></li>
 		    </ul>
 		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" href="#"  id="admin_state">통계</a>
-		  </li> 
 		</ul>	 
 		<hr>	
 

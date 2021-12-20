@@ -16,7 +16,6 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -617,7 +616,33 @@ public class Ad_BoardController {
 	}
 	
 	
+	/*       	 리뷰게시판         		   */
+	// 관리자 제품 문의하기 게시판 이동
+	@RequestMapping(value="/review.do")
+	public String review(Locale locale,Model model,Criteria cs) throws Exception{
+		
+		cs.setPerPageNum(20);
+		
+		PageMaker pm = new PageMaker();
+		pm.setScri(cs);
+		pm.setKind(cs.getKind());
+		
+		int review_count = ad_boardService.review_count(pm);
+		pm.setTotalCount(review_count);
+		
+		model.addAttribute("pm", pm);
+		model.addAttribute("list", ad_boardService.review_list(pm));
+		return "admin/Board/review";
+	}
 	
+	// 리뷰 삭제
+	@RequestMapping(value="/review_delete.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int review_delete(int ridx)throws Exception{
+		 ad_boardService.review_delete(ridx);
+		return 1;
+	}
+
 	public void makeDir1() {
         // 폴더를 만들 디렉토리 경로(Window 기반)
         File makeFolder = new File(FILE_SERVER_PATH1);

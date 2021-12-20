@@ -10,8 +10,15 @@ public class ReviewVO {
 	private int midx;
 	private int oidx;
 	private int grade;
+	private int pidx;
 	
 	
+	public int getPidx() {
+		return pidx;
+	}
+	public void setPidx(int pidx) {
+		this.pidx = pidx;
+	}
 	public int getRidx() {
 		return ridx;
 	}

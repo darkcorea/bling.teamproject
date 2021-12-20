@@ -13,6 +13,7 @@ import com.project.bling.vo.NoticeVO;
 import com.project.bling.vo.Order_detailVO;
 import com.project.bling.vo.Product_QuestionVO;
 import com.project.bling.vo.QuestionVO;
+import com.project.bling.vo.ReviewVO;
 
 @Service("Ad_BoardService")
 public class Ad_BoardServiceImpl implements Ad_BoardService{
@@ -142,6 +143,23 @@ public class Ad_BoardServiceImpl implements Ad_BoardService{
 	@Override
 	public void question_product_modify(Product_QuestionVO pv) throws Exception {
 		ad_boardDAO.question_product_modify(pv);		
+	}
+
+	// 리뷰 총 갯수
+	@Override
+	public int review_count(PageMaker pm) throws Exception {
+		return ad_boardDAO.review_count(pm);
+	}
+	// 리뷰 리스트
+	@Override
+	public List<ReviewVO> review_list(PageMaker pm) throws Exception {
+		return ad_boardDAO.review_list(pm);
+	}
+	
+	// 리뷰삭제
+	@Override
+	public void review_delete(int ridx) throws Exception {
+		ad_boardDAO.review_delete(ridx);
 	}
 
 	
