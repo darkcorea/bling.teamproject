@@ -21,6 +21,7 @@ public class UserVO {
 	private String rdate1;
 	private int sum;
 	private int count;
+	private String quit;
 	
 	public String getRdate() {
 		return rdate;
@@ -135,6 +136,12 @@ public class UserVO {
 	}
 	public void setGrade(String grade) {
 		this.grade = grade;
+	}
+	public String getQuit() {
+		return quit;
+	}
+	public void setQuit(String quit) {
+		this.quit = quit;
 	}
 	
 	

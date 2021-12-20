@@ -77,4 +77,8 @@
 		
 	</update>
 	
+	<select id="secession_list" resultType="UserVO">
+		select id,uname,grade,rdate,quit from bg_user where delyn=0
+	</select>
+	
 </mapper>

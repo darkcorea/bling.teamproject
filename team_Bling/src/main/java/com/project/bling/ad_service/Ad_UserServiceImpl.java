@@ -32,4 +32,9 @@ public class Ad_UserServiceImpl implements Ad_UserService{
 		
 	}
 
+	@Override
+	public List<UserVO> secession_list() throws Exception {
+		return ad_userDAO.secession_list();
+	}
+
 }
