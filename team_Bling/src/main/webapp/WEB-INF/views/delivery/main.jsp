@@ -535,7 +535,7 @@ $(document).ready(function() {
 						str += " <img class='image_main' src='/team_Bling/resources/usercustomizing/"+data[i].main+"'></a>";
 						str += "</td>";	
 						str += "<td style='width:300px;'>";
-						str += "<a href='/team_Bling/Custom/list.do'>";
+						str += "<a href='/team_Bling/Custom/list.do' class='title4'>";
 						str += "<span><b>"+data[i].pname+"</b></span></a><br>"
 					}
 					

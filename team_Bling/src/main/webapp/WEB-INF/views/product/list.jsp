@@ -71,7 +71,7 @@
 				<c:when test="${kind eq 'E'}">	귀걸이  </c:when>
 				<c:when test="${kind eq 'B'}">	팔찌	</c:when>
 			</c:choose>
-		</div><br>
+		</div><br><br>
 		
 		<!-- best상품 3개 뿌려 주는 곳 -->
 		<div class="container">
@@ -140,7 +140,7 @@
 					</script> 
 				</c:forEach>
 			</div>
-		</div>
+		</div><br><br><br>
 		
 		<!-- 신상품, 판매산위순, 높은 가격순, 낮은 가격순 -->
 		<div class="row margin15">
@@ -149,7 +149,6 @@
 			<input type="hidden" value="${page}" id="page">
 			<script type="text/javascript">
 				var kind = document.getElementById("option_kind").value;
-				console.log(">>>>kind의 값 >>>>"+kind);
 				
 				document.write("<div class='btn-group btn-group-sm d-md-flex justify-content-md-end' role='group' aria-label='Basic example'>");
 					document.write("<button type='button' class='btn btn-light me-md-2' onclick='option_num(1);'>신상품순</button>");

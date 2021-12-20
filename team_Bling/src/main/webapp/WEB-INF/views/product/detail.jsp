@@ -142,17 +142,14 @@
 		<div>
 			<hr class="explan-bottom">
 		</div>
-
+		<div class="div_height"><a id="move_info"></a></div><br>
 		<!-- 상품설명, 후기 등 네비게이션 -->
 		<div class="detail-nav fw-bold">
-			<span class="detail-nav-1"><a id="move_info">상세정보</a></span> <span
-				class="detail-nav-1"><a href="#move_review"
-				style="text-decoration: none; color: inherit;">후기(<span><c:out
-							value="${fn:length(review)}" /></span>)
-			</a></span> <span class="detail-nav-1"><a href="#move_question"
-				style="text-decoration: none; color: inherit;">상품문의</a></span> <span
-				class="detail-nav-1"><a href="#move_giude"
-				style="text-decoration: none; color: inherit;">구매가이드</a></span>
+			<span class="detail-nav-1 pointer" style="border:#CB7878 solid;border-width: 0 0 10px 0;">상세정보</span>
+			<span class="detail-nav-1"><a href="#move_review" style="text-decoration: none; color: inherit;"
+			>후기(<span><c:out value="${fn:length(review)}" /></span>)</a></span>
+			<span class="detail-nav-1"><a href="#move_question"	style="text-decoration: none; color: inherit;">상품문의</a></span>
+			<span class="detail-nav-1"><a href="#move_giude" style="text-decoration: none; color: inherit;">구매가이드</a></span>
 		</div>
 		<!-- 상품 상세 설명 이미지 -->
 		<div class="detail-image">
@@ -172,15 +169,12 @@
 		</div>
 
 		<!-- 상품에 관한 리뷰 -->
+		<div class="div_height"><a id="move_review"></a></div><br>
 		<div class="detail-nav fw-bold">
-			<span class="detail-nav-1"><a href="#move_info"
-				style="text-decoration: none; color: inherit;">상세정보</a></span> <span
-				class="detail-nav-1"><a id="move_review">후기(<span><c:out
-							value="${fn:length(review)}" /></span>)
-			</a></span> <span class="detail-nav-1"><a href="#move_question"
-				style="text-decoration: none; color: inherit;">상품문의</a></span> <span
-				class="detail-nav-1"><a href="#move_giude"
-				style="text-decoration: none; color: inherit;">구매가이드</a></span>
+			<span class="detail-nav-1"><a href="#move_info" style="text-decoration: none; color: inherit;">상세정보</a></span>
+			<span class="detail-nav-1" style="border:#CB7878 solid;border-width: 0 0 10px 0;">후기(<span><c:out value="${fn:length(review)}" /></span>)
+			</span> <span class="detail-nav-1"><a href="#move_question" 	style="text-decoration: none; color: inherit;">상품문의</a></span>
+			<span class="detail-nav-1"><a href="#move_giude" style="text-decoration: none; color: inherit;">구매가이드</a></span>
 		</div>
 
 		<!-- 상품문의 상단 정보들 표시 -->
@@ -237,30 +231,26 @@
 		</div>
 
 		<!-- 상품에 관한 문의 -->
+		<div class="div_height"><a id="move_question"></a></div><br>
 		<div class="detail-nav fw-bold">
-			<span class="detail-nav-1"><a href="#move_info"
-				style="text-decoration: none; color: inherit;">상세정보</a></span> <span
-				class="detail-nav-1"><a href="#move_review"
-				style="text-decoration: none; color: inherit;">후기(<span><c:out
-							value="${fn:length(review)}" /></span>)
-			</a></span> <span class="detail-nav-1"><a id="move_question">상품문의</a></span> <span
-				class="detail-nav-1"><a href="#move_giude"
-				style="text-decoration: none; color: inherit;">구매가이드</a></span>
+			<span class="detail-nav-1"><a href="#move_info"	style="text-decoration: none; color: inherit;">상세정보</a></span>
+			<span class="detail-nav-1"><a href="#move_review" style="text-decoration: none; color: inherit;">
+			후기(<span><c:out value="${fn:length(review)}" /></span>)	</a></span>
+			<span class="detail-nav-1" style="border:#CB7878 solid;border-width: 0 0 10px 0;">상품문의</span>
+			<span,class="detail-nav-1"><a href="#move_giude" style="text-decoration: none; color: inherit;">구매가이드</a></span>
 		</div>
 		<div id="detail-Inquiry">
 
 		</div>
 
 		<!-- 상품구매에 대한 가이드 -->
+		<div class="div_height"><a id="move_giude"></a></div><br>
 		<div class="detail-nav fw-bold">
-			<span class="detail-nav-1"><a href="#move_info"
-				style="text-decoration: none; color: inherit;">상세정보</a></span> <span
-				class="detail-nav-1"><a href="#move_review"
-				style="text-decoration: none; color: inherit;">후기(<span><c:out
-							value="${fn:length(review)}" /></span>)
-			</a></span> <span class="detail-nav-1"><a href="#move_question"
-				style="text-decoration: none; color: inherit;">상품문의</a></span> <span
-				class="detail-nav-1"><a id="move_giude">구매가이드</a></span>
+			<span class="detail-nav-1"><a href="#move_info"	style="text-decoration: none; color: inherit;">상세정보</a></span>
+			<span class="detail-nav-1"><a href="#move_review" style="text-decoration: none; color: inherit;">
+			후기(<span><c:out value="${fn:length(review)}" /></span>)	</a></span>
+			<span class="detail-nav-1"><a href="#move_question"	style="text-decoration: none; color: inherit;">상품문의</a></span>
+			<span class="detail-nav-1" style="border:#CB7878 solid;border-width: 0 0 10px 0;">구매가이드</span>
 		</div>
 		<div class="detail-guide">
 			<img src="${cPath}/resources/simage/제품구매가이드.jpg">
