@@ -58,7 +58,7 @@
 					<c:if test="${detail.imgfile != null}">
 					<tr>
 						<td colspan="2">
-							<a href="${cPath}/Notice/fileDownLoad.do?fileName=${detail.imgfile}">
+							<a href="/team_Bling/Ad_board/fileDownLoad.do?fileName=${detail.imgfile}">
 							파일 다운로드 : 
 							<i class="bi bi-file-earmark-arrow-down"></i>
 							${detail.imgfile}
