@@ -735,22 +735,40 @@ $(document).ready(function(){
 	var zip_code = 0;
 	var name = 0;
 	var rphone = 0;
+	
+	
+	$.ajax({
+		url:"${cPath}/Order/select_basic_addr.do",
+		type:"post",
+		data:{"midx":midx},
+		dataType:"json",
+		success:function(data){
+			if(data[0].basic_addr==1){
+				name = data[0].name;
+				addr1 = data[0].addr1;
+				addr2 = data[0].addr2;
+				zip_code = data[0].zip_code;
+				rphone = data[0].rphone;
+				$("#recipient").val(name);
+				$("#address1").val(addr1);
+				$("#address2").val(addr2);
+				$("#zip_code").val(zip_code);
+				$("#rphone").val(rphone);
+			}
+		},
+		error:function(){
+			alert("실행오류");
+		}
+	});
+	
+	
 	$.ajax({
 		url:"${cPath}/Order/select_midx.do",
 		type:"post",
 		data:{"midx":midx},
 		dataType:"json",
 		success:function(data){
-			name = data.name;
-			addr1 = data.addr1;
-			addr2 = data.addr2;
-			zip_code = data.zip_code;
-			rphone = data.rphone;
-			$("#recipient").val(name);
-			$("#address1").val(addr1);
-			$("#address2").val(addr2);
-			$("#zip_code").val(zip_code);
-			$("#rphone").val(rphone);
+			
 			grade = data.grade;
 			console.log("data : "+grade);
 			var point = data.mileage;

@@ -170,4 +170,11 @@ public class OrderController {
 		
 		return vo.getNonidx();
 	}
+	
+	@RequestMapping(value="/select_basic_addr.do")
+	@ResponseBody
+	public  List <UserVO> select_basic_addr(int midx)  throws Exception{
+		return orderService.select_basic_addr(midx);
+	}
+	
 }
