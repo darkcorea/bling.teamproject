@@ -31,7 +31,7 @@
 			,COUNT(*) OVER(PARTITION BY ord.order_idx) AS count
 			,SUM(od.quantity) OVER(PARTITION BY ord.order_idx) AS quantitySum
 		    ,TIMESTAMPDIFF(DAY, de.deli_com, now()) AS date_differ
-		    ,ROW_NUMBER() OVER(PARTITION BY ord.order_idx ORDER BY ord.order_idx asc )AS RNUM
+		    ,ROW_NUMBER() OVER(PARTITION BY ord.order_idx ORDER BY ord.order_idx desc, re.ridx IS NULL desc )AS RNUM
 		    ,pr.cuidx as cuidx
 			FROM bg_order_detail od
 			JOIN bg_order ord ON ord.order_idx = od.order_idx
@@ -43,7 +43,7 @@
 			WHERE ord.midx=#{midx}
 			<include refid="date_search"></include>
 
-			ORDER BY ord.order_idx desc, od.detail_idx desc) A
+			ORDER BY ord.order_idx desc, re.ridx IS NULL desc) A
         WHERE RNUM =1
         Limit #{startPost},#{scri.perPageNum}
 	</select>
