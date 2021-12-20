@@ -34,6 +34,8 @@
 		#info{
 			font-size:8pt;
 			color:#cd2828;
+			display: block;
+			
 		}
 		
 	</style>
@@ -62,7 +64,7 @@
 						</select>
 					</th>
 					<th class="center" style='width:110px;'>마일리지</th>
-					<th class="center" style='width:110px;'>주문금액</th>
+					<th class="center" style='width:150px;'>주문금액<span id="info">(30일 기준)</span></th>
 					<th class="center" style='width:140px;'>회원가입일</th>
 					<th class="center" style='width:140px;'>최종로그인</th>
 					

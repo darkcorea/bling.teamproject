@@ -13,6 +13,7 @@ import com.project.bling.vo.NoticeVO;
 import com.project.bling.vo.Order_detailVO;
 import com.project.bling.vo.Product_QuestionVO;
 import com.project.bling.vo.QuestionVO;
+import com.project.bling.vo.ReviewVO;
 
 @Repository
 public class Ad_BoardDAO {
@@ -134,5 +135,20 @@ public class Ad_BoardDAO {
 	public void question_product_modify(Product_QuestionVO pv)throws Exception{
 		sqlSession.update(ps+"question_product_modify", pv);
 	}
+	
+	// 리뷰 총 갯수
+	public int review_count(PageMaker pm) throws Exception{
+		return sqlSession.selectOne(ps+"review_count", pm);
+	}
+	// 리뷰 리스트
+	public List<ReviewVO> review_list(PageMaker pm)throws Exception{
+		return sqlSession.selectList(ps+"review_list", pm);
+	}
+	// 리뷰 삭제
+	public void review_delete(int ridx)throws Exception{
+		sqlSession.delete(ps+"review_delete", ridx);
+	}
+	
+	
 	
 }

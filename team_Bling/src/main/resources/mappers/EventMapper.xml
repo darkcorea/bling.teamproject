@@ -40,7 +40,7 @@
 		SELECT *
 		FROM bg_event
 		<!-- 전체옵션 -->	
-		<if test = 'type == "ing"'>
+		<if test = 'type == "tot"'>
 			where 1=1
 		</if>
 		<!-- 진행중옵션 -->	

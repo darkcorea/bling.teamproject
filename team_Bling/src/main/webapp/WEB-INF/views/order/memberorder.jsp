@@ -200,8 +200,8 @@
 		<br><br>
 	<h5 id="inline">받는 사람 정보</h5>
 		<div class="infos">
-			<label><input type="radio" name="info" value="same">구매자 정보와 동일</label>
-			<label><input type="radio" name="info" value="new" checked>새로운 배송지</label>
+			<label><input type="radio" name="info" value="same" checked>기본 배송지</label>
+			<label><input type="radio" name="info" value="new">새로운 배송지</label>
 		</div>
 		<div id="addrlist">
 		<input type="button" value="주소록" onclick="addrlist()" id="addrbtn"></div>
@@ -420,7 +420,11 @@
 					str += "	</tr>";
 					for (let i =0; i<data.length; i++){
 						str += "	<tr class='line1'>";
-						str += "	<td><input type='radio' name='addr'>"+data[i].addr_name+"</td>";
+						str += "	<td><input type='radio' name='addr'>"+data[i].addr_name;
+						if(data[i].basic_addr==1){
+							str += "<div style='border:1px solid #CB7878; border-radius: 2em;'>기본배송지</div>";
+						}
+						str += "</td>";
 						str += "	<td>"+data[i].zip_code+"</td>";
 						str += "	<td>"+data[i].addr1+"</td>";
 						str += "	<td>"+data[i].addr2+"</td>";
@@ -726,12 +730,45 @@ $(document).ready(function(){
 	var midx = "${sessionScope.UserVO.midx}";
 	var grade = 0;
 	var price = ${tot_price};
+	var addr1 = 0;
+	var addr2 = 0;
+	var zip_code = 0;
+	var name = 0;
+	var rphone = 0;
+	
+	
+	$.ajax({
+		url:"${cPath}/Order/select_basic_addr.do",
+		type:"post",
+		data:{"midx":midx},
+		dataType:"json",
+		success:function(data){
+			if(data[0].basic_addr==1){
+				name = data[0].name;
+				addr1 = data[0].addr1;
+				addr2 = data[0].addr2;
+				zip_code = data[0].zip_code;
+				rphone = data[0].rphone;
+				$("#recipient").val(name);
+				$("#address1").val(addr1);
+				$("#address2").val(addr2);
+				$("#zip_code").val(zip_code);
+				$("#rphone").val(rphone);
+			}
+		},
+		error:function(){
+			alert("실행오류");
+		}
+	});
+	
+	
 	$.ajax({
 		url:"${cPath}/Order/select_midx.do",
 		type:"post",
 		data:{"midx":midx},
 		dataType:"json",
 		success:function(data){
+			
 			grade = data.grade;
 			console.log("data : "+grade);
 			var point = data.mileage;
@@ -845,17 +882,13 @@ $(document).ready(function(){
 	
 	$(".infos input:radio").change(function(){
 		var value = $(this).val();
-		var name = $(".name").text();
-		var phone = $(".phone").text();
-		let addr1 = "${sessionScope.UserVO.addr1}";
-		let addr2 = "${sessionScope.UserVO.addr2}";
-		let zipcode = "${sessionScope.UserVO.zip_code}";
+		
 		if(value=="same"){
 			$("#recipient").val(name);
-			$("#rphone").val(phone);
+			$("#rphone").val(rphone);
 			$("#address1").val(addr1);
 			$("#address2").val(addr2);
-			$("#zip_code").val(zipcode);
+			$("#zip_code").val(zip_code);
 		}
 		else if(value=="new"){
 			$("#recipient").val("");

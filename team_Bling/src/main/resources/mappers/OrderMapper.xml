@@ -51,7 +51,7 @@
 	
 	<select id="addr_select" parameterType="int" resultType="OrderVO">
 	<![CDATA[
-		SELECT addr_name,ZIP_CODE,ADDR1,ADDR2,RPHONE,NAME FROM BG_ADDRESS_LIST WHERE MIDX=#{midx}
+		SELECT addr_name,ZIP_CODE,ADDR1,ADDR2,RPHONE,NAME,basic_addr FROM BG_ADDRESS_LIST WHERE MIDX=#{midx}
 	]]>
 	</select>
 	
@@ -64,6 +64,13 @@
 	<select id="select_midx" parameterType="int" resultType="UserVO">
 	<![CDATA[
 		SELECT email,phone,grade,mileage FROM BG_USER WHERE MIDX=#{midx}
+	]]>
+	</select>
+	
+	<select id="select_basic_addr" parameterType="int" resultType="UserVO">
+	<![CDATA[
+		 SELECT ZIP_CODE,ADDR1,ADDR2,RPHONE,NAME,basic_addr FROM bg_address_list
+ 		WHERE MIDX=#{midx} order by basic_addr desc
 	]]>
 	</select>
 	

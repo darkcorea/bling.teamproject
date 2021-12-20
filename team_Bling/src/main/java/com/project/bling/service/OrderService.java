@@ -18,4 +18,5 @@ public interface OrderService {
 	UserVO select_midx(int midx) throws Exception;
 	void delivery_insert(OrderVO vo) throws Exception;
 	void non_delivery_insert(NonorderVO vo) throws Exception;
+	public  List <UserVO> select_basic_addr(int midx) throws Exception;
 }

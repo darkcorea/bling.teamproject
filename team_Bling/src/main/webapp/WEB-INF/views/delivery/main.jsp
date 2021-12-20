@@ -522,12 +522,23 @@ $(document).ready(function() {
 					str += "<table>";	
 					str += "</tr>";	
 					str += " <td style='width:150px;'>";
-					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"'>"
-					str += " <img class='image_main' src='/team_Bling/resources/image/"+data[i].main+"'></a>";	
-					str += "</td>";	
-					str += "<td style='width:300px;'>";
-					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"' class='title4'>"
-					str += "<span><b>"+data[i].pname+"</b></span></a><br>";	
+					
+					if(data[i].cuidx == 0){
+						str += "<a href='/team_Bling/Product/detail.do?pidx="+data[i].pidx+"'>"
+						str += " <img class='image_main' src='/team_Bling/resources/image/"+data[i].main+"'></a>";	
+						str += "</td>";	
+						str += "<td style='width:300px;'>";
+						str += "<a href='/team_Bling/Product/detail.do?pidx="+data[i].pidx+"' class='title4'>";
+						str += "<span><b>"+data[i].pname+"</b></span></a><br>";	
+					}else if(data[i].cuidx != 0 || data[i].cuidx != null){
+						str += "<a href='/team_Bling/Custom/list.do'>"
+						str += " <img class='image_main' src='/team_Bling/resources/usercustomizing/"+data[i].main+"'></a>";
+						str += "</td>";	
+						str += "<td style='width:300px;'>";
+						str += "<a href='/team_Bling/Custom/list.do'>";
+						str += "<span><b>"+data[i].pname+"</b></span></a><br>"
+					}
+					
 					var oname = data[i].oname.split("+")[0]
 					str += " <span>"+oname+"</span>(수량: <span>"+data[i].quantity+"</span>)";	
 					str += "</td>";	
@@ -586,7 +597,7 @@ $(document).ready(function() {
 		$("#staticBackdrop1").modal("show");
 	}
 	
-	// 모달 쓰기 
+	// 리뷰 쓰기 
 	function reviewWrite(){
 
 		let starRating = document.querySelector("input[name='rating']:checked");
@@ -615,6 +626,7 @@ $(document).ready(function() {
 			data: "contents="+contents+"&grade="+grade,
 			ContentType: "json",
 			success: function(data){
+				$("#staticBackdrop1").modal("hide");
 				alert("리뷰가 작성되었습니다.");
 				location.reload();
 				

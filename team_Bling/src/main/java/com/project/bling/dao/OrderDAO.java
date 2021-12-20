@@ -52,4 +52,7 @@ public class OrderDAO {
 		
 		sqlSession.insert(om+"nondelivery_insert",vo);
 	}
+	public List <UserVO> select_basic_addr(int midx) throws Exception {
+		return sqlSession.selectList(om+"select_basic_addr",midx);
+	}
 }

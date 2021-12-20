@@ -220,5 +220,34 @@
   	UPDATE bg_product_question SET title=#{title}, comments=#{comments} WHERE pqidx=#{pqidx}
   </update>
   
+  <!-- 리뷰 총 갯수와 리뷰 리스트 -->
+  <select id="review_count" resultType="int" parameterType="PageMaker">
+  	SELECT count(*) FROM bg_review WHERE ridx
+  	<if test='kind == "A"'> AND grade=1</if>
+	<if test='kind == "B"'> AND grade=2</if>
+	<if test='kind == "C"'> AND grade=3</if>
+	<if test='kind == "D"'> AND grade=4</if>
+	<if test='kind == "E"'> AND grade=5</if>
+  </select>
+  <select id="review_list" parameterType="PageMaker" resultType="ReviewVO">
+  	SELECT a.ridx, a.contents, a.rdate, a.image1, a.image2, a.midx, a.grade, c.pidx
+  	FROM bg_review a
+	JOIN bg_order_detail b ON a.detail_idx = b.detail_idx
+	JOIN bg_option c ON c.oidx = b.oidx
+	WHERE 1=1
+	<if test='kind == "A"'> AND grade=1</if>
+	<if test='kind == "B"'> AND grade=2</if>
+	<if test='kind == "C"'> AND grade=3</if>
+	<if test='kind == "D"'> AND grade=4</if>
+	<if test='kind == "E"'> AND grade=5</if>
+	ORDER BY a.ridx desc
+  	Limit #{startPost},#{scri.perPageNum}
+  </select>
+  
+  <!-- 리뷰 삭제 -->
+  <delete id="review_delete" parameterType="int">
+  	DELETE FROM bg_review WHERE ridx=#{ridx}
+  </delete>
+  
   
 </mapper>

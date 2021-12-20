@@ -22,7 +22,22 @@ public class UserVO {
 	private int sum;
 	private int count;
 	private String quit;
+	private String name;
+	private String rphone;
+	private int basic_addr;
 	
+	public String getRphone() {
+		return rphone;
+	}
+	public void setRphone(String rphone) {
+		this.rphone = rphone;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getRdate() {
 		return rdate;
 	}
@@ -142,6 +157,12 @@ public class UserVO {
 	}
 	public void setQuit(String quit) {
 		this.quit = quit;
+	}
+	public int getBasic_addr() {
+		return basic_addr;
+	}
+	public void setBasic_addr(int basic_addr) {
+		this.basic_addr = basic_addr;
 	}
 	
 	

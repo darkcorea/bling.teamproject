@@ -31,7 +31,7 @@
 			,COUNT(*) OVER(PARTITION BY ord.order_idx) AS count
 			,SUM(od.quantity) OVER(PARTITION BY ord.order_idx) AS quantitySum
 		    ,TIMESTAMPDIFF(DAY, de.deli_com, now()) AS date_differ
-		    ,ROW_NUMBER() OVER(PARTITION BY ord.order_idx ORDER BY ord.order_idx asc )AS RNUM
+		    ,ROW_NUMBER() OVER(PARTITION BY ord.order_idx ORDER BY ord.order_idx desc, re.ridx IS NULL desc )AS RNUM
 		    ,pr.cuidx as cuidx
 			FROM bg_order_detail od
 			JOIN bg_order ord ON ord.order_idx = od.order_idx
@@ -43,7 +43,7 @@
 			WHERE ord.midx=#{midx}
 			<include refid="date_search"></include>
 
-			ORDER BY ord.order_idx desc, od.detail_idx desc) A
+			ORDER BY ord.order_idx desc, re.ridx IS NULL desc) A
         WHERE RNUM =1
         Limit #{startPost},#{scri.perPageNum}
 	</select>
@@ -71,7 +71,7 @@
 	  <!-- order_idx로 구매한 상품들 정보 가져 오기 -->
 	  <select id="order_list" parameterType="int" resultType="CombineVO">
 	 	SELECT bp.pidx, bo.recipient, bo.rphone, bo.addr1, bo.addr2, bp.pname, bi.main, bop.oname, 
-	  			bod.quantity, bo.payment, bo.tot_price,bo.zip_code,bo.order_idx, re.ridx, bod.detail_idx
+	  			bod.quantity, bo.payment, bo.tot_price,bo.zip_code,bo.order_idx, re.ridx, bod.detail_idx,bp.cuidx,bp.cuidx
 		FROM bg_order bo
 		JOIN bg_order_detail bod ON bo.order_idx = bod.order_idx
 		JOIN bg_option bop ON bod.oidx = bop.oidx
@@ -117,6 +117,7 @@
 			,COUNT(*) OVER(PARTITION BY ord.order_idx) AS count
 			,SUM(od.quantity) OVER(PARTITION BY ord.order_idx) AS quantitySum
 		    ,ROW_NUMBER() OVER(PARTITION BY ord.order_idx ORDER BY ord.order_idx asc )AS RNUM
+		    ,pr.cuidx
 			FROM bg_order_detail od
 			JOIN bg_order ord ON ord.order_idx = od.order_idx
 			JOIN bg_option op ON op.oidx = od.oidx

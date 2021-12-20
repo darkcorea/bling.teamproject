@@ -9,6 +9,7 @@ import com.project.bling.vo.NoticeVO;
 import com.project.bling.vo.Order_detailVO;
 import com.project.bling.vo.Product_QuestionVO;
 import com.project.bling.vo.QuestionVO;
+import com.project.bling.vo.ReviewVO;
 
 public interface Ad_BoardService {
 	
@@ -58,5 +59,10 @@ public interface Ad_BoardService {
 	List<CombineVO> product_detail(int pidx)throws Exception;
 	void question_product_write(Product_QuestionVO pv)throws Exception;
 	void question_product_modify(Product_QuestionVO pv)throws Exception;
+	
+	// 리뷰 리스트
+	int review_count(PageMaker pm) throws Exception;
+	List<ReviewVO> review_list(PageMaker pm)throws Exception;
+	void review_delete(int ridx)throws Exception;
 	
 }

@@ -781,12 +781,20 @@
 					str += "<table>";	
 					str += "</tr>";	
 					str += " <td style='width:150px;'>";
-					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"'>"
-					str += " <img class='image_main' src='/team_Bling/resources/image/"+data[i].main+"'></a>";	
-					str += "</td>";	
-					str += "<td style='width:300px;'>";
-					str += "<a href='/team_Bling/Product/detail.do?pidx="+data[0].pidx+"' class='title4'>"
-					str += "<span><b>"+data[i].pname+"</b></span></a><br>";	
+					
+					if(data[i].cuidx == 0){
+						str += "<a href='/team_Bling/Product/detail.do?pidx="+data[i].pidx+"'>"
+						str += " <img class='image_main' src='/team_Bling/resources/image/"+data[i].main+"'></a>";	
+						str += "</td>";	
+						str += "<td style='width:300px;'>";
+						str += "<a href='/team_Bling/Product/detail.do?pidx="+data[i].pidx+"' class='title4'>";
+						str += "<span><b>"+data[i].pname+"</b></span></a><br>";	
+					}else if(data[i].cuidx != 0 || data[i].cuidx != null){
+						str += " <img class='image_main' src='/team_Bling/resources/usercustomizing/"+data[i].main+"'>";
+						str += "</td>";	
+						str += "<td style='width:300px;'>";
+						str += "<span><b>"+data[i].pname+"</b></span><br>"
+					}
 					var oname = data[i].oname.split("+")[0]
 					str += " <span>"+oname+"</span>(수량: <span>"+data[i].quantity+"</span>)";	
 					str += "</td>";	

@@ -27,6 +27,7 @@ public class OrderVO {
 	private int addmileage;
 	private int payed_mileage;
 	private int cuidx;
+	private int basic_addr;
 	
 	
 	
@@ -179,6 +180,12 @@ public class OrderVO {
 	}
 	public void setCart_idx(int cart_idx) {
 		this.cart_idx = cart_idx;
+	}
+	public int getBasic_addr() {
+		return basic_addr;
+	}
+	public void setBasic_addr(int basic_addr) {
+		this.basic_addr = basic_addr;
 	}
 	
 }
