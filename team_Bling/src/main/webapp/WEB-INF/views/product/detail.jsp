@@ -307,7 +307,7 @@
 		$(".form-select").change(function(){
 			
 			// 선택된 셀렉트 박스의 text값과 value값 읽어오기
-		    let opName = $(this).children('option:selected').text();
+		    let opName = $(this).children('option:selected').text().trim();
 			
 			// 선택된 옵션에서 odxi와 stock값 분리하기 
 		    let opvalue = $(this).children('option:selected').val();
@@ -1129,17 +1129,22 @@
 					async: false,
 					ContentType:"application/json",
 					success:function(data){
-						if(data=="save"){
-							alert("장바구니에 담겼습니다");
-							location.reload();
+						if(data == "save"){
+							abc = data;
 						}else{
-							alert(data+' 상품이 장바구니에 존재합니다');
+							abc = data;
 						}
 					},
 					error:function(){
 						alert("실행오류");
 					}
 				});
+			}
+	   		if( abc == "save"){
+				alert("장바구니에 담겼습니다");
+				location.reload();
+			}else{
+				alert(abc + " 상품이 장바구니에 존재합니다");
 			}
 		}
 	}
