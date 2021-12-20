@@ -64,6 +64,9 @@
 	.pointer {
 		cursor: pointer;
 	}
+	.backcolor{
+		background-color: #FFEDED;
+	}
 </style>
 </head>
 
@@ -148,7 +151,7 @@
 
 <!-- 제품 미리보기 BEST-->
 		<div class="container">
-			<span><a id="subMenu1" href="/team_Bling/Product/best_new.do?kind=best">BEST</a></span><span><a id="subMenu2" href="/Product/best_new.do?kind=best">+더보기</a></span>
+			<div class="backcolor"><span><a id="subMenu1" href="/team_Bling/Product/best_new.do?kind=best">BEST</a></span><span><a id="subMenu2" href="/Product/best_new.do?kind=best">+더보기</a></span></div>
 			<br>
 			<div class="row" id="prodRow">
 				<c:forEach items="${best}" var="best" begin="0" end="2">
@@ -201,7 +204,7 @@
 	
 	<!-- 제품 미리보기 NEW-->
 		<div class="container">
-			<span><a id="subMenu1" href="/team_Bling/Product/best_new.do?kind=new">NEW</a></span><span><a id="subMenu2" href="/team_Bling/Product/best_new.do?kind=new">+더보기</a></span>
+			<div class="backcolor"><span><a id="subMenu1" href="/team_Bling/Product/best_new.do?kind=new">NEW</a></span><span><a id="subMenu2" href="/team_Bling/Product/best_new.do?kind=new">+더보기</a></span></div>
 			<br>
 			<div class="row" id="prodRow">
 				<c:forEach items="${newProd}" var="newProd" begin="0" end="5">
@@ -249,8 +252,8 @@
 	
 	<!-- 제품 종류 Ring-->
 		<div class="container">
-			<span><a id="subMenu1" href="/team_Bling/Product/sroll.do?kind=R">반지</a></span>
-			<span><a id="subMenu2" href="/team_Bling/Product/sroll.do?kind=R">+더보기</a></span>
+			<div class="backcolor"><span><a id="subMenu1" href="/team_Bling/Product/sroll.do?kind=R">반지</a></span>
+			<span><a id="subMenu2" href="/team_Bling/Product/sroll.do?kind=R">+더보기</a></span></div>
 			<br>
 			<div class="row" id="prodRow">
 				<c:forEach items="${ring}" var="ring" begin="0" end="2">
@@ -307,8 +310,8 @@
 	<section>
 	<!-- 제품 종류 Necklace-->
 		<div class="container">
-			<span><a id="subMenu1" href="/team_Bling/Product/sroll.do?kind=N">목걸이</a></span>
-			<span><a id="subMenu2" href="/team_Bling/Product/sroll.do?kind=N">+더보기</a></span>
+			<div class="backcolor"><span><a id="subMenu1" href="/team_Bling/Product/sroll.do?kind=N">목걸이</a></span>
+			<span><a id="subMenu2" href="/team_Bling/Product/sroll.do?kind=N">+더보기</a></span></div>
 			<br>
 			<div class="row" id="prodRow">
 				<c:forEach items="${neck}" var="neck" begin="0" end="2">
@@ -355,8 +358,8 @@
 	
 	<!-- 제품 종류 Earring-->
 		<div class="container">
-			<span><a id="subMenu1" href="/team_Bling/Product/sroll.do?kind=E">귀걸이</a></span>
-			<span><a id="subMenu2" href="/team_Bling/Product/sroll.do?kind=E">+더보기</a></span>
+			<div class="backcolor"><span><a id="subMenu1" href="/team_Bling/Product/sroll.do?kind=E">귀걸이</a></span>
+			<span><a id="subMenu2" href="/team_Bling/Product/sroll.do?kind=E">+더보기</a></span></div>
 			<br>
 			<div class="row" id="prodRow">
 				<c:forEach items="${ear}" var="ear" begin="0" end="2">
@@ -403,8 +406,8 @@
 		
 	<!-- 제품 종류 Bracelet-->
 		<div class="container">
-			<span><a id="subMenu1" href="/team_Bling/Product/sroll.do?kind=B">팔찌</a></span>
-			<span><a id="subMenu2" href="/team_Bling/Product/sroll.do?kind=B">+더보기</a></span>
+			<div class="backcolor"><span><a id="subMenu1" href="/team_Bling/Product/sroll.do?kind=B">팔찌</a></span>
+			<span><a id="subMenu2" href="/team_Bling/Product/sroll.do?kind=B">+더보기</a></span></div>
 			<br>
 			<div class="row" id="prodRow">
 				<c:forEach items="${brac}" var="brac" begin="0" end="2">
