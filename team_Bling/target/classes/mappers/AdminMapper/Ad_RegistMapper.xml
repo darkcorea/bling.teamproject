@@ -154,4 +154,23 @@
 		WHERE pidx = #{pidx}
 	</update>
 	
+	<!-- 재고가 적은 상품 불러 오기 -->
+	<select id="sold_out_count" resultType="int">
+	<![CDATA[
+		SELECT count(*) FROM bg_product a
+		JOIN bg_option b ON a.pidx=b.pidx
+		WHERE a.kind not like 'z' AND a.saleyn='Y' and b.stock < 20
+	]]>
+	</select>
+	<select id="sold_out_list" parameterType="PageMaker" resultType="CombineVO">
+	<![CDATA[
+		SELECT * FROM bg_product pr
+		JOIN bg_image im ON im.pidx = pr.pidx
+		JOIN bg_option a ON a.pidx = pr.pidx
+		WHERE pr.kind not like 'z' and a.stock < 20
+		ORDER BY pr.pidx desc
+		Limit #{startPost},#{scri.perPageNum}
+	]]>
+	</select>
+	
 </mapper>

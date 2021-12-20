@@ -30,6 +30,16 @@ public class Ad_RegistServiceImpl implements Ad_RegistService{
 		return ad_registDAO.product_count1(kind);
 	}
 	
+	// 옵션이 20미만 제품
+	@Override
+	public int sold_out_count() throws Exception {
+		return ad_registDAO.sold_out_count();
+	}
+	@Override
+	public List<CombineVO> sold_out_list(PageMaker pm) throws Exception{
+		return ad_registDAO.sold_out_list(pm);
+	}
+	
 	// 제품 등록
 	@Override
 	public void insert(ProductVO vo) throws Exception {

@@ -124,15 +124,24 @@ public class Ad_RegistController {
 		pm.setScri(sc);
 		pm.setKind(kind);
 		
-		// 물건 총 갯수 구하기
-		int product_count = ad_registService.product_count(kind);
-		pm.setTotalCount(product_count);
-		
+
+		// 옵션이 20개 미만인 상품
+		if ( kind.equals("Z")) {
+			int product_count = ad_registService.sold_out_count();
+			pm.setTotalCount(product_count);
+			model.addAttribute("count", product_count);
+			model.addAttribute("list", ad_registService.sold_out_list(pm));
+		// 그 밖의 모든 일반 적인 경우	
+		}else {
+			// 물건 총 갯수 구하기
+			int product_count = ad_registService.product_count(kind);
+			pm.setTotalCount(product_count);
+			model.addAttribute("count", product_count);
+			model.addAttribute("list", ad_registService.list(pm));
+		}
+
 		// 페이징된 리스트와 필요한 값 페이지로 보내기
 		model.addAttribute("pm", pm);
-		model.addAttribute("list", ad_registService.list(pm));
-		model.addAttribute("count", product_count);
-		
 		// 옵션 정보 페이지로 보내기
 		model.addAttribute("oblist", ad_registService.oblist());
 		
