@@ -87,6 +87,7 @@
 		#mr{
 			margin-left:10px;
 		}
+		
 	</style>
 	
 </head>
@@ -266,7 +267,7 @@
         
         //글선택시
         function over(number){
-        	$(".divnumber"+number).css({"background-color":"#f8e0c8"});
+        	$(".divnumber"+number).css({"background-color":"orange"});
         	$("#number"+number).css({"border":"blue 1px solid"});
         }
         

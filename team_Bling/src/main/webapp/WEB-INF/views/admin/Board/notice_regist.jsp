@@ -76,7 +76,7 @@
 				<tr>
 					<th class="head">내용	</th>
 					<td colspan="3" height="294.8">
-						<textarea id="summernote" name="contents" ></textarea>
+						<textarea id="summernote" name="contents" id="contents"></textarea>
 						<input type="hidden" name="imges" id="imges">
 					</td>
 				</tr>
@@ -102,6 +102,19 @@
 		
 	</body>
 	<script>
+		$("form").submit(function(){
+			var check = true;
+			var type = $('input:radio[name=type]').is(':checked');
+			if(type == false){
+				alert("type을 선택해주세요.");
+				check = false;
+			}else if($("#subject").val() == null || $("#subject").val() == ""){
+				alert("제목을 적어주세요");
+				check = false;
+			}
+			return check;
+		});
+		
 		var setting = {
             height : 300,
             minHeight : null,

@@ -25,7 +25,12 @@
 				str += "	<tr id='tableRow'>";
 				str += "		<td id='td1'><span id='t1'>${ro.rdate}</span></td>";
 				str += "		<td id='td2'><span id='t2'>${ro.order_idx}</span></td>";
-				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/team_Bling/Product/detail.do?pidx=${ro.pidx}'>${ro.pname} <br> ${ro.oname}</a></span></td>";
+				str += "<c:if test='${ro.cuidx == 0}'>";
+				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/team_Bling/Product/detail.do?pidx=${ro.pidx}'>${ro.pname} / ${ro.oname}</a></span></td>";
+				str += "</c:if>";
+				str += "<c:if test='${ro.cuidx != 0}'>";
+					str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/team_Bling/Custom/list.do'>${ro.pname} / ${ro.oname}</a></span></td>";
+				str += "</c:if>";
 				str += "		<td id='td4'><span id='t4'><fmt:formatNumber value='${(ro.saleprice+ro.addprice)*ro.quantitySum}' pattern='#,###' />원</span></td>";
 				str += "		<td id='td5'><span id='t5'>${ro.quantitySum}</span></td>";
 				
