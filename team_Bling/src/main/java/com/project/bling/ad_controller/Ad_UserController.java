@@ -40,4 +40,12 @@ public class Ad_UserController {
 		
 		return "admin/User/userList";
 	}
+	
+	@RequestMapping(value="/secession_list.do")
+	public String secession_list(Model model) throws Exception{
+		
+		model.addAttribute("list",ad_userService.secession_list());
+		
+		return "admin/User/secessionList";
+	}
 }
