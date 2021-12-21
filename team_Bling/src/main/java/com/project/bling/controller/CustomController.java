@@ -37,10 +37,10 @@ import com.project.bling.vo.UserVO;
 @Controller
 public class CustomController {
 	
-	private static final String FILE_SERVER_PATH = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\usercustomizing\\";
-	private static final String FILE_SERVER_PATH1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\usercustomizing";
-	//private static final String FILE_SERVER_PATH = "C:\\tomcat\\webapps\\team_Bling\\resources\\usercustomizing\\";
-	//private static final String FILE_SERVER_PATH1 = "C:\\tomcat\\webapps\\team_Bling\\resources\\usercustomizing";
+	//private static final String FILE_SERVER_PATH = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\usercustomizing\\";
+	//private static final String FILE_SERVER_PATH1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\usercustomizing";
+	private static final String FILE_SERVER_PATH = "C:\\tomcat\\webapps\\team_Bling\\resources\\usercustomizing\\";
+	private static final String FILE_SERVER_PATH1 = "C:\\tomcat\\webapps\\team_Bling\\resources\\usercustomizing";
 	
 	@Autowired
 	CustomService customService;

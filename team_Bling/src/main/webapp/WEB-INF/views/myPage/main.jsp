@@ -205,7 +205,8 @@
 		
 		
 		function uploadFile(){
-			let files = document.querySelector("input[name='uploadBtn']").files;
+			const upInput = document.querySelector("input[name='uploadBtn']");
+			let files = upInput.files;
 			console.log("files : "+files);
 			
 			let image1 = files[0];
@@ -230,6 +231,9 @@
                 success: function(data){
                 	if(data == "true"){
                 		console.log("파일 업로드 성공");
+                		//같은 파일을 다시 선택할 경우 input value가 변경된게 아니기 때문에 change 이벤트가 발생되지 않는다.
+                		//파일이 선택된 후 처리해줄 로직이 끝난 뒤에, 아래와 같이 input 요소의 value 값을 비워주면 된다.
+                		upInput.value = '';
                 	}
                 	else if(data == "false"){
                 		console.log("지정된 이미지 파일이 아닙니다.");

@@ -24,8 +24,8 @@ public class NoticeController {
 	@Autowired
 	NoticeService noticeService;
 	
-	private static final String FILE_SERVER_PATH = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notices\\";
-	//private static final String FILE_SERVER_PATH = "C:\\tomcat\\webapps\\team_Bling\\resources\\notice\\;
+	//private static final String FILE_SERVER_PATH = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\notices\\";
+	private static final String FILE_SERVER_PATH = "C:\\tomcat\\webapps\\team_Bling\\resources\\notice\\";
 	
 	@RequestMapping(value="/notice_main.do")
 	public String main(Locale locale, Model model) throws Exception{
