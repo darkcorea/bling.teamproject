@@ -67,4 +67,16 @@
 	<select id="getid" parameterType="String" resultType="String">
 		select id from bg_user where id=#{id} AND delyn = 1;
 	</select>
+	
+	<!-- 로그인 카운트  -->
+	<update id="login_count" parameterType="String">
+		UPDATE bg_user SET login_count=login_count+1 WHERE id=#{id}
+	</update>
+	<select id="login_count1" parameterType="String" resultType="int">
+		SELECT login_count FROM bg_user WHERE id=#{id}
+	</select>
+	
+	<update id="login_count_zero" parameterType="String">
+		UPDATE bg_user SET login_count=0 WHERE id=#{id}
+	</update>
 </mapper>

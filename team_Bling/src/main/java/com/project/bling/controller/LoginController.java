@@ -39,28 +39,38 @@ public class LoginController {
 		String idd = vo.getId();
 		
 		String value = loginService.getid(idd);
-
-		System.out.println("******************"+value);
 		
 		if(value != null) {
-			String pwd = vo.getPwd();
-			String getpwd = loginService.getpwd(idd);
 			
-			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			
-			if(encoder.matches(pwd, getpwd)) {
-				//넘겨받은 비밀번호와 user객체에 암호화된 비밀번호와 비교
-				loginService.loginCheck(vo, session, request);
-				UserVO uv = (UserVO)session.getAttribute("UserVO");
-				//회원정보에서 회원번호만 선택
-				int midx = uv.getMidx();
-				
-				loginService.final_login(midx);
-				mav.setViewName("redirect:/");
-				mav.addObject("msg", "success");
-			}else {
+			// 로그인 시도 id에 체크 로그인 성공하면 값 0으로
+			int login_count = loginService.login_count(idd);
+			// 5번 로그인을 시도 했다면
+			if( login_count > 5) {
 				mav.setViewName("login/main");
-				mav.addObject("msg", "failure");
+				mav.addObject("login_out", "failure");
+			}else {
+				String pwd = vo.getPwd();
+				String getpwd = loginService.getpwd(idd);
+				
+				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+				
+				if(encoder.matches(pwd, getpwd)) {
+					//넘겨받은 비밀번호와 user객체에 암호화된 비밀번호와 비교
+					loginService.loginCheck(vo, session, request);
+					UserVO uv = (UserVO)session.getAttribute("UserVO");
+					//회원정보에서 회원번호만 선택
+					int midx = uv.getMidx();
+					
+					// 로그인시 로그인 카운트 초기화 
+					loginService.login_count_zero(idd);
+					loginService.final_login(midx);
+					mav.setViewName("redirect:/");
+					mav.addObject("msg", "success");
+				}else {
+					mav.setViewName("login/main");
+					mav.addObject("msg", "failure");
+					mav.addObject("login_count", login_count);
+				}
 			}
 		}else {
 			mav.setViewName("login/main");
