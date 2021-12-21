@@ -230,7 +230,14 @@
 			<artifactId>lucy-xss-servlet</artifactId>
 			<version>2.0.0</version>
 		</dependency>
-	
+		
+		<!-- Spring-security 모듈 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		
 	</dependencies>
 	
 	

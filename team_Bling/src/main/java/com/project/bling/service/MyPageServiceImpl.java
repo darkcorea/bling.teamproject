@@ -93,5 +93,11 @@ public class MyPageServiceImpl implements MyPageService {
 	public void del(CombineVO vo) throws Exception {
 		myPageDAO.del(vo);
 	}
+
+	//비밀번호 수정
+	@Override
+	public void modifypwd(UserVO uv) throws Exception {
+		myPageDAO.modifypwd(uv);
+	}
 	
 }

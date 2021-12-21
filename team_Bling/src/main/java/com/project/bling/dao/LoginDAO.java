@@ -56,4 +56,9 @@ public class LoginDAO {
 	public void final_login(int midx) throws Exception{
 		sqlSession.update(lm+"final_login", midx);
 	}
+	
+	//암호화된 패스워드를 비교
+	public String getpwd(String id)throws Exception{
+		return sqlSession.selectOne(lm+"getpwd",id);
+	}
 }

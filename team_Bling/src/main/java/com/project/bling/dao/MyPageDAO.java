@@ -67,6 +67,11 @@ public class MyPageDAO {
 		sqlSession.update(mm+"remodify",uv);
 	}
 	
+	//비밀번호 수정
+	public void modifypwd(UserVO uv) throws Exception{
+		sqlSession.update(mm+"modifypwd",uv);
+	}
+	
 	//탈퇴비번확인
 	public String delconfirm(int midx) throws Exception{
 		return sqlSession.selectOne(mm+"delconfirm",midx);

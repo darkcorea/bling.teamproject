@@ -295,13 +295,19 @@
 	<!-- 회원정보 수정 -->
 	<update id="remodify" parameterType="UserVO">
 		UPDATE bg_user SET 
-		pwd = #{pwd},
 		uname = #{uname},
 		email = #{email},
 		addr1 = #{addr1},
 		addr2 = #{addr2},
 		phone = #{phone},
 		zip_code = #{zip_code}
+		WHERE midx = #{midx}
+	</update>
+	
+	<!-- 비밀번호 수정 -->
+	<update id="modifypwd" parameterType="UserVO">
+		UPDATE bg_user SET 
+		pwd = #{pwd}
 		WHERE midx = #{midx}
 	</update>
 	

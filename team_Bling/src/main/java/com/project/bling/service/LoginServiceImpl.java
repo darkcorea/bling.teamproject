@@ -26,6 +26,7 @@ public class LoginServiceImpl implements LoginService {
 				UserVO vo2 = viewMember(vo);
 				// 세션 변수 등록
 				session.setAttribute("UserVO", vo2);
+				System.out.println("서비스 midx : "+vo2.getMidx());
 				/*
 					세션에 저장된 UserVO 객체가 null이면 session.getAttribute("UserVO")에서
 					id 필드를 NullPointerException 때문에 참조를 못 하기 때문에 밑에 따로 추가함.
@@ -107,6 +108,10 @@ public class LoginServiceImpl implements LoginService {
 		
 	}
 
-	
+	//비번암호화 확인
+	@Override
+	public String getpwd(String id) throws Exception {
+		return loginDAO.getpwd(id);
+	}
 	
 }
