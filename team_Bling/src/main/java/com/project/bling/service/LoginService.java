@@ -25,4 +25,8 @@ public interface LoginService {
 	public String getpwd(String id)throws Exception;
 	//아이디있는지 확인
 	public String getid(String id) throws Exception;
+	
+	// 로그인한 횟수
+	int login_count(String id) throws Exception;
+	void login_count_zero(String id) throws Exception;
 }

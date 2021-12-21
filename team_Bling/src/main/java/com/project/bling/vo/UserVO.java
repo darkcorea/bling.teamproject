@@ -25,7 +25,14 @@ public class UserVO {
 	private String name;
 	private String rphone;
 	private int basic_addr;
+	private int login_count;
 	
+	public int getLogin_count() {
+		return login_count;
+	}
+	public void setLogin_count(int login_count) {
+		this.login_count = login_count;
+	}
 	public String getRphone() {
 		return rphone;
 	}

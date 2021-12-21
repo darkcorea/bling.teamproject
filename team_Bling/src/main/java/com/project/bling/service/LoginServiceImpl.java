@@ -118,5 +118,16 @@ public class LoginServiceImpl implements LoginService {
 	public String getid(String id) throws Exception {
 		return loginDAO.getid(id);
 	}
+	// 로그인 한 횟수
+	@Override
+	public int login_count(String id) throws Exception {
+		return loginDAO.login_count(id);
+	}
+	
+	// 로그인 카운트 초기화
+	@Override
+	public void login_count_zero(String id) throws Exception {
+			loginDAO.login_count_zero(id);
+	}
 	
 }

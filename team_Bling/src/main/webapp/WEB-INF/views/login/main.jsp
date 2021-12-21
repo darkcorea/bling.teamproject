@@ -53,6 +53,7 @@
 		#formText{
 			position: relative;
 			left: 123px;
+			margin-top: 10px;
 		}
 		#inputId,#inputPw{
 			position: relative;
@@ -83,7 +84,7 @@
 			top: 60px;
 		}
 		#cautionDiv{
-			height: 60px;
+			height: 80px;
 		}
 		#rememberLogin{
 			position: relative;
@@ -132,14 +133,24 @@
 							</label> -->
 						</div>
 						<div id="cautionDiv">
+						<c:if test="${login_out == 'failure'}">
+							<div id="caution" style="color: red;">로그인 횟수를 초과하였습니다.</div>
+							<div id="caution" style="color: red;">아이디 찾기 또는 비밀번호 찾기를 사용해주세요</div>
+						</c:if>
+						<c:if test="${login_out == null}">
 							<c:if test="${msg == 'failure'}">
 								<div id="caution" style="color: red;">아이디 또는 비밀번호가 잘못 입력 되었습니다.</div>
 								<div id="caution" style="color: red;">아이디와 비밀번호를 정확히 입력해 주세요.</div>
+								<c:if test="${login_count != '' && login_count != null}">
+									<div id="caution" style="color: red;">5번이상 로그인 실패시 로그인을 하실 수 없습니다.(<c:out value="${login_count}"/>)</div>
+								</c:if>
 							</c:if>
 							<c:if test="${msg == 'logout'}">
 								<div id="caution" style="color: red;">로그아웃 되었습니다.</div>
 							</c:if>
+						</c:if>
 						</div>
+						
 						<div id="btnDiv">
 							<input class="btn btn-primary" id="loginBtn" type="submit" value="로그인">
 						</div>
