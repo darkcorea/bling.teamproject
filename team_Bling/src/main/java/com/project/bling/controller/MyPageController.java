@@ -529,7 +529,9 @@ public class MyPageController {
 		String securePw = encoder.encode(pwd);
 		vo.setPwd(securePw);
 		myPageService.modifypwd(vo);
-		return "myPage/modify_fin";
+		
+		loginService.logout(session);
+		return "redirect:/Login/main.do";
 	}
 	
 	//이메일 중복확인

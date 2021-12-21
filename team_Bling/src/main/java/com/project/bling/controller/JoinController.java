@@ -2,6 +2,8 @@ package com.project.bling.controller;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -28,7 +30,11 @@ public class JoinController {
 	
 	//일반회원가입
 	@RequestMapping(value="/normal.do")
-	public String normal(Locale locale,Model mode) {
+	public String normal(Locale locale,Model mode, HttpSession session) {
+		// 로그인되면 회원가입 페이지로 이동 불가
+		if(session.getAttribute("UserVO") != null) {
+			return "redirect:/";
+		}
 		return "join/normal";
 	}
 	
