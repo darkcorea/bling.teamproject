@@ -420,13 +420,13 @@
 					//리뷰사진 개수에 따라 화면출력 조정
 					if(list.image1 != null && list.image2 != null){
 						str += "			<td id='rvImgTr'>";
-						str += "				<img id='rvImg' src='/team_Bling/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
-						str += "				<img id='rvImg2' src='/team_Bling/resources/review_img/"+list.image2+"' alt='리뷰사진 2번'>";
+						str += "				<img id='rvImg' class='img-thumbnail' src='/team_Bling/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
+						str += "				<img id='rvImg2' class='img-thumbnail' src='/team_Bling/resources/review_img/"+list.image2+"' alt='리뷰사진 2번'>";
 						str += "			</td>";
 					}
 					else if(list.image1 != null && list.image2 == null){
 						str += "			<td id='rvImgTr'>";
-						str += "				<img id='rvImg' src='/team_Bling/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
+						str += "				<img id='rvImg' class='img-thumbnail' src='/team_Bling/resources/review_img/"+list.image1+"' alt='리뷰사진 1번'>";
 						str += "			</td>";
 					}
 					else if(list.image1 == null && list.image2 == null){

@@ -75,6 +75,12 @@ public class OrderServiceImpl implements OrderService {
 		
 		orderDAO.non_delivery_insert(vo);
 	}
+
+	@Override
+	public  List <UserVO> select_basic_addr(int midx) throws Exception {
+		
+		return orderDAO.select_basic_addr(midx);
+	}
 	
 	
 	

@@ -26,7 +26,7 @@
 				str += "		<td id='td1'><span id='t1'>${ro.rdate}</span></td>";
 				str += "		<td id='td2'><span id='t2'>${ro.order_idx}</span></td>";
 				str += "<c:if test='${ro.cuidx == 0}'>";
-				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/team_Bling/Product/detail.do?pidx=${ro.pidx}'>${ro.pname} / ${ro.oname}</a></span></td>";
+				str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/team_Bling/Product/detail.do?pidx=${ro.pidx}'>${ro.pname} <br> ${ro.oname}</a></span></td>";
 				str += "</c:if>";
 				str += "<c:if test='${ro.cuidx != 0}'>";
 					str += "		<td id='td3'><span id='t3'><a id='prodLink' href='/team_Bling/Custom/list.do'>${ro.pname} / ${ro.oname}</a></span></td>";
@@ -484,6 +484,24 @@
 				}
 			});
 			
+		}
+		
+		
+		function delPreview2(number){
+			let num = number;
+			
+			if(num==1){
+				$("#previewImg1").attr("src","");
+				$("#badge1").css("display","none");
+			}else if(num==2){
+				$("#previewImg2").attr("src","");
+				$("#badge2").css("display","none");
+			}else if(num==0){
+				$("#previewImg1").attr("src","");
+				$("#badge1").css("display","none");
+				$("#previewImg2").attr("src","");
+				$("#badge2").css("display","none");
+			}
 		}
 		
 	</script>
@@ -954,7 +972,7 @@
 				
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal" onclick="javascript:modalReset();delPreview(0);">닫기</button>
-					<button type="button" class="btn btn-primary" id="saveBtn" data-bs-dismiss="modal" onclick="javascript:reviewWrite(); modalReset();delPreview(0);">저장</button>
+					<button type="button" class="btn btn-primary" id="saveBtn" data-bs-dismiss="modal" onclick="javascript:reviewWrite(); modalReset();delPreview2(0);">저장</button>
 				</div>
 				
 			</div>

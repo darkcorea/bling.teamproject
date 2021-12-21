@@ -141,7 +141,7 @@ section {
 
 /* explan밑에 있는 hr줄의 마진  */
 .explan-bottom {
-	margin-bottom: 50px;
+	margin-bottom: 20px;
 }
 
 /* 상세정보 후기 상품문의 구매가이드  바*/
@@ -156,13 +156,6 @@ section {
 /* 상세정보, 후기, 상품문의, 구매가이드  */
 .detail-nav-1 {
 	margin: 20px;
-}
-
-
-/* 상세정보, 후기, 상품문의, 구매가이드 각각 아래 발간색 줄 */
-#move_info, #move_review, #move_question, #move_giude {
-	border: #CB7878 solid;
-	border-width: 0 0 10px 0;
 }
 
 /* 상세정보 이미지 가운데로 */
@@ -284,4 +277,7 @@ section {
 /* 클래스 추가하면 가져다 대면 손모양 나옴*/
 .pointer {
 	cursor: pointer;
+}
+.div_height{
+	height:5px;
 }

@@ -29,7 +29,7 @@
 			width: 160px;
 		}
 		.img-fluid{
-			width: 160px;
+			width: 140px;
 		}
 		.tab{
 			width:100%;
@@ -175,9 +175,9 @@
 					str += "	<input type='hidden' name='stock1' value='"+item.stock+"'>";
 					str += "	</td>";
 					if(item.cuidx != 0){
-						str += "	<td><img class='img-fluid' src='/team_Bling/resources/usercustomizing/"+item.main+"'></td>";
+						str += "	<td><img class='img-fluid img-thumbnail' src='/team_Bling/resources/usercustomizing/"+item.main+"'></td>";
 					}else{
-						str += "	<td><img class='img-fluid' src='/team_Bling/resources/image/"+item.main+"'></td>";
+						str += "	<td><img class='img-fluid img-thumbnail' src='/team_Bling/resources/image/"+item.main+"'></td>";
 					}
 					str += "	<td><a class='deco' href='/team_Bling/Product/detail.do?pidx="+item.pidx+"'>"+item.pname+"</a>";
 					str += "		<p>옵션명 : "+item.oname+"</p>";
