@@ -27,8 +27,11 @@ public class LoginController {
 	
 	// 01. 로그인 화면 
 	@RequestMapping(value="/main.do")
-	public String main(Locale locale, Model model) throws Exception{
-		
+	public String main(Locale locale, Model model, HttpSession session) throws Exception{
+		// 로그인되면 로그인 페이지로 이동 불가
+		if(session.getAttribute("UserVO") != null) {
+			return "redirect:/";
+		}
 		return "login/main";	// views/login/main.jsp로 포워드
 	}
 	
@@ -208,6 +211,11 @@ public class LoginController {
 			vo.setMidx(midx);
 			//midx에 해당하는 계정에 임시 비밀번호로 변경하기
 			loginService.tempPwd(vo);
+			// 로그인 횟수 초기화
+			if(midx != 0) {
+				String id = vo.getId();
+				loginService.login_count_zero(id);
+			}
 		}else if(vo.getPhone() != null) {
 			//회원정보를 특정하기 위해 midx 가져오기
 			int midx = loginService.pwdFindPhone(vo);
@@ -215,6 +223,11 @@ public class LoginController {
 			vo.setMidx(midx);
 			//midx에 해당하는 계정에 임시 비밀번호로 변경하기
 			loginService.tempPwd(vo);
+			// 로그인 횟수 초기화
+			if(midx != 0) {
+				String id = vo.getId();
+				loginService.login_count_zero(id);
+			}
 		}
 	}
 	
