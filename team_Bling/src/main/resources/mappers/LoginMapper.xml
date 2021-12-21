@@ -63,4 +63,8 @@
 		select pwd from bg_user where id=#{id}
 	</select>
 	
+	<!-- 아이디있는지 확인 -->
+	<select id="getid" parameterType="String" resultType="String">
+		select id from bg_user where id=#{id} AND delyn = 1;
+	</select>
 </mapper>

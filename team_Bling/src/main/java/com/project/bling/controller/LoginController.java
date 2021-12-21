@@ -35,28 +35,33 @@ public class LoginController {
 	// 02. 로그인 처리
 	@RequestMapping(value="/check.do")
 	public ModelAndView loginCheck(@ModelAttribute UserVO vo, HttpSession session, HttpServletRequest request) throws Exception{
-		
-		String idd = vo.getId();
-		String pwd = vo.getPwd();
-		String getpwd = loginService.getpwd(idd);
-		System.out.println("************"+getpwd);
-		System.out.println("************"+pwd);
-		
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
-		
 		ModelAndView mav = new ModelAndView();
-		if(encoder.matches(pwd, getpwd)) {
-			System.out.println("성공");
-			//넘겨받은 비밀번호와 user객체에 암호화된 비밀번호와 비교
-			loginService.loginCheck(vo, session, request);
-			UserVO uv = (UserVO)session.getAttribute("UserVO");
-			//회원정보에서 회원번호만 선택
-			int midx = uv.getMidx();
+		String idd = vo.getId();
+		
+		String value = loginService.getid(idd);
+
+		System.out.println("******************"+value);
+		
+		if(value != null) {
+			String pwd = vo.getPwd();
+			String getpwd = loginService.getpwd(idd);
 			
-			loginService.final_login(midx);
-			mav.setViewName("redirect:/");
-			mav.addObject("msg", "success");
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			
+			if(encoder.matches(pwd, getpwd)) {
+				//넘겨받은 비밀번호와 user객체에 암호화된 비밀번호와 비교
+				loginService.loginCheck(vo, session, request);
+				UserVO uv = (UserVO)session.getAttribute("UserVO");
+				//회원정보에서 회원번호만 선택
+				int midx = uv.getMidx();
+				
+				loginService.final_login(midx);
+				mav.setViewName("redirect:/");
+				mav.addObject("msg", "success");
+			}else {
+				mav.setViewName("login/main");
+				mav.addObject("msg", "failure");
+			}
 		}else {
 			mav.setViewName("login/main");
 			mav.addObject("msg", "failure");

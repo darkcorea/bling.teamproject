@@ -113,5 +113,10 @@ public class LoginServiceImpl implements LoginService {
 	public String getpwd(String id) throws Exception {
 		return loginDAO.getpwd(id);
 	}
+
+	@Override
+	public String getid(String id) throws Exception {
+		return loginDAO.getid(id);
+	}
 	
 }

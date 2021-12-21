@@ -61,4 +61,9 @@ public class LoginDAO {
 	public String getpwd(String id)throws Exception{
 		return sqlSession.selectOne(lm+"getpwd",id);
 	}
+	
+	//아이디있는지 확인
+	public String getid(String id) throws Exception{
+		return sqlSession.selectOne(lm+"getid",id);
+	}
 }
