@@ -194,5 +194,20 @@ public class Ad_Order_deliveryController {
 		//ajax로 화면 로딩시 출력할 데이터들을 return
 		return back;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/returnStat.do")
+	public String returnStat(@RequestBody CombineVO vo) throws Exception {
+		System.out.println("관리자 return리스트 컨트롤러 : returnStat 실행");
+		System.out.println("return 버튼으로 받은 kind : "+vo.getKind());
+		System.out.println("return 버튼으로 받은 order_idx : "+vo.getOrder_idx());
+		
+		
+		//주문상태 변경
+		ad_order_deliveryService.returnStat(vo);
+		
+		
+		return "취소상태 변경";
+	}
 /* ------------------------------return------------------------------ */
 }

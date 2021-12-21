@@ -29,6 +29,7 @@
 		       d.order_yn AS 'D_order_yn',
 			   o.delivery_yn,
 		       d.deli_stat,
+		       d.invoice_num,
 		       d.cancel,
 		       d.refund,
 		       d.exchange,
@@ -127,11 +128,17 @@
 	<!-- 전체 취소/환불/교환 개수 -->
 	<select id="returnCnt" resultType="int" parameterType="Criteria">
 		SELECT 
-		<if test='kind=="all"'>count(didx),didx</if>
-		<if test='kind=="C"'>count(cancel)</if>
-		<if test='kind=="R"'>count(refund)</if>
-		<if test='kind=="E"'>count(exchange)</if>
+		<if test='kind=="all"'>count(cancel)+count(refund)+count(exchange)</if>
+		<if test='kind.contains("C")'>count(cancel)</if>
+		<if test='kind.contains("R")'>count(refund)</if>
+		<if test='kind.contains("E")'>count(exchange)</if>
 		FROM bg_delivery
+		<if test='kind=="CN"'>WHERE cancel='N'</if>
+		<if test='kind=="CY"'>WHERE cancel='Y'</if>
+		<if test='kind=="RN"'>WHERE refund='N'</if>
+		<if test='kind=="RY"'>WHERE refund='Y'</if>
+		<if test='kind=="EN"'>WHERE exchange='N'</if>
+		<if test='kind=="EY"'>WHERE exchange='Y'</if>
 	</select>
 	
 	<!-- 취소/환불/교환 -->
@@ -153,9 +160,34 @@
 		INNER JOIN bg_user u
 		ON o.midx=u.midx
 		
-		<if test='scri.kind!="all"'>WHERE d.cancel=#{scri.kind}</if>
+		<if test='scri.kind=="all"'>WHERE d.cancel=('Y' OR 'N') OR d.refund=('Y' OR 'N') OR d.exchange=('Y' OR 'N')</if>
+		<if test='scri.kind=="C"'>WHERE d.cancel=('Y' OR 'N')</if>
+		<if test='scri.kind=="CN"'>WHERE d.cancel='N'</if>
+		<if test='scri.kind=="CY"'>WHERE d.cancel='Y'</if>
+		<if test='scri.kind=="R"'>WHERE d.refund=('Y' OR 'N')</if>
+		<if test='scri.kind=="RN"'>WHERE d.refund='N'</if>
+		<if test='scri.kind=="RY"'>WHERE d.refund='Y'</if>
+		<if test='scri.kind=="E"'>WHERE d.exchange=('Y' OR 'N')</if>
+		<if test='scri.kind=="EN"'>WHERE d.exchange='N'</if>
+		<if test='scri.kind=="EY"'>WHERE d.exchange='Y'</if>
 		ORDER BY o.order_idx
 		DESC
 		LIMIT #{startPost},#{scri.perPageNum}
 	</select>
+	
+	<!-- 취소/환불/교환 버튼(관리자 주문리스트에서 delivery 테이블의 cancel 또는 refund 또는 exchange 컬럼을 Y로 바꾸기 -->
+	<update id="returnStat" parameterType="CombineVO">
+		UPDATE bg_delivery
+		SET 
+		<if test='kind == "C"'>
+		 cancel='Y'
+		</if>
+		<if test='kind == "R"'>
+		 refund='Y'
+		</if>
+		<if test='kind == "E"'>
+		 exchange='Y'
+		</if>
+		WHERE o.order_idx=#{order_idx}
+	</update>
 </mapper>

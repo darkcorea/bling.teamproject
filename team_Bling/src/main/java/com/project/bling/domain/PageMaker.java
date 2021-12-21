@@ -23,6 +23,7 @@ public class PageMaker {
 	private int end;
 	private String type;
 	private String grade;
+	private String invoice_num;
 	
 	
 	public int getMidx() {
@@ -42,6 +43,18 @@ public class PageMaker {
 	}
 	public void setKind(String kind) {
 		this.kind = kind;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	public String getInvoice_num() {
+		return invoice_num;
+	}
+	public void setInvoice_num(String invoice_num) {
+		this.invoice_num = invoice_num;
 	}
 	public int getStart() {
 		return start;
@@ -168,11 +181,6 @@ public class PageMaker {
 		String keyword3 = keyword2.trim();
 		return keyword3;
 	}
-	public String getGrade() {
-		return grade;
-	}
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
+	
 	
 }

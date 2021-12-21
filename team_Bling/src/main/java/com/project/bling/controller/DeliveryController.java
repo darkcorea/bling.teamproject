@@ -130,7 +130,7 @@ public class DeliveryController {
 	
 	// 마이페이지 주문내역 중에 취소반품교환내역
 	@RequestMapping(value="/main1.do")
-	public String delivery1(Locale locale, Model model, HttpSession session, Criteria cs) throws Exception {
+	public String delivery1(Model model, HttpSession session, Criteria cs) throws Exception {
 		
 		// 로그인이 풀렸을 떄 대비해서 넣음
 		if ( session.getAttribute("UserVO") == null) {return "redirect:/Login/main.do";}
@@ -154,7 +154,7 @@ public class DeliveryController {
 	
 	// 비회원 주문조회
 	@RequestMapping(value="/nonDelivery.do")
-	public String nonDelivey(Locale locale, Model model) throws Exception {	
+	public String nonDelivey(Model model) throws Exception {	
 		return "delivery/nonDelivery";
 	}
 		
@@ -167,7 +167,7 @@ public class DeliveryController {
 	
 	// 비회원 주문조회 디테일 페이지
 	@RequestMapping(value="/non_main.do")
-	public String non_main(Locale locale, Model model,NonorderVO nv) throws Exception {
+	public String non_main(Model model,NonorderVO nv) throws Exception {
 		String orderid = (String)nv.getOrderid();
 		model.addAttribute("list", deliveryService.nonDel_list(orderid));
 		return "delivery/non_main";

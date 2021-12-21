@@ -73,7 +73,7 @@ public class MyPageController {
 	
 	//MyPage 메인페이지 -> 실행시 바로 화면에 최근 주문 정보 출력
 	@RequestMapping(value="/main.do")
-	public String main(Locale locale, Model model, CombineVO vo, HttpSession session, int page) throws Exception {
+	public String main(Model model, CombineVO vo, HttpSession session, int page) throws Exception {
 		
 		// 로그인이 풀렸을 떄 대비해서 넣음
 		if(session.getAttribute("UserVO") == null) {

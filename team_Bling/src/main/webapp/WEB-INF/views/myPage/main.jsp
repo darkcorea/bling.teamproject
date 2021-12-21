@@ -347,7 +347,7 @@
 						title: '리뷰가 작성되었습니다.'
 					}).then((result) => {
 						if(result.isConfirmed){
-							window.location.replace("/team_Bling/MyPage/main.do?page=1");
+							window.location.replace("/team_Bling/MyPage/main.do?page="+${pm.scri.page}+"");
 						}else if (result.isDenied) {
 						}
 					});
@@ -402,7 +402,7 @@
 					}).then((result) => {
 						  /* Read more about isConfirmed, isDenied below */
 						  if (result.isConfirmed) {
-							   window.location.replace("/team_Bling/MyPage/main.do?page=1");
+							   window.location.replace("/team_Bling/MyPage/main.do?page="+${pm.scri.page}+"");
 						  } else if (result.isDenied) {
 					   }
 					});
@@ -946,7 +946,7 @@
 								<label for="1">☆</label>
 						</div>
 						<br>
-						<textarea id="textArea1" placeholder="상품에 대한 후기를 남겨 주세요.&#13;&#10;사진은 2장까지 첨부 가능합니다."></textarea>
+						<textarea id="textArea1" placeholder="상품에 대한 후기를 남겨 주세요.(10자 이상, 500자 이하)&#13;&#10;사진은 2장까지 첨부 가능합니다."></textarea>
 						<br>
 					</form>
 					<form id="pictureForm">
