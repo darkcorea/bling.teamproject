@@ -20,4 +20,7 @@ public interface LoginService {
 	public int pwdFindPhone(UserVO vo) throws Exception;
 	public void tempPwd(UserVO vo) throws Exception;
 	public void final_login(int midx) throws Exception;
+	
+	//암호화된 패스워드를 비교
+	public String getpwd(String id)throws Exception;
 }
