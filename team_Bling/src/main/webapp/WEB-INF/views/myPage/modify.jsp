@@ -44,7 +44,6 @@
 								</th>
 								<td>
 									<input type="password" id="pass">
-									<input type="hidden" value="${data.pwd }" id="that">
 								</td>
 							</tr>
 						</table>
@@ -62,18 +61,22 @@
 	<script>
 		function confirm(){
 			var pass = document.getElementById("pass").value;
-			var real = document.getElementById("that").value;
 			
-			// 비밀번호를 불러와서 히든으로 하다니 왜 그랬어? ㅜㅜ
-					
-			if(pass == ""){
-				alert("비밀번호를 입력하세요.");
-				document.getElementById("pass").focus();
-			}else if(pass == real){
-				location.href="${cPath}/MyPage/modifyInformation.do";
-			}else{
-				alert("비밀번호가 틀렸습니다.");
-			}
+			$.ajax({
+				url:"/team_Bling/MyPage/confirmpwd.do",
+				type:"post",
+				data:{"pass":pass},
+				dataType:"json",
+				success:function(data){
+					if(data==true){
+						location.href="${cPath}/MyPage/modifyInformation.do";
+					}else{
+						alert("비밀번호가 틀렸습니다.");
+					}
+				},error:function(){
+					alert("비밀번호 확인오류!");
+				}
+			});
 		}
 	</script>
 </html>

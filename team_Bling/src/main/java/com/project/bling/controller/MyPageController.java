@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -483,6 +484,23 @@ public class MyPageController {
 		return "myPage/modify";
 	}
 	
+	//비번확인
+	@RequestMapping(value="/confirmpwd.do")
+	@ResponseBody
+	public boolean confirmpwd(String pass, HttpSession session)throws Exception{
+		boolean value = false;
+		UserVO uv = (UserVO)session.getAttribute("UserVO");
+		//회원정보에서 회원번호만 선택
+		int midx = uv.getMidx();
+		String getpwd = myPageService.delconfirm(midx);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		if(encoder.matches(pass, getpwd)) {
+			//넘겨받은 비밀번호와 user객체에 암호화된 비밀번호와 비교
+			value=true;
+		}
+		return value;
+	}
+	
 	//회원정보 수정 페이지
 	@RequestMapping(value="/modifyInformation.do")
 	public String modifyInf(Model model,HttpSession session)throws Exception{
@@ -494,6 +512,24 @@ public class MyPageController {
 		model.addAttribute("data",myPageService.confirm(midx));
 				
 		return "myPage/modifyInformation";
+	}
+	
+	//비밀번호 변경 jsp
+	@RequestMapping(value="/modifypwd.do")
+	public String modifypwd()throws Exception{
+		return "myPage/modifypwd";
+	}
+	
+	//비밀번호 변경
+	@RequestMapping(value="/remodifypwd.do")
+	public String remodifypwd(Locale locale,Model model,String pwd,HttpSession session)throws Exception{
+		UserVO vo = (UserVO)session.getAttribute("UserVO");
+		//비밀번호 인코딩
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String securePw = encoder.encode(pwd);
+		vo.setPwd(securePw);
+		myPageService.modifypwd(vo);
+		return "myPage/modify_fin";
 	}
 	
 	//이메일 중복확인

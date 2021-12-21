@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,24 +35,29 @@ public class LoginController {
 	// 02. 로그인 처리
 	@RequestMapping(value="/check.do")
 	public ModelAndView loginCheck(@ModelAttribute UserVO vo, HttpSession session, HttpServletRequest request) throws Exception{
-		//System.out.println("로그인 컨트롤러에서 post로 받은 id : "+vo.getId());
-		//System.out.println("로그인 컨트롤러에서 post로 받은 pwd : "+vo.getPwd());
 		
-		boolean result = loginService.loginCheck(vo, session, request);
+		String idd = vo.getId();
+		String pwd = vo.getPwd();
+		String getpwd = loginService.getpwd(idd);
+		System.out.println("************"+getpwd);
+		System.out.println("************"+pwd);
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
+		
 		ModelAndView mav = new ModelAndView();
-		if (result == true) { // 로그인 성공
-			// home.jsp로 이동
-
-			//로그인시 세션에 저장된 회원정보 불러오기
+		if(encoder.matches(pwd, getpwd)) {
+			System.out.println("성공");
+			//넘겨받은 비밀번호와 user객체에 암호화된 비밀번호와 비교
+			loginService.loginCheck(vo, session, request);
 			UserVO uv = (UserVO)session.getAttribute("UserVO");
 			//회원정보에서 회원번호만 선택
 			int midx = uv.getMidx();
 			
 			loginService.final_login(midx);
 			mav.setViewName("redirect:/");
-			//mav.addObject("msg", "success");
-		} else {	// 로그인 실패
-			// main.jsp로 이동
+			mav.addObject("msg", "success");
+		}else {
 			mav.setViewName("login/main");
 			mav.addObject("msg", "failure");
 		}
@@ -165,9 +171,13 @@ public class LoginController {
 		String temp = buf.toString();
 		
 		//생성한 임시 비밀번호를 UserVO에 저장
-		vo.setPwd(temp);
+		
 		
 		//여기에 밑에 선언한 임시비번을 DB에 적용하는 메소드 입력하기
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String securePw = encoder.encode(temp);
+		
+		vo.setPwd(securePw);
 		tempPwd(vo);
 		
 		return temp;

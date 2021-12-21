@@ -104,18 +104,6 @@
 		                       	${ban.id }
 		                    </div>
 		                   <input type="hidden" value="${ban.midx }" name="midx"/>
-		                    <div class="rows h" id="liner">
-		                        <label for="password">비밀번호 변경<span class="red">*</span></label>
-		                        <input type="password" class="impor imporz" name="pwd" id="password" placeholder="비밀번호를 입력하세요." value="${data.pwd }">
-		                        <span class="check"></span>
-		                        <div  id="checkpwd">(영문 대소문자/숫자/특수문자 모두 조합,8~16자)</div>
-		                    </div>
-		                    
-		                    <div class="rows h" id="liner">
-		                        <label for="passwordre">비밀번호 확인<span class="red">*</span></label>
-		                        <input type="password" class="impor imporz" name="passwordre" id="passwordre" placeholder="비밀번호를 다시 입력하세요." value="${data.pwd }">
-		                        <span class="check"></span>
-		                    </div>
 		                    
 		                    <div class="rows h" id="liner">
 		                        <label for="name">이름<span class="red">*</span></label>
@@ -150,6 +138,7 @@
 		
 		                    <div class="rows h d-grid gap-2 col-6 mx-auto" id="formbtn">
 		                    	<input type="submit" class="btn btn-primary " value="수정하기">
+		                    	<button type="button" class="btn btn-warning" id="btn2" onclick="location.href='/team_Bling/MyPage/modifypwd.do'">비밀번호수정하기</button>
 								<button type="button" class="btn btn-secondary" id="btn2" onclick="location.href='/team_Bling/MyPage/main.do?page=1'">취소하기</button>
 		                    </div>
 					 	
@@ -172,7 +161,6 @@
 	$(document).ready(function(){
 		//회원가입시 생기는 유효성검사
 		$(".impor").blur(function(){
-			var checkPwd = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 			var checkName = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g;
 			var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/g;
 			var checkPhone = /^[0-9]{10,11}/g;
@@ -182,16 +170,7 @@
 				$(this).siblings(".check").text("*필수").css("color","red").show();
 			}else{
 				var id = $(this).attr("id");
-				if(id == "password"){
-					var test = checkPwd.test(value);
-					if(!test){
-						$(this).siblings(".check").text("*형식오류").css("color","red").show();
-					}
-				}else if(id == "passwordre"){
-					if(value != $("input[id=password]").val()){
-						$(this).siblings(".check").text("*비밀번호 불일치").css("color","red").show();
-					}
-				}else if(id == "name"){
+				if(id == "name"){
 					var test = checkName.test(value);
 					if(!test){
 						$(this).siblings(".check").text("*형식오류").css("color","red").show();
@@ -214,7 +193,6 @@
 		
 		//가입하기 버튼 누를시
 		$("form").submit(function(){
-			var checkPwd = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 			var checkName = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g;
 			var checkEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/g;
 			var checkPhone = /^[0-9]{10,11}/g;
@@ -233,17 +211,7 @@
 					}
 				}else{
 					var id = $(this).attr("id");
-					if(id == "password"){
-						var test = checkPwd.test(value);
-						if(!test){
-							$(this).siblings(".check").text("*형식오류").css("color","red").show();
-							check = false;
-						}
-					}else if(id == "passwordre"){
-						if(value != $("input[id=password]").val()){
-							$(this).siblings(".check").text("*비밀번호 불일치").css("color","red").show();
-						}
-					}else if(id == "name"){
+					if(id == "name"){
 						var test = checkName.test(value);
 						if(!test){
 							$(this).siblings(".check").text("*형식오류").css("color","red").show();

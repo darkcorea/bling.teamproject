@@ -8,18 +8,18 @@
 	<select id="loginCheck" resultType="String">
 		SELECT uname
 		FROM bg_user
-		WHERE id=#{id} AND pwd=#{pwd} AND delyn = 1
+		WHERE id=#{id} AND delyn = 1
 	</select>
 	<select id="delyn" resultType="int">
 		SELECT delyn
 		FROM bg_user
-		WHERE id=#{id} AND pwd=#{pwd} AND delyn = 1
+		WHERE id=#{id} AND delyn = 1
 	</select>	
 	  
 	<select id="viewMember" resultType="UserVO">
 		SELECT *
 		FROM bg_user
-		WHERE id=#{id} AND pwd=#{pwd} AND delyn = 1
+		WHERE id=#{id} AND delyn = 1
 	</select>
 	
 	<select id="idFindEmail" resultType="String">
@@ -57,5 +57,10 @@
 		SET rdate1 = CURRENT_TIMESTAMP
 		WHERE midx = #{midx}
 	</update>
+	
+	<!-- 암호화된 패스워드를 비교 -->
+	<select id="getpwd" parameterType="String" resultType="String">
+		select pwd from bg_user where id=#{id}
+	</select>
 	
 </mapper>

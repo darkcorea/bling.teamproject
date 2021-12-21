@@ -3,6 +3,7 @@ package com.project.bling.controller;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +35,13 @@ public class JoinController {
 	//회원가입시 정보들 db에 저장
 	@RequestMapping(value="/value.do", method = RequestMethod.POST)
 	public String insert(Locale locale,Model model,UserVO vo)throws Exception{
+		//비밀번호 암호화
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String securePw = encoder.encode(vo.getPwd());
+		vo.setPwd(securePw);
+		System.out.println(securePw);
 		joinService.insert(vo);
+		
 		return "login/main";
 	}
 	
