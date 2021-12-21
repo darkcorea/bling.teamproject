@@ -23,4 +23,6 @@ public interface LoginService {
 	
 	//암호화된 패스워드를 비교
 	public String getpwd(String id)throws Exception;
+	//아이디있는지 확인
+	public String getid(String id) throws Exception;
 }
