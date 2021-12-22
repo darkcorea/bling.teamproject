@@ -27,5 +27,11 @@ public interface Ad_RegistService {
 	ImageVO image(int pidx) throws Exception;
 	void deleteImg(CombineVO cv) throws Exception;
 	void updateImg(ImageVO vo) throws Exception;
+	
+	
+	// 커스텀
+	int custom_list_count(PageMaker pm) throws Exception;
+	List<CustomVO> custom_list(PageMaker pm) throws Exception;
+	void custom_delete(int coidx) throws Exception;
 	void customregist(CustomVO vo)throws Exception;
 }

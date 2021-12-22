@@ -125,5 +125,19 @@ public class Ad_RegistServiceImpl implements Ad_RegistService{
 		ad_registDAO.customregist(vo);
 	}
 
-	
+	// 커스텀 총 갯수
+	@Override
+	public int custom_list_count(PageMaker pm) throws Exception{
+		return ad_registDAO.custom_list_count(pm);
+	}
+	// 커스텀 리스트
+	@Override
+	public List<CustomVO> custom_list(PageMaker pm) throws Exception {
+		return ad_registDAO.custom_list(pm);
+	}
+	// 커스텀 삭제
+	@Override
+	public void custom_delete(int coidx) throws Exception {
+		ad_registDAO.custom_delete(coidx);
+	}
 }

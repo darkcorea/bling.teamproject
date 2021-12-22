@@ -30,20 +30,21 @@ public class Ad_RegistController {
 	Ad_RegistService ad_registService;
 	
 	
+	/*
 	// 테스트 경로
 	String path = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image\\";
 	String spath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage\\";
+	String cpath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\custom\\";
 	String path1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image";
 	String spath1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage";
-	String cpath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\custom\\";
+	*/
 	
-	/*
 	// 서버 올리는 경로
 	String path = "C:\\tomcat\\webapps\\team_Bling\\resources\\image\\";
 	String spath = "C:\\tomcat\\webapps\\team_Bling\\resources\\simage\\";
+	String cpath = "C:\\tomcat\\webapps\\team_Bling\\resources\\custom\\";
 	String path1 = "C:\\tomcat\\webapps\\team_Bling\\resources\\image";
 	String spath1 = "C:\\tomcat\\webapps\\team_Bling\\resources\\simage";
-	*/
 	
 
 	// 폴더 없으면 폴더 생성
@@ -541,6 +542,54 @@ public class Ad_RegistController {
 		ad_registService.customregist(vo);
 		
 		return "";
+	}
+	
+	/* 파일이름를 입력하면 파일을 삭제하는 메소드 simage폴더*/
+	public void cimageDel(String name) {
+		 File deleteFile = new File(cpath+name);
+		 if(deleteFile.exists()) {   
+	            // 파일을 삭제합니다.
+	            deleteFile.delete(); 
+	            System.out.println("파일을 삭제하였습니다.");
+	        } else {
+	            System.out.println("파일이 존재하지 않습니다.");
+	        }
+	}
+	
+	// 커스텀 리스트 페이지 이동
+	@RequestMapping(value = "/custom_list.do")
+	public String custom_list(Locale locale, Model model, int page, int type, int kind) throws Exception {
+		
+		Criteria sc = new Criteria();
+		sc.setPerPageNum(20);
+		sc.setPage(page);
+		
+		PageMaker pm = new PageMaker();
+		pm.setScri(sc);
+		if(kind != 0) {	pm.setKind(Integer.toString(kind));	}
+		if(type != 0) {	pm.setType(Integer.toString(type));	}
+		
+		// 물건 총 갯수 구하기
+		int custom_list_count = ad_registService.custom_list_count(pm);
+		pm.setTotalCount(custom_list_count);
+		
+		// 커스텀 리스트 보내기
+		model.addAttribute("pm", pm);
+		model.addAttribute("count", custom_list_count);
+		model.addAttribute("list", ad_registService.custom_list(pm));
+		
+		return "admin/Custom/customList";
+	}
+	
+	// 커스텀 삭제
+	@RequestMapping(value = "/custom_delete.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int custom_delete(int coidx, String customimg) throws Exception {
+		// 사진 삭제
+		cimageDel(customimg);
+		//커스텀 삭제
+		ad_registService.custom_delete(coidx);
+		return 1;
 	}
 	
 }
