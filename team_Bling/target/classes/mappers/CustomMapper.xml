@@ -22,10 +22,8 @@
 	</insert>
 	
 	<!-- 커스텀 개수 -->
-	<select id="howmany" resultType="int">
-		<![CDATA[
-			select count(cuidx) from bg_custom_user where cuidx > 0
-		]]>	
+	<select id="howmany" resultType="int" parameterType="int">
+		select count(cuidx) from bg_custom_user where delyn = '판매' and midx = #{midx}
 	</select>
 	
 	<!-- 커스텀 페이징 -->

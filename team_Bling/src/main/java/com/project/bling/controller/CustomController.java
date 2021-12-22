@@ -60,7 +60,7 @@ public class CustomController {
 		UserVO vo = (UserVO)session.getAttribute("UserVO");
 		int midx = vo.getMidx();
 		int count = 0;
-		count = customService.howmany();
+		count = customService.howmany(midx);
 		Criteria sc = new Criteria();
 		sc.setPerPageNum(6);
 		sc.setPage(page);
@@ -71,6 +71,10 @@ public class CustomController {
 		Map<String, Object> list = new HashMap<String, Object>();
 		list.put("list", customService.listajax(pm));
 		list.put("pm", pm);
+		
+		System.out.println("************"+pm.getEndPage());
+		System.out.println(count);
+		System.out.println(page);
 		
 		return list;
 	}

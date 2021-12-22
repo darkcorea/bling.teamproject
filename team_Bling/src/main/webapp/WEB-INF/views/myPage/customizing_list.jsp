@@ -65,7 +65,6 @@
 		});
 		
 		
-		
 		function list(page){
 			
 			$.ajax({
@@ -78,15 +77,11 @@
 					let pm = data.pm;
 					let prev = parseInt(pm.startPage - 1) ;
 				  	let next = parseInt(pm.endPage + 1) ;
-				  	
+				  	console.log(pm.startPage);
+				  	console.log(pm.endPage);
 					//본문
-					if(data.length < 4){
-						str += threelist(0,3,data);
-					}else if(3 < data.list.length < 7){
-						str += threelist(0,3,data);
-						str += threelist(3,6,data);
-					}
-					
+					str += threelist(0,3,data);
+					str += threelist(3,6,data);
 					str+="<br>";
 					
 					//네비게이션바
