@@ -197,7 +197,7 @@ public class Ad_Order_deliveryController {
 	
 	@ResponseBody
 	@RequestMapping(value="/returnStat.do")
-	public String returnStat(@RequestBody CombineVO vo) throws Exception {
+	public String returnStat(CombineVO vo) throws Exception {
 		System.out.println("관리자 return리스트 컨트롤러 : returnStat 실행");
 		System.out.println("return 버튼으로 받은 kind : "+vo.getKind());
 		System.out.println("return 버튼으로 받은 order_idx : "+vo.getOrder_idx());

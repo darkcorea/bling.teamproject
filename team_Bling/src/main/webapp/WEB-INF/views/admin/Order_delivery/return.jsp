@@ -310,12 +310,17 @@
 						
 						str += "	</button>";
 						str += "	<ul class='dropdown-menu'>";
-						str += "		<li><input type='radio' name='prodStat' id='prodStatC"+rl[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"C\",\""+kind+"\","+rl[i].order_idx+","+page+")'></li>";
-						str += "			<label for='prodStatC"+rl[i].order_idx+"'>취소완료</label><br>";
-						str += "		<li><input type='radio' name='prodStat' id='prodStatR"+rl[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"R\",\""+kind+"\","+rl[i].order_idx+","+page+")'></li>";
-						str += "			<label for='prodStatR"+rl[i].order_idx+"'>환불완료</label><br>";
-						str += "		<li><input type='radio' name='prodStat' id='prodStatE"+rl[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"E\",\""+kind+"\","+rl[i].order_idx+","+page+")'></li>";
-						str += "			<label for='prodStatE"+rl[i].order_idx+"'>교환완료</label><br>";
+						if(rl[i].cancel=="N"){
+							str += "		<li><input type='radio' name='prodStat' id='prodStatC"+rl[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"C\",\""+kind+"\","+rl[i].order_idx+","+page+")'></li>";
+							str += "			<label for='prodStatC"+rl[i].order_idx+"'>취소완료</label><br>";
+						}else if(rl[i].refund=="N"){
+							str += "		<li><input type='radio' name='prodStat' id='prodStatR"+rl[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"R\",\""+kind+"\","+rl[i].order_idx+","+page+")'></li>";
+							str += "			<label for='prodStatR"+rl[i].order_idx+"'>환불완료</label><br>";
+						}else if(rl[i].exchange=="N"){
+							str += "		<li><input type='radio' name='prodStat' id='prodStatE"+rl[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"E\",\""+kind+"\","+rl[i].order_idx+","+page+")'></li>";
+							str += "			<label for='prodStatE"+rl[i].order_idx+"'>교환완료</label><br>";
+						}
+						
 						str += "	</ul>";
 						str += "</div>";
 								
@@ -404,13 +409,13 @@
 	
 	/* 취소상태 변경 */
 	function statChange(kind,order_idx,page,stat){
-		
+		console.log("statChange() 실행");
 		$.ajax({
 			url: "/team_Bling/Ad_order_delivery/returnStat.do",
 			type: "post",
 			data: {"kind":kind, "order_idx":order_idx},
 			success: function(data){
-				
+				returnList(page,stat);
 			},
 			error: function(){
 				console.log("취소상태 변경 에러");

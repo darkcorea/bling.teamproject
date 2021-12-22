@@ -188,6 +188,6 @@
 		<if test='kind == "E"'>
 		 exchange='Y'
 		</if>
-		WHERE o.order_idx=#{order_idx}
+		WHERE order_idx=#{order_idx}
 	</update>
 </mapper>
