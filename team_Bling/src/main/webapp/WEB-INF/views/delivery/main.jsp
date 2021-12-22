@@ -311,69 +311,69 @@
 </div>
 
 <!-- 리뷰 작성 Modal -->
-<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-		
-			<div class="modal-header">
-				<h5 class="modal-title" id="staticBackdropLabel">리뷰 작성</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="modalReset()"></button>
-		</div>
-		
-		<div class="modal-body">
-			<div id="modalText1">상품은 만족하셨나요?</div>
-			<form id="modalForm">				
-				<!-- star_rating -->
-				<div class="rating">
-					<input type="radio" name="rating" value="5" id="5" class="star">
-						<label for="5">☆</label> 
-					<input type="radio" name="rating" value="4" id="4" class="star">
-						<label for="4">☆</label> 
-					<input type="radio" name="rating" value="3" id="3" class="star">
-						<label for="3">☆</label> 
-					<input type="radio" name="rating" value="2" id="2" class="star">
-						<label for="2">☆</label> 
-					<input type="radio" name="rating" value="1" id="1" class="star">
-						<label for="1">☆</label>
+	<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+			
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">리뷰 작성</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="javascript:modalReset();delPreview(0);"></button>
 				</div>
-				<br>
-				<textarea id="textArea1" placeholder="상품에 대한 후기를 남겨 주세요.&#13;&#10;사진은 2장까지 첨부 가능합니다."></textarea>
-				<div id="textArea1_cnt">0/500</div>
-				<br>
-			</form>
-			<form id="pictureForm">
-				<div id="uploadDiv">
-				<!-- 파일을 업로드할 영역 -->
-					<input type="file" id="uploadBtn" name="uploadBtn" multiple accept=".jpg, .jpeg, .png" onchange="uploadFile()">
-					<label for="uploadBtn" class="fileBtn btn">
-						<span id="fileBtnText">
-							<i class="bi bi-camera"></i>사진 첨부하기
-						</span>
-					</label>
-					<span id="fileName"></span>
+				
+				<div class="modal-body">
+					<div id="modalText1">상품은 만족하셨나요?</div>
+					<form id="modalForm">				
+						<!-- star_rating -->
+						<div class="rating">
+							<input type="radio" name="rating" value="5" id="5" class="star">
+								<label for="5">☆</label> 
+							<input type="radio" name="rating" value="4" id="4" class="star">
+								<label for="4">☆</label> 
+							<input type="radio" name="rating" value="3" id="3" class="star">
+								<label for="3">☆</label> 
+							<input type="radio" name="rating" value="2" id="2" class="star">
+								<label for="2">☆</label> 
+							<input type="radio" name="rating" value="1" id="1" class="star">
+								<label for="1">☆</label>
+						</div>
+						<br>
+						<textarea id="textArea1" placeholder="상품에 대한 후기를 남겨 주세요.(10자 이상, 500자 이하)&#13;&#10;사진은 2장까지 첨부 가능합니다."></textarea>
+						<div id="textArea1_cnt">0/500</div>
+						<br>
+					</form>
+					<form id="pictureForm">
+						<div id="uploadDiv">
+						<!-- 파일을 업로드할 영역 -->
+							<input type="file" id="uploadBtn" name="uploadBtn" multiple accept=".jpg, .jpeg, .png" onchange="javascript:uploadFile();preview();">
+							<label for="uploadBtn" class="fileBtn btn">
+								<span id="fileBtnText">
+									<i class="bi bi-camera"></i>사진 첨부하기
+								</span>
+							</label>
+							<span id="fileName"></span>
+						</div>
+					</form>
+					<br>
+					<div id="preview">
+						<div class="previewD1">
+							<i id="badge1" class="bi bi-dash-circle position-absolute" onclick="delPreview(1)"></i>
+							<img class="previewImg" id="previewImg1" src="">
+						</div>
+						<div class="previewD2">
+							<i id="badge2" class="bi bi-dash-circle position-absolute" onclick="delPreview(2)"></i>
+							<img class="previewImg" id="previewImg2" src="">
+						</div>						
+					</div>
 				</div>
-			</form>
-			<br>
-			<div id="preview">
-				<div class="previewD1">
-					<i id="badge1" class="bi bi-dash-circle position-absolute" onclick="delPreview(1)"></i>
-					<img class="previewImg" id="previewImg1" src="">
-				</div>
-				<div class="previewD2">
-					<i id="badge2" class="bi bi-dash-circle position-absolute" onclick="delPreview(2)"></i>
-					<img class="previewImg" id="previewImg2" src="">
-				</div>						
-			</div>
-		</div>
-		
-		<div class="modal-footer">
-			<button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal" onclick="modalReset()">닫기</button>
-			<button type="button" class="btn btn-primary" id="saveBtn" data-bs-dismiss="modal" onclick="javascript:reviewWrite(); modalReset();">저장</button>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal" onclick="javascript:modalReset();delPreview(0);">닫기</button>
+					<button type="button" class="btn btn-primary" id="saveBtn" data-bs-dismiss="modal" onclick="javascript:reviewWrite(); modalReset();delPreview2();">저장</button>
 				</div>
 				
 			</div>
 		</div>
-</div>
+	</div>
 <!-- 리뷰 여려개 달기 모달창  -->
 <div class="modal fade" id="review_write" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
@@ -608,62 +608,16 @@ $(document).ready(function() {
 		$("#staticBackdrop1").modal("show");
 	}
 	
-	// 리뷰 쓰기 
-	function reviewWrite(){
-
-		let starRating = document.querySelector("input[name='rating']:checked");
-		let grade = "";
-		let contents = "";
-		
-		if(starRating != null){
-			grade = starRating.value;
-			contents = contentsCheck();
-			if(contents == ""){
-				return ;
-			}
-		}
-		else if(starRating == null){
-			Swal.fire({
-				icon: 'error',
-				title: '별점을 선택해주세요!',
-				text: '별점은 1점부터 5점까지 선택 가능합니다.',
-			});
-			modalReset();
-		}
-		
-		$.ajax({
-			url: "/team_Bling/MyPage/reviewWrite.do",
-			type: "post",
-			data: "contents="+contents+"&grade="+grade,
-			ContentType: "json",
-			success: function(data){
-				$("#staticBackdrop1").modal("hide");
-				alert("리뷰가 작성되었습니다.");
-				location.reload();
-				
-			},
-			error: function(){
-				console.log("!!!!!리뷰작성 에러!!!!!");
-			}
-		});
-	}
-	
-	// 모달 새로 키면 내용 리셋
-	function modalReset(){
-		document.querySelector("form[id='modalForm']").reset();
-		document.querySelector("form[id='pictureForm']").reset();
-	}
-	
-	// 리뷰 창 새로 키면 사진 업로드 리셋 
-	function pictureReset(){
-		document.querySelector("form[id='pictureForm']").reset();
-	}
 	
 	function uploadFile(){
-		let files = document.querySelector("input[name='uploadBtn']").files;
+		const upInput = document.querySelector("input[name='uploadBtn']");
+		let files = upInput.files;
+		console.log("files : "+files);
 		
 		let image1 = files[0];
 		let image2 = files[1];
+		console.log("image1 : "+image1);
+		console.log("image2 : "+image2);
 		
 		let formData = new FormData();
 		formData.append("image1", image1);
@@ -673,29 +627,36 @@ $(document).ready(function() {
 			url: "/team_Bling/MyPage/upload.do",
 			type: "post",
 			data: formData,
-		    dataType: "text",
-		    processData: false,
-		    contentType: false,
-		    success: function(data){
-		    	if(data == "true"){
-		    		console.log("파일 업로드 성공");
-		    	}
-		    	else if(data == "false"){
-		    		console.log("지정된 이미지 파일이 아닙니다.");
-		    		console.log("파일 업로드 실패");
-		    		Swal.fire({
-							icon: 'error',
-							title: '지정된 이미지 파일이 아닙니다!',
-							text: 'jpg, jpeg, png 파일만 선택 가능합니다.',
-						});
-		    		pictureReset();
-		    	}
-		    }
+			// processData: true=> get방식, false => post방식
+            dataType: "text",
+            // contentType: true => application/x-www-form-urlencoded, 
+            //                false => multipart/form-data
+            processData: false,
+            contentType: false,
+            success: function(data){
+            	if(data == "true"){
+            		console.log("파일 업로드 성공");
+            		//같은 파일을 다시 선택할 경우 input value가 변경된게 아니기 때문에 change 이벤트가 발생되지 않는다.
+            		//파일이 선택된 후 처리해줄 로직이 끝난 뒤에, 아래와 같이 input 요소의 value 값을 비워주면 된다.
+            		upInput.value = '';
+            	}
+            	else if(data == "false"){
+            		console.log("지정된 이미지 파일이 아닙니다.");
+            		console.log("파일 업로드 실패");
+            		Swal.fire({
+						icon: 'error',
+						title: '지정된 이미지 파일이 아닙니다!',
+						text: 'jpg, jpeg, png 파일만 선택 가능합니다.',
+					});
+            		delPreview(0);
+            	}
+            }
 		});
 	}
 	
-	// 리뷰 내용 체크 
+	
 	function contentsCheck(){
+		//리뷰내용 가져오기(contents)
 		let textArea1 = document.querySelector("textarea").value;
 		let contents = "";
 		
@@ -717,6 +678,9 @@ $(document).ready(function() {
 					text: '최소 10자부터 최대 500자까지 입력 가능합니다.',
 				});
 			}
+			else if(contents.length>=10 && contents.length<=500){
+				
+			}
 		}
 		else if(textArea1 == null){
 			Swal.fire({
@@ -724,10 +688,174 @@ $(document).ready(function() {
 				title: '내용을 입력해주세요!',
 				text: '최소 10자부터 최대 500자까지 입력 가능합니다.',
 			});
+			console.log("내용을 입력해주세요.");
 			modalReset();
-		}	
+			delPreview(0);
+		}
+		
+		console.log("contentsCheck()에서 return값 : "+contents);
 		return contents;
 	}
+	
+	
+	function reviewWrite(){
+		//detail_idx 값 가져오기
+		//console.log(event.currentTarget.value);
+		//let detail_idx = event.currentTarget.value;
+		
+		//detail_idx 확인
+		//console.log(idx);
+		
+		//console.log(event.currentTarget);
+		//let detail_idx = event.currentTarget.value;
+		
+		
+		//Uncaught TypeError: Cannot read properties of null (reading 'value')
+		// -> JavaScript는 존재하지 않는 것의 값을 읽을 수 없어서 오류 발생
+		
+		//별점 value 가져오기(grade)
+		let starRating = document.querySelector("input[name='rating']:checked");
+		let grade = "";
+		let contents = "";
+		
+		if(starRating != null){
+			grade = starRating.value;
+			console.log(grade);
+			
+			contents = contentsCheck();
+			console.log("reviewWrite()에서 contentsCheck() 호출 후 return값 : "+contentsCheck());
+			if(contents == ""){
+				console.log("reviewWrite()에서 contents가 없음");
+				return ;
+			}
+		}
+		else if(starRating == null){
+			Swal.fire({
+				icon: 'error',
+				title: '별점을 선택해주세요!',
+				text: '별점은 1점부터 5점까지 선택 가능합니다.',
+			});
+			console.log("별점을 선택해주세요.");
+			modalReset();
+			delPreview(0);
+		}
+		
+		
+		$.ajax({
+			url: "/team_Bling/MyPage/reviewWrite.do",
+			type: "post",
+			data: {"contents":contents,"grade":grade},
+			success: function(data){
+				$("#staticBackdrop1").modal("hide");
+				Swal.fire({
+					icon: 'info',
+					title: '리뷰가 작성되었습니다.'
+				}).then((result) => {
+					if(result.isConfirmed){
+						window.location.replace("/team_Bling/MyPage/main.do?page="+${pm.scri.page}+"");
+					}else if (result.isDenied) {
+					}
+				});
+			},
+			error: function(){
+				console.log("!!!!!리뷰작성 에러!!!!!");
+			}
+		});
+	}
+	
+	
+	function modalReset(){
+		//document.getElementById("textArea").value = "";
+		//document.getElementById("uploadBtn").value = "";
+		//$("#modalForm")[0].reset();
+		document.querySelector("form[id='modalForm']").reset();
+	}
+	
+	//업로드할 사진 thumbnail
+	//id속성.src=~ 는 되는데 class속성.src=~는 적용되지 않았음
+	function preview(){
+		let pic = event.target.files;
+		
+		if(pic.length==1){
+			if($("#previewImg1").attr("src") == ""){
+				console.log("preview()-사진1");
+				previewImg1.src=URL.createObjectURL(pic[0]);
+				//메모리 누수(?)가 있을 수 있으므로 이미지 로드 후 삭제
+				previewImg1.onload = function(){
+					URL.revokeObjectURL(this.src);
+				}
+				$("#badge1").css("display","unset");
+			}else if($("#previewImg1").attr("src") != ""){
+				console.log("preview()-사진2");
+				previewImg2.src=URL.createObjectURL(pic[0]);
+				previewImg2.onload = function(){
+					URL.revokeObjectURL(this.src);
+				}
+				$("#badge2").css("display","unset");
+			}
+			//URL.revokeObjectURL(previewImg1.src);		blob 객체 image 주소 제거
+			//URL.revokeObjectURL($("#previewImg1").attr("src"));	위와 동일하게 blob 객체 image 주소 제거 가능
+		}
+		else if(pic.length==2){
+			previewImg1.src=URL.createObjectURL(pic[0]);
+			previewImg2.src=URL.createObjectURL(pic[1]);
+			
+			$("#badge1,#badge2").css("display","unset");
+			
+			previewImg1.onload = function(){
+				URL.revokeObjectURL(this.src);
+			}
+			previewImg2.onload = function(){
+				URL.revokeObjectURL(this.src);
+			}
+		}
+		
+	}
+
+	function delPreview(number){
+		let num = number;
+		
+		if(num==1){
+			$("#previewImg1").attr("src","");
+			$("#badge1").css("display","none");
+		}else if(num==2){
+			$("#previewImg2").attr("src","");
+			$("#badge2").css("display","none");
+		}else if(num==0){
+			$("#previewImg1").attr("src","");
+			$("#badge1").css("display","none");
+			$("#previewImg2").attr("src","");
+			$("#badge2").css("display","none");
+		}
+		
+		$.ajax({
+			url: "/team_Bling/MyPage/cancel.do",
+			type: "post",
+			data: {"num":num},
+			success:function(data){
+				if(data=="pic1"){
+					console.log("썸네일 1번 삭제 성공");
+				}else if(data=="pic2"){
+					console.log("썸네일 2번 삭제 성공");
+				}else if(data=="all"){
+					console.log("썸네일 모두 삭제 성공");
+				}
+			},
+			error:function(){
+				console.log("썸네일 삭제 에러");
+			}
+		});
+		
+	}
+	
+	
+	function delPreview2(){
+		$("#previewImg1").attr("src","");
+		$("#badge1").css("display","none");
+		$("#previewImg2").attr("src","");
+		$("#badge2").css("display","none");
+	}
+	
 	
 	// 구매한 옵션이 여러개 라면
 	function review_writed(order_idx){
@@ -925,102 +1053,6 @@ $(document).ready(function() {
 	    }
 	}
 	rdate();
-	
-	//업로드할 사진 thumbnail
-	//id속성.src=~ 는 되는데 class속성.src=~는 적용되지 않았음
-	function preview(){
-		let pic = event.target.files;
-		
-		if(pic.length==1){
-			if($("#previewImg1").attr("src") == ""){
-				console.log("preview()-사진1");
-				previewImg1.src=URL.createObjectURL(pic[0]);
-				//메모리 누수(?)가 있을 수 있으므로 이미지 로드 후 삭제
-				previewImg1.onload = function(){
-					URL.revokeObjectURL(this.src);
-				}
-				$("#badge1").css("display","unset");
-			}else if($("#previewImg1").attr("src") != ""){
-				console.log("preview()-사진2");
-				previewImg2.src=URL.createObjectURL(pic[0]);
-				previewImg2.onload = function(){
-					URL.revokeObjectURL(this.src);
-				}
-				$("#badge2").css("display","unset");
-			}
-			//URL.revokeObjectURL(previewImg1.src);		blob 객체 image 주소 제거
-			//URL.revokeObjectURL($("#previewImg1").attr("src"));	위와 동일하게 blob 객체 image 주소 제거 가능
-		}
-		else if(pic.length==2){
-			previewImg1.src=URL.createObjectURL(pic[0]);
-			previewImg2.src=URL.createObjectURL(pic[1]);
-			
-			$("#badge1,#badge2").css("display","unset");
-			
-			previewImg1.onload = function(){
-				URL.revokeObjectURL(this.src);
-			}
-			previewImg2.onload = function(){
-				URL.revokeObjectURL(this.src);
-			}
-		}
-		
-	}
-
-	function delPreview(number){
-		let num = number;
-		
-		if(num==1){
-			$("#previewImg1").attr("src","");
-			$("#badge1").css("display","none");
-		}else if(num==2){
-			$("#previewImg2").attr("src","");
-			$("#badge2").css("display","none");
-		}else if(num==0){
-			$("#previewImg1").attr("src","");
-			$("#badge1").css("display","none");
-			$("#previewImg2").attr("src","");
-			$("#badge2").css("display","none");
-		}
-		
-		$.ajax({
-			url: "/team_Bling/MyPage/cancel.do",
-			type: "post",
-			data: {"num":num},
-			success:function(data){
-				if(data=="pic1"){
-					console.log("썸네일 1번 삭제 성공");
-				}else if(data=="pic2"){
-					console.log("썸네일 2번 삭제 성공");
-				}else if(data=="all"){
-					console.log("썸네일 모두 삭제 성공");
-				}
-			},
-			error:function(){
-				console.log("썸네일 삭제 에러");
-			}
-		});
-		
-	}
-	
-	
-	function delPreview2(number){
-		let num = number;
-		
-		if(num==1){
-			$("#previewImg1").attr("src","");
-			$("#badge1").css("display","none");
-		}else if(num==2){
-			$("#previewImg2").attr("src","");
-			$("#badge2").css("display","none");
-		}else if(num==0){
-			$("#previewImg1").attr("src","");
-			$("#badge1").css("display","none");
-			$("#previewImg2").attr("src","");
-			$("#badge2").css("display","none");
-		}
-	}
-	
 	
 	
 </script>

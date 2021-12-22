@@ -118,6 +118,7 @@
 		}
 		
 		
+		
 		function detailIdx(detail_idx){
 			//console.log(event.currentTarget.value);
 			
@@ -497,21 +498,11 @@
 		}
 		
 		
-		function delPreview2(number){
-			let num = number;
-			
-			if(num==1){
-				$("#previewImg1").attr("src","");
-				$("#badge1").css("display","none");
-			}else if(num==2){
-				$("#previewImg2").attr("src","");
-				$("#badge2").css("display","none");
-			}else if(num==0){
-				$("#previewImg1").attr("src","");
-				$("#badge1").css("display","none");
-				$("#previewImg2").attr("src","");
-				$("#badge2").css("display","none");
-			}
+		function delPreview2(){
+			$("#previewImg1").attr("src","");
+			$("#badge1").css("display","none");
+			$("#previewImg2").attr("src","");
+			$("#badge2").css("display","none");
 		}
 		
 	</script>
@@ -953,6 +944,7 @@
 						</div>
 						<br>
 						<textarea id="textArea1" placeholder="상품에 대한 후기를 남겨 주세요.(10자 이상, 500자 이하)&#13;&#10;사진은 2장까지 첨부 가능합니다."></textarea>
+						<div id="textArea1_cnt">0/500</div>
 						<br>
 					</form>
 					<form id="pictureForm">
@@ -982,7 +974,7 @@
 				
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal" onclick="javascript:modalReset();delPreview(0);">닫기</button>
-					<button type="button" class="btn btn-primary" id="saveBtn" data-bs-dismiss="modal" onclick="javascript:reviewWrite(); modalReset();delPreview2(0);">저장</button>
+					<button type="button" class="btn btn-primary" id="saveBtn" data-bs-dismiss="modal" onclick="javascript:reviewWrite(); modalReset();delPreview2();">저장</button>
 				</div>
 				
 			</div>
@@ -1203,4 +1195,18 @@
 	</footer>
 	
 </body>
+
+<script>
+	$(function(){
+		// 글자수 500자로 제한
+	    $('#textArea1').on('keyup', function() {
+	        $('#textArea1_cnt').html("(<b>"+$(this).val().length+"</b> / 500)");
+	
+	        if($(this).val().length > 500) {
+	            $(this).val($(this).val().substring(0, 500));
+	            $('#textArea1_cnt').html("(<b>500</b> / 500)");
+	        }
+	    });
+	});
+</script>
 </html>
