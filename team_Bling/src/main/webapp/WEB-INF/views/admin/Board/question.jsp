@@ -100,7 +100,6 @@
 	<option value="/team_Bling/Ad_board/question.do?page=1&kind=C">기타문의</option>
 	<option value="/team_Bling/Ad_board/question.do?page=1&kind=D">교환신청</option>
 	<option value="/team_Bling/Ad_board/question.do?page=1&kind=E">반품신청</option>
-	<option value="/team_Bling/Ad_board/question.do?page=1&kind=F">취소신청</option>
 	<option value="/team_Bling/Ad_board/question.do?page=1&kind=G">답변 미완료</option>
 	</select>
 	</div>
@@ -540,11 +539,8 @@ function proselected(){
 	if(kind == "E"){
 	    $("#kind option:eq(5)").attr("selected", "selected");
 	}
-	if(kind == "F"){
-	    $("#kind option:eq(6)").attr("selected", "selected");
-	}
 	if(kind == "G"){
-	    $("#kind option:eq(7)").attr("selected", "selected");
+	    $("#kind option:eq(6)").attr("selected", "selected");
 	}
 	if(kind == "H"){
 	    $("#kind option:eq(0)").attr("selected", "selected");
