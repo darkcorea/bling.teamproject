@@ -41,7 +41,6 @@ public class LoginServiceImpl implements LoginService {
 					session.setAttribute("userId", vo.getId());가
 					SessionListener.getSessionidCheck("userId", vo.getId()); 보다 위에 위치하면
 					로그인 하자마자 로그아웃 시킨다.
-					
 				**/
 				session.setAttribute("userId", vo.getId());
 				
