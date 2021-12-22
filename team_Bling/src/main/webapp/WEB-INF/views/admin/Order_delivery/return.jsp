@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content ="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>취소/환불/교환</title>
+<title>취소/반품/교환</title>
 	<!-- SweetAlert2(alert,modal창) -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -178,7 +178,7 @@
 	
 	<!-- 본문 -->
 	<div>
-		<span id="subTitle">취소/환불/교환</span>
+		<span id="subTitle">취소/반품/교환</span>
 		<br><br>
 		<table>
 			<tr>
@@ -195,9 +195,9 @@
 						<option value="C">취소</option>
 						<option value="CN"> -취소 진행중</option>
 						<option value="CY"> -취소완료</option>
-						<option value="R">환불</option>
-						<option value="RN"> -환불 진행중</option>
-						<option value="RY"> -환불완료</option>
+						<option value="R">반품</option>
+						<option value="RN"> -반품 진행중</option>
+						<option value="RY"> -반품완료</option>
 						<option value="E">교환</option>
 						<option value="EN"> -교환 진행중</option>
 						<option value="EY"> -교환완료</option>
@@ -291,10 +291,10 @@
 						}else if((rl[i].refund=="N" || rl[i].refund=="Y") && rl[i].cancel==null && rl[i].exchange==null){
 							if(rl[i].refund=="N"){
 								str += "	<button type='button' class='btn btn-secondary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
-								str += "		환불 진행중";
+								str += "		반품 진행중";
 							}else if(rl[i].refund=="Y"){
 								str += "	<button type='button' class='btn btn-secondary prodBtnN'>";
-								str += "		환불완료(N)";
+								str += "		반품완료(N)";
 							}
 						}else if((rl[i].exchange=="N" || rl[i].exchange=="Y") && rl[i].cancel==null && rl[i].refund==null){
 							if(rl[i].exchange=="N"){
@@ -315,7 +315,7 @@
 							str += "			<label for='prodStatC"+rl[i].order_idx+"'>취소완료</label><br>";
 						}else if(rl[i].refund=="N"){
 							str += "		<li><input type='radio' name='prodStat' id='prodStatR"+rl[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"R\",\""+kind+"\","+rl[i].order_idx+","+page+")'></li>";
-							str += "			<label for='prodStatR"+rl[i].order_idx+"'>환불완료</label><br>";
+							str += "			<label for='prodStatR"+rl[i].order_idx+"'>반품완료</label><br>";
 						}else if(rl[i].exchange=="N"){
 							str += "		<li><input type='radio' name='prodStat' id='prodStatE"+rl[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"E\",\""+kind+"\","+rl[i].order_idx+","+page+")'></li>";
 							str += "			<label for='prodStatE"+rl[i].order_idx+"'>교환완료</label><br>";
@@ -391,7 +391,7 @@
 		if(kind=="C"){
 			kind2="취소완료(C)";
 		}else if(kind=="R"){
-			kind2="환불완료(R)";
+			kind2="반품완료(R)";
 		}else if(kind=="E"){
 			kind2="교환완료(E)";
 		}

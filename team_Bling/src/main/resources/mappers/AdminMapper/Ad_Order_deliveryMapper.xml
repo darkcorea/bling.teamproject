@@ -125,7 +125,7 @@
 		LIMIT #{startPost},#{scri.perPageNum}
 	</select>
 	
-	<!-- 전체 취소/환불/교환 개수 -->
+	<!-- 전체 취소/반품/교환 개수 -->
 	<select id="returnCnt" resultType="int" parameterType="Criteria">
 		SELECT 
 		<if test='kind=="all"'>count(cancel)+count(refund)+count(exchange)</if>
@@ -141,7 +141,7 @@
 		<if test='kind=="EY"'>WHERE exchange='Y'</if>
 	</select>
 	
-	<!-- 취소/환불/교환 -->
+	<!-- 취소/반품/교환 -->
 	<select id="returnList" resultType="CombineVO" parameterType="PageMaker">
 		SELECT o.order_idx,
 			   d.didx,
@@ -175,7 +175,7 @@
 		LIMIT #{startPost},#{scri.perPageNum}
 	</select>
 	
-	<!-- 취소/환불/교환 버튼(관리자 주문리스트에서 delivery 테이블의 cancel 또는 refund 또는 exchange 컬럼을 Y로 바꾸기 -->
+	<!-- 취소/반품/교환 버튼(관리자 주문리스트에서 delivery 테이블의 cancel 또는 refund 또는 exchange 컬럼을 Y로 바꾸기 -->
 	<update id="returnStat" parameterType="CombineVO">
 		UPDATE bg_delivery
 		SET 
