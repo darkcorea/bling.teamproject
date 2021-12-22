@@ -443,8 +443,11 @@ function reply_fn(midx,qidx,category,order_idx,detail_idx){
 					let price = data[0].tot_price.toLocaleString();
 					str += "<span class='title'>결제금액 : </span><span class='title'>"+price+"원</span>";
 					str += "</div>";
-					str += "<button>반품완료</button>";
-	
+					if(data[0].payed_mileage != 0){
+					str += "<button class='btn btn-outline-success' onclick='return_complite("+order_idx+")'>반품/교환 완료</button>";
+					}
+					let str1 = "사용한 마일리지 :" +data[0].payed_mileage;
+					$("#content_write").val(str1);
 					$("#delivery1").html(str);
 					$("#reply_write").modal("show");
 			},error:function(){
@@ -549,6 +552,11 @@ function proselected(){
 }
 proselected();
 
+
+function return_complite(){
+	
+	
+}
 
 
 </script>
