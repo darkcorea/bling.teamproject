@@ -47,4 +47,7 @@ public class Ad_Order_deliveryDAO {
 	public List<CombineVO> returnList(PageMaker pm) throws Exception {
 		return sqlSession.selectList(ps+"returnList", pm);
 	}
+	public void returnStat(CombineVO vo) throws Exception {
+		sqlSession.update(ps+"returnStat", vo);
+	}
 }
