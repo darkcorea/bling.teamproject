@@ -302,3 +302,27 @@
 	.page-item {
 		padding: 0px;
 	}
+	#review{
+		cursor: pointer;
+	}
+	#reviewWrite1{
+		color: #CB7878;
+		background-color: #ffffff;
+		border: none;
+		cursor: pointer;
+		width: 70px;
+	}
+	#reviewWrite2{
+		color: #000000;
+		background-color: #ffffff;
+		border: none;
+		cursor: pointer;
+		width: 70px;
+	}
+	#reviewWrite3{
+		color: #C1B2B2;
+		background-color: #ffffff;
+		border: none;
+		width: 70px;
+		}
+		

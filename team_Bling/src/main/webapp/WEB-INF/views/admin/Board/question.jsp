@@ -96,7 +96,7 @@
 	<select name="kind" id="kind" onchange="location.href=this.value">
 	<option value="/team_Bling/Ad_board/question.do?page=1&kind=H">모든 문의</option>
 	<option value="/team_Bling/Ad_board/question.do?page=1&kind=A">배송문의</option>
-	<option value="/team_Bling/Ad_board/question.do?page=1&kind=B">교환/환불/취소문의</option>
+	<option value="/team_Bling/Ad_board/question.do?page=1&kind=B">교환/반품/취소문의</option>
 	<option value="/team_Bling/Ad_board/question.do?page=1&kind=C">기타문의</option>
 	<option value="/team_Bling/Ad_board/question.do?page=1&kind=D">교환신청</option>
 	<option value="/team_Bling/Ad_board/question.do?page=1&kind=E">반품신청</option>
@@ -139,7 +139,7 @@
   							배송문의
   						</c:if>
   						<c:if test="${list.category == 'B'}">
-  							교환/환불/취소문의
+  							교환/반품/취소문의
   						</c:if>
   						<c:if test="${list.category == 'C'}">
   							기타
@@ -148,7 +148,7 @@
   							교환신청
   						</c:if>
   						<c:if test="${list.category == 'E'}">
-  							환불신청
+  							반품신청
   						</c:if>
   						<c:if test="${list.category == 'F'}">
   							취소신청
@@ -443,7 +443,7 @@ function reply_fn(midx,qidx,category,order_idx,detail_idx){
 					let price = data[0].tot_price.toLocaleString();
 					str += "<span class='title'>결제금액 : </span><span class='title'>"+price+"원</span>";
 					str += "</div>";
-					if (data[0].refund != null){
+					if (data[0].refund != null && data[0].payed_mileage != 0){
 					str += "<button id='payed_mileage_btn' class='btn btn-outline-success' onclick='return_complite("+order_idx+","+midx+","+data[0].payed_mileage+")'>반품 마일리지반환</button>";
 					}
 					let str1 = "사용한 마일리지 :" +data[0].payed_mileage;
@@ -561,7 +561,7 @@ function return_complite(midx,order_idx,payed_mileage){
 		data:{"midx":midx,"order_idx":order_idx,"payed_mileage":payed_mileage},
 		success:function(data){
 			 $("#payed_mileage_btn").hide();
-			 alert("사용한 마일리지가 반납되었습니다");
+			 alert("사용한 마일리지"+payed_mileage+" 원이 반납되었습니다");
 		},error:function(){
 			alert("답글 수정 오류");
 		}

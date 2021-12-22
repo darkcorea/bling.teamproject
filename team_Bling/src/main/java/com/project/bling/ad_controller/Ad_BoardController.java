@@ -619,10 +619,8 @@ public class Ad_BoardController {
 	@ResponseBody
 	public int payed_mileage_add(CombineVO cv)throws Exception{
 		
-		// 회원 마일리지에 쓴 마일리지 추가
-		
-		// 오더에 있는 쓴 마일리지 0으로 만들기
-		
+		// 회원 마일리지에 쓴 마일리지 추가, 오더에 있는 쓴 마일리지 0으로 만들기
+		ad_boardService.payed_mileage_add(cv);
 		return 1;
 	}
 	

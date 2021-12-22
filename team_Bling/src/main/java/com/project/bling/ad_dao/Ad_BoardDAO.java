@@ -149,6 +149,12 @@ public class Ad_BoardDAO {
 		sqlSession.delete(ps+"review_delete", ridx);
 	}
 	
+	// 사용한 마일리지 돌려주고 payed_mileage는 0으로 변경
+	public void payed_mileage_add(CombineVO cv)throws Exception{
+		sqlSession.update(ps+"payed_mileage_add", cv);
+		sqlSession.update(ps+"payed_mileage_zero", cv);
+	}
+	
 	
 	
 }

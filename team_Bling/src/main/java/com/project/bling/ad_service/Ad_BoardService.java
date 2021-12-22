@@ -59,6 +59,7 @@ public interface Ad_BoardService {
 	List<CombineVO> product_detail(int pidx)throws Exception;
 	void question_product_write(Product_QuestionVO pv)throws Exception;
 	void question_product_modify(Product_QuestionVO pv)throws Exception;
+	void payed_mileage_add(CombineVO cv)throws Exception;
 	
 	// 리뷰 리스트
 	int review_count(PageMaker pm) throws Exception;

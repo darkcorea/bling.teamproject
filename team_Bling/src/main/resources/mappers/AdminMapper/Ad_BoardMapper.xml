@@ -250,7 +250,7 @@
   </delete>
 	  
   <!-- 사용한 마일리지 다시 돌려주기 -->
-  <update id="addmileage_user" parameterType="CombineVO">
+  <update id="payed_mileage_add" parameterType="CombineVO">
 	  	UPDATE bg_user SET mileage=mileage+#{payed_mileage} where midx=#{midx}
   </update>
   <!--  사용한 마일리지 다시 돌려주는 일이 없어록 0으로 만들기 -->
