@@ -25,7 +25,7 @@ public class SessionListener implements HttpSessionListener {
 		출처 : https://ratseno.tistory.com/64
 	**/
 	//					 Map<Key, Value>
-	private static final Map<String, HttpSession> sessions = new ConcurrentHashMap();
+	private static final Map<String, HttpSession> sessions = new ConcurrentHashMap<String, HttpSession>();
 
     //중복로그인 지우기
 	public synchronized static String getSessionidCheck(String type, String compareId){
