@@ -443,6 +443,7 @@ function reply_fn(midx,qidx,category,order_idx,detail_idx){
 					let price = data[0].tot_price.toLocaleString();
 					str += "<span class='title'>결제금액 : </span><span class='title'>"+price+"원</span>";
 					str += "</div>";
+					str += "<button>반품완료</button>";
 	
 					$("#delivery1").html(str);
 					$("#reply_write").modal("show");
