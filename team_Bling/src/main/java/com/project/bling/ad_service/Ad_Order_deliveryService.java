@@ -16,4 +16,5 @@ public interface Ad_Order_deliveryService {
 	public List<CombineVO> deliveryList(PageMaker pm) throws Exception;
 	public int returnCnt(Criteria sc) throws Exception;
 	public List<CombineVO> returnList(PageMaker pm) throws Exception;
+	public void returnStat(CombineVO vo) throws Exception;
 }
