@@ -77,7 +77,7 @@
 		    <ul class="dropdown-menu">
 		      <li><a class="dropdown-item" href="/team_Bling/Ad_order_delivery/order.do">주문 리스트</a></li>
 		      <li><a class="dropdown-item" href="/team_Bling/Ad_order_delivery/delivery.do">배송 리스트</a></li>
-		      <li><a class="dropdown-item" href="/team_Bling/Ad_order_delivery/return.do">취소/환불/교환</a></li>
+		      <li><a class="dropdown-item" href="/team_Bling/Ad_order_delivery/return.do">취소/반품/교환</a></li>
 		    </ul>
 		  </li>
 		   <li class="nav-item dropdown">

@@ -498,7 +498,7 @@
 					str += "			<label for='prodStatA"+ol[i].order_idx+"'>상품준비중</label><br>";
 					str += "		<li><input type='radio' name='prodStat' id='prodStatB"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"B\",\""+kind+"\","+ol[i].order_idx+","+page+")'></li>";
 					str += "			<label for='prodStatB"+ol[i].order_idx+"'>배송중</label><br>";
-					str += "		<li><input type='radio' name='prodStat' id='prodStatC"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"C\",\""+kind+"\","+ol[i].order_idx+","+page+")'></li>";
+					str += "		<li><input type='radio' name='prodStat' id='prodStatC"+ol[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"C\",\""+kind+"\","+ol[i].order_idx+","+page+","+ol[i].invoice_num+")'></li>";
 					str += "			<label for='prodStatC"+ol[i].order_idx+"'>배송완료</label><br>";
 					str += "	</ul>";
 					str += "</div>";
@@ -557,10 +557,11 @@
 	
 	
 	/* 주문상태 및 송장입력 상위 함수 */
-	function deli(kind,statN,order_idx,page){
+	function deli(kind,statN,order_idx,page,invoice_num){
 		console.log("deli() 실행");
 		console.log("kind : "+kind);
 		console.log("order_idx : "+order_idx);
+		console.log("invoice_num : "+invoice_num);
 		
 		let stat = statN;
 		console.log("stat : "+stat);
@@ -592,10 +593,13 @@
 				else if(kind=="N" || kind=="Y" || kind=="A"){
 					invoiceDel(kind,order_idx,page,stat);
 				}
-				else{
-					statChange(kind,order_idx,page,stat);
+				else if(kind=="C"){
+					if(invoice_num != null){
+						statChange(kind,order_idx,page,stat);
+					}else{
+						invoiceChange(kind,order_idx,page,stat);
+					}
 				}
-				
 			}
 		});
 	}

@@ -39,43 +39,41 @@
 				str += "			<c:if test='${ro.cancel == \"Y\"}'>";
 				str += "				<td id='td6'><span id='t6'>취소완료</span></td>";
 				str += "			</c:if>";
+				str += "			<c:if test='${ro.cancel==\"N\" && ro.refund==null && ro.exchange==null}'>";
+				str += "				<td id='td6'><span id='t6'>취소 진행중</span></td>";
+				str += "			</c:if>";
 				str += "			<c:if test='${ro.cancel==null && ro.refund==null && ro.exchange==null}'>";
-				str += "				<td id='td6'><span id='t6'>미결제</span></td>";
+				str += "				<td id='td6'><span id='t6'>결제대기</span></td>";
 				str += "			</c:if>";
 				str += "		</c:if>";
 				str += "		<c:if test='${ro.deli_stat == \"Y\"}'>";
 				str += "			<c:if test='${ro.cancel == \"Y\"}'>";
 				str += "				<td id='td6'><span id='t6'>취소완료</span></td>";
 				str += "			</c:if>";
+				str += "			<c:if test='${ro.cancel==\"N\" && ro.refund==null && ro.exchange==null}'>";
+				str += "				<td id='td6'><span id='t6'>취소 진행중</span></td>";
+				str += "			</c:if>";
 				str += "			<c:if test='${ro.cancel==null && ro.refund==null && ro.exchange==null}'>";
 				str += "				<td id='td6'><span id='t6'>결제완료</span></td>";
 				str += "			</c:if>";
 				str += "		</c:if>";
 				str += "		<c:if test='${ro.deli_stat == \"A\"}'>";
-				str += "			<c:if test='${ro.cancel == \"N\"}'>";
-				str += "				<td id='td6'><span id='t6'>취소중</span></td>";
-				str += "			</c:if>";
-				str += "			<c:if test='${ro.cancel == \"Y\"}'>";
-				str += "				<td id='td6'><span id='t6'>취소완료</span></td>";
-				str += "			</c:if>";
-				str += "			<c:if test='${ro.cancel==null && ro.refund==null && ro.exchange==null}'>";
-				str += "				<td id='td6'><span id='t6'>상품준비중</span></td>";
-				str += "			</c:if>";
+				str += "			<td id='td6'><span id='t6'>상품준비중</span></td>";
 				str += "		</c:if>";
 				str += "		<c:if test='${ro.deli_stat == \"B\"}'>";
 				str += "			<td id='td6'><span id='t6'>배송중</span></td>";
 				str += "		</c:if>";
 				str += "		<c:if test='${ro.deli_stat == \"C\"}'>";
-				str += "			<c:if test='${ro.refund == \"N\"}'>";
-				str += "				<td id='td6'><span id='t6'>환불중</span></td>";
+				str += "			<c:if test='${ro.refund == \"N\" && ro.cancel==null && ro.exchange==null}'>";
+				str += "				<td id='td6'><span id='t6'>반품 진행중</span></td>";
 				str += "			</c:if>";
-				str += "			<c:if test='${ro.refund == \"Y\"}'>";
-				str += "				<td id='td6'><span id='t6'>환불완료</span></td>";
+				str += "			<c:if test='${ro.refund == \"Y\" && ro.cancel==null && ro.exchange==null}'>";
+				str += "				<td id='td6'><span id='t6'>반품완료</span></td>";
 				str += "			</c:if>";
-				str += "			<c:if test='${ro.exchange == \"N\"}'>";
-				str += "				<td id='td6'><span id='t6'>교환중</span></td>";
+				str += "			<c:if test='${ro.exchange == \"N\" && ro.cancel==null && ro.refund==null}'>";
+				str += "				<td id='td6'><span id='t6'>교환 진행중</span></td>";
 				str += "			</c:if>";
-				str += "			<c:if test='${ro.exchange == \"Y\"}'>";
+				str += "			<c:if test='${ro.exchange == \"Y\" && ro.cancel==null && ro.refund==null}'>";
 				str += "				<td id='td6'><span id='t6'>교환완료</span></td>";
 				str += "			</c:if>";
 				str += "			<c:if test='${ro.cancel==null && ro.refund==null && ro.exchange==null}'>";
@@ -83,18 +81,26 @@
 				str += "			</c:if>";
 				str += "		</c:if>";
 				
-				
+				/* 배송완료 후 7일 이전 리뷰 작성 가능 */
 				str += "		<c:if test='${ro.date_differ <= 7}'>";
+				/* 7일 이내 리뷰 내용이 있다면 -> 리뷰 확인 */
 				str += "			<c:if test='${ro.contents != null}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite2' data-bs-toggle='modal' data-bs-target='#staticBackdrop2' onclick='reviewDetail(${ro.ridx})' value='리뷰 확인' readonly></span></td>";
 				str += "			</c:if>";
+				/* 7일 이내 리뷰 내용이 없고 배송완료(C) 상태가 아니라면 -> 공백 */
 				str += "			<c:if test='${ro.contents == null && ro.deli_stat != \"C\"}'>";
 				str += "				<td id='td7'></td>";
 				str += "			</c:if>";
-				str += "			<c:if test='${ro.contents == null && ro.deli_stat == \"C\"}'>";
+				/* 7일 이내 리뷰 내용이 없고 배송완료(C) 상태 & 취소/반품/교환 상태가 아니라면 -> 리뷰 작성 */
+				str += "			<c:if test='${ro.contents == null && ro.deli_stat == \"C\" && ro.cancel==null && ro.refund==null && ro.exchange==null}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite1' data-bs-toggle='modal' data-bs-target='#staticBackdrop1' onclick='detailIdx(${ro.detail_idx})' value='리뷰 작성' readonly></span></td>";
 				str += "			</c:if>";
+				/* 7일 이내 리뷰 내용이 없고 배송완료(C) 상태 & 취소/반품/교환 중 1가지 상태라면 -> 공백 */
+				str += "			<c:if test='${ro.contents == null && ro.deli_stat == \"C\" && ((ro.cancel==\"N\" || ro.cancel==\"Y\") || (ro.refund==\"N\" || ro.refund==\"Y\") || (ro.exchange==\"N\" || ro.exchange==\"Y\"))}'>";
+				str += "				<td id='td7'></td>";
+				str += "			</c:if>";
 				str += "		</c:if>";
+				/* 배송완료 후 7일 이후 리뷰 작성 불가 */
 				str += "		<c:if test='${ro.date_differ > 7}'>";
 				str += "			<c:if test='${ro.contents == null}'>";
 				str += "				<td id='td7'><span id='t7'><input id='reviewWrite3' value='구매 확정' readonly></span></td>";
@@ -347,7 +353,7 @@
 						title: '리뷰가 작성되었습니다.'
 					}).then((result) => {
 						if(result.isConfirmed){
-							window.location.replace("/team_Bling/MyPage/main.do?page=1");
+							window.location.replace("/team_Bling/MyPage/main.do?page="+${pm.scri.page}+"");
 						}else if (result.isDenied) {
 						}
 					});
@@ -402,7 +408,7 @@
 					}).then((result) => {
 						  /* Read more about isConfirmed, isDenied below */
 						  if (result.isConfirmed) {
-							   window.location.replace("/team_Bling/MyPage/main.do?page=1");
+							   window.location.replace("/team_Bling/MyPage/main.do?page="+${pm.scri.page}+"");
 						  } else if (result.isDenied) {
 					   }
 					});
@@ -946,7 +952,7 @@
 								<label for="1">☆</label>
 						</div>
 						<br>
-						<textarea id="textArea1" placeholder="상품에 대한 후기를 남겨 주세요.&#13;&#10;사진은 2장까지 첨부 가능합니다."></textarea>
+						<textarea id="textArea1" placeholder="상품에 대한 후기를 남겨 주세요.(10자 이상, 500자 이하)&#13;&#10;사진은 2장까지 첨부 가능합니다."></textarea>
 						<br>
 					</form>
 					<form id="pictureForm">

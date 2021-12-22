@@ -49,10 +49,10 @@ public class MyPageController {
 	LoginService  loginService;
 	
 	// 학원
-	String uploadPath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
+	//String uploadPath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\review_img";
 	
 	// 서버 올리는 용
-	//String uploadPath = "C:\\tomcat\\webapps\\team_Bling\\resources\\review_img";
+	String uploadPath = "C:\\tomcat\\webapps\\team_Bling\\resources\\review_img";
     
 	
 	// 폴더 생성
@@ -73,7 +73,7 @@ public class MyPageController {
 	
 	//MyPage 메인페이지 -> 실행시 바로 화면에 최근 주문 정보 출력
 	@RequestMapping(value="/main.do")
-	public String main(Locale locale, Model model, CombineVO vo, HttpSession session, int page) throws Exception {
+	public String main(Model model, CombineVO vo, HttpSession session, int page) throws Exception {
 		
 		// 로그인이 풀렸을 떄 대비해서 넣음
 		if(session.getAttribute("UserVO") == null) {
@@ -579,12 +579,13 @@ public class MyPageController {
 		//회원정보에서 회원번호만 선택
 		int midx = uv.getMidx();
 
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String realpass = myPageService.delconfirm(midx);
 		
-		if(!realpass.equals(pass)) {
-			confirm = 0; //비번틀림
+		if(encoder.matches(pass, realpass)) {
+			confirm = 1; //비번틀림
 		}else {
-			confirm = 1; //비번 맞음
+			confirm = 0; //비번 맞음
 		}
 				
 		return confirm;

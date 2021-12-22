@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content ="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>취소/환불/교환</title>
+<title>취소/반품/교환</title>
 	<!-- SweetAlert2(alert,modal창) -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -138,6 +138,10 @@
 		.prodBtn{
 			width: 140px;
 		}
+		.prodBtnN{
+			width: 140px;
+			cursor: default !important;
+		}
 		.btn-warning{
 			color: #ffffff;
 		}
@@ -152,9 +156,9 @@
 			min-width: unset;
 		}
 		.prodStat{
-			width: 10px;
+			width: 10px !important;
 			margin-left: 10px;
-			display: inline;
+			display: inline !important;
 		}
 		/* dropdown 메뉴 */
 		/* 마우스 커서 */
@@ -174,7 +178,7 @@
 	
 	<!-- 본문 -->
 	<div>
-		<span id="subTitle">취소/환불/교환</span>
+		<span id="subTitle">취소/반품/교환</span>
 		<br><br>
 		<table>
 			<tr>
@@ -189,8 +193,14 @@
 					<select id="deliStat" onchange="returnList(1,this.value)">
 						<option value="all">전체선택</option>
 						<option value="C">취소</option>
-						<option value="R">환불</option>
+						<option value="CN"> -취소 진행중</option>
+						<option value="CY"> -취소완료</option>
+						<option value="R">반품</option>
+						<option value="RN"> -반품 진행중</option>
+						<option value="RY"> -반품완료</option>
 						<option value="E">교환</option>
+						<option value="EN"> -교환 진행중</option>
+						<option value="EY"> -교환완료</option>
 					</select>
 				</th>
 			</tr>
@@ -211,12 +221,13 @@
      });
 	
 	function returnList(page,kind){
+		console.log("returnList()-kind : "+kind);
 		$.ajax({
 			url: "${cPath}/Ad_order_delivery/returnList.do",
 			type: "post",
 			data: {"page":page,"kind":kind},
 			success: function(data){
-				console.log("배송목록 불러오기 성공");
+				console.log("return목록 불러오기 성공");
 				
 				let str = "";
 				
@@ -265,10 +276,56 @@
 							str += "	<td class='td td7'>배송완료(C)</td>";	
 						}
 						
-						if((rl[i].deli_stat=="N" || rl[i].deli_stat=="Y") && (rl[i].cancel==null && rl[i].refund==null && rl[i].exchange==null)){
-							str += "	<td class='td td8'>취소가능</td>";
+						str += "	<td class='td td8'>";
+						
+						str += "<div class='btn-group dropend'>";
+						
+						if((rl[i].cancel=="N" || rl[i].cancel=="Y") && rl[i].refund==null && rl[i].exchange==null){
+							if(rl[i].cancel=="N"){
+								str += "	<button type='button' class='btn btn-danger dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+								str += "		취소 진행중";
+							}else if(rl[i].cancel=="Y"){
+								str += "	<button type='button' class='btn btn-danger prodBtnN'>";
+								str += "		취소완료(N)";
+							}
+						}else if((rl[i].refund=="N" || rl[i].refund=="Y") && rl[i].cancel==null && rl[i].exchange==null){
+							if(rl[i].refund=="N"){
+								str += "	<button type='button' class='btn btn-secondary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+								str += "		반품 진행중";
+							}else if(rl[i].refund=="Y"){
+								str += "	<button type='button' class='btn btn-secondary prodBtnN'>";
+								str += "		반품완료(N)";
+							}
+						}else if((rl[i].exchange=="N" || rl[i].exchange=="Y") && rl[i].cancel==null && rl[i].refund==null){
+							if(rl[i].exchange=="N"){
+								str += "	<button type='button' class='btn btn-primary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+								str += "		교환 진행중";
+							}else if(rl[i].exchange=="Y"){
+								str += "	<button type='button' class='btn btn-primary prodBtnN'>";
+								str += "		교환완료(N)";
+							}
+						}else if((rl[i].cancel=="N" || rl[i].cancel=="Y") && (rl[i].refund=="N" || rl[i].refund=="Y") && (rl[i].exchange=="N" || rl[i].exchange=="Y")){
+							str += "	<td class='td td8'></td>";
 						}
 						
+						str += "	</button>";
+						str += "	<ul class='dropdown-menu'>";
+						if(rl[i].cancel=="N"){
+							str += "		<li><input type='radio' name='prodStat' id='prodStatC"+rl[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"C\",\""+kind+"\","+rl[i].order_idx+","+page+")'></li>";
+							str += "			<label for='prodStatC"+rl[i].order_idx+"'>취소완료</label><br>";
+						}else if(rl[i].refund=="N"){
+							str += "		<li><input type='radio' name='prodStat' id='prodStatR"+rl[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"R\",\""+kind+"\","+rl[i].order_idx+","+page+")'></li>";
+							str += "			<label for='prodStatR"+rl[i].order_idx+"'>반품완료</label><br>";
+						}else if(rl[i].exchange=="N"){
+							str += "		<li><input type='radio' name='prodStat' id='prodStatE"+rl[i].order_idx+"' class='dropdown-item prodStat' onclick='deli(\"E\",\""+kind+"\","+rl[i].order_idx+","+page+")'></li>";
+							str += "			<label for='prodStatE"+rl[i].order_idx+"'>교환완료</label><br>";
+						}
+						
+						str += "	</ul>";
+						str += "</div>";
+								
+								
+						str += "	</td>";
 						str += "</tr>";
 					}
 			  	}
@@ -320,28 +377,23 @@
 	}
 	
 	
-	
-	
-		
-	function deli(kind,statN,order_idx){
+	function deli(kind,statN,order_idx,page){
 		console.log("deli() 실행");
 		console.log("kind : "+kind);
 		console.log("order_idx : "+order_idx);
 		
 		let stat = statN;
 		console.log("stat : "+stat);
+		console.log("page : "+page);
+		
 		
 		let kind2 = "";
-		if(kind=="N"){
-			kind2="결제대기(N)";
-		}else if(kind=="Y"){
-			kind2="결제완료(Y)";
-		}else if(kind=="A"){
-			kind2="상품준비중(A)";
-		}else if(kind=="B"){
-			kind2="배송중(B)";
-		}else if(kind=="C"){
-			kind2="배송완료(C)";
+		if(kind=="C"){
+			kind2="취소완료(C)";
+		}else if(kind=="R"){
+			kind2="반품완료(R)";
+		}else if(kind=="E"){
+			kind2="교환완료(E)";
 		}
 		
 		Swal.fire({
@@ -350,38 +402,26 @@
 			showCancelButton: true
 		}).then((result) => {
 			if (result.isConfirmed) {
-				let prodData = {
-						method: "post",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify({kind:kind, order_idx:order_idx})
-					}
-				
-				fetch('/Ad_order_delivery/prodStat.do', prodData)
-				.then((response) => {
-					if(!response.ok){
-						throw new Error('400 아니면 500 에러 발생');
-					}
-					
-					return response;
-				})
-				/* 
-					해당 fetch()의 response가 그냥 String이므로 	return response.json();가 아닌 그냥 response를 return함.
-					return response;가 아래의 .then((data)=>{})의 data에 들어간다.
-				*/
-				.then((data) => {
-					console.log("response=data : "+data);
-					console.log("deli()-stat : "+stat);
-					orderList("1",stat);
-				})
-				.catch(() => {
-					console.log('출고버튼 에러');
-				})
+				statChange(kind,order_idx,page,stat);
 			}
 		});
 	}
 	
+	/* 취소상태 변경 */
+	function statChange(kind,order_idx,page,stat){
+		console.log("statChange() 실행");
+		$.ajax({
+			url: "/team_Bling/Ad_order_delivery/returnStat.do",
+			type: "post",
+			data: {"kind":kind, "order_idx":order_idx},
+			success: function(data){
+				returnList(page,stat);
+			},
+			error: function(){
+				console.log("취소상태 변경 에러");
+			}
+		});
+	}	
 	
 </script>
 </html>
