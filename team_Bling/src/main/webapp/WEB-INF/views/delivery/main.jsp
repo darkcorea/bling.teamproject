@@ -122,7 +122,7 @@
 						<b>취소완료</b>
 						</c:if>
 						<c:if test="${list.refund == 'Y'}">
-						<b>환불완료</b>
+						<b>반품완료</b>
 						</c:if>
 						<c:if test="${list.exchange == 'Y'}">
 						<b>교환완료</b>
@@ -137,10 +137,10 @@
 						<b>취소완료</b>
 						</c:if>
 						<c:if test="${list.refund == 'N'}">
-						<b>환불중</b>
+						<b>반품중</b>
 						</c:if>
 						<c:if test="${list.refund == 'Y'}">
-						<b>환불완료</b>
+						<b>반품완료</b>
 						</c:if>
 						<c:if test="${list.exchange == 'N'}">
 						<b>교환중</b>
@@ -158,11 +158,11 @@
 						<c:if test="${list.cancel == 'Y'}">
 							<span>취소완료</span>
 						</c:if>
-						<!-- 환불이 되면 -->
+						<!-- 밤품이 되면 -->
 						<c:if test="${list.refund == 'Y'}">
-							<span>환불완료</span>
+							<span>반품완료</span>
 						</c:if>
-						<!-- 환불이 되면 -->
+						<!-- 교환이 되면 -->
 						<c:if test="${list.exchange == 'Y'}">
 							<span>교환완료</span>
 						</c:if>

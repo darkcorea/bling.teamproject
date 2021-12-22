@@ -238,10 +238,10 @@
 						<b>취소완료</b>
 						</c:if>
 						<c:if test="${list.refund == 'N'}">
-						<b>환불중</b>
+						<b>반품중</b>
 						</c:if>
 						<c:if test="${list.refund == 'Y'}">
-						<b>환불완료</b>
+						<b>반품완료</b>
 						</c:if>
 						<c:if test="${list.exchange == 'N'}">
 						<b>교환중</b>
