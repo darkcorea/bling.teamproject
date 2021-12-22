@@ -44,7 +44,8 @@
 	<div id="contents">
 	기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.<br>
 	주문번호를 클릭하면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.<br>
-	취소/교환/반품 신청은 배송완료일 기준 7일까지 가능합니다.
+	취소는 입금전, 입금완료에 할 수 있으며 배송 준비 중부터는 배송을 취소 할 수 없습니다<br>
+	교환/반품 신청은 배송완료일 기준 7일까지 가능합니다.
 	</div><br>
 	<c:if test="${fn:length(list) == 0 }">
 	<div class="title text_center">
@@ -386,18 +387,17 @@
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header bling_color">
-        <h5 class="modal-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;교환/반품/취소</h5>
+        <h5 class="modal-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;교환/반품</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
      	 <table>
       		<tr style="height:60px;">
-      			<td style="width:140px;" class="text_center"><b>교환/반품/취소</b></td>
+      			<td style="width:140px;" class="text_center"><b>교환/반품</b></td>
       			<td>
       				<select style="width:140px;" name="type" id="re_selected">
 	      				<option value="D">교환</option>
 	      				<option value="E">반품</option>
-	      				<option value="F">취소</option>
 					</select>
 					<span id="content_10" style="color:red;displayn:nonn;">10자이상을 입력해주세요</span>
       			</td>
@@ -410,10 +410,10 @@
       			</td>
       		</tr>
       	</table>
-      	<!-- 취소,교환,반품을 고르면 자세한 설명 나오는 곳 -->
+      	<!-- 교환,반품을 고르면 자세한 설명 나오는 곳 -->
       	<div id="re_select" class="text_center">
       	<hr>
-      	<b>교환 / 반품 / 취소는 관리자 확인 후 진행됨을 알려드립니다. <br>
+      	<b>교환 / 반품 은 관리자 확인 후 진행됨을 알려드립니다. <br>
       	빠른 시일 내로 처리해 드리곘습니다.</b>
       	</div>
       </div>
@@ -795,7 +795,7 @@ $(document).ready(function() {
 		
 	}
 	
-	// 상품  교환, 반품, 취소  하기 버튼을 누르면
+	// 상품  교환, 반품 하기 버튼을 누르면
 	function Return(order_idx,type){
 		$("#content").val("");
 		$("#content_cnt").html("(0 / 500)");
@@ -813,7 +813,7 @@ $(document).ready(function() {
 		$("#Return").modal("show");
 	}
 	
-	// 교환/반품/취소 모달창에서 내용을 입력하고 확인을 눌렀을 떄
+	// 교환/반품  모달창에서 내용을 입력하고 확인을 눌렀을 떄
 	function return_delivery1(){
 	    
 	   let order_idx = $("#re_order_idx").val();
@@ -848,7 +848,7 @@ $(document).ready(function() {
 			    
 			},
 			error: function(){
-			    alert("상품 취소/교환/반품 오류");
+			    alert("상품 교환/반품 오류");
 			}
 			});
 	   }
