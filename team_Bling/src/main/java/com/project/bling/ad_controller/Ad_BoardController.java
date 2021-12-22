@@ -614,6 +614,17 @@ public class Ad_BoardController {
 		ad_boardService.question_product_modify(pv);
 		return 1;
 	}
+	// 반품 들어온 제품에 한해서 사용한 마일리지가 있다면 마일리지를 돌려준다.
+	@RequestMapping(value="/payed_mileage_add.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int payed_mileage_add(CombineVO cv)throws Exception{
+		
+		// 회원 마일리지에 쓴 마일리지 추가
+		
+		// 오더에 있는 쓴 마일리지 0으로 만들기
+		
+		return 1;
+	}
 	
 	
 	/*       	 리뷰게시판         		   */

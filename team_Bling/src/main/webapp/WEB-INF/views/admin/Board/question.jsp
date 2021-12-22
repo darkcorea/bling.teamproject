@@ -443,8 +443,8 @@ function reply_fn(midx,qidx,category,order_idx,detail_idx){
 					let price = data[0].tot_price.toLocaleString();
 					str += "<span class='title'>결제금액 : </span><span class='title'>"+price+"원</span>";
 					str += "</div>";
-					if(data[0].payed_mileage != 0){
-					str += "<button class='btn btn-outline-success' onclick='return_complite("+order_idx+")'>반품/교환 완료</button>";
+					if (data[0].refund != null){
+					str += "<button id='payed_mileage_btn' class='btn btn-outline-success' onclick='return_complite("+order_idx+","+midx+","+data[0].payed_mileage+")'>반품 마일리지반환</button>";
 					}
 					let str1 = "사용한 마일리지 :" +data[0].payed_mileage;
 					$("#content_write").val(str1);
@@ -553,8 +553,19 @@ function proselected(){
 proselected();
 
 
-function return_complite(){
+function return_complite(midx,order_idx,payed_mileage){
 	
+	$.ajax({
+		url:"/team_Bling/Ad_board/payed_mileage_add.do",
+		type:"POST",
+		data:{"midx":midx,"order_idx":order_idx,"payed_mileage":payed_mileage},
+		success:function(data){
+			 $("#payed_mileage_btn").hide();
+			 alert("사용한 마일리지가 반납되었습니다");
+		},error:function(){
+			alert("답글 수정 오류");
+		}
+	});
 	
 }
 
