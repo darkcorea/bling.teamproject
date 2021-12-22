@@ -17,6 +17,7 @@ import com.project.bling.ad_service.Ad_RegistService;
 import com.project.bling.domain.Criteria;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.CustomVO;
 import com.project.bling.vo.ImageVO;
 import com.project.bling.vo.OptionVO;
 import com.project.bling.vo.ProductVO;
@@ -28,20 +29,21 @@ public class Ad_RegistController {
 	@Autowired
 	Ad_RegistService ad_registService;
 	
-	/*
+	
 	// 테스트 경로
 	String path = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image\\";
 	String spath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage\\";
 	String path1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\image";
 	String spath1 = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\simage";
-	*/
+	String cpath = "C:\\bling\\bling.teamproject\\team_Bling\\src\\main\\webapp\\resources\\custom\\";
 	
+	/*
 	// 서버 올리는 경로
 	String path = "C:\\tomcat\\webapps\\team_Bling\\resources\\image\\";
 	String spath = "C:\\tomcat\\webapps\\team_Bling\\resources\\simage\\";
 	String path1 = "C:\\tomcat\\webapps\\team_Bling\\resources\\image";
 	String spath1 = "C:\\tomcat\\webapps\\team_Bling\\resources\\simage";
-	
+	*/
 	
 
 	// 폴더 없으면 폴더 생성
@@ -510,6 +512,35 @@ public class Ad_RegistController {
 		model.addAttribute("oblist", ad_registService.oblist());
 		
 		return "admin/Regist/stop";
+	}
+	
+	/////////////////////커스텀/////////////////////
+	@RequestMapping(value="/doregist.do")
+	public String doregist()throws Exception{
+		return "admin/Custom/CustomRegist";
+	}
+	
+	@RequestMapping(value="/customregist.do", method = RequestMethod.POST)
+	public String regist(MultipartHttpServletRequest request)throws Exception{
+		
+		String images=null;
+		
+		CustomVO vo = new CustomVO();
+		vo.setName(request.getParameter("name"));
+		vo.setKind(Integer.parseInt(request.getParameter("kind")));
+		vo.setType(Integer.parseInt(request.getParameter("type")));
+		vo.setPrice(Integer.parseInt(request.getParameter("price")));
+		
+		MultipartFile f_image = request.getFile("customimg");
+		if(f_image.getOriginalFilename() != null && f_image.getOriginalFilename() != "") {
+			String name = f_image.getOriginalFilename();
+			images = imgName1(name);
+			f_image.transferTo(new File(cpath+images));
+			vo.setCustomimg(images);
+		}
+		ad_registService.customregist(vo);
+		
+		return "";
 	}
 	
 }

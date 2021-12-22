@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project.bling.ad_dao.Ad_RegistDAO;
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.CustomVO;
 import com.project.bling.vo.ImageVO;
 import com.project.bling.vo.OptionVO;
 import com.project.bling.vo.ProductVO;
@@ -116,6 +117,12 @@ public class Ad_RegistServiceImpl implements Ad_RegistService{
 	@Override
 	public void updateImg(ImageVO vo) throws Exception {
 		ad_registDAO.updateImg(vo);
+	}
+	
+	//커스텀 등록
+	@Override
+	public void customregist(CustomVO vo) throws Exception {
+		ad_registDAO.customregist(vo);
 	}
 
 	

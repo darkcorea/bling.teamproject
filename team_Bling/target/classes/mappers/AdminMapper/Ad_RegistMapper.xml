@@ -173,4 +173,13 @@
 	]]>
 	</select>
 	
+	<!-- 커스텀 등록 -->
+	<insert id="customregist" parameterType="customVO">
+		insert into bg_custom_option(kind, type, shape, name, customimg, price)
+		values (#{kind},#{type},#{shape},#{name},#{customimg},#{price})
+	
+		<selectKey resultType="int" keyProperty="shape" order="BEFORE">
+          SELECT MAX(shape)+1 FROM bg_custom_option
+       </selectKey>
+	</insert>
 </mapper>
