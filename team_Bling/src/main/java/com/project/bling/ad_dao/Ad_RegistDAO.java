@@ -108,4 +108,17 @@ public class Ad_RegistDAO {
 	public void customregist(CustomVO vo) throws Exception{
 		sqlSession.insert(am+"customregist",vo);
 	}
+	
+	// 커스텀 부속 품 제품 총 갯수
+	public int custom_list_count(PageMaker pm) throws Exception {
+		return sqlSession.selectOne(am+"custom_list_count", pm);
+	}
+	// 커스텀 리스트
+	public List<CustomVO> custom_list(PageMaker pm) throws Exception{
+		return sqlSession.selectList(am+"custom_list", pm);
+	}
+	// 커스텀 삭제
+	public void custom_delete(int coidx) throws Exception {
+		sqlSession.delete(am+"custom_delete", coidx);
+	}
 }
