@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.CustomVO;
 import com.project.bling.vo.ImageVO;
 import com.project.bling.vo.OptionVO;
 import com.project.bling.vo.ProductVO;
@@ -103,4 +104,8 @@ public class Ad_RegistDAO {
 		return sqlSession.selectList(am+"sold_out_list", pm);
 	}
 	
+	//커스텀 추가
+	public void customregist(CustomVO vo) throws Exception{
+		sqlSession.insert(am+"customregist",vo);
+	}
 }

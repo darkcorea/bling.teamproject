@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project.bling.domain.PageMaker;
 import com.project.bling.vo.CombineVO;
+import com.project.bling.vo.CustomVO;
 import com.project.bling.vo.ImageVO;
 import com.project.bling.vo.OptionVO;
 import com.project.bling.vo.ProductVO;
@@ -26,4 +27,5 @@ public interface Ad_RegistService {
 	ImageVO image(int pidx) throws Exception;
 	void deleteImg(CombineVO cv) throws Exception;
 	void updateImg(ImageVO vo) throws Exception;
+	void customregist(CustomVO vo)throws Exception;
 }
