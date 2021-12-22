@@ -31,8 +31,8 @@ public class CustomDAO {
 	}
 	
 	//개수
-	public int howmany() throws Exception{
-		return sqlSession.selectOne(cm+"howmany");
+	public int howmany(int midx) throws Exception{
+		return sqlSession.selectOne(cm+"howmany",midx);
 	}
 	
 	//리스트

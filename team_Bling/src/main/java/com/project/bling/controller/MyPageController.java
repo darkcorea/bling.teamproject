@@ -579,12 +579,13 @@ public class MyPageController {
 		//회원정보에서 회원번호만 선택
 		int midx = uv.getMidx();
 
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String realpass = myPageService.delconfirm(midx);
 		
-		if(!realpass.equals(pass)) {
-			confirm = 0; //비번틀림
+		if(encoder.matches(pass, realpass)) {
+			confirm = 1; //비번틀림
 		}else {
-			confirm = 1; //비번 맞음
+			confirm = 0; //비번 맞음
 		}
 				
 		return confirm;

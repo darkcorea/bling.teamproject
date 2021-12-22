@@ -11,7 +11,7 @@ public interface CustomService {
 	List<CustomVO> shapes(CustomVO co) throws Exception;
 	void insertdb(CustomVO co)throws Exception;
 	//리스트개수
-	int howmany() throws Exception;
+	int howmany(int midx) throws Exception;
 	//리스트
 	List<CustomVO> listajax(PageMaker pm) throws Exception;
 	//삭제

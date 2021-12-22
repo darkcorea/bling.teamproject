@@ -32,8 +32,8 @@ public class CustomServiceImpl implements CustomService{
 	
 	//개수
 	@Override
-	public int howmany() throws Exception {
-		return customDAO.howmany();
+	public int howmany(int midx) throws Exception {
+		return customDAO.howmany(midx);
 	}
 	//리스트
 	@Override
