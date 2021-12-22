@@ -353,6 +353,17 @@
 					<span id="fileName"></span>
 				</div>
 			</form>
+			<br>
+			<div id="preview">
+				<div class="previewD1">
+					<i id="badge1" class="bi bi-dash-circle position-absolute" onclick="delPreview(1)"></i>
+					<img class="previewImg" id="previewImg1" src="">
+				</div>
+				<div class="previewD2">
+					<i id="badge2" class="bi bi-dash-circle position-absolute" onclick="delPreview(2)"></i>
+					<img class="previewImg" id="previewImg2" src="">
+				</div>						
+			</div>
 		</div>
 		
 		<div class="modal-footer">
@@ -914,6 +925,103 @@ $(document).ready(function() {
 	    }
 	}
 	rdate();
+	
+	//업로드할 사진 thumbnail
+	//id속성.src=~ 는 되는데 class속성.src=~는 적용되지 않았음
+	function preview(){
+		let pic = event.target.files;
+		
+		if(pic.length==1){
+			if($("#previewImg1").attr("src") == ""){
+				console.log("preview()-사진1");
+				previewImg1.src=URL.createObjectURL(pic[0]);
+				//메모리 누수(?)가 있을 수 있으므로 이미지 로드 후 삭제
+				previewImg1.onload = function(){
+					URL.revokeObjectURL(this.src);
+				}
+				$("#badge1").css("display","unset");
+			}else if($("#previewImg1").attr("src") != ""){
+				console.log("preview()-사진2");
+				previewImg2.src=URL.createObjectURL(pic[0]);
+				previewImg2.onload = function(){
+					URL.revokeObjectURL(this.src);
+				}
+				$("#badge2").css("display","unset");
+			}
+			//URL.revokeObjectURL(previewImg1.src);		blob 객체 image 주소 제거
+			//URL.revokeObjectURL($("#previewImg1").attr("src"));	위와 동일하게 blob 객체 image 주소 제거 가능
+		}
+		else if(pic.length==2){
+			previewImg1.src=URL.createObjectURL(pic[0]);
+			previewImg2.src=URL.createObjectURL(pic[1]);
+			
+			$("#badge1,#badge2").css("display","unset");
+			
+			previewImg1.onload = function(){
+				URL.revokeObjectURL(this.src);
+			}
+			previewImg2.onload = function(){
+				URL.revokeObjectURL(this.src);
+			}
+		}
+		
+	}
+
+	function delPreview(number){
+		let num = number;
+		
+		if(num==1){
+			$("#previewImg1").attr("src","");
+			$("#badge1").css("display","none");
+		}else if(num==2){
+			$("#previewImg2").attr("src","");
+			$("#badge2").css("display","none");
+		}else if(num==0){
+			$("#previewImg1").attr("src","");
+			$("#badge1").css("display","none");
+			$("#previewImg2").attr("src","");
+			$("#badge2").css("display","none");
+		}
+		
+		$.ajax({
+			url: "/team_Bling/MyPage/cancel.do",
+			type: "post",
+			data: {"num":num},
+			success:function(data){
+				if(data=="pic1"){
+					console.log("썸네일 1번 삭제 성공");
+				}else if(data=="pic2"){
+					console.log("썸네일 2번 삭제 성공");
+				}else if(data=="all"){
+					console.log("썸네일 모두 삭제 성공");
+				}
+			},
+			error:function(){
+				console.log("썸네일 삭제 에러");
+			}
+		});
+		
+	}
+	
+	
+	function delPreview2(number){
+		let num = number;
+		
+		if(num==1){
+			$("#previewImg1").attr("src","");
+			$("#badge1").css("display","none");
+		}else if(num==2){
+			$("#previewImg2").attr("src","");
+			$("#badge2").css("display","none");
+		}else if(num==0){
+			$("#previewImg1").attr("src","");
+			$("#badge1").css("display","none");
+			$("#previewImg2").attr("src","");
+			$("#badge2").css("display","none");
+		}
+	}
+	
+	
 	
 </script>
 </html>

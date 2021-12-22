@@ -161,6 +161,12 @@ public class Ad_BoardServiceImpl implements Ad_BoardService{
 	public void review_delete(int ridx) throws Exception {
 		ad_boardDAO.review_delete(ridx);
 	}
+	
+	// 사용한 마일리지 돌려주고 payed_mileage는 0으로 변경
+	@Override
+	public void payed_mileage_add(CombineVO cv)throws Exception{
+		ad_boardDAO.payed_mileage_add(cv);
+	}
 
 	
 	
