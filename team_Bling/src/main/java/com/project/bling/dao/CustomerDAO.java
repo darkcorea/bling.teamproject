@@ -83,8 +83,8 @@ public class CustomerDAO {
 		return sqlSession.selectOne(cm+"myquestion_detail",qidx);
 	}
 	
-	public void myquestion_delete(int qidx) throws Exception {
-		sqlSession.delete(cm+"myquestion_delete",qidx);
+	public void myquestion_delete(int originqidx) throws Exception {
+		sqlSession.delete(cm+"myquestion_delete",originqidx);
 	}
 	
 	public List<QuestionVO> product_question_list(PageMaker pm) throws Exception {
@@ -93,8 +93,8 @@ public class CustomerDAO {
 	public QuestionVO product_myquestion_detail(int pqidx) throws Exception {
 		return sqlSession.selectOne(cm+"product_myquestion_detail",pqidx);
 	}
-	public void product_myquestion_delete(int pqidx) throws Exception {
-		sqlSession.delete(cm+"product_myquestion_delete",pqidx);
+	public void product_myquestion_delete(int originpqidx) throws Exception {
+		sqlSession.delete(cm+"product_myquestion_delete",originpqidx);
 	}
 	public int questionCount(int midx) throws Exception {
 		return sqlSession.selectOne(cm+"questionCount", midx);

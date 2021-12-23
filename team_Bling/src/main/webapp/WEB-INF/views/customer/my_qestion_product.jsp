@@ -240,7 +240,7 @@
 				str += "</table><br><br>";
 				str += "<div id='btndiv'>";
 				str += "<button class='btn btn-secondary t' onclick='linkFn(); return false;'>돌아가기</button>";
-				str += "<button class='btn btn-secondary' onclick='delFn("+data.pqidx+")'>삭제 하기</button>";
+				str += "<button class='btn btn-secondary' onclick='delFn("+data.originpqidx+")'>삭제 하기</button>";
 				str += "</div>";
 				$("#content").html(str);
 			},
@@ -255,11 +255,11 @@
 		
 		location.href="/team_Bling/Customer/myquestion_product.do?page=1";
 	}
-	function delFn(pqidx){
+	function delFn(originpqidx){
 		$.ajax({
 			url:"/team_Bling/Customer/product_myquestion_delete.do",
 			type:"POST",
-			data:{"pqidx":pqidx},
+			data:{"originpqidx":originpqidx},
 			dataType:"json",
 			success:function(data){
 				alert("삭제되었습니다");

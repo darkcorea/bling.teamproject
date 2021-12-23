@@ -118,7 +118,7 @@
 			    t1.*
 				FROM bg_question t1,
 			    (SELECT @rownum:=0) tmp
-			    WHERE midx =#{midx} ORDER BY originqidx desc)sub
+			    WHERE midx =#{midx} ORDER BY originqidx desc, depth asc)sub
 			    Limit #{startPost},#{scri.perPageNum}
 							   
 	</select>
@@ -126,7 +126,7 @@
 	<!-- 나의 1:1문의내역 상세보기-->
 	<select id="myquestion_detail" parameterType="int" resultType="QuestionVO">
 	<![CDATA[SELECT * FROM
-					(SELECT a.qidx,a.title,a.content, a.rdate,b.oname,d.pname,a.order_idx
+					(SELECT a.qidx,a.title,a.content, a.rdate,b.oname,d.pname,a.order_idx,a.originqidx
 					,COUNT(*) OVER(PARTITION BY a.qidx) AS count
 					,ROW_NUMBER() OVER(PARTITION BY a.qidx ORDER BY a.qidx asc )AS RNUM
 	   				FROM bg_question a LEFT JOIN bg_order_detail c  on c.order_idx=a.order_idx
@@ -141,7 +141,7 @@
 	<delete id="myquestion_delete" parameterType="int">
 		
 		<![CDATA[
-		DELETE FROM bg_question WHERE qidx = #{qidx}
+		DELETE FROM bg_question WHERE originqidx = #{originqidx}
 		  ]]>
 	</delete>
 	
@@ -163,13 +163,13 @@
                        LEFT JOIN bg_product T2 ON (T2 .pidx = T1. pidx)
                        JOIN ( SELECT @rownum := 0) R
                        where midx =#{midx}) AS A
-                  order by originpqidx desc) AS B
+                  order by originpqidx desc, depth asc) AS B
   					Limit #{startPost},#{scri.perPageNum}
 	</select>
 	
 	<!-- 나의 상품문의내역 상세보기-->
 	<select id="product_myquestion_detail" parameterType="int" resultType="QuestionVO">
-	<![CDATA[	SELECT a.pqidx,a.title,a.comments, a.rdate,d.pname
+	<![CDATA[	SELECT a.pqidx,a.title,a.comments, a.rdate,d.pname,a.originpqidx
    				FROM bg_product_question a LEFT JOIN bg_product d ON a.pidx=d.pidx 
                 WHERE pqidx=#{pqidx}
     ]]>
@@ -179,7 +179,7 @@
 	<delete id="product_myquestion_delete" parameterType="int">
 		
 		<![CDATA[
-		DELETE FROM bg_product_question WHERE pqidx = #{pqidx}
+		DELETE FROM bg_product_question WHERE originpqidx = #{originpqidx}
 		  ]]>
 	</delete>
 	

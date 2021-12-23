@@ -269,7 +269,7 @@
 				str += "</table><br><br>";
 				str += "<div id='btndiv'>";
 				str += "<button class='btn btn-secondary t' onclick='linkFn(); return false;'>돌아가기</button>";
-				str += "<button class='btn btn-secondary' onclick='delFn("+data.qidx+")'>삭제 하기</button>";
+				str += "<button class='btn btn-secondary' onclick='delFn("+data.originqidx+")'>삭제 하기</button>";
 				str += "</div>";
 				$("#content").html(str);
 				if(data.count>1){
@@ -286,11 +286,11 @@
 	function linkFn(){
 		location.href="/team_Bling/Customer/my_qestion.do?page=1"; 
 	}
-	function delFn(qidx){
+	function delFn(originqidx){
 		$.ajax({
 			url:"/team_Bling/Customer/myquestion_delete.do",
 			type:"POST",
-			data:{"qidx":qidx},
+			data:{"originqidx":originqidx},
 			dataType:"json",
 			success:function(data){
 				alert("삭제되었습니다");

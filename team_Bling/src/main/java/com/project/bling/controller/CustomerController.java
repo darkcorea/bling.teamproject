@@ -170,9 +170,9 @@ public class CustomerController {
 	//나의문의내역 삭제
 	@RequestMapping(value="/myquestion_delete.do")
 	@ResponseBody
-	public int myquestion_delete(int qidx) throws Exception {
+	public int myquestion_delete(int originqidx) throws Exception {
 		
-		customerService.myquestion_delete(qidx);
+		customerService.myquestion_delete(originqidx);
 		return 1;
 	}
 	//나의 제품문의 리스트 가기
@@ -211,9 +211,9 @@ public class CustomerController {
 	//나의 제품문의 삭제
 		@RequestMapping(value="/product_myquestion_delete.do")
 		@ResponseBody
-		public int product_myquestion_delete(int pqidx) throws Exception {
+		public int product_myquestion_delete(int originpqidx) throws Exception {
 			
-			customerService.product_myquestion_delete(pqidx);
+			customerService.product_myquestion_delete(originpqidx);
 			return 1;
 		}
 }

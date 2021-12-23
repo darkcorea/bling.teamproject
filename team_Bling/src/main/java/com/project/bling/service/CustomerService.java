@@ -23,10 +23,10 @@ public interface CustomerService {
 	List<NoticeVO> Question_page(PageMaker pm) throws Exception;
 	List<QuestionVO> question_list(PageMaker pm) throws Exception;
 	QuestionVO myquestion_detail(int qidx) throws Exception;
-	public void myquestion_delete(int qidx) throws Exception;
+	public void myquestion_delete(int originqidx) throws Exception;
 	List<QuestionVO> product_question_list(PageMaker pm) throws Exception;
 	QuestionVO product_myquestion_detail(int pqidx) throws Exception;
-	public void product_myquestion_delete(int pqidx) throws Exception;
+	public void product_myquestion_delete(int originpqidx) throws Exception;
 	public int questionCount(int midx) throws Exception;
 	public int product_questionCount(int midx) throws Exception;
 }
