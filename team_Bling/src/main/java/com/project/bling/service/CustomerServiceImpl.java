@@ -97,8 +97,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public void myquestion_delete(int qidx) throws Exception {
-		customerDAO.myquestion_delete(qidx);
+	public void myquestion_delete(int originqidx) throws Exception {
+		customerDAO.myquestion_delete(originqidx);
 		
 	}
 
@@ -114,9 +114,9 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public void product_myquestion_delete(int pqidx) throws Exception {
+	public void product_myquestion_delete(int originpqidx) throws Exception {
 		
-		customerDAO.product_myquestion_delete(pqidx);
+		customerDAO.product_myquestion_delete(originpqidx);
 		
 	}
 
