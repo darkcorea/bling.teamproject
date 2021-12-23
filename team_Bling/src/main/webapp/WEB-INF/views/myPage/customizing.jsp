@@ -103,7 +103,7 @@
             <!-- 선택한옵션 -->
                 <td id="select" rowspan="2">
                 	<div id="zz">
-	                	<h4>선택한 상품들</h4>
+	                	<h4 style="text-align:center">선택한 상품들</h4>
 	                	<div id="cnt"> </div>
 	                	<input type="hidden" id="cntval">
 	                	<hr>
@@ -129,12 +129,14 @@
 	                	</div>
                 	</div>
                 </td>
-                <td id="kind">
-                    <div style="height: 800px;overflow: auto;">
-                        목걸이 필수템들
-                        <a style="cursor:pointer;" onclick="javascript:types(1)"><img src="/team_Bling/resources/custom/체인.JPG" id="type"></a>
+                <td id="kind" style="text-align:center">
+                    <div style="height: 800px;overflow: auto;" >
+                       	<br>
+                        <a style="cursor:pointer;" onclick="javascript:types(1)"><img src="/team_Bling/resources/custom/체인.jpg" id="type"></a>
+                        <br><br><br>
                         <a style="cursor:pointer;" onclick="javascript:types(2)"><img src="/team_Bling/resources/custom/고리.jpg" id="type"></a>
-                        <a style="cursor:pointer;" onclick="javascript:types(3)"><img src="/team_Bling/resources/custom/장식.jpeg" id="type"></a>
+                        <br><br><br>
+                        <a style="cursor:pointer;" onclick="javascript:types(3)"><img src="/team_Bling/resources/custom/장식.jpg" id="type"></a>
                     </div>
                 </td>
             </tr>
@@ -146,7 +148,7 @@
                     </div>
                     <input type="hidden" id="totalname">
                 </td>
-                <td id="but">
+                <td id="but" style="text-align:center">
                 	* 커스터마이징한 제품의 <br>이름을 지어주세요.
                 	<br><br>
                 	<input type="text" id="name">
