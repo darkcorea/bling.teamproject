@@ -97,7 +97,7 @@
         <table style="margin-right: auto;margin-left: auto;">
             <h2 style="text-align: center;">커스터마이징</h2>
             <button type="button" class="btn btn-outline-primary" onclick="location.href='/team_Bling/Custom/list.do'" style="float: right;" id="mr">커스터마이징 리스트</button>
-            <button type="button" class="btn btn-outline-warning" onclick="location.href='/'" style="float: right;">홈</button>
+            <button type="button" class="btn btn-outline-warning" onclick="location.href='/team_Bling/'" style="float: right;">홈</button>
             <br>
             <tr>
             <!-- 선택한옵션 -->
