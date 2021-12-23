@@ -151,7 +151,7 @@
 
 <!-- 제품 미리보기 BEST-->
 		<div class="container">
-			<div class="backcolor"><span><a id="subMenu1" href="/team_Bling/Product/best_new.do?kind=best">BEST</a></span><span><a id="subMenu2" href="/Product/best_new.do?kind=best">+더보기</a></span></div>
+			<div class="backcolor"><span><a id="subMenu1" href="/team_Bling/Product/best_new.do?kind=best">BEST</a></span><span><a id="subMenu2" href="/team_Bling/Product/best_new.do?kind=best">+더보기</a></span></div>
 			<br>
 			<div class="row" id="prodRow">
 				<c:forEach items="${best}" var="best" begin="0" end="2">
