@@ -7,6 +7,7 @@
 		<meta http-equiv="X-UA-Compatible" content ="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>커스텀 추가</title>
+		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 		<script src="/team_Bling/js/summernote/summernote-lite.js"></script>
 		<script src="/team_Bling/js/summernote/lang/summernote-ko-KR.js"></script>
 		<link rel="stylesheet" href="/team_Bling/css/summernote/summernote-lite.css">

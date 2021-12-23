@@ -752,7 +752,7 @@ $(document).ready(function() {
 					title: '리뷰가 작성되었습니다.'
 				}).then((result) => {
 					if(result.isConfirmed){
-						window.location.replace("/team_Bling/MyPage/main.do?page="+${pm.scri.page}+"");
+						location.reload();
 					}else if (result.isDenied) {
 					}
 				});
