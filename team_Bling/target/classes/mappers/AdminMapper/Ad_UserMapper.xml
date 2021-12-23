@@ -7,10 +7,10 @@
 
 	<select id="userCount"  parameterType="String" resultType="int">
 		SELECT count(midx) as count
-		FROM bg_user
-		<if test='_parameter == "S"'> where grade='S'</if>
-		<if test='_parameter == "G"'> where grade='G'</if>
-		<if test='_parameter == "B"'> where grade='B'</if>
+		FROM bg_user WHERE midx
+		<if test='_parameter == "S"'> AND grade='S'</if>
+		<if test='_parameter == "G"'> AND grade='G'</if>
+		<if test='_parameter == "B"'> AND grade='B'</if>
 	</select>
 
 	<select id="user_list" parameterType="PageMaker" resultType="UserVO">
