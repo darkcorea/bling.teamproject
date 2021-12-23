@@ -523,7 +523,7 @@ public class Ad_RegistController {
 	
 	@RequestMapping(value="/customregist.do", method = RequestMethod.POST)
 	public String regist(MultipartHttpServletRequest request)throws Exception{
-		
+		makeDir();
 		String images=null;
 		
 		CustomVO vo = new CustomVO();
