@@ -209,7 +209,7 @@
 			<!-- 이미지 등록 -->
 			<br><br>
 			<form name="iamge_fn1" action="/team_Bling/Ad_regist/insertImg.do" method="post" enctype="multipart/form-data">
-				<span class="title">이미지 </span><span class="warning"> *사진을 순서에 맞춰서 넣어주세요.</span>
+				<span class="title">이미지 </span><span class="warning"> *메인 이미지와 설명 이미지 1은 필수 사항입니다.</span>
 				<br><br>
 				<div>
 					제품 번호 : <input type="number" name="pidx" class="pidx">
