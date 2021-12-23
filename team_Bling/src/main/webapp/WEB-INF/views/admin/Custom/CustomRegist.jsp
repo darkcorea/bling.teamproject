@@ -90,4 +90,25 @@
             <br>
 		</form>
 	</body>
+	
+	<script>
+		$("form").submit(function(){
+			var check = true;
+			var type = $('input:radio[name=type]').is(':checked');
+			if(type == false){
+				alert("type을 선택해주세요.");
+				check = false;
+			}else if($("#name").val() == null || $("#name").val() == ""){
+				alert("이름을 적어주세요");
+				check = false;
+			}else if($("#price").val() == null || $("#price").val() == ""){
+				alert("가격을 적어주세요");
+				check = false;
+			}else if($("#customimg").val() == null || $("#customimg").val() == ""){
+				alert("사진을 올려주세요");
+				check = false;
+			}
+			return check;
+		});
+	</script>
 </html>
