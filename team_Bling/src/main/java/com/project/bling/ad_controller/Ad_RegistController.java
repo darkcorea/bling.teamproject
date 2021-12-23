@@ -541,7 +541,7 @@ public class Ad_RegistController {
 		}
 		ad_registService.customregist(vo);
 		
-		return "";
+		return "redirect:/Ad_regist/custom_list.do?page=1&kind=0&type=0";
 	}
 	
 	/* 파일이름를 입력하면 파일을 삭제하는 메소드 simage폴더*/
