@@ -455,9 +455,53 @@
 	
 	<footer>
 		<%@ include file="/WEB-INF/views/footer.jsp" %>
-	</footer> 
+	</footer>
+	
+<!-- 쇼핑몰 소개 모달 -->
+<div class="modal fade" id="Bling_Modal" tabindex="-1" aria-labelledby="bLing_Modal1" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="Bling_Modal1">쇼핑몰 제작</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       	<img src="/team_Bling/resources/image/블링 소개.jpg">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary" onclick="Bling_modal_fn()">7일동안 보지 않기</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
  <script>
+ 
+ $(document).ready(function() {
+	
+	// 쇼핑몰 소개 모달 열고 닫기
+	cookedata = document.cookie;
+	if(cookedata.indexOf("blingcookie=done") < 0){
+		$("#Bling_Modal").modal("show");
+	}
+	
+ });
+
+// 쿠키 생성
+function setCookie (name, value, expiredays){
+	var todayDate = new Date();
+	todayDate.setDate(todayDate.getDate() + expiredays);
+	document.cookie = name + "=" + escape(value) + "; path=/team_Bling; expires=" + todayDate.toGMTString() + ";";
+}
+
+// 쇼핑몰 모달 7일 동안 보지 않기
+function Bling_modal_fn(){
+	setCookie("blingcookie","done",7);
+	$("#Bling_Modal").modal("hide");
+}
+
+
 //관심 상품 표시 하기
  function like_do(){
      var uid = '${sessionScope.UserVO.id}';
