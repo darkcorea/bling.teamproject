@@ -137,7 +137,7 @@
 					<td class="center"><c:out value="${fn:substring(date,0,10)}"/></td>
 					
 					<!-- 버튼 -->
-					<td><button class="btn btn-outline-primary" onclick="delete_fn(${list.ridx})">삭제</button>	</td>
+					<td><button class="btn btn-outline-primary D" onclick="delete_fn(${list.ridx})">삭제</button>	</td>
   				</tr>
   			</c:forEach>
   			</tbody>
@@ -233,6 +233,10 @@ function delete_fn(ridx){
 	});
 	
 }
+
+$(function(){
+	disabled();
+});
 
 </script>
 </html>

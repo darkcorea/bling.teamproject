@@ -65,8 +65,8 @@
 		
 			<!-- 게시글 등록/삭제 -->
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='/team_Bling/Ad_board/regist.do'">등록</button>
-				<button type="button" class="btn btn-outline-danger" onclick="deleteArry()">삭제</button>
+				<button type="button" class="btn btn-outline-primary D" onclick="location.href='/team_Bling/Ad_board/regist.do'">등록</button>
+				<button type="button" class="btn btn-outline-danger D" onclick="deleteArry()">삭제</button>
 			</div>
 		
 			<br>
@@ -82,6 +82,7 @@
 		
 		$(function(){
 			list_fn(page,type);
+			disabled();
 		});
 		
 		

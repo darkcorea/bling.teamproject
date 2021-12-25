@@ -62,6 +62,9 @@
 		.dropdown-menu{
 			width:140px;
 		}
+		#adminId{
+			color: #CB7878;
+		}
 	</style>
 </head>
 <body>
@@ -111,7 +114,7 @@
 
 	
 	<div id="logoutDiv">
-	  	<a href="/team_Bling/Ad_login/logout.do" id="logoutA">로그아웃</a>
+	  	<span id="adminId">${sessionScope.adminId}</span> <a href="/team_Bling/Ad_login/logout.do" id="logoutA">로그아웃</a>
 	</div>	
 </body>
 <script>
@@ -144,6 +147,18 @@ function amind_selected_Fn(){
 }
 amind_selected_Fn();
 
+
+	//버튼 비활성화
+	function disabled(){
+		const adminId = "${sessionScope.adminId}";
+		console.log("adminId : "+adminId);
+		
+		if(adminId == "tester"){
+			console.log("버튼 비활성화 실행!!!");
+			$("button.D").attr("disabled", "disabled");
+			$("input.D").attr("disabled", "disabled");
+		}
+	}
 
 </script>
 </html>

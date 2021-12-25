@@ -437,52 +437,58 @@
 					
 					if(ol[i].deli_stat == "N"){
 						if(ol[i].cancel!=null || ol[i].refund!=null || ol[i].exchange!=null){
-							str += "	<button type='button' class='btn btn-secondary prodBtnN'>";
-							str += "		결제대기(N)";
+							str += "	<button type='button' class='btn btn-secondary prodBtn' onclick='caution4()'>";
+							str += "		결제대기(N)-X";
 						}else{
-							str += "	<button type='button' class='btn btn-secondary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+							str += "	<button type='button' class='btn btn-secondary dropdown-toggle prodBtn D' data-bs-toggle='dropdown' aria-expanded='false'>";
 							str += "		결제대기(N)";
 						}
 					}else if(ol[i].deli_stat == "Y"){
 						if(ol[i].cancel!=null || ol[i].refund!=null || ol[i].exchange!=null){
-							str += "	<button type='button' class='btn btn-success prodBtnN'>";
-							str += "		결제완료(Y)";
+							str += "	<button type='button' class='btn btn-success prodBtn' onclick='caution4()'>";
+							str += "		결제완료(Y)-X";
 						}else{
-							str += "	<button type='button' class='btn btn-success dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+							str += "	<button type='button' class='btn btn-success dropdown-toggle prodBtn D' data-bs-toggle='dropdown' aria-expanded='false'>";
 							str += "		결제완료(Y)";
 						}
 					}else if(ol[i].deli_stat == "A"){
 						if(ol[i].cancel!=null || ol[i].refund!=null || ol[i].exchange!=null){
 							str += "	<button type='button' class='btn btn-primary prodBtnN'>";
-							str += "		상품준비중(A)";
+							str += "		상품준비중(A)-X";
 						}else{
-							str += "	<button type='button' class='btn btn-primary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+							str += "	<button type='button' class='btn btn-primary dropdown-toggle prodBtn D' data-bs-toggle='dropdown' aria-expanded='false'>";
 							str += "		상품준비중(A)";
 						}
 					}else if(ol[i].deli_stat == "B"){
 						if(ol[i].cancel!=null || ol[i].refund!=null || ol[i].exchange!=null){
 							str += "	<button type='button' class='btn btn-warning prodBtnN'>";
-							str += "		배송중(B)";
+							str += "		배송중(B)-X";
 						}else{
-							str += "	<button type='button' class='btn btn-warning dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+							str += "	<button type='button' class='btn btn-warning dropdown-toggle prodBtn D' data-bs-toggle='dropdown' aria-expanded='false'>";
 							str += "		배송중(B)";
 						}
 					}else if(ol[i].deli_stat == "C"){
+						/* 취소/반품/교환 중 1가지 상태일 때 */
 						if(ol[i].cancel!=null || ol[i].refund!=null || ol[i].exchange!=null){
-							str += "	<button type='button' class='btn btn-danger prodBtnN'>";
-							str += "		배송완료(C)";
+							str += "	<button type='button' class='btn btn-danger prodBtn' onclick='caution3()'>";
+							str += "		배송완료(C)-X";
+						/* 취소/반품/교환이 아닐 때 */
 						}else{
+							/* 배송완료 후 7일 이내 */
 							if(ol[i].date_differ<=7){
+								/* 리뷰가 없을 때(리뷰작성 가능) */
 								if(ol[i].ridx == 0){
-									str += "	<button type='button' class='btn btn-danger dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+									str += "	<button type='button' class='btn btn-danger dropdown-toggle prodBtn D' data-bs-toggle='dropdown' aria-expanded='false'>";
 									str += "		배송완료(C)";
+								/* 리뷰가 있을 때 */
 								}else if(ol[i].ridx != 0){
 									str += "	<button type='button' class='btn btn-danger prodBtn' onclick='caution1()'>";
-									str += "		배송완료(C)";
+									str += "		배송완료(C)-R";
 								}
+							/* 배송완료 후 7일 후(리뷰작성 불가) */
 							}else if(ol[i].date_differ>7){
 								str += "	<button type='button' class='btn btn-danger prodBtn' onclick='caution2()'>";
-								str += "		배송완료(C)";
+								str += "		배송완료(C)-O";
 							}
 						}
 					}
@@ -548,6 +554,9 @@
 			
 			
 			$("#ajaxTable").html(str);
+			
+			
+			disabled();
 			
 		})
 		.catch(() => {
@@ -823,21 +832,36 @@
 	
 	//리뷰가 존재할 때 경고창
 	function caution1(){
-		
 		Swal.fire({
 			icon: 'warning',
-			text: '리뷰가 존재합니다!',
+			text: '리뷰가 존재합니다!'
 		});
 	}
 	
 	//배송완료일로부터 7일 초과시 경고창
 	function caution2(){
-		
 		Swal.fire({
 			icon: 'warning',
-			html: '구매확정된 상품입니다! <br> (배송완료일로부터 7일 초과)',
+			html: '구매확정된 주문입니다! <br> (배송완료일로부터 7일 초과)'
 		});
 	}
+	
+	//	반품/교환 상태
+	function caution3(){
+		Swal.fire({
+			icon: 'warning',
+			text: '반품 또는 교환 주문입니다!'
+		});
+	}
+	
+	//	취소 상태
+	function caution4(){
+		Swal.fire({
+			icon: 'warning',
+			text: '취소 주문입니다!'
+		});
+	}
+	
 	
 </script>
 </html>
