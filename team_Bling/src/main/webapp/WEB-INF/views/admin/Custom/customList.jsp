@@ -136,7 +136,7 @@
 					<span class="saleprice"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}"/>원</span>
 				</td>
 				<!-- 삭제 -->
-				<td><button type="button" class="btn btn-outline-primary btn-sm" onclick="del_fn(${list.coidx},'${list.customimg}')">삭제</button></td>
+				<td><button type="button" class="btn btn-outline-primary btn-sm D" onclick="del_fn(${list.coidx},'${list.customimg}')">삭제</button></td>
 			</tr>
 			</c:forEach>
 			</table>
@@ -224,6 +224,10 @@ function del_fn(coidx,customimg){
 		}
 	});
 }
+
+$(function(){
+	disabled();
+});
 
 </script>
 </html>

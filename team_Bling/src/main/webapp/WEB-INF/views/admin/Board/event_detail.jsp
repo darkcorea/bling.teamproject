@@ -32,7 +32,7 @@
 				</tr>
 			</table>
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-			  <button class="btn btn-outline-danger" type="button" onclick="detail_del(${detail.eidx})">삭제하기</button>
+			  <button class="btn btn-outline-danger D" type="button" onclick="detail_del(${detail.eidx})">삭제하기</button>
 			  <button class="btn btn-outline-secondary" type="button" onclick="location.href='/team_Bling/Ad_board/event.do'">목록가기</button>
 			</div>
 		</div>
@@ -61,6 +61,10 @@
 			}
 			
 		}
+		
+		$(function(){
+			disabled();
+		})
 	</script>
 </body>
 </html>

@@ -83,7 +83,7 @@
 					</tr>	
 				</table>
 			<div style="text-align:center;width:700px">		
-		 		<p><br><button type="button" class="btn btn-secondary t" onclick="insertPro(this.form)">저장</button></p>
+		 		<p><br><button type="button" class="btn btn-secondary t D" onclick="insertPro(this.form)">저장</button></p>
 			</div>
 			</form>
 			
@@ -123,7 +123,7 @@
 			
 			<div style="text-align:center;width:700px">
 			<button class="btn btn-secondary" onclick="select_fn('frm1')">선택</button>
-			<button onclick="insertOpt('frm1')" class="t btn btn-secondary">저장</button><br><br>
+			<button onclick="insertOpt('frm1')" class="t btn btn-secondary D">저장</button><br><br>
 			</div>
 			
 			<!-- 옵션 등록 -->
@@ -162,7 +162,7 @@
 			
 			<div style="text-align:center;width:700px">
 				<button class="btn btn-secondary" onclick="select_fn('frm2')">선택</button>
-				<button onclick="insertOpt('frm2')" class="btn btn-secondary t">저장</button>
+				<button onclick="insertOpt('frm2')" class="btn btn-secondary t D">저장</button>
 			</div>
 			
 			<!-- 옵션 등록 -->
@@ -201,7 +201,7 @@
 			
 			<div style="text-align:center;width:700px">
 				<button class="btn btn-secondary" onclick="select_fn('frm3')">선택</button>
-				<button onclick="insertOpt('frm3')" class="btn btn-secondary t">저장</button>
+				<button onclick="insertOpt('frm3')" class="btn btn-secondary t D">저장</button>
 			</div>
 			
 
@@ -221,17 +221,17 @@
 				<div class="mb-3">
   					<label class="form-label bold">상세 이미지1
 				 	<input class="form-control" type="file" name="detail1" accept="image/*"></label>
-				 	<input id="detail_add" type="button" value="파일 추가" onclick="plusFn()" class="btn btn-secondary">
+				 	<input id="detail_add" type="button" value="파일 추가" onclick="plusFn()" class="btn btn-secondary D">
 				</div>
 				<div id="result"></div>
 				<div class="mb-3">
   					<label class="form-label bold">설명 이미지1
 				 	<input class="form-control" type="file" name="showing1" accept="image/*"></label>
-					<input id="showing_add" type="button" value="파일 추가" onclick="plusFn2()" class="btn btn-secondary">
+					<input id="showing_add" type="button" value="파일 추가" onclick="plusFn2()" class="btn btn-secondary D">
 				</div>
 				<div id="result2"></div>
 				<div style="text-align:center;width:700px">
-				<button type="button" class="btn btn-secondary t" onclick="iamge_fn(this.form)">등록</button>
+				<button type="button" class="btn btn-secondary t D" onclick="iamge_fn(this.form)">등록</button>
 				</div>
 			</form>	
 		</div>
@@ -264,7 +264,7 @@ $(document).ready(function () {
     $(".quickmenu").stop().animate({"top":position+currentPosition+"px"},1000); 
     });
     
-    
+    disabled();
     
   });
  

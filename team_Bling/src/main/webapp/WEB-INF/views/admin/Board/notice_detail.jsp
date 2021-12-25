@@ -60,8 +60,8 @@
 				
 			</table>
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-			  <button class="btn btn-outline-primary" type="button" onclick="location.href='/team_Bling/Ad_board/bf_modify.do?nidx=${detail.nidx}'">수정하기</button>
-			  <button class="btn btn-outline-danger" type="button" onclick="detail_del(${detail.nidx})">삭제하기</button>
+			  <button class="btn btn-outline-primary D" type="button" onclick="location.href='/team_Bling/Ad_board/bf_modify.do?nidx=${detail.nidx}'">수정하기</button>
+			  <button class="btn btn-outline-danger D" type="button" onclick="detail_del(${detail.nidx})">삭제하기</button>
 			  <button class="btn btn-outline-secondary" type="button" onclick="location.href='/team_Bling/Ad_board/board.do?page=1&type=T'">목록가기</button>
 			</div>
 		</div>
@@ -90,5 +90,9 @@
 			}
 			
 		}
+		
+		$(function(){
+			disabled();
+		});
 	</script>
 </html>

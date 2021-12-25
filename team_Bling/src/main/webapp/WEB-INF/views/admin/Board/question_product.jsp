@@ -189,10 +189,10 @@
 					<td class="center"><c:out value="${fn:substring(date,0,10)}"/></td>
 					<td class="center">
 						<c:if test="${list.depth == 0 && list.state == 'N'}">
-							<button class="btn btn-outline-primary" onclick="reply_fn('${list.midx}','${list.pqidx}','${list.pidx}','${list.show_yn}','${list.kind}')">답글작성</button>
+							<button class="btn btn-outline-primary D" onclick="reply_fn('${list.midx}','${list.pqidx}','${list.pidx}','${list.show_yn}','${list.kind}')">답글작성</button>
 						</c:if>
 						<c:if test="${list.depth == 1 && list.state == 'Y'}">						
-						<button class="btn btn-outline-success" onclick="modify_fn(${list.pqidx})">수정</button>
+						<button class="btn btn-outline-success D" onclick="modify_fn(${list.pqidx})">수정</button>
 						</c:if>
 					</td>
   				</tr>
@@ -475,6 +475,10 @@ function proselected(){
 	}
 }
 proselected();
+
+$(function(){
+	disabled();
+});
 
 </script>
 </html>

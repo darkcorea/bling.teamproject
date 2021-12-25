@@ -68,7 +68,7 @@
 					<td >
 						<div class="mb-3">
 		  					<label class="form-label bold">메인 이미지
-						 	<input class="form-control" type="file" name="customimg" accept="image/*"></label>
+						 	<input class="form-control D" type="file" name="customimg" accept="image/*"></label>
 						</div>
 					</td>
 				</tr>
@@ -81,8 +81,8 @@
 			</table>
 			
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-			   <input type="submit" class="btn btn-primary" value="등록하기">
-			  <button class="btn btn-outline-secondary" type="button" onclick="location.href='/team_Bling/Ad_regist/custom_list.do?page=1&kind=0&type=0'">취소하기</button>
+			   <input type="submit" class="btn btn-primary D" value="등록하기">
+			  <button class="btn btn-outline-secondary D" type="button" onclick="location.href='/team_Bling/Ad_regist/custom_list.do?page=1&kind=0&type=0'">취소하기</button>
 			</div>
 			
 			<br>
@@ -109,6 +109,10 @@
 				check = false;
 			}
 			return check;
+		});
+		
+		$(function(){
+			disabled();
 		});
 	</script>
 </html>

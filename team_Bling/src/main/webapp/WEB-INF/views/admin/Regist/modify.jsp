@@ -128,7 +128,7 @@
 					</tr>	
 				</table>
 			<div style="text-align:center;width:700px">		
-		 		<p><br><button type="button" class="btn btn-secondary t" onclick="updatePro(this.form)">상품수정</button></p>
+		 		<p><br><button type="button" class="btn btn-secondary t D" onclick="updatePro(this.form)">상품수정</button></p>
 			</div>
 			</form>
 			
@@ -224,8 +224,8 @@
 				
 				<div style="text-align:center;width:700px">
 				<button class="btn btn-secondary" onclick="select_fn('frm${obnum}')">선택</button>&ensp;
-				<button onclick="updateOpt('frm${obnum}')" class="t btn btn-secondary">옵션수정</button>&ensp;&ensp;
-				<button onclick="deleteOpt('frm${obnum}', '${oblist.oidx}')" class="btn btn-secondary">옵션삭제</button><br><br>
+				<button onclick="updateOpt('frm${obnum}')" class="t btn btn-secondary D">옵션수정</button>&ensp;&ensp;
+				<button onclick="deleteOpt('frm${obnum}', '${oblist.oidx}')" class="btn btn-secondary D">옵션삭제</button><br><br>
 				</div>
 			<c:set var="obnum" value="${obnum + 1}"/>	
 			</div>
@@ -242,19 +242,19 @@
 					<c:if test="${image.detail1 ne null}">
 						<div class="image2 center" id="detail1">
 						<img src="/team_Bling/resources/image/${image.detail1}" class="img-thumbnail" id="detail1" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기  detail1">
-						<br><button class="t1 btn btn-secondary" onclick="deleteImg_fn('detail1','${image.detail1}')">삭제</button>
+						<br><button class="t1 btn btn-secondary D" onclick="deleteImg_fn('detail1','${image.detail1}')">삭제</button>
 						</div>					
 					</c:if>
 					<c:if test="${image.detail2 ne null}">
 						<div class="image2 center" id="detail2">
 						<img src="/team_Bling/resources/image/${image.detail2}" class="img-thumbnail" id="detail1" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기  detail2">
-						<br><button class="t1 btn btn-secondary" onclick="deleteImg_fn('detail2','${image.detail2}')">삭제</button>
+						<br><button class="t1 btn btn-secondary D" onclick="deleteImg_fn('detail2','${image.detail2}')">삭제</button>
 						</div>
 						</c:if>
 					<c:if test="${image.detail3 ne null}">
 						<div class="image2 center" id="detail3">
 						<img src="/team_Bling/resources/image/${image.detail3}" class="img-thumbnail" id="detail1" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기  detail3">
-						<br><button class="t1 btn btn-secondary" onclick="deleteImg_fn('detail3','${image.detail3}')">삭제</button>
+						<br><button class="t1 btn btn-secondary D" onclick="deleteImg_fn('detail3','${image.detail3}')">삭제</button>
 						</div>	
 					</c:if>
 				</div>
@@ -265,25 +265,25 @@
 					<c:if test="${image.showing2 ne null}">
 						<div class="image3 center" id="showing2">
 						<img src="/team_Bling/resources/simage/${image.showing2}" class="img-thumbnail image3" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기 showing2">
-						<br><button class="t1 btn btn-secondary" onclick="deleteImg_fn('showing2','${image.showing2}')">삭제</button>
+						<br><button class="t1 btn btn-secondary D" onclick="deleteImg_fn('showing2','${image.showing2}')">삭제</button>
 						</div>
 					</c:if>
 					<c:if test="${image.showing3 ne null}">
 						<div class="image3 center" id="showing3">
 						<img src="/team_Bling/resources/simage/${image.showing3}" class="img-thumbnail image3" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기 showing3">
-						<br><button class="t1 btn btn-secondary" onclick="deleteImg_fn('showing3','${image.showing3}')">삭제</button>
+						<br><button class="t1 btn btn-secondary D" onclick="deleteImg_fn('showing3','${image.showing3}')">삭제</button>
 						</div>
 					</c:if>
 					<c:if test="${image.showing4 ne null}">
 						<div class="image3 center" id="showing4">
 						<img src="/team_Bling/resources/simage/${image.showing4}" class="img-thumbnail image3" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기 showing4">
-						<br><button class="t1 btn btn-secondary" onclick="deleteImg_fn('showing4','${image.showing4}')">삭제</button>
+						<br><button class="t1 btn btn-secondary D" onclick="deleteImg_fn('showing4','${image.showing4}')">삭제</button>
 						</div>
 					</c:if>
 					<c:if test="${image.showing5 ne null}">
 						<div class="image3 center" id="showing5">
 						<img src="/resources/simage/${image.showing5}" class="img-thumbnail image3" data-bs-toggle="tooltip" title="클릭시 새창으로 이미지 띄우기 showing5">
-						<br><button class="t1 btn btn-secondary" onclick="deleteImg_fn('showing5','${image.showing5}')">삭제</button>
+						<br><button class="t1 btn btn-secondary D" onclick="deleteImg_fn('showing5','${image.showing5}')">삭제</button>
 						</div>
 					</c:if>
 				</div>
@@ -296,23 +296,23 @@
 					<input type="hidden" name="pidx" value="${product.pidx}" >
 					<div class="mb-3">
 	  					<label class="form-label bold">메인 이미지
-					 	<input class="form-control" type="file" name="main" accept="image/*"></label>
+					 	<input class="form-control D" type="file" name="main" accept="image/*"></label>
 					</div>
 					<div class="mb-3">
 	  					<label class="form-label bold">상세 이미지
-					 	<input class="form-control" type="file" name="detail1" accept="image/*"></label>
-					 	<input id="detail_add" type="button" value="파일 추가" onclick="plusFn()" class="btn btn-secondary">
+					 	<input class="form-control D" type="file" name="detail1" accept="image/*"></label>
+					 	<input id="detail_add" type="button" value="파일 추가" onclick="plusFn()" class="btn btn-secondary D">
 					</div>
 					<div id="result"></div>
 					<div class="mb-3">
 	  					<label class="form-label bold">설명 이미지
-					 	<input class="form-control" type="file" name="showing1" accept="image/*"></label>
-						<input id="showing_add" type="button" value="파일 추가" onclick="plusFn2()" class="btn btn-secondary">
+					 	<input class="form-control D" type="file" name="showing1" accept="image/*"></label>
+						<input id="showing_add" type="button" value="파일 추가" onclick="plusFn2()" class="btn btn-secondary D">
 					</div>
 					<div id="result2"></div>
 					<div style="text-align:center;width:700px"></div>
 				</form>
-				<button type="button" class="btn btn-secondary t" onclick="iamge_fn(this.form)">수정</button>
+				<button type="button" class="btn btn-secondary t D" onclick="iamge_fn(this.form)">수정</button>
 			</div>
 	</div>	
 </section>
@@ -352,7 +352,7 @@ $(document).ready(function () {
     // 제품 kind 선택 셀렉트 박스
     proselected();
   
-    
+    disabled();
 });
 
 

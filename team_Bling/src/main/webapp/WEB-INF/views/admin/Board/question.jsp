@@ -196,17 +196,17 @@
 					<td class="center">
 						<c:if test="${list.depth == 0 && list.state == 'N'}">
 							<c:if test="${list.order_idx != '' && list.detail_idx == ''}">
-								<button class="btn btn-outline-primary" onclick="reply_fn('${list.midx}','${list.qidx}','${list.category}','${list.order_idx}','0')">답글작성</button>
+								<button class="btn btn-outline-primary D" onclick="reply_fn('${list.midx}','${list.qidx}','${list.category}','${list.order_idx}','0')">답글작성</button>
 							</c:if>
 							<c:if test="${list.detail_idx != ''  && list.order_idx == ''}">
-								<button class="btn btn-outline-primary" onclick="reply_fn('${list.midx}','${list.qidx}','${list.category}','0','${list.detail_idx}')">답글작성</button>
+								<button class="btn btn-outline-primary D" onclick="reply_fn('${list.midx}','${list.qidx}','${list.category}','0','${list.detail_idx}')">답글작성</button>
 							</c:if>
 							<c:if test="${list.detail_idx == '' && list.order_idx == ''}">
-								<button class="btn btn-outline-primary" onclick="reply_fn('${list.midx}','${list.qidx}','${list.category}','0','0')">답글작성</button>
+								<button class="btn btn-outline-primary D" onclick="reply_fn('${list.midx}','${list.qidx}','${list.category}','0','0')">답글작성</button>
 							</c:if>		
 						</c:if>
 						<c:if test="${list.depth == 1 && list.state == 'Y'}">						
-						<button class="btn btn-outline-success" onclick="modify_fn(${list.qidx})">수정</button>
+						<button class="btn btn-outline-success D" onclick="modify_fn(${list.qidx})">수정</button>
 						</c:if>
 					</td>
   				</tr>
@@ -569,6 +569,9 @@ function return_complite(midx,order_idx,payed_mileage){
 	
 }
 
+$(function(){
+	disabled();
+});
 
 </script>
 </html>

@@ -282,7 +282,7 @@
 						
 						if((rl[i].cancel=="N" || rl[i].cancel=="Y") && rl[i].refund==null && rl[i].exchange==null){
 							if(rl[i].cancel=="N"){
-								str += "	<button type='button' class='btn btn-danger dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+								str += "	<button type='button' class='btn btn-danger dropdown-toggle prodBtn D' data-bs-toggle='dropdown' aria-expanded='false'>";
 								str += "		취소 진행중";
 							}else if(rl[i].cancel=="Y"){
 								str += "	<button type='button' class='btn btn-danger prodBtnN'>";
@@ -290,7 +290,7 @@
 							}
 						}else if((rl[i].refund=="N" || rl[i].refund=="Y") && rl[i].cancel==null && rl[i].exchange==null){
 							if(rl[i].refund=="N"){
-								str += "	<button type='button' class='btn btn-secondary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+								str += "	<button type='button' class='btn btn-secondary dropdown-toggle prodBtn D' data-bs-toggle='dropdown' aria-expanded='false'>";
 								str += "		반품 진행중";
 							}else if(rl[i].refund=="Y"){
 								str += "	<button type='button' class='btn btn-secondary prodBtnN'>";
@@ -298,7 +298,7 @@
 							}
 						}else if((rl[i].exchange=="N" || rl[i].exchange=="Y") && rl[i].cancel==null && rl[i].refund==null){
 							if(rl[i].exchange=="N"){
-								str += "	<button type='button' class='btn btn-primary dropdown-toggle prodBtn' data-bs-toggle='dropdown' aria-expanded='false'>";
+								str += "	<button type='button' class='btn btn-primary dropdown-toggle prodBtn D' data-bs-toggle='dropdown' aria-expanded='false'>";
 								str += "		교환 진행중";
 							}else if(rl[i].exchange=="Y"){
 								str += "	<button type='button' class='btn btn-primary prodBtnN'>";
@@ -369,6 +369,8 @@
 				
 				
 				$("#ajaxTable").html(str);	
+				
+				disabled();
 			},
 			error: function(){
 				console.log("returnList() 에러발생");
