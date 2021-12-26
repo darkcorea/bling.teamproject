@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class LoginController {
 	
 	// 02. 로그인 처리
 	@RequestMapping(value="/check.do")
-	public ModelAndView loginCheck(@ModelAttribute UserVO vo, HttpSession session, HttpServletRequest request) throws Exception{
+	public ModelAndView loginCheck(@ModelAttribute UserVO vo, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		ModelAndView mav = new ModelAndView();
 		String idd = vo.getId();
 		
@@ -59,7 +60,7 @@ public class LoginController {
 				
 				if(encoder.matches(pwd, getpwd)) {
 					//넘겨받은 비밀번호와 user객체에 암호화된 비밀번호와 비교
-					loginService.loginCheck(vo, session, request);
+					loginService.loginCheck(vo, session, request, response);
 					UserVO uv = (UserVO)session.getAttribute("UserVO");
 					//회원정보에서 회원번호만 선택
 					int midx = uv.getMidx();
@@ -85,8 +86,8 @@ public class LoginController {
 	
 	// 03. 로그아웃 처리
 	@RequestMapping("/logout.do")
-	public ModelAndView logout(HttpSession session) throws Exception{
-		loginService.logout(session);
+	public ModelAndView logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		loginService.logout(session, request, response);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("login/main");
 		mav.addObject("msg", "logout");

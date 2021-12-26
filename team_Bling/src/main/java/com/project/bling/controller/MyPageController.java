@@ -522,7 +522,7 @@ public class MyPageController {
 	
 	//비밀번호 변경
 	@RequestMapping(value="/remodifypwd.do")
-	public String remodifypwd(Locale locale,Model model,String pwd,HttpSession session)throws Exception{
+	public String remodifypwd(Model model,String pwd,HttpSession session, HttpServletRequest request, HttpServletResponse response)throws Exception{
 		UserVO vo = (UserVO)session.getAttribute("UserVO");
 		//비밀번호 인코딩
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -530,7 +530,7 @@ public class MyPageController {
 		vo.setPwd(securePw);
 		myPageService.modifypwd(vo);
 		
-		loginService.logout(session);
+		loginService.logout(session,request,response);
 		return "redirect:/Login/main.do";
 	}
 	
@@ -593,7 +593,7 @@ public class MyPageController {
 	
 	@RequestMapping(value="/deletefin.do")
 	@ResponseBody
-	public int delfin(HttpSession session, String quitval)throws Exception{
+	public int delfin(HttpSession session, String quitval, HttpServletRequest request, HttpServletResponse response)throws Exception{
 		//로그인시 세션에 저장된 회원정보 불러오기
 		UserVO uv = (UserVO)session.getAttribute("UserVO");
 		//회원정보에서 회원번호만 선택
@@ -601,7 +601,7 @@ public class MyPageController {
 		CombineVO vo = new CombineVO();
 		vo.setMidx(midx);
 		vo.setComments(quitval);
-		loginService.logout(session);
+		loginService.logout(session,request,response);
 		myPageService.del(vo);
 		return 0;
 	}

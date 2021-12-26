@@ -72,6 +72,7 @@ public class SessionListener implements HttpSessionListener {
 		}
 		System.out.println("리스너에서 key.toString()을 담은 result>>>>>>>>>>>>"+result);
 		removeSessionForDoubleLogin(result);
+		
 		return result;
 	}
 	

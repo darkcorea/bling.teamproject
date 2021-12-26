@@ -56,6 +56,8 @@
 	<!-- 인터셉터 bean 설정 -->
 	<!-- 사용자 세션체크 bean -->
 	<beans:bean id="loginInterceptor" class="com.project.bling.interceptor.LoginInterceptor"/>
+	<!-- 로그인 유지 세션체크 bean -->
+	<beans:bean id="keepInterceptor" class="com.project.bling.interceptor.LoginKeepInterceptor"/>
 	<!-- 관리자 세션체크 bean -->
 	<beans:bean id="adminInterceptor" class="com.project.bling.interceptor.AdminInterceptor"/>
 	<!-- 인터셉터 매핑정보 -->
@@ -88,6 +90,11 @@
 			<!-- 주문하기 -->
 			<mapping path="/Order/memberorder.do"/>
 			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
+		<!-- 로그인 유지 세션체크 매핑 -->
+		<interceptor>
+			<mapping path="/"/>
+			<beans:ref bean="keepInterceptor"/>
 		</interceptor>
 	</interceptors>
 	

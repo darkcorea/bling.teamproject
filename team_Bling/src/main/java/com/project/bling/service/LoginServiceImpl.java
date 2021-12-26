@@ -1,10 +1,15 @@
 package com.project.bling.service;
 
+import java.text.SimpleDateFormat;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.WebUtils;
 
 import com.project.bling.dao.LoginDAO;
 import com.project.bling.session.SessionListener;
@@ -18,25 +23,57 @@ public class LoginServiceImpl implements LoginService {
 
 	// 01_01. 회원 로그인체크
 	@Override
-	public boolean loginCheck(UserVO vo, HttpSession session, HttpServletRequest request) throws Exception {
+	public boolean loginCheck(UserVO vo, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		boolean result = loginDAO.loginCheck(vo);
 		boolean delyn = delyn(vo);
 		if (result) { // true일 경우 세션에 등록
 			if(delyn == true) {
-				UserVO vo2 = viewMember(vo);
-				// 세션 변수 등록
-				session.setAttribute("UserVO", vo2);
-				System.out.println("서비스 midx : "+vo2.getMidx());
+				
 				/*
 					세션에 저장된 UserVO 객체가 null이면 session.getAttribute("UserVO")에서
 					id 필드를 NullPointerException 때문에 참조를 못 하기 때문에 밑에 따로 추가함.
 				*/
+				// 로그인 유지 체크 안 했을 때
+				if(vo.getLoginKeep() == null) {
+					UserVO vo2 = viewMember(vo);
+					// 세션 변수 등록
+					session.setAttribute("UserVO", vo2);
+					System.out.println("서비스 midx : "+vo2.getMidx());
+				// 로그인 유지 체크했을 때
+				}else {
+					System.out.println("로그인 서비스-로그인유지 실행!!!!!");
+	                // 쿠키를 생성하고 현재 로그인되어 있을 때 생성되었던 세션의 id를 쿠키에 저장한다.
+					Cookie cookie =new Cookie("loginCookie", session.getId());
+					// 쿠키를 찾을 경로를 컨텍스트 경로로 변경해 주고...
+	                cookie.setPath("/");
+	                int amount = 60*60*24*7;
+	                // 단위는 (초)이므로 7일정도로 유효시간을 설정해 준다.
+	                cookie.setMaxAge(amount);
+	                // 쿠키를 적용해 준다.
+	                response.addCookie(cookie);
+	                
+	                // DB에 저장될 쿠키에 사용할 세션의 유효기간
+	                // currentTimeMills()가 1/1000초 단위임으로 1000곱해서 더해야함
+	                String sessionLimit = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(System.currentTimeMillis() + (1000*amount));
+	                // 현재 세션 id와 유효시간을 사용자 테이블에 저장한다.
+	                UserVO vo2 = viewMember(vo);
+	                System.out.println("로그인 서비스-로그인 유지 체크시 uname : "+vo2.getUname());
+	                vo2.setSessionId(session.getId());
+	                vo2.setSessionLimit(sessionLimit);
+	                loginDAO.keepLogin(vo2);
+	                
+	                session.setAttribute("UserVO", vo2);
+	                
+				}
+	            
 				//session.setAttribute("userId", vo2.getId());
 
 				//	getSessionidCheck(String type, String compareId)
 				//	-> String type으로 "userId"가 대입되고, String compareId로 vo.getId()가 대입된다.
 				//	vo.getId()는 로그인창(jsp화면)->로그인 컨트롤러->로그인 서비스로 전달된 즉, 입력된 id이다.
 				SessionListener.getSessionidCheck("userId", vo.getId());
+				// 쿠키 리셋(중복 로그인시 쿠키 초기화)
+				cookieReset(session, request, response);
 				/**
 					session.setAttribute("userId", vo.getId());가
 					SessionListener.getSessionidCheck("userId", vo.getId()); 보다 위에 위치하면
@@ -69,12 +106,62 @@ public class LoginServiceImpl implements LoginService {
 	
 	// 02. 회원 로그아웃
 	@Override
-	public void logout(HttpSession session) throws Exception{
+	public void logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		UserVO vo = (UserVO)session.getAttribute("UserVO");
+		
 		// 세션 변수 개별 삭제
-		// session.removeAttribute("userId");
+		session.removeAttribute("userId");
+		session.removeAttribute("UserVO");
 		//세션을 모두 초기화시킴
 		session.invalidate();
+		
+		//쿠키를 가져와보고
+        Cookie loginCookie = WebUtils.getCookie(request,"loginCookie");
+        if ( loginCookie !=null ){
+            // null이 아니면 존재하면!
+            loginCookie.setPath("/");
+            // 쿠키는 없앨 때 유효시간을 0으로 설정하는 것 !!! invalidate같은거 없음.
+            loginCookie.setMaxAge(0);
+            // 쿠키 설정을 적용한다.
+            response.addCookie(loginCookie);
+             
+            // 사용자 테이블에서도 유효기간을 현재시간으로 다시 세팅해줘야함.
+            // DB에 저장될 쿠키에 사용할 세션의 유효기간
+            String sessionLimit = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(System.currentTimeMillis());
+            // 현재 세션 id와 유효시간을 사용자 테이블에 저장한다.
+            vo.setSessionId(session.getId());
+            vo.setSessionLimit(sessionLimit);
+            loginDAO.keepLogin(vo);
+        }
+
 	}
+	
+	// 쿠키 초기화
+		@Override
+		public void cookieReset(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception{
+			UserVO vo = (UserVO)session.getAttribute("UserVO");
+			
+			//쿠키를 가져와보고
+	        Cookie loginCookie = WebUtils.getCookie(request,"loginCookie");
+	        if ( loginCookie !=null ){
+	            // null이 아니면 존재하면!
+	            loginCookie.setPath("/");
+	            // 쿠키는 없앨 때 유효시간을 0으로 설정하는 것 !!! invalidate같은거 없음.
+	            loginCookie.setMaxAge(0);
+	            // 쿠키 설정을 적용한다.
+	            response.addCookie(loginCookie);
+	             
+	            // 사용자 테이블에서도 유효기간을 현재시간으로 다시 세팅해줘야함.
+	            // DB에 저장될 쿠키에 사용할 세션의 유효기간
+	            String sessionLimit = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(System.currentTimeMillis());
+	            // 현재 세션 id와 유효시간을 사용자 테이블에 저장한다.
+	            vo.setSessionId(session.getId());
+	            vo.setSessionLimit(sessionLimit);
+	            loginDAO.keepLogin(vo);
+	            System.out.println("로그인 서비스-쿠키리셋 실행!!!!!!!!!!!!!!!!!!!");
+	        }
+
+		}
 
 	@Override
 	public String idFindEmail(UserVO vo) throws Exception {
@@ -126,7 +213,7 @@ public class LoginServiceImpl implements LoginService {
 	// 로그인 카운트 초기화
 	@Override
 	public void login_count_zero(String id) throws Exception {
-			loginDAO.login_count_zero(id);
+		loginDAO.login_count_zero(id);
 	}
-	
+
 }

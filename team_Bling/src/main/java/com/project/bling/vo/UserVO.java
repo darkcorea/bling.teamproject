@@ -26,6 +26,9 @@ public class UserVO {
 	private String rphone;
 	private int basic_addr;
 	private int login_count;
+	private String loginKeep;
+	private String sessionId;
+	private String sessionLimit;
 	
 	public int getLogin_count() {
 		return login_count;
@@ -171,6 +174,23 @@ public class UserVO {
 	public void setBasic_addr(int basic_addr) {
 		this.basic_addr = basic_addr;
 	}
-	
+	public String getLoginKeep() {
+		return loginKeep;
+	}
+	public void setLoginKeep(String loginKeep) {
+		this.loginKeep = loginKeep;
+	}
+	public String getSessionId() {
+		return sessionId;
+	}
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+	public String getSessionLimit() {
+		return sessionLimit;
+	}
+	public void setSessionLimit(String sessionLimit) {
+		this.sessionLimit = sessionLimit;
+	}
 	
 }
