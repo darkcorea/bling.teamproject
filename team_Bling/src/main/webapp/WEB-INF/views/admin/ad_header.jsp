@@ -151,10 +151,8 @@ amind_selected_Fn();
 	//버튼 비활성화
 	function disabled(){
 		const adminId = "${sessionScope.adminId}";
-		console.log("adminId : "+adminId);
 		
 		if(adminId == "tester"){
-			console.log("버튼 비활성화 실행!!!");
 			$("button.D").attr("disabled", "disabled");
 			$("input.D").attr("disabled", "disabled");
 		}
