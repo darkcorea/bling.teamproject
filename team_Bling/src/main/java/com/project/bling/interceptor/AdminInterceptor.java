@@ -11,7 +11,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		// 세션객체 생성
+		// 세션객체 가져오기
 		HttpSession session = request.getSession();
 		// session에 관리자id가 null이면
 		if(session.getAttribute("adminId") == null){

@@ -1,18 +1,21 @@
 package com.project.bling.service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.project.bling.vo.UserVO;
 
 public interface LoginService {
 	// 01_01. 회원 로그인 체크
-	public boolean loginCheck(UserVO vo, HttpSession session, HttpServletRequest request) throws Exception;
+	public boolean loginCheck(UserVO vo, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public boolean delyn(UserVO vo)throws Exception;
 	// 01_02. 회원 로그인 정보
 	public UserVO viewMember(UserVO vo) throws Exception;
 	// 02. 회원 로그아웃
-	public void logout(HttpSession session) throws Exception;
+	public void logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	// 쿠키 초기화
+	public void cookieReset(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public String idFindEmail(UserVO vo) throws Exception;
 	public String idFindPhone(UserVO vo) throws Exception;
@@ -29,4 +32,5 @@ public interface LoginService {
 	// 로그인한 횟수
 	int login_count(String id) throws Exception;
 	void login_count_zero(String id) throws Exception;
+	
 }

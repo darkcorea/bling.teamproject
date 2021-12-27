@@ -77,5 +77,11 @@ public class LoginDAO {
 	public void login_count_zero(String id) throws Exception {
 		sqlSession.update(lm+"login_count_zero", id);
 	}
+	public void keepLogin(UserVO vo) throws Exception {
+		sqlSession.update(lm+"keepLogin", vo);
+	}
+	public UserVO checkCookie(String sessionId) throws Exception {
+		return sqlSession.selectOne(lm+"checkCookie", sessionId);
+	}
 	
 }

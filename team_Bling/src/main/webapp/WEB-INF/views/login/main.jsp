@@ -128,9 +128,9 @@
 							</div>
 						</div>
 						<div id="rememberLogin">
-							<!-- <label>
-								<input type="checkbox" name="useCookie"> 로그인 유지
-							</label> -->
+							<label>
+								<input type="checkbox" name="loginKeep" value="keep"> 로그인 유지
+							</label>
 						</div>
 						<div id="cautionDiv">
 						<c:if test="${login_out == 'failure'}">
