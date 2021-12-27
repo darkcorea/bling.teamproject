@@ -67,6 +67,9 @@
 	.backcolor{
 		background-color: #FFEDED;
 	}
+	#Bling_img{
+		width:1000px;
+	}
 </style>
 </head>
 
@@ -466,7 +469,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-       	<img src="/team_Bling/resources/image/블링 소개.jpg">
+       	<img id="Bling_img" src="/team_Bling/resources/image/블링 소개.jpg"><br>
+       	<a href="/team_Bling/Ad_login/login.do">관리자 모드</a><br>
+       	보기용 관리자 : ID-tester, pwd1-1111, pwd2-1111
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
