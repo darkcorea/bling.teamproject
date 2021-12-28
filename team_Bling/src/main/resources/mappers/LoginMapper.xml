@@ -82,11 +82,15 @@
 	
 	<!-- 로그인 유지 체크시 해당 세션id와 유효시간을 사용자 테이블에 저장 -->
 	<update id="keepLogin" parameterType="UserVO">
-        UPDATE bg_user SET sessionId = #{sessionId}, sessionLimit = #{sessionLimit} WHERE id=#{id}
+        UPDATE bg_user SET
+        <if test='sessionLimit == "0"'>sessionId = null, sessionLimit = null</if>
+        <if test='sessionLimit != "0"'>sessionId = #{sessionId}, sessionLimit = #{sessionLimit}</if>
+        WHERE id=#{id}
     </update>
     
     <!-- 유효기간이 남아있는 쿠키인 경우 -->
 	<select id="checkCookie" resultType="UserVO">
         SELECT * FROM bg_user WHERE sessionId = #{sessionId} AND sessionLimit > now()
     </select>
+    
 </mapper>
