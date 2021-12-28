@@ -71,6 +71,11 @@
 			<mapping path="/Ad_user/*"/>
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
+		<!-- 로그인 유지 세션체크 매핑 -->
+		<interceptor>
+			<mapping path="/"/>
+			<beans:ref bean="keepInterceptor"/>
+		</interceptor>
 		<!-- 사용자 세션체크 매핑 -->
 		<interceptor>
 			<!-- 마이페이지 , 주문배송 확인, 관심상품, 장바구니, 나의 리류, 나의 문의내역, 나의정보수정,커스터마이징, 배송지 목록-->
@@ -91,11 +96,7 @@
 			<mapping path="/Order/memberorder.do"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
-		<!-- 로그인 유지 세션체크 매핑 -->
-		<interceptor>
-			<mapping path="/"/>
-			<beans:ref bean="keepInterceptor"/>
-		</interceptor>
+
 	</interceptors>
 	
 	

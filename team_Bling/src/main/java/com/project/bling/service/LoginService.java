@@ -14,8 +14,6 @@ public interface LoginService {
 	public UserVO viewMember(UserVO vo) throws Exception;
 	// 02. 회원 로그아웃
 	public void logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception;
-	// 쿠키 초기화
-	public void cookieReset(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public String idFindEmail(UserVO vo) throws Exception;
 	public String idFindPhone(UserVO vo) throws Exception;

@@ -110,8 +110,8 @@ public class LoginController {
 	@RequestMapping(value="/idSearch.do", produces = "text/html; charset=utf-8")
 	@ResponseBody
 	public String idSearch(UserVO vo) throws Exception{
-		System.out.println("로그인 컨트롤러에서 이름>>>>>>>>>>"+vo.getUname());
-		System.out.println("로그인 컨트롤러에서 메일>>>>>>>>>>"+vo.getEmail());
+		//System.out.println("로그인 컨트롤러에서 이름>>>>>>>>>>"+vo.getUname());
+		//System.out.println("로그인 컨트롤러에서 메일>>>>>>>>>>"+vo.getEmail());
 		String id = "";
 		
 		if(vo.getEmail() != null) {
@@ -127,8 +127,8 @@ public class LoginController {
 	@RequestMapping(value="/pwdSearch.do", produces = "text/html; charset=utf-8")
 	@ResponseBody
 	public String pwdSearch(UserVO vo) throws Exception {
-		System.out.println("로그인 컨트롤러에서 비번찾기 아이디>>>>>>>>>>"+vo.getId());
-		System.out.println("로그인 컨트롤러에서 비번찾기 이름>>>>>>>>>>"+vo.getUname());
+		//System.out.println("로그인 컨트롤러에서 비번찾기 아이디>>>>>>>>>>"+vo.getId());
+		//System.out.println("로그인 컨트롤러에서 비번찾기 이름>>>>>>>>>>"+vo.getUname());
 		
 		StringBuffer buf =new StringBuffer();
 		
@@ -207,7 +207,7 @@ public class LoginController {
 		if(vo.getEmail() != null) {
 			//회원정보를 특정하기 위해 midx 가져오기
 			int midx = loginService.pwdFindEmail(vo);
-			System.out.println("로그인 컨트롤러에서 폰번으로 회원번호 가져오기 : "+midx);
+			//System.out.println("로그인 컨트롤러에서 폰번으로 회원번호 가져오기 : "+midx);
 			//가져온 midx를 UserVO에 저장
 			vo.setMidx(midx);
 			//midx에 해당하는 계정에 임시 비밀번호로 변경하기
@@ -220,7 +220,7 @@ public class LoginController {
 		}else if(vo.getPhone() != null) {
 			//회원정보를 특정하기 위해 midx 가져오기
 			int midx = loginService.pwdFindPhone(vo);
-			System.out.println("로그인 컨트롤러에서 폰번으로 회원번호 가져오기 : "+midx);
+			//System.out.println("로그인 컨트롤러에서 폰번으로 회원번호 가져오기 : "+midx);
 			vo.setMidx(midx);
 			//midx에 해당하는 계정에 임시 비밀번호로 변경하기
 			loginService.tempPwd(vo);

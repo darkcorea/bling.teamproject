@@ -24,6 +24,7 @@ public class LoginKeepInterceptor extends HandlerInterceptorAdapter {
 		
 		// 쿠키를 꺼내온다.
         Cookie loginCookie = WebUtils.getCookie(request,"loginCookie");
+        
         //쿠키가 존재하면
         if(loginCookie != null) {
             // loginCookie의 값을 꺼내오고 -> 즉, 저장해놓은 세션Id를 꺼내오고
@@ -32,16 +33,24 @@ public class LoginKeepInterceptor extends HandlerInterceptorAdapter {
             // 유효시간이 > now() 인 즉 아직 유효시간이 지나지 않으면서 해당 sessionId 정보를 가지고 있는 사용자 정보를 반환한다.
             UserVO vo3 = loginDAO.checkCookie(sessionId);
             
-            // 그런 사용자가 있다면
+            System.out.println("쿠키id존재 여부>>>>>>>>>>>>>>>>>>>>>>>"+vo3);
+            
+            // 현재 쿠키가 최신 이라면 자동로그인 처음에 함
             if(vo3 != null){
                 // 세션을 생성시켜 준다.
                 session.setAttribute("UserVO", vo3);
                 //LoginInterceptor에서 기준을 세션에 "userId"가 존재하는지로 했으므로 추가해줘야한다.
                 session.setAttribute("userId", vo3.getId());
-                return true;
+                
+            // 쿠키가 존재하는데 최신 쿠키가 아니라면
+            }else if (vo3 == null){
+            	// 쿠기 주소 입력
+            	 loginCookie.setPath("/team_Bling/");
+ 	            // 쿠키는 없앨 때 유효시간을 0으로 설정해서 쿠키를 없앤다
+ 	            loginCookie.setMaxAge(0);
+ 	            // 쿠키 설정을 적용한다.
+ 	            response.addCookie(loginCookie);
             }
-        }else {
-        	return true;
         }
         return true;
 	}
